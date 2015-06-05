@@ -10,11 +10,11 @@ import backend.lzmastreams.sevenzip.compression.lzma.Encoder;
 class EncoderThread implements Runnable
 {
 	public static final Integer				DEFAULT_DICT_SZ_POW2	= new Integer(20);
-	protected ArrayBlockingQueue<byte[]>	q;
-	protected InputStream					in;
-	protected OutputStream					out;
-	protected Encoder						enc;
-	protected IOException					exn;
+	protected ArrayBlockingQueue<byte[]>	queue;
+	protected InputStream					input;
+	protected OutputStream					output;
+	protected Encoder						encoder;
+	protected IOException					localException;
 	private Thread							wrapperThread;
 
 	/**
@@ -23,16 +23,16 @@ class EncoderThread implements Runnable
 	 * @param fastBytes
 	 *            If non-null, equivalent to the N in the -fbN arg to LzmaAlone
 	 */
-	EncoderThread(OutputStream _out, Integer dictSzPow2, Integer fastBytes)
+	protected EncoderThread(OutputStream output, Integer dictSzPow2, Integer fastBytes)
 	{
-		this.q = ConcurrentBufferOutputStream.newQueue();
-		this.in = ConcurrentBufferInputStream.create(this.q);
-		this.out = _out;
-		this.enc = new Encoder();
-		this.exn = null;
-		this.enc.SetDictionarySize(1 << (dictSzPow2 == null ? EncoderThread.DEFAULT_DICT_SZ_POW2 : dictSzPow2).intValue());
+		this.queue = ConcurrentBufferOutputStream.newQueue();
+		this.input = ConcurrentBufferInputStream.create(this.queue);
+		this.output = output;
+		this.encoder = new Encoder();
+		this.localException = null;
+		this.encoder.SetDictionarySize(1 << (dictSzPow2 == null ? EncoderThread.DEFAULT_DICT_SZ_POW2 : dictSzPow2).intValue());
 		if (fastBytes != null)
-			this.enc.SetNumFastBytes(fastBytes.intValue());
+			this.encoder.SetNumFastBytes(fastBytes.intValue());
 	}
 
 	@Override
@@ -40,20 +40,20 @@ class EncoderThread implements Runnable
 	{
 		try
 		{
-			this.enc.SetEndMarkerMode(true);
+			this.encoder.SetEndMarkerMode(true);
 			if (LzmaOutputStream.LZMA_HEADER)
 			{
-				this.enc.WriteCoderProperties(this.out);
+				this.encoder.WriteCoderProperties(this.output);
 				// 5d 00 00 10 00
 				long fileSize = -1;
 				for (int i = 0; i < 8; i++)
-					this.out.write((int) (fileSize >>> 8 * i) & 0xFF);
+					this.output.write((int) (fileSize >>> 8 * i) & 0xFF);
 			}
-			this.enc.Code(this.in, this.out, -1, -1, null);
-			this.out.close();
-		} catch (IOException _exn)
+			this.encoder.Code(this.input, this.output, -1, -1, null);
+			this.output.close();
+		} catch (IOException e)
 		{
-			this.exn = _exn;
+			this.localException = e;
 		}
 	}
 

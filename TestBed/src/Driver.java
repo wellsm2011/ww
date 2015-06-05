@@ -1,12 +1,26 @@
 import java.io.IOException;
 import java.util.LinkedList;
 
+import config.Config;
 import backend.U;
 
 public class Driver
 {
 
 	public static void main(String[] args)
+	{
+		//testLoadStore();
+		testConfig();
+	}
+
+	private static void testConfig()
+	{
+		Config config = new Config("config.json");
+		U.p(config.getItems());
+	}
+
+	@SuppressWarnings("unused")
+	private static void testLoadStore()
 	{
 		LinkedList<String> bob;
 

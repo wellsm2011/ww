@@ -25,7 +25,7 @@ public class LzmaOutputStream extends FilterOutputStream
 	{
 		super(null);
 		this.encoderthread = new EncoderThread(output, dictSzPow2, fastBytes);
-		this.out = ConcurrentBufferOutputStream.create(this.encoderthread.q);
+		this.out = ConcurrentBufferOutputStream.create(this.encoderthread.queue);
 		this.encoderthread.start();
 	}
 
@@ -40,8 +40,8 @@ public class LzmaOutputStream extends FilterOutputStream
 		{
 			throw new InterruptedIOException(exn.getMessage());
 		}
-		if (this.encoderthread.exn != null)
-			throw this.encoderthread.exn;
+		if (this.encoderthread.localException != null)
+			throw this.encoderthread.localException;
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class LzmaOutputStream extends FilterOutputStream
 	@Override
 	public void write(int i) throws IOException
 	{
-		if (this.encoderthread.exn != null)
-			throw this.encoderthread.exn;
+		if (this.encoderthread.localException != null)
+			throw this.encoderthread.localException;
 		this.out.write(i);
 	}
 }

@@ -9,6 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -436,5 +440,18 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
+	}
+	
+	public static String readFile(String path) {
+		return readFile(path, StandardCharsets.UTF_8);
+	}
+
+	public static String readFile(String path, Charset encoding)
+	{
+		try {
+			return new String(Files.readAllBytes(Paths.get(path)), encoding);
+		} catch (IOException e) {
+			return "";
+		}
 	}
 }
