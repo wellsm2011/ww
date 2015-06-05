@@ -7,7 +7,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import backend.lzmastreams.sevenzip.compression.lzma.Encoder;
 
-class EncoderThread extends Thread
+class EncoderThread implements Runnable
 {
 	public static final Integer				DEFAULT_DICT_SZ_POW2	= new Integer(20);
 	protected ArrayBlockingQueue<byte[]>	q;
@@ -15,6 +15,7 @@ class EncoderThread extends Thread
 	protected OutputStream					out;
 	protected Encoder						enc;
 	protected IOException					exn;
+	private Thread							wrapperThread;
 
 	/**
 	 * @param dictSzPow2
@@ -56,9 +57,20 @@ class EncoderThread extends Thread
 		}
 	}
 
+	public void start()
+	{
+		this.wrapperThread = new Thread(this);
+		this.wrapperThread.start();
+	}
+
 	@Override
 	public String toString()
 	{
 		return "EncoderThread" + this.hashCode();
+	}
+
+	public void join() throws InterruptedException
+	{
+		this.wrapperThread.join();
 	}
 }

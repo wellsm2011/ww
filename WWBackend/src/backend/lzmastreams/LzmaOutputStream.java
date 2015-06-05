@@ -9,7 +9,7 @@ public class LzmaOutputStream extends FilterOutputStream
 {
 	public static boolean	LZMA_HEADER	= true;
 
-	protected EncoderThread	eth;
+	protected EncoderThread	encoderthread;
 
 	/*
 	 * true for compatibility with lzma(1) command-line tool, false for
@@ -21,12 +21,12 @@ public class LzmaOutputStream extends FilterOutputStream
 		this(_out, EncoderThread.DEFAULT_DICT_SZ_POW2, null);
 	}
 
-	public LzmaOutputStream(OutputStream _out, Integer dictSzPow2, Integer fastBytes)
+	public LzmaOutputStream(OutputStream output, Integer dictSzPow2, Integer fastBytes)
 	{
 		super(null);
-		this.eth = new EncoderThread(_out, dictSzPow2, fastBytes);
-		this.out = ConcurrentBufferOutputStream.create(this.eth.q);
-		this.eth.start();
+		this.encoderthread = new EncoderThread(output, dictSzPow2, fastBytes);
+		this.out = ConcurrentBufferOutputStream.create(this.encoderthread.q);
+		this.encoderthread.start();
 	}
 
 	@Override
@@ -35,13 +35,13 @@ public class LzmaOutputStream extends FilterOutputStream
 		this.out.close();
 		try
 		{
-			this.eth.join();
+			this.encoderthread.join();
 		} catch (InterruptedException exn)
 		{
 			throw new InterruptedIOException(exn.getMessage());
 		}
-		if (this.eth.exn != null)
-			throw this.eth.exn;
+		if (this.encoderthread.exn != null)
+			throw this.encoderthread.exn;
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class LzmaOutputStream extends FilterOutputStream
 	@Override
 	public void write(int i) throws IOException
 	{
-		if (this.eth.exn != null)
-			throw this.eth.exn;
+		if (this.encoderthread.exn != null)
+			throw this.encoderthread.exn;
 		this.out.write(i);
 	}
 }

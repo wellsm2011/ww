@@ -7,29 +7,29 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 class ConcurrentBufferInputStream extends InputStream
 {
-	public static InputStream create(ArrayBlockingQueue<byte[]> q)
+	public static InputStream create(ArrayBlockingQueue<byte[]> queue)
 	{
-		InputStream in = new ConcurrentBufferInputStream(q);
+		InputStream in = new ConcurrentBufferInputStream(queue);
 		return in;
 	}
 
-	protected ArrayBlockingQueue<byte[]>	q;
-	protected byte[]						buf		= null;
+	protected ArrayBlockingQueue<byte[]>	queue;
+	protected byte[]						buffer	= null;
 	protected int							next	= 0;
 
 	protected boolean						eof		= false;
 
-	private ConcurrentBufferInputStream(ArrayBlockingQueue<byte[]> q)
+	private ConcurrentBufferInputStream(ArrayBlockingQueue<byte[]> queue)
 	{
-		this.q = q;
+		this.queue = queue;
 		this.eof = false;
 	}
 
-	protected byte[] guarded_take() throws IOException
+	protected byte[] guardedTake() throws IOException
 	{
 		try
 		{
-			return this.q.take();
+			return this.queue.take();
 		} catch (InterruptedException exn)
 		{
 			throw new InterruptedIOException(exn.getMessage());
@@ -40,11 +40,11 @@ class ConcurrentBufferInputStream extends InputStream
 	{
 		if (this.eof)
 			return true;
-		if (this.buf == null || this.next >= this.buf.length)
+		if (this.buffer == null || this.next >= this.buffer.length)
 		{
-			this.buf = this.guarded_take();
+			this.buffer = this.guardedTake();
 			this.next = 0;
-			if (this.buf.length == 0)
+			if (this.buffer.length == 0)
 			{
 				this.eof = true;
 				return true;
@@ -58,7 +58,7 @@ class ConcurrentBufferInputStream extends InputStream
 	{
 		if (this.prepareAndCheckEOF())
 			return -1;
-		int x = this.buf[this.next];
+		int x = this.buffer[this.next];
 		this.next++;
 		return x & 0xff;
 	}
@@ -68,10 +68,10 @@ class ConcurrentBufferInputStream extends InputStream
 	{
 		if (this.prepareAndCheckEOF())
 			return -1;
-		int k = this.buf.length - this.next;
+		int k = this.buffer.length - this.next;
 		if (len < k)
 			k = len;
-		System.arraycopy(this.buf, this.next, b, off, k);
+		System.arraycopy(this.buffer, this.next, b, off, k);
 		this.next += k;
 		return k;
 	}

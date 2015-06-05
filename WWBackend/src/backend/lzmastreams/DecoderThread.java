@@ -7,7 +7,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import backend.lzmastreams.sevenzip.compression.lzma.Decoder;
 
-class DecoderThread extends Thread
+class DecoderThread implements Runnable
 {
 	static final int						propSize	= 5;
 	static final byte[]						props		= new byte[DecoderThread.propSize];
@@ -27,21 +27,21 @@ class DecoderThread extends Thread
 	protected OutputStream					out;
 
 	protected Decoder						dec;
-	protected IOException					exn;
+	protected IOException					localException;
 
-	DecoderThread(InputStream input)
+	protected DecoderThread(InputStream input)
 	{
 		this.queue = ConcurrentBufferOutputStream.newQueue();
 		this.in = input;
 		this.out = ConcurrentBufferOutputStream.create(this.queue);
 		this.dec = new Decoder();
-		this.exn = null;
+		this.localException = null;
 	}
 
 	public void maybeThrow() throws IOException
 	{
-		if (this.exn != null)
-			throw this.exn;
+		if (this.localException != null)
+			throw this.localException;
 	}
 
 	@Override
@@ -69,10 +69,10 @@ class DecoderThread extends Thread
 				this.dec.SetDecoderProperties(DecoderThread.props);
 			}
 			this.dec.Code(this.in, this.out, outSize);
-			this.in.close(); // ?
-		} catch (IOException _exn)
+			this.in.close();
+		} catch (IOException e)
 		{
-			this.exn = _exn;
+			this.localException = e;
 		}
 		// close either way, so listener can unblock
 		try
@@ -86,6 +86,11 @@ class DecoderThread extends Thread
 	@Override
 	public String toString()
 	{
-		return String.format("Dec@%x", this.hashCode());
+		return "DecoderThread" + hashCode();
+	}
+
+	public void start()
+	{
+		new Thread(this).start();
 	}
 }
