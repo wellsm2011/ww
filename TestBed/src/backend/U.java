@@ -19,7 +19,7 @@ public class U {
 	private static PrintStream output;
 	private static int debugging = 0;
 	private static SimpleDateFormat formatter = new SimpleDateFormat(
-			"HH:mm:ss.SSSS");
+			"HH:mm:ss.SSS");
 	private static Scanner input;
 	private static Random rand;
 
