@@ -1,16 +1,16 @@
 import java.io.IOException;
 import java.util.LinkedList;
 
-import config.Config;
 import backend.U;
+import config.Config;
 
 public class Driver
 {
 
 	public static void main(String[] args)
 	{
-		//testLoadStore();
-		testConfig();
+		// testLoadStore();
+		Driver.testConfig();
 	}
 
 	private static void testConfig()
