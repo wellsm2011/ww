@@ -6,5 +6,9 @@
 			"onPlayerDeath" : {
 			}
 		}
+	},
+	"statuses" : {
+	},
+	"roles" : {
 	}
 }

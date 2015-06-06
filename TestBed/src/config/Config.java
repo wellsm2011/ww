@@ -38,6 +38,8 @@ public class Config
 			JSONObject data = new JSONObject(U.readFile(filename));
 			this.maps = new HashMap<String, HashMap<String, ?>>();
 			this.parseItems(data);
+			this.parseStatuses(data);
+			this.parseRoles(data);
 
 		} catch (JSONException e)
 		{
@@ -49,6 +51,15 @@ public class Config
 			e.printStackTrace();
 			Globals.exit();
 		}
+	}
+
+	private void parseRoles(JSONObject data)
+	{
+		JSONObject rolesData = data.getJSONObject("roles");
+		HashMap<String, Role> roles = this.getMap("roles");
+
+		for (String cur : rolesData.keySet())
+			roles.put(cur, new Role(cur, rolesData.getJSONObject(cur)));
 	}
 
 	public HashMap<String, Item> getItems()
@@ -63,7 +74,15 @@ public class Config
 
 		for (String cur : itemData.keySet())
 			items.put(cur, new Item(cur, itemData.getJSONObject(cur)));
-		U.p("Parsed Actions: " + items);
+	}
+
+	private void parseStatuses(JSONObject data)
+	{
+		JSONObject statusesData = data.getJSONObject("statuses");
+		HashMap<String, Status> statuses = this.getMap("statuses");
+
+		for (String cur : statusesData.keySet())
+			statuses.put(cur, new Status(cur, statusesData.getJSONObject(cur)));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -73,7 +92,7 @@ public class Config
 			this.maps.put(name, new HashMap<String, T>());
 		return (HashMap<String, T>) this.maps.get(name);
 	}
-	
+
 	public String toString()
 	{
 		return this.maps.toString();
