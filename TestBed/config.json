@@ -1,7 +1,10 @@
 {
 	"items" : {
-		"OnUseActions" : {
+		"ExampleItem" : {
+			"OnUseActions" : {
+			},
+			"onPlayerDeath" : {
+			}
 		}
-		
 	}
 }
