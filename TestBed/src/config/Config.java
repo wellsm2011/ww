@@ -1,5 +1,7 @@
 package config;
 
+import global.Globals;
+
 import java.util.HashMap;
 
 import backend.U;
@@ -39,12 +41,12 @@ public class Config
 		} catch (JSONException e)
 		{
 			U.e("Error parsing config file", e);
-			System.exit(1);
+			Globals.exit();
 		} catch (NullPointerException e)
 		{
 			U.e("Internal error parsing config file.");
 			e.printStackTrace();
-			System.exit(1);
+			Globals.exit();
 		}
 	}
 

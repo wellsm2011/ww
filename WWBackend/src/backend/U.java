@@ -1,5 +1,7 @@
 package backend;
 
+import global.Globals;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -177,7 +179,7 @@ public class U
 		} catch (FileNotFoundException e)
 		{
 			U.e("Error opening file " + filename, e);
-			System.exit(0);
+			Globals.exit();
 		}
 		return null;
 	}
