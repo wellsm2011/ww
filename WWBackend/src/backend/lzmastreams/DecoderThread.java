@@ -83,14 +83,14 @@ class DecoderThread implements Runnable
 		}
 	}
 
-	@Override
-	public String toString()
-	{
-		return "DecoderThread" + hashCode();
-	}
-
 	public void start()
 	{
 		new Thread(this).start();
+	}
+
+	@Override
+	public String toString()
+	{
+		return "DecoderThread" + this.hashCode();
 	}
 }

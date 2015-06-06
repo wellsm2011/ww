@@ -35,6 +35,11 @@ class EncoderThread implements Runnable
 			this.encoder.SetNumFastBytes(fastBytes.intValue());
 	}
 
+	public void join() throws InterruptedException
+	{
+		this.wrapperThread.join();
+	}
+
 	@Override
 	public void run()
 	{
@@ -67,10 +72,5 @@ class EncoderThread implements Runnable
 	public String toString()
 	{
 		return "EncoderThread" + this.hashCode();
-	}
-
-	public void join() throws InterruptedException
-	{
-		this.wrapperThread.join();
 	}
 }

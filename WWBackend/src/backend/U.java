@@ -179,7 +179,7 @@ public class U
 			U.e("Error opening file " + filename, e);
 			System.exit(0);
 		}
-		return U.input;
+		return null;
 	}
 
 	/**
@@ -265,6 +265,40 @@ public class U
 		res.append("] ");
 		res.append(in);
 		U.output.println(res.toString().trim());
+	}
+
+	/**
+	 * Given a file, attempts to load the contents as a string. Assumes UTF_8
+	 * encoding. Returns "" if any kind of error.
+	 *
+	 * @param path
+	 *            the file to open
+	 * @return the contents of the specified file
+	 */
+
+	public static String readFile(String path)
+	{
+		return U.readFile(path, StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * Given a file and encoding, attempts to load the contents as a string.
+	 * Returns "" if any kind of error.
+	 *
+	 * @param path
+	 *            the file to open
+	 * @param encoding
+	 * @return the contents of the specified file
+	 */
+	public static String readFile(String path, Charset encoding)
+	{
+		try
+		{
+			return new String(Files.readAllBytes(Paths.get(path)), encoding);
+		} catch (IOException e)
+		{
+			return "";
+		}
 	}
 
 	/**
@@ -440,18 +474,5 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
-	}
-	
-	public static String readFile(String path) {
-		return readFile(path, StandardCharsets.UTF_8);
-	}
-
-	public static String readFile(String path, Charset encoding)
-	{
-		try {
-			return new String(Files.readAllBytes(Paths.get(path)), encoding);
-		} catch (IOException e) {
-			return "";
-		}
 	}
 }

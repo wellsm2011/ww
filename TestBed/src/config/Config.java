@@ -12,18 +12,18 @@ import backend.json.JSONObject;
  * of loading will probably matter, for example: Actions will probably need to
  * be loaded before Items, if Items refer to Actions, etc, etc. Bi-directional
  * links would be nice to avoid architecturely, but wouldn't be a show-stopper.
- * 
+ *
  * Overall structure of this class should basically be
- * 
+ *
  * Constructor - Reads the file, then calls parsing subroutines
- * 
+ *
  * Parsing Subroutines - Pulls the relevant section(s?) from the main json file,
  * and passes individual data-sections to the constructors of other classes
  * (Items, etc, etc, etc)
- * 
+ *
  * Storage - Also provides hashmaps (May become hashtables if thread-safety
  * becomes a requirement) to parsed items for later use.
- * 
+ *
  */
 public class Config
 {
