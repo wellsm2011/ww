@@ -16,7 +16,7 @@ public class Driver
 	private static void testConfig()
 	{
 		Config config = new Config("config.json");
-		U.p(config.getItems());
+		U.p(config);
 	}
 
 	@SuppressWarnings("unused")

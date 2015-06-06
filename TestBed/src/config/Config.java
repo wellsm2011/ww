@@ -29,13 +29,14 @@ import backend.json.JSONObject;
  */
 public class Config
 {
-	private HashMap<String, Item>	items;
+	private HashMap<String, HashMap<String, ?>>	maps;
 
 	public Config(String filename)
 	{
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
+			this.maps = new HashMap<String, HashMap<String, ?>>();
 			this.parseItems(data);
 
 		} catch (JSONException e)
@@ -52,16 +53,29 @@ public class Config
 
 	public HashMap<String, Item> getItems()
 	{
-		return this.items;
+		return this.getMap("name");
 	}
 
 	private void parseItems(JSONObject data)
 	{
-		JSONObject items = data.getJSONObject("items");
-		this.items = new HashMap<String, Item>();
+		JSONObject itemData = data.getJSONObject("items");
+		HashMap<String, Item> items = this.getMap("items");
 
-		for (String cur : items.keySet())
-			this.items.put(cur, new Item(cur, items.getJSONObject(cur)));
-		U.p("Parsed Actions: " + this.items);
+		for (String cur : itemData.keySet())
+			items.put(cur, new Item(cur, itemData.getJSONObject(cur)));
+		U.p("Parsed Actions: " + items);
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> HashMap<String, T> getMap(String name)
+	{
+		if (!this.maps.containsKey(name))
+			this.maps.put(name, new HashMap<String, T>());
+		return (HashMap<String, T>) this.maps.get(name);
+	}
+	
+	public String toString()
+	{
+		return this.maps.toString();
 	}
 }
