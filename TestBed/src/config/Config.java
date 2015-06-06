@@ -53,18 +53,17 @@ public class Config
 		}
 	}
 
-	private void parseRoles(JSONObject data)
-	{
-		JSONObject rolesData = data.getJSONObject("roles");
-		HashMap<String, Role> roles = this.getMap("roles");
-
-		for (String cur : rolesData.keySet())
-			roles.put(cur, new Role(cur, rolesData.getJSONObject(cur)));
-	}
-
 	public HashMap<String, Item> getItems()
 	{
 		return this.getMap("name");
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> HashMap<String, T> getMap(String name)
+	{
+		if (!this.maps.containsKey(name))
+			this.maps.put(name, new HashMap<String, T>());
+		return (HashMap<String, T>) this.maps.get(name);
 	}
 
 	private void parseItems(JSONObject data)
@@ -76,6 +75,15 @@ public class Config
 			items.put(cur, new Item(cur, itemData.getJSONObject(cur)));
 	}
 
+	private void parseRoles(JSONObject data)
+	{
+		JSONObject rolesData = data.getJSONObject("roles");
+		HashMap<String, Role> roles = this.getMap("roles");
+
+		for (String cur : rolesData.keySet())
+			roles.put(cur, new Role(cur, rolesData.getJSONObject(cur)));
+	}
+
 	private void parseStatuses(JSONObject data)
 	{
 		JSONObject statusesData = data.getJSONObject("statuses");
@@ -85,14 +93,7 @@ public class Config
 			statuses.put(cur, new Status(cur, statusesData.getJSONObject(cur)));
 	}
 
-	@SuppressWarnings("unchecked")
-	private <T> HashMap<String, T> getMap(String name)
-	{
-		if (!this.maps.containsKey(name))
-			this.maps.put(name, new HashMap<String, T>());
-		return (HashMap<String, T>) this.maps.get(name);
-	}
-
+	@Override
 	public String toString()
 	{
 		return this.maps.toString();
