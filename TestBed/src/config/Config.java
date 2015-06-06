@@ -42,7 +42,7 @@ public class Config
 			System.exit(1);
 		} catch (NullPointerException e)
 		{
-			U.e("Error parseing config file.");
+			U.e("Internal error parsing config file.");
 			e.printStackTrace();
 			System.exit(1);
 		}
