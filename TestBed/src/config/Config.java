@@ -2,6 +2,7 @@ package config;
 
 import global.Globals;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -17,16 +18,19 @@ import backend.json.JSONObject;
  * be loaded before Items, if Items refer to Actions, etc, etc. Bi-directional
  * links would be nice to avoid architecturely, but wouldn't be a show-stopper.
  *
- * Overall structure of this class should basically be
- *
- * Constructor - Reads the file, then calls parsing subroutines
- *
- * Parsing Subroutines - Pulls the relevant section(s?) from the main json file,
- * and passes individual data-sections to the constructors of other classes
- * (Items, etc, etc, etc)
- *
- * Storage - Also provides hashmaps (May become hashtables if thread-safety
- * becomes a requirement) to parsed items for later use.
+ * <p>
+ * Procedure to add a new config file section: Add line in Constructor line
+ * like...
+ * </p>
+ * 
+ * <p>
+ * <code>configMembers.put(<json key here>, <parseing class>.class);</code>
+ * </p>
+ * 
+ * <p>
+ * and write the parseing class. Done!
+ * </p>
+ * 
  *
  */
 public class Config
@@ -44,6 +48,16 @@ public class Config
 		loadConfig(filename, configMembers);
 	}
 
+	/**
+	 * Based on a given filename, as well as a set of config members, parses
+	 * them into their own classes.
+	 * 
+	 * @param filename
+	 *            the filename to open
+	 * @param configMembers
+	 *            the config categories to parse, maps strings to class
+	 *            definitions
+	 */
 	private void loadConfig(String filename, HashMap<String, Class<?>> configMembers)
 	{
 		try
@@ -65,8 +79,18 @@ public class Config
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private <T> void parse(JSONObject data, String key, Class<T> classs)
+	/**
+	 * Based on a JSON config file, pulls the given key, and instantiates
+	 * objects into the passed class.
+	 * 
+	 * @param data
+	 *            the json data to load from
+	 * @param key
+	 *            the json key to pull things from
+	 * @param type
+	 *            the class type to instantiate.
+	 */
+	private <T> void parse(JSONObject data, String key, Class<T> type)
 	{
 		JSONObject jsonData = data.getJSONObject(key);
 		HashMap<String, T> parsed = this.getMap(key);
@@ -74,19 +98,36 @@ public class Config
 		for (String cur : jsonData.keySet())
 			try
 			{
-				parsed.put(cur, (T) classs.getConstructors()[0].newInstance(cur, jsonData.getJSONObject(cur)));
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | JSONException e)
+				Constructor<T> constructor = type.getConstructor(String.class, JSONObject.class);
+				parsed.put(cur, (T) constructor.newInstance(cur, jsonData.getJSONObject(cur)));
+
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | JSONException | NoSuchMethodException e)
 			{
-				U.e("Issue parseing " + key + " during config loading.");
+				U.e("Issue parseing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
 			}
 	}
 
+	/**
+	 * Returns a hashmap of the implied type for the specified section.
+	 * 
+	 * @param key
+	 *            the key for the config section required
+	 * @return a hashmap of strings to the implied type.
+	 */
 	public <T> HashMap<String, T> getSection(String key)
 	{
 		return this.getMap(key);
 	}
 
+	/**
+	 * Internal map getter, for a given name either returns, or makes and
+	 * returns a hashmap that corresponds to the given key.
+	 * 
+	 * @param name
+	 *            the key of the section
+	 * @return a hashmap from strings to the implied type
+	 */
 	@SuppressWarnings("unchecked")
 	private <T> HashMap<String, T> getMap(String name)
 	{
@@ -95,6 +136,9 @@ public class Config
 		return (HashMap<String, T>) this.maps.get(name);
 	}
 
+	/**
+	 * Basic toString method, simply returns the string representation
+	 */
 	@Override
 	public String toString()
 	{

@@ -4,7 +4,9 @@
 			"OnUseActions" : {
 			},
 			"onPlayerDeath" : {
-			}
+			},
+			"AnotherThing" : 42
+			
 		}
 	},
 	"statuses" : {
