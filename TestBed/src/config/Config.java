@@ -82,9 +82,9 @@ public class Config
 			}
 	}
 
-	public HashMap<String, Item> getItems()
+	public <T> HashMap<String, T> getSection(String key)
 	{
-		return this.getMap("name");
+		return this.getMap(key);
 	}
 
 	@SuppressWarnings("unchecked")
