@@ -2,7 +2,9 @@ package config;
 
 import global.Globals;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import backend.U;
 import backend.json.JSONException;
@@ -33,13 +35,23 @@ public class Config
 
 	public Config(String filename)
 	{
+		HashMap<String, Class<?>> configMembers = new HashMap<String, Class<?>>();
+
+		configMembers.put("items", Item.class);
+		configMembers.put("statuses", Status.class);
+		configMembers.put("roles", Role.class);
+
+		loadConfig(filename, configMembers);
+	}
+
+	private void loadConfig(String filename, HashMap<String, Class<?>> configMembers)
+	{
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
 			this.maps = new HashMap<String, HashMap<String, ?>>();
-			this.parseItems(data);
-			this.parseStatuses(data);
-			this.parseRoles(data);
+			for (Entry<String, Class<?>> cur : configMembers.entrySet())
+				this.parse(data, cur.getKey(), cur.getValue());
 
 		} catch (JSONException e)
 		{
@@ -53,6 +65,23 @@ public class Config
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	private <T> void parse(JSONObject data, String key, Class<T> classs)
+	{
+		JSONObject jsonData = data.getJSONObject(key);
+		HashMap<String, T> parsed = this.getMap(key);
+
+		for (String cur : jsonData.keySet())
+			try
+			{
+				parsed.put(cur, (T) classs.getConstructors()[0].newInstance(cur, jsonData.getJSONObject(cur)));
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | JSONException e)
+			{
+				U.e("Issue parseing " + key + " during config loading.");
+				e.printStackTrace();
+			}
+	}
+
 	public HashMap<String, Item> getItems()
 	{
 		return this.getMap("name");
@@ -64,33 +93,6 @@ public class Config
 		if (!this.maps.containsKey(name))
 			this.maps.put(name, new HashMap<String, T>());
 		return (HashMap<String, T>) this.maps.get(name);
-	}
-
-	private void parseItems(JSONObject data)
-	{
-		JSONObject itemData = data.getJSONObject("items");
-		HashMap<String, Item> items = this.getMap("items");
-
-		for (String cur : itemData.keySet())
-			items.put(cur, new Item(cur, itemData.getJSONObject(cur)));
-	}
-
-	private void parseRoles(JSONObject data)
-	{
-		JSONObject rolesData = data.getJSONObject("roles");
-		HashMap<String, Role> roles = this.getMap("roles");
-
-		for (String cur : rolesData.keySet())
-			roles.put(cur, new Role(cur, rolesData.getJSONObject(cur)));
-	}
-
-	private void parseStatuses(JSONObject data)
-	{
-		JSONObject statusesData = data.getJSONObject("statuses");
-		HashMap<String, Status> statuses = this.getMap("statuses");
-
-		for (String cur : statusesData.keySet())
-			statuses.put(cur, new Status(cur, statusesData.getJSONObject(cur)));
 	}
 
 	@Override
