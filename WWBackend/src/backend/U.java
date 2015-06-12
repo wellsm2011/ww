@@ -186,6 +186,90 @@ public class U
 	}
 
 	/**
+	 * Given a filename, reads an object from it.
+	 *
+	 * Note: make sure you are reading into the correct class (and version of
+	 * the class), otherwise ClassNotFound exceptions will be thrown.
+	 *
+	 * @param filename
+	 *            the filename to said object to.
+	 * @throws ClassNotFoundException
+	 *             if the class that this is trying to read into does not match
+	 *             the stored file
+	 * @throws FileNotFoundException
+	 *             if the file is not found
+	 * @throws IOException
+	 */
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Serializable> T objReadFromFile(String filename) throws FileNotFoundException, ClassNotFoundException, IOException
+	{
+		ObjectInputStream ois = null;
+		FileInputStream fis = null;
+		LzmaInputStream lis = null;
+		T result = null;
+		try
+		{
+			fis = new FileInputStream(filename);
+			lis = new LzmaInputStream(fis);
+			ois = new ObjectInputStream(lis);
+			result = (T) ois.readObject();
+		} catch (FileNotFoundException e)
+		{
+			U.e("'" + filename + "' not found, throwing exception.", e);
+			throw e;
+		} catch (ClassNotFoundException e)
+		{
+			U.e("'" + filename + "' could not be thrown into, throwing exception.", e);
+			ois.close();
+			throw e;
+		} catch (IOException e)
+		{
+			U.e("'" + filename + "' file invalid, throwing exception.", e);
+			throw e;
+		}
+		U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
+		U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", fis);
+		U.tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
+		return result;
+	}
+
+	/**
+	 * Given an object (Which must be Serializable!) this will save that to a
+	 * given file.
+	 *
+	 * @param obj
+	 *            the object to save
+	 * @param filename
+	 *            the filename to said object to.
+	 */
+	public static <T extends Serializable> void objWriteToFile(T obj, String filename) throws FileNotFoundException, IOException
+	{
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		LzmaOutputStream los = null;
+		U.d("Writing object to filename " + filename + ".", 10);
+		try
+		{
+			fos = new FileOutputStream(filename);
+			los = new LzmaOutputStream(fos);
+			oos = new ObjectOutputStream(los);
+			oos.writeObject(obj);
+		} catch (FileNotFoundException e)
+		{
+			U.e("Error: '" + filename + "' file not found.", e);
+			throw e;
+		} catch (IOException e)
+		{
+			U.e("Error: '" + filename + "' file invalid, throwing exception.", e);
+			throw e;
+		}
+		U.tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
+		U.tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
+		U.tryCloseStream("Could not close LZMA stream while writing to file '" + filename + "'.", los);
+	}
+
+	/**
 	 * Pretty-print a 2d float array
 	 *
 	 * @param arr
@@ -305,55 +389,6 @@ public class U
 	}
 
 	/**
-	 * Given a filename, reads an object from it.
-	 *
-	 * Note: make sure you are reading into the correct class (and version of
-	 * the class), otherwise ClassNotFound exceptions will be thrown.
-	 *
-	 * @param filename
-	 *            the filename to said object to.
-	 * @throws ClassNotFoundException
-	 *             if the class that this is trying to read into does not match
-	 *             the stored file
-	 * @throws FileNotFoundException
-	 *             if the file is not found
-	 * @throws IOException
-	 */
-
-	@SuppressWarnings("unchecked")
-	public static <T extends Serializable> T readObjectFromFile(String filename) throws FileNotFoundException, ClassNotFoundException, IOException
-	{
-		ObjectInputStream ois = null;
-		FileInputStream fis = null;
-		LzmaInputStream lis = null;
-		T result = null;
-		try
-		{
-			fis = new FileInputStream(filename);
-			lis = new LzmaInputStream(fis);
-			ois = new ObjectInputStream(lis);
-			result = (T) ois.readObject();
-		} catch (FileNotFoundException e)
-		{
-			U.e("'" + filename + "' not found, throwing exception.", e);
-			throw e;
-		} catch (ClassNotFoundException e)
-		{
-			U.e("'" + filename + "' could not be thrown into, throwing exception.", e);
-			ois.close();
-			throw e;
-		} catch (IOException e)
-		{
-			U.e("'" + filename + "' file invalid, throwing exception.", e);
-			throw e;
-		}
-		tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
-		tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", fis);
-		tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
-		return result;
-	}
-
-	/**
 	 * Sets the debugging level to something new. Used so that the debugging
 	 * level is set in the main, and not forgotten about...
 	 *
@@ -387,45 +422,9 @@ public class U
 	}
 
 	/**
-	 * Given an object (Which must be Serializable!) this will save that to a
-	 * given file.
-	 *
-	 * @param obj
-	 *            the object to save
-	 * @param filename
-	 *            the filename to said object to.
-	 */
-
-	public static <T extends Serializable> void writeObjectToFile(T obj, String filename) throws FileNotFoundException, IOException
-	{
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
-		LzmaOutputStream los = null;
-		U.d("Writing object to filename " + filename + ".", 10);
-		try
-		{
-			fos = new FileOutputStream(filename);
-			los = new LzmaOutputStream(fos);
-			oos = new ObjectOutputStream(los);
-			oos.writeObject(obj);
-		} catch (FileNotFoundException e)
-		{
-			U.e("Error: '" + filename + "' file not found.", e);
-			throw e;
-		} catch (IOException e)
-		{
-			U.e("Error: '" + filename + "' file invalid, throwing exception.", e);
-			throw e;
-		}
-		tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
-		tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
-		tryCloseStream("Could not close LZMA stream while writing to file '" + filename + "'.", los);
-	}
-
-	/**
 	 * Tries to close the passed stream, if it is not null. If it encounters an
 	 * exception, it logs it and continues.
-	 * 
+	 *
 	 * @param message
 	 *            the message to log on IO exception
 	 * @param stream

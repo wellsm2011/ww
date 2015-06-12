@@ -26,7 +26,7 @@ public class Driver
 
 		try
 		{
-			bob = U.readObjectFromFile("bob.store");
+			bob = U.objReadFromFile("bob.store");
 		} catch (ClassNotFoundException | IOException e)
 		{
 			bob = new LinkedList<String>();
@@ -38,7 +38,7 @@ public class Driver
 
 		try
 		{
-			U.writeObjectToFile(bob, "bob.store");
+			U.objWriteToFile(bob, "bob.store");
 		} catch (IOException e)
 		{
 			e.printStackTrace();
