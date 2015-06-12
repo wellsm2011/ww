@@ -2,6 +2,7 @@ package backend;
 
 import global.Globals;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -346,30 +347,9 @@ public class U
 			U.e("'" + filename + "' file invalid, throwing exception.", e);
 			throw e;
 		}
-		if (ois != null)
-			try
-			{
-				ois.close();
-			} catch (IOException e)
-			{
-				U.e("Could not close object input stream while reading from file '" + filename + "'.", e);
-			}
-		if (fis != null)
-			try
-			{
-				fis.close();
-			} catch (IOException e)
-			{
-				U.e("Could not close object input stream while reading from file '" + filename + "'.", e);
-			}
-		if (lis != null)
-			try
-			{
-				lis.close();
-			} catch (IOException e)
-			{
-				U.e("Could not close LZMA input stream while reading from file '" + filename + "'.", e);
-			}
+		tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
+		tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", fis);
+		tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
 		return result;
 	}
 
@@ -437,29 +417,30 @@ public class U
 			U.e("Error: '" + filename + "' file invalid, throwing exception.", e);
 			throw e;
 		}
-		if (oos != null)
+		tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
+		tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
+		tryCloseStream("Could not close LZMA stream while writing to file '" + filename + "'.", los);
+	}
+
+	/**
+	 * Tries to close the passed stream, if it is not null. If it encounters an
+	 * exception, it logs it and continues.
+	 * 
+	 * @param message
+	 *            the message to log on IO exception
+	 * @param stream
+	 *            the stream to try and close
+	 */
+
+	public static void tryCloseStream(String message, Closeable stream)
+	{
+		if (stream != null)
 			try
 			{
-				oos.close();
+				stream.close();
 			} catch (IOException e)
 			{
-				U.e("Could not close object output stream while reading from file '" + filename + "'.", e);
-			}
-		if (fos != null)
-			try
-			{
-				fos.close();
-			} catch (IOException e)
-			{
-				U.e("Could not close file output stream while writing to file '" + filename + "'.", e);
-			}
-		if (los != null)
-			try
-			{
-				los.close();
-			} catch (IOException e)
-			{
-				U.e("Could not close LZMA stream while writing to file '" + filename + "'.", e);
+				U.e(message, e);
 			}
 	}
 
