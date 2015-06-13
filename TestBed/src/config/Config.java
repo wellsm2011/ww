@@ -35,12 +35,14 @@ import backend.json.JSONObject;
  */
 public class Config
 {
-	private HashMap<String, HashMap<String, ?>>	maps;
+	private HashMap<String, HashMap<String, ? extends JSONExportable>>	maps;
 
 	public Config(String filename)
 	{
-		HashMap<String, Class<?>> configMembers = new HashMap<String, Class<?>>();
+		HashMap<String, Class<? extends JSONExportable>> configMembers = new HashMap<String, Class<? extends JSONExportable>>();
 
+		// Note: If it shows an error, make sure that your <something>.class
+		// implements JSONExportable.
 		configMembers.put("items", Item.class);
 		configMembers.put("statuses", Status.class);
 		configMembers.put("roles", Role.class);
@@ -58,13 +60,13 @@ public class Config
 	 *            the config categories to parse, maps strings to class
 	 *            definitions
 	 */
-	private void loadConfig(String filename, HashMap<String, Class<?>> configMembers)
+	private void loadConfig(String filename, HashMap<String, Class<? extends JSONExportable>> configMembers)
 	{
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
-			this.maps = new HashMap<String, HashMap<String, ?>>();
-			for (Entry<String, Class<?>> cur : configMembers.entrySet())
+			this.maps = new HashMap<String, HashMap<String, ? extends JSONExportable>>();
+			for (Entry<String, Class<? extends JSONExportable>> cur : configMembers.entrySet())
 				this.parse(data, cur.getKey(), cur.getValue());
 
 		} catch (JSONException e)
@@ -90,7 +92,7 @@ public class Config
 	 * @param type
 	 *            the class type to instantiate.
 	 */
-	private <T> void parse(JSONObject data, String key, Class<T> type)
+	private <T extends JSONExportable> void parse(JSONObject data, String key, Class<T> type)
 	{
 		JSONObject jsonData = data.getJSONObject(key);
 		HashMap<String, T> parsed = this.getMap(key);
@@ -99,11 +101,23 @@ public class Config
 			try
 			{
 				Constructor<T> constructor = type.getConstructor(String.class, JSONObject.class);
-				parsed.put(cur, (T) constructor.newInstance(cur, jsonData.getJSONObject(cur)));
+				JSONObject curJSONSection = jsonData.optJSONObject(cur);
+				if (curJSONSection == null)
+					curJSONSection = new JSONObject();
+				parsed.put(cur, (T) constructor.newInstance(cur, curJSONSection));
 
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | JSONException | NoSuchMethodException e)
+			} catch (NoSuchMethodException e)
 			{
-				U.e("Issue parseing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
+				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
+						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
+			} catch (InstantiationException e)
+			{
+				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
+						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | JSONException e)
+
+			{
+				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
 			}
 	}
@@ -115,7 +129,7 @@ public class Config
 	 *            the key for the config section required
 	 * @return a hashmap of strings to the implied type.
 	 */
-	public <T> HashMap<String, T> getSection(String key)
+	public <T extends JSONExportable> HashMap<String, T> getSection(String key)
 	{
 		return this.getMap(key);
 	}
@@ -129,7 +143,7 @@ public class Config
 	 * @return a hashmap from strings to the implied type
 	 */
 	@SuppressWarnings("unchecked")
-	private <T> HashMap<String, T> getMap(String name)
+	private <T extends JSONExportable> HashMap<String, T> getMap(String name)
 	{
 		if (!this.maps.containsKey(name))
 			this.maps.put(name, new HashMap<String, T>());
@@ -143,5 +157,18 @@ public class Config
 	public String toString()
 	{
 		return this.maps.toString();
+	}
+
+	public void writeToFile(String filename)
+	{
+		JSONObject output = new JSONObject();
+		for (Entry<String, HashMap<String, ? extends JSONExportable>> curConfigMember : this.maps.entrySet())
+		{
+			JSONObject member = new JSONObject();
+			for (Entry<String, ? extends JSONExportable> curMemberItem : curConfigMember.getValue().entrySet())
+				member.putOpt(curMemberItem.getKey(), curMemberItem.getValue().exportAsJSON());
+			output.putOnce(curConfigMember.getKey(), member);
+		}
+		U.p(output.toString(4));
 	}
 }

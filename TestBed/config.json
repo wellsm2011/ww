@@ -1,16 +1,15 @@
 {
-	"items" : {
-		"ExampleItem" : {
-			"OnUseActions" : {
-			},
-			"onPlayerDeath" : {
-			},
-			"AnotherThing" : 42
-			
-		}
-	},
-	"statuses" : {
-	},
-	"roles" : {
-	}
+    "roles": {},
+    "statuses": {},
+    "items": {"ExampleItem": {
+        "exampleB": [
+            10,
+            4,
+            265,
+            4,
+            7,
+            4
+        ],
+        "exampleA": 42
+    }}
 }

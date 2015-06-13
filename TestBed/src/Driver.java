@@ -17,6 +17,7 @@ public class Driver
 	{
 		Config config = new Config("config.json");
 		U.p(config);
+		config.writeToFile("");
 	}
 
 	@SuppressWarnings("unused")
