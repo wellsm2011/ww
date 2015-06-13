@@ -167,7 +167,6 @@ public class Config
 				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
 						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | JSONException e)
-
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
