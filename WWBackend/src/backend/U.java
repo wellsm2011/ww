@@ -221,16 +221,17 @@ public class U
 		} catch (ClassNotFoundException e)
 		{
 			U.e("'" + filename + "' could not be thrown into, throwing exception.", e);
-			ois.close();
 			throw e;
 		} catch (IOException e)
 		{
 			U.e("'" + filename + "' file invalid, throwing exception.", e);
 			throw e;
+		} finally
+		{
+			U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
+			U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", fis);
+			U.tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
 		}
-		U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
-		U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", fis);
-		U.tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
 		return result;
 	}
 
@@ -263,10 +264,12 @@ public class U
 		{
 			U.e("Error: '" + filename + "' file invalid, throwing exception.", e);
 			throw e;
+		} finally
+		{
+			U.tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
+			U.tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
+			U.tryCloseStream("Could not close LZMA stream while writing to file '" + filename + "'.", los);
 		}
-		U.tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
-		U.tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
-		U.tryCloseStream("Could not close LZMA stream while writing to file '" + filename + "'.", los);
 	}
 
 	/**
