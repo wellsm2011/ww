@@ -13,11 +13,20 @@ import backend.json.JSONException;
 import backend.json.JSONObject;
 
 /**
+ * <p>
  * Testbed config, uses the JSON parser to parse different parts of a given
- * config file. Currently has a simple example for items, in the future, order
- * of loading will probably matter, for example: Actions will probably need to
- * be loaded before Items, if Items refer to Actions, etc, etc. Bi-directional
+ * config file. Maintains ordering of original config file, as well as adding
+ * config sections during writing out that were not in the original config file.
+ * Assumes that JSONExportable classes properly export themselves, this also
+ * allows for full, pretty-printed config writing.
+ * </p>
+ * 
+ * <p>
+ * Future: Currently has a simple example for items, in the future, order of
+ * loading will probably matter, for example: Actions will probably need to be
+ * loaded before Items, if Items refer to Actions, etc, etc. Bi-directional
  * links would be nice to avoid architecturely, but wouldn't be a show-stopper.
+ * </p>
  *
  * <p>
  * Procedure to add a new config file section: Add line in Constructor line
@@ -29,7 +38,7 @@ import backend.json.JSONObject;
  * </p>
  * 
  * <p>
- * and write the parseing class. Done!
+ * and write the parsing class. Done!
  * </p>
  * 
  *
@@ -38,15 +47,24 @@ public class Config
 {
 	private LinkedHashMap<String, LinkedHashMap<String, ? extends JSONExportable>>	maps;
 
+	/**
+	 * Attempts to load a config from the file passed.
+	 * 
+	 * @param filename
+	 *            the file to load a config from
+	 */
 	public Config(String filename)
 	{
 		LinkedHashMap<String, Class<? extends JSONExportable>> configMembers = new LinkedHashMap<String, Class<? extends JSONExportable>>();
 
 		// Note: If it shows an error, make sure that your <something>.class
 		// implements JSONExportable.
+
 		configMembers.put("items", Item.class);
 		configMembers.put("statuses", Status.class);
 		configMembers.put("roles", Role.class);
+		// Add new config sections here, order here merely changes the default
+		// export ordering.
 
 		loadConfig(filename, configMembers);
 	}
@@ -67,8 +85,11 @@ public class Config
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
 			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends JSONExportable>>();
-			for (Entry<String, Class<? extends JSONExportable>> cur : configMembers.entrySet())
-				this.parse(data, cur.getKey(), cur.getValue());
+			for (String curJSONKey : data.keySet())
+				this.parse(data, curJSONKey, configMembers.get(curJSONKey));
+			for (Entry<String, Class<? extends JSONExportable>> configMembs : configMembers.entrySet())
+				if (!this.maps.containsKey(configMembs.getKey()))
+					this.parse(data, configMembs.getKey(), configMembs.getValue());
 
 		} catch (JSONException e)
 		{
@@ -95,7 +116,9 @@ public class Config
 	 */
 	private <T extends JSONExportable> void parse(JSONObject data, String key, Class<T> type)
 	{
-		JSONObject jsonData = data.getJSONObject(key);
+		JSONObject jsonData = data.optJSONObject(key);
+		if (jsonData == null)
+			jsonData = new JSONObject();
 		HashMap<String, T> parsed = this.getMap(key);
 
 		for (String cur : jsonData.keySet())
@@ -160,6 +183,12 @@ public class Config
 		return this.maps.toString();
 	}
 
+	/**
+	 * Writes to file a JSON equivalent of this loaded config.
+	 * 
+	 * @param filename
+	 *            the file to export to
+	 */
 	public void writeToFile(String filename)
 	{
 		JSONObject output = new JSONObject();

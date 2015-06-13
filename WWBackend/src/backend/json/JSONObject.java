@@ -561,6 +561,7 @@ public class JSONObject
 	 */
 	public JSONObject()
 	{
+		//Changed to LinkedHashMap to make it maintain ordering.
 		this.map = new LinkedHashMap<String, Object>();
 	}
 
