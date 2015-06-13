@@ -165,7 +165,7 @@ public class U
 	 * Attempts to open the file listed, if it can't kills the program with an
 	 * error message.
 	 *
-	 * NOTE: If this file isn't required, do something else!
+	 * <p><b>NOTE: If this file isn't required, do something else!</b></p>
 	 *
 	 * @param filename
 	 *            the file to try and open
@@ -229,7 +229,7 @@ public class U
 		} finally
 		{
 			U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
-			U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", fis);
+			U.tryCloseStream("Could not close file input stream while reading from file '" + filename + "'.", fis);
 			U.tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
 		}
 		return result;
@@ -268,7 +268,7 @@ public class U
 		{
 			U.tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
 			U.tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
-			U.tryCloseStream("Could not close LZMA stream while writing to file '" + filename + "'.", los);
+			U.tryCloseStream("Could not close LZMA output stream while writing to file '" + filename + "'.", los);
 		}
 	}
 
