@@ -657,7 +657,7 @@ public class JSONObject
 	 */
 	public JSONObject(Map<String, Object> map)
 	{
-		this.map = new HashMap<String, Object>();
+		this.map = new LinkedHashMap<String, Object>();
 		if (map != null)
 		{
 			Iterator<Entry<String, Object>> i = map.entrySet().iterator();
