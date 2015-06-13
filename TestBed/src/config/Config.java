@@ -20,7 +20,7 @@ import backend.json.JSONObject;
  * Assumes that JSONExportable classes properly export themselves, this also
  * allows for full, pretty-printed config writing.
  * </p>
- * 
+ *
  * <p>
  * Future: Currently has a simple example for items, in the future, order of
  * loading will probably matter, for example: Actions will probably need to be
@@ -32,15 +32,15 @@ import backend.json.JSONObject;
  * Procedure to add a new config file section: Add line in Constructor line
  * like...
  * </p>
- * 
+ *
  * <p>
  * <code>configMembers.put(<json key here>, <parseing class>.class);</code>
  * </p>
- * 
+ *
  * <p>
  * and write the parsing class. Done!
  * </p>
- * 
+ *
  *
  */
 public class Config
@@ -49,7 +49,7 @@ public class Config
 
 	/**
 	 * Attempts to load a config from the file passed.
-	 * 
+	 *
 	 * @param filename
 	 *            the file to load a config from
 	 */
@@ -66,13 +66,41 @@ public class Config
 		// Add new config sections here, order here merely changes the default
 		// export ordering.
 
-		loadConfig(filename, configMembers);
+		this.loadConfig(filename, configMembers);
+	}
+
+	/**
+	 * Internal map getter, for a given name either returns, or makes and
+	 * returns a hashmap that corresponds to the given key.
+	 *
+	 * @param name
+	 *            the key of the section
+	 * @return a hashmap from strings to the implied type
+	 */
+	@SuppressWarnings("unchecked")
+	private <T extends JSONExportable> HashMap<String, T> getMap(String name)
+	{
+		if (!this.maps.containsKey(name))
+			this.maps.put(name, new LinkedHashMap<String, T>());
+		return (HashMap<String, T>) this.maps.get(name);
+	}
+
+	/**
+	 * Returns a hashmap of the implied type for the specified section.
+	 *
+	 * @param key
+	 *            the key for the config section required
+	 * @return a hashmap of strings to the implied type.
+	 */
+	public <T extends JSONExportable> HashMap<String, T> getSection(String key)
+	{
+		return this.getMap(key);
 	}
 
 	/**
 	 * Based on a given filename, as well as a set of config members, parses
 	 * them into their own classes.
-	 * 
+	 *
 	 * @param filename
 	 *            the filename to open
 	 * @param configMembers
@@ -106,7 +134,7 @@ public class Config
 	/**
 	 * Based on a JSON config file, pulls the given key, and instantiates
 	 * objects into the passed class.
-	 * 
+	 *
 	 * @param data
 	 *            the json data to load from
 	 * @param key
@@ -128,7 +156,7 @@ public class Config
 				JSONObject curJSONSection = jsonData.optJSONObject(cur);
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
-				parsed.put(cur, (T) constructor.newInstance(cur, curJSONSection));
+				parsed.put(cur, constructor.newInstance(cur, curJSONSection));
 
 			} catch (NoSuchMethodException | SecurityException e)
 			{
@@ -147,34 +175,6 @@ public class Config
 	}
 
 	/**
-	 * Returns a hashmap of the implied type for the specified section.
-	 * 
-	 * @param key
-	 *            the key for the config section required
-	 * @return a hashmap of strings to the implied type.
-	 */
-	public <T extends JSONExportable> HashMap<String, T> getSection(String key)
-	{
-		return this.getMap(key);
-	}
-
-	/**
-	 * Internal map getter, for a given name either returns, or makes and
-	 * returns a hashmap that corresponds to the given key.
-	 * 
-	 * @param name
-	 *            the key of the section
-	 * @return a hashmap from strings to the implied type
-	 */
-	@SuppressWarnings("unchecked")
-	private <T extends JSONExportable> HashMap<String, T> getMap(String name)
-	{
-		if (!this.maps.containsKey(name))
-			this.maps.put(name, new LinkedHashMap<String, T>());
-		return (HashMap<String, T>) this.maps.get(name);
-	}
-
-	/**
 	 * Basic toString method, simply returns the string representation
 	 */
 	@Override
@@ -185,7 +185,7 @@ public class Config
 
 	/**
 	 * Writes to file a JSON equivalent of this loaded config.
-	 * 
+	 *
 	 * @param filename
 	 *            the file to export to
 	 */

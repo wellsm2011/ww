@@ -28,7 +28,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -561,7 +560,7 @@ public class JSONObject
 	 */
 	public JSONObject()
 	{
-		//Changed to LinkedHashMap to make it maintain ordering.
+		// Changed to LinkedHashMap to make it maintain ordering.
 		this.map = new LinkedHashMap<String, Object>();
 	}
 

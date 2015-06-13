@@ -393,46 +393,6 @@ public class U
 	}
 
 	/**
-	 * Given a file and contents, attempts to write the entire string provided
-	 * to the file. By default, uses the UTF_8 charset. If the file does not
-	 * exist, it creates it. If the file exists, it overwrites the contents,
-	 * truncating prior to any writing.
-	 * 
-	 * @param path
-	 *            the path of the file to write to
-	 * @param contents
-	 *            the data to be written to the file
-	 */
-	public static void writeToFile(String path, String contents)
-	{
-		U.writeToFile(path, contents, StandardCharsets.UTF_8);
-	}
-
-	/**
-	 * Given a file and contents, and Charset, attempts to write the entire
-	 * string provided to the file using the specified encoding. If the file
-	 * does not exist, it creates it. If the file exists, it overwrites the
-	 * contents, truncating prior to any writing.
-	 * 
-	 * @param path
-	 *            the path of the file to write to
-	 * @param contents
-	 *            the data to be written to the file
-	 * @param encoding
-	 *            the string encoding method to use
-	 */
-	public static void writeToFile(String path, String contents, Charset encoding)
-	{
-		try
-		{
-			Files.write(Paths.get(path), contents.getBytes(encoding));
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Sets the debugging level to something new. Used so that the debugging
 	 * level is set in the main, and not forgotten about...
 	 *
@@ -485,6 +445,46 @@ public class U
 			{
 				U.e(message, e);
 			}
+	}
+
+	/**
+	 * Given a file and contents, attempts to write the entire string provided
+	 * to the file. By default, uses the UTF_8 charset. If the file does not
+	 * exist, it creates it. If the file exists, it overwrites the contents,
+	 * truncating prior to any writing.
+	 *
+	 * @param path
+	 *            the path of the file to write to
+	 * @param contents
+	 *            the data to be written to the file
+	 */
+	public static void writeToFile(String path, String contents)
+	{
+		U.writeToFile(path, contents, StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * Given a file and contents, and Charset, attempts to write the entire
+	 * string provided to the file using the specified encoding. If the file
+	 * does not exist, it creates it. If the file exists, it overwrites the
+	 * contents, truncating prior to any writing.
+	 *
+	 * @param path
+	 *            the path of the file to write to
+	 * @param contents
+	 *            the data to be written to the file
+	 * @param encoding
+	 *            the string encoding method to use
+	 */
+	public static void writeToFile(String path, String contents, Charset encoding)
+	{
+		try
+		{
+			Files.write(Paths.get(path), contents.getBytes(encoding));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
