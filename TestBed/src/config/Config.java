@@ -5,6 +5,7 @@ import global.Globals;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import backend.U;
@@ -35,11 +36,11 @@ import backend.json.JSONObject;
  */
 public class Config
 {
-	private HashMap<String, HashMap<String, ? extends JSONExportable>>	maps;
+	private LinkedHashMap<String, LinkedHashMap<String, ? extends JSONExportable>>	maps;
 
 	public Config(String filename)
 	{
-		HashMap<String, Class<? extends JSONExportable>> configMembers = new HashMap<String, Class<? extends JSONExportable>>();
+		LinkedHashMap<String, Class<? extends JSONExportable>> configMembers = new LinkedHashMap<String, Class<? extends JSONExportable>>();
 
 		// Note: If it shows an error, make sure that your <something>.class
 		// implements JSONExportable.
@@ -65,7 +66,7 @@ public class Config
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
-			this.maps = new HashMap<String, HashMap<String, ? extends JSONExportable>>();
+			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends JSONExportable>>();
 			for (Entry<String, Class<? extends JSONExportable>> cur : configMembers.entrySet())
 				this.parse(data, cur.getKey(), cur.getValue());
 
@@ -106,7 +107,7 @@ public class Config
 					curJSONSection = new JSONObject();
 				parsed.put(cur, (T) constructor.newInstance(cur, curJSONSection));
 
-			} catch (NoSuchMethodException e)
+			} catch (NoSuchMethodException | SecurityException e)
 			{
 				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
 						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
@@ -114,7 +115,7 @@ public class Config
 			{
 				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
 						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | JSONException e)
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | JSONException e)
 
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
@@ -146,7 +147,7 @@ public class Config
 	private <T extends JSONExportable> HashMap<String, T> getMap(String name)
 	{
 		if (!this.maps.containsKey(name))
-			this.maps.put(name, new HashMap<String, T>());
+			this.maps.put(name, new LinkedHashMap<String, T>());
 		return (HashMap<String, T>) this.maps.get(name);
 	}
 
@@ -162,13 +163,13 @@ public class Config
 	public void writeToFile(String filename)
 	{
 		JSONObject output = new JSONObject();
-		for (Entry<String, HashMap<String, ? extends JSONExportable>> curConfigMember : this.maps.entrySet())
+		for (Entry<String, LinkedHashMap<String, ? extends JSONExportable>> curConfigMember : this.maps.entrySet())
 		{
 			JSONObject member = new JSONObject();
 			for (Entry<String, ? extends JSONExportable> curMemberItem : curConfigMember.getValue().entrySet())
 				member.putOpt(curMemberItem.getKey(), curMemberItem.getValue().exportAsJSON());
 			output.putOnce(curConfigMember.getKey(), member);
 		}
-		U.p(output.toString(4));
+		U.writeToFile(filename, output.toString(4));
 	}
 }

@@ -13,7 +13,7 @@ public class Item implements JSONExportable
 
 	public Item(String name, JSONObject data)
 	{
-		this.exampleA = data.optDouble("exampleA", 42);
+		this.exampleA = data.optDouble("exampleA", 0);
 		
 		JSONArray exB = data.optJSONArray("exampleB");
 		this.exampleB = new LinkedList<Double>();

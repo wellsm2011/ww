@@ -1,15 +1,27 @@
 {
     "roles": {},
-    "statuses": {},
-    "items": {"ExampleItem": {
-        "exampleB": [
-            10,
-            4,
-            265,
-            4,
-            7,
-            4
-        ],
-        "exampleA": 42
-    }}
+	"items": {
+		"ExampleItem": {
+			"exampleB": [
+				10,
+				4,
+				265,
+				4,
+				7,
+				4
+			],
+			"exampleA": 5
+		},
+		"ExampleItem2": {
+			"exampleB": [
+				10,
+				4,
+				265,
+				4,
+				7,
+				4
+			]
+		}
+	},
+    "statuses": {}    
 }

@@ -1,0 +1,28 @@
+{
+    "items": {
+        "ExampleItem": {
+            "exampleA": 5,
+            "exampleB": [
+                10,
+                4,
+                265,
+                4,
+                7,
+                4
+            ]
+        },
+        "ExampleItem2": {
+            "exampleA": 0,
+            "exampleB": [
+                10,
+                4,
+                265,
+                4,
+                7,
+                4
+            ]
+        }
+    },
+    "statuses": {},
+    "roles": {}
+}
