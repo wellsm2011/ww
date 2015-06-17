@@ -11,7 +11,7 @@ import backend.json.JSONObject;
  *
  *
  */
-public class Item implements JSONExportable
+public class Item implements ConfigMember
 {
 
 	private double				exampleA;
@@ -45,6 +45,26 @@ public class Item implements JSONExportable
 		res.put("exampleA", this.exampleA);
 		res.put("exampleB", this.exampleB);
 		return res;
+	}
+
+	public double getOptExampleA()
+	{
+		return this.exampleA;
+	}
+
+	public LinkedList<Double> getOptExampleB()
+	{
+		return this.exampleB;
+	}
+
+	public void setOptExampleA(double input)
+	{
+		this.exampleA = input;
+	}
+
+	public void setOptExampleB(LinkedList<Double> input)
+	{
+		this.exampleB = input;
 	}
 
 	@Override

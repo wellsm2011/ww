@@ -2,7 +2,7 @@ package config;
 
 import backend.json.JSONObject;
 
-public class Role implements JSONExportable
+public class Role implements ConfigMember
 {
 
 	public Role(String cur, JSONObject jsonObject)

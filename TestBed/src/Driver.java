@@ -3,6 +3,7 @@ import java.util.LinkedList;
 
 import backend.U;
 import config.Config;
+import editor.Explorer;
 
 public class Driver
 {
@@ -18,6 +19,7 @@ public class Driver
 		Config config = new Config("config.json");
 		U.p(config);
 		config.writeToFile("parsedConfig.json");
+		Explorer e = new Explorer(config);
 	}
 
 	@SuppressWarnings("unused")

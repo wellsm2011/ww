@@ -2,7 +2,7 @@ package config;
 
 import backend.json.JSONObject;
 
-public class Status implements JSONExportable
+public class Status implements ConfigMember
 {
 
 	public Status(String cur, JSONObject jsonObject)

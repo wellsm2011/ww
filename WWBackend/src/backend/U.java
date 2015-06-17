@@ -12,10 +12,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -165,7 +168,9 @@ public class U
 	 * Attempts to open the file listed, if it can't kills the program with an
 	 * error message.
 	 *
-	 * <p><b>NOTE: If this file isn't required, do something else!</b></p>
+	 * <p>
+	 * <b>NOTE: If this file isn't required, do something else!</b>
+	 * </p>
 	 *
 	 * @param filename
 	 *            the file to try and open
@@ -500,5 +505,38 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
+	}
+
+	/**
+	 * Calls the specified method with the specified parameters, checking to
+	 * make sure passed arguments match required ones before attempting an
+	 * invocation.
+	 * @param <T>
+	 * 
+	 * @param method
+	 *            is the method which is being attempted to be invoked.
+	 * @param input
+	 *            is a var-args (any number of options, or an array) for the
+	 *            parameters.
+	 * @throws InvalidParameterException
+	 *             if the passed options don't match with the arguments required
+	 *             by the method.
+	 */
+
+	public static <T> T carefulCall(Method method, Object... input) throws InvalidParameterException
+	{
+		int i = 0;
+		Object res = null;
+		for (Class<?> c : method.getParameterTypes())
+			if (!c.isInstance(input[i++]))
+				throw new InvalidParameterException("Input item " + input[i - 1].getClass().getName() + " is incompatible with required parameter " + c.getName() + " for method " + method.getName());
+		try
+		{
+			res = method.invoke(input);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
+		{
+			U.e("Error, could not properly call method " + method.getName(), e);
+		}
+		return (T) res;
 	}
 }

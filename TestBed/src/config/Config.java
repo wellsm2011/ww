@@ -45,7 +45,7 @@ import backend.json.JSONObject;
  */
 public class Config
 {
-	private LinkedHashMap<String, LinkedHashMap<String, ? extends JSONExportable>>	maps;
+	private LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>	maps;
 
 	/**
 	 * Attempts to load a config from the file passed.
@@ -55,7 +55,7 @@ public class Config
 	 */
 	public Config(String filename)
 	{
-		LinkedHashMap<String, Class<? extends JSONExportable>> configMembers = new LinkedHashMap<String, Class<? extends JSONExportable>>();
+		LinkedHashMap<String, Class<? extends ConfigMember>> configMembers = new LinkedHashMap<String, Class<? extends ConfigMember>>();
 
 		// Note: If it shows an error, make sure that your <something>.class
 		// implements JSONExportable.
@@ -70,6 +70,20 @@ public class Config
 	}
 
 	/**
+	 * Access all config members stored. <b>
+	 * <p>
+	 * Note: this is the base map, so all changes are backed against the primary
+	 * config object.</b>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>> getAllMaps()
+	{
+		return this.maps;
+	}
+
+	/**
 	 * Internal map getter, for a given name either returns, or makes and
 	 * returns a hashmap that corresponds to the given key.
 	 *
@@ -78,7 +92,7 @@ public class Config
 	 * @return a hashmap from strings to the implied type
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends JSONExportable> HashMap<String, T> getMap(String name)
+	private <T extends ConfigMember> HashMap<String, T> getMap(String name)
 	{
 		if (!this.maps.containsKey(name))
 			this.maps.put(name, new LinkedHashMap<String, T>());
@@ -92,7 +106,7 @@ public class Config
 	 *            the key for the config section required
 	 * @return a hashmap of strings to the implied type.
 	 */
-	public <T extends JSONExportable> HashMap<String, T> getSection(String key)
+	public <T extends ConfigMember> HashMap<String, T> getSection(String key)
 	{
 		return this.getMap(key);
 	}
@@ -107,15 +121,15 @@ public class Config
 	 *            the config categories to parse, maps strings to class
 	 *            definitions
 	 */
-	private void loadConfig(String filename, HashMap<String, Class<? extends JSONExportable>> configMembers)
+	private void loadConfig(String filename, HashMap<String, Class<? extends ConfigMember>> configMembers)
 	{
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
-			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends JSONExportable>>();
+			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>();
 			for (String curJSONKey : data.keySet())
 				this.parse(data, curJSONKey, configMembers.get(curJSONKey));
-			for (Entry<String, Class<? extends JSONExportable>> configMembs : configMembers.entrySet())
+			for (Entry<String, Class<? extends ConfigMember>> configMembs : configMembers.entrySet())
 				if (!this.maps.containsKey(configMembs.getKey()))
 					this.parse(data, configMembs.getKey(), configMembs.getValue());
 
@@ -142,7 +156,7 @@ public class Config
 	 * @param type
 	 *            the class type to instantiate.
 	 */
-	private <T extends JSONExportable> void parse(JSONObject data, String key, Class<T> type)
+	private <T extends ConfigMember> void parse(JSONObject data, String key, Class<T> type)
 	{
 		JSONObject jsonData = data.optJSONObject(key);
 		if (jsonData == null)
@@ -191,10 +205,10 @@ public class Config
 	public void writeToFile(String filename)
 	{
 		JSONObject output = new JSONObject();
-		for (Entry<String, LinkedHashMap<String, ? extends JSONExportable>> curConfigMember : this.maps.entrySet())
+		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curConfigMember : this.maps.entrySet())
 		{
 			JSONObject member = new JSONObject();
-			for (Entry<String, ? extends JSONExportable> curMemberItem : curConfigMember.getValue().entrySet())
+			for (Entry<String, ? extends ConfigMember> curMemberItem : curConfigMember.getValue().entrySet())
 				member.putOpt(curMemberItem.getKey(), curMemberItem.getValue().exportAsJSON());
 			output.putOnce(curConfigMember.getKey(), member);
 		}
