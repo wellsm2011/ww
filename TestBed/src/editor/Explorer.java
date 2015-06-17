@@ -30,7 +30,6 @@ public class Explorer
 
 	private void debug(String key, ConfigMember value)
 	{
-
 		U.p(key + " --- " + this.findExportedOptions(value));
 	}
 

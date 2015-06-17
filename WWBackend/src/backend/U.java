@@ -56,6 +56,40 @@ public class U
 	}
 
 	/**
+	 * Calls the specified method with the specified parameters, checking to
+	 * make sure passed arguments match required ones before attempting an
+	 * invocation.
+	 * 
+	 * @param <T>
+	 *
+	 * @param method
+	 *            is the method which is being attempted to be invoked.
+	 * @param input
+	 *            is a var-args (any number of options, or an array) for the
+	 *            parameters.
+	 * @throws InvalidParameterException
+	 *             if the passed options don't match with the arguments required
+	 *             by the method.
+	 */
+
+	public static <T> T carefulCall(Method method, Object... input) throws InvalidParameterException
+	{
+		int i = 0;
+		Object res = null;
+		for (Class<?> c : method.getParameterTypes())
+			if (!c.isInstance(input[i++]))
+				throw new InvalidParameterException("Input item " + input[i - 1].getClass().getName() + " is incompatible with required parameter " + c.getName() + " for method " + method.getName());
+		try
+		{
+			res = method.invoke(input);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
+		{
+			U.e("Error, could not properly call method " + method.getName(), e);
+		}
+		return (T) res;
+	}
+
+	/**
 	 * Simple confirmation function, returns a true or false in response to the
 	 * passed message.
 	 *
@@ -505,38 +539,5 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
-	}
-
-	/**
-	 * Calls the specified method with the specified parameters, checking to
-	 * make sure passed arguments match required ones before attempting an
-	 * invocation.
-	 * @param <T>
-	 * 
-	 * @param method
-	 *            is the method which is being attempted to be invoked.
-	 * @param input
-	 *            is a var-args (any number of options, or an array) for the
-	 *            parameters.
-	 * @throws InvalidParameterException
-	 *             if the passed options don't match with the arguments required
-	 *             by the method.
-	 */
-
-	public static <T> T carefulCall(Method method, Object... input) throws InvalidParameterException
-	{
-		int i = 0;
-		Object res = null;
-		for (Class<?> c : method.getParameterTypes())
-			if (!c.isInstance(input[i++]))
-				throw new InvalidParameterException("Input item " + input[i - 1].getClass().getName() + " is incompatible with required parameter " + c.getName() + " for method " + method.getName());
-		try
-		{
-			res = method.invoke(input);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
-		{
-			U.e("Error, could not properly call method " + method.getName(), e);
-		}
-		return (T) res;
 	}
 }

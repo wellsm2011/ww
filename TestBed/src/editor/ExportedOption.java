@@ -32,6 +32,6 @@ public class ExportedOption
 	@Override
 	public String toString()
 	{
-		return this.paramName + " - [" + setter.getName() + " " + getter.getName() + "]";
+		return this.paramName + " - [" + this.setter.getName() + " " + this.getter.getName() + "]";
 	}
 }
