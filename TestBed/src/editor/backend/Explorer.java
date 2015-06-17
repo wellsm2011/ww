@@ -1,4 +1,4 @@
-package editor;
+package editor.backend;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
@@ -6,31 +6,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import backend.U;
 import config.Config;
 import config.ConfigMember;
 
 public class Explorer
 {
-	private static final String	SETTER_EXPORT_DEF	= "setOpt";
-	private static final String	GETTER_EXPORT_DEF	= "getOpt";
-	private Config				config;
+	private static final String													SETTER_EXPORT_DEF	= "setOpt";
+	private static final String													GETTER_EXPORT_DEF	= "getOpt";
+	private Config																config;
+	private LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>>	mappedInfo;
 
 	public Explorer(Config config)
 	{
 		this.config = config;
+		this.mappedInfo = new LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>>();
 
 		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curSection : this.config.getAllMaps().entrySet())
 		{
 			String sectionName = curSection.getKey();
+			this.mappedInfo.put(sectionName, new LinkedHashMap<String, List<ExportedOption>>());
 			for (Entry<String, ? extends ConfigMember> curElem : curSection.getValue().entrySet())
-				this.debug(curElem.getKey(), curElem.getValue());
+				this.mappedInfo.get(sectionName).put(curElem.getKey(), this.findExportedOptions(curElem.getValue()));
 		}
-	}
-
-	private void debug(String key, ConfigMember value)
-	{
-		U.p(key + " --- " + this.findExportedOptions(value));
 	}
 
 	private List<ExportedOption> findExportedOptions(ConfigMember input)
@@ -50,5 +47,10 @@ public class Explorer
 				exportedOptions.add(new ExportedOption(curOption, setters.get(curOption), getters.get(curOption), input));
 
 		return exportedOptions;
+	}
+
+	public LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>> getMappedInfo()
+	{
+		return this.mappedInfo;
 	}
 }

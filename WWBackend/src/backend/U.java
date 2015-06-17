@@ -59,7 +59,7 @@ public class U
 	 * Calls the specified method with the specified parameters, checking to
 	 * make sure passed arguments match required ones before attempting an
 	 * invocation.
-	 * 
+	 *
 	 * @param <T>
 	 *
 	 * @param method

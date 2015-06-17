@@ -1,4 +1,4 @@
-package editor;
+package editor.backend;
 
 import java.lang.reflect.Method;
 
