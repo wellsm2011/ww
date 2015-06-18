@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import editor.explorer.Explorer;
-import editor.explorer.ExportedParameter;
+import editor.explorer.interfaces.ExportedParameter;
 import global.Globals;
 
 public class EditorGui

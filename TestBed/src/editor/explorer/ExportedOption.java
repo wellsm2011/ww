@@ -2,6 +2,8 @@ package editor.explorer;
 
 import java.lang.reflect.Method;
 
+import editor.explorer.interfaces.Gettable;
+import editor.explorer.interfaces.Settable;
 import backend.U;
 
 public class ExportedOption implements Gettable, Settable

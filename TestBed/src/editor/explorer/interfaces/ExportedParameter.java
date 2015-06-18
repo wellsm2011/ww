@@ -1,4 +1,4 @@
-package editor.explorer;
+package editor.explorer.interfaces;
 
 public interface ExportedParameter
 {

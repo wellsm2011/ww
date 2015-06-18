@@ -2,6 +2,7 @@ package editor.explorer;
 
 import java.lang.reflect.Method;
 
+import editor.explorer.interfaces.Gettable;
 import backend.U;
 
 public class ExportedView implements Gettable

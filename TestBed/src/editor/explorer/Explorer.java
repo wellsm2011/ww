@@ -11,6 +11,7 @@ import config.Config;
 import config.ConfigMember;
 import config.explorer.GettableParameter;
 import config.explorer.SettableParameter;
+import editor.explorer.interfaces.ExportedParameter;
 
 public class Explorer
 {
