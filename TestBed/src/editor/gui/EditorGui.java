@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import editor.backend.Explorer;
-import editor.backend.ExportedParameter;
+import editor.explorer.Explorer;
+import editor.explorer.ExportedParameter;
 import global.Globals;
 
 public class EditorGui

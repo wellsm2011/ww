@@ -1,4 +1,4 @@
-package editor.backend;
+package editor.explorer;
 
 public interface Settable extends ExportedParameter
 {

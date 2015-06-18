@@ -1,4 +1,4 @@
-package editor.backend;
+package editor.explorer;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
