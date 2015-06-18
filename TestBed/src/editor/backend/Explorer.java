@@ -6,13 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import backend.U;
 import config.Config;
 import config.ConfigMember;
+import config.explorer.GettableParameter;
+import config.explorer.SettableParameter;
 
 public class Explorer
 {
-	private static final String													SETTER_EXPORT_DEF	= "setOpt";
-	private static final String													GETTER_EXPORT_DEF	= "getOpt";
+	private static final String													SETTER_EXPORT_DEF	= "set";
+	private static final String													GETTER_EXPORT_DEF	= "get";
 	private Config																config;
 	private LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>>	mappedInfo;
 
@@ -36,15 +39,19 @@ public class Explorer
 		LinkedHashMap<String, Method> getters = new LinkedHashMap<String, Method>();
 
 		for (Method curMethod : input.getClass().getDeclaredMethods())
-			if (curMethod.getName().contains(Explorer.GETTER_EXPORT_DEF))
+			if (curMethod.isAnnotationPresent(GettableParameter.class))
 				getters.put(curMethod.getName().substring(Explorer.GETTER_EXPORT_DEF.length()), curMethod);
-			else if (curMethod.getName().contains(Explorer.SETTER_EXPORT_DEF))
+			else if (curMethod.isAnnotationPresent(SettableParameter.class))
 				setters.put(curMethod.getName().substring(Explorer.SETTER_EXPORT_DEF.length()), curMethod);
 
+		U.p("Getters: " + getters);
+		U.p("Setters: " + setters);
 		LinkedList<ExportedOption> exportedOptions = new LinkedList<ExportedOption>();
-		for (String curOption : setters.keySet())
-			if (getters.containsKey(curOption))
+		for (String curOption : getters.keySet())
+			if (setters.containsKey(curOption))
 				exportedOptions.add(new ExportedOption(curOption, setters.get(curOption), getters.get(curOption), input));
+			else
+				exportedOptions.add(new ExportedOption(curOption, null, getters.get(curOption), input));
 
 		return exportedOptions;
 	}

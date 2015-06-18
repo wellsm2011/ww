@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import backend.U;
 
-public class ExportedOption
+public class ExportedOption implements Gettable, Settable
 {
 	private Method	getter;
 	private Method	setter;
@@ -21,7 +21,10 @@ public class ExportedOption
 
 	public <T> T get()
 	{
-		return U.carefulCall(this.getter, this.target);
+		if (this.getter != null)
+			return U.carefulCall(this.getter, this.target);
+		else
+			return null;
 	}
 
 	public void set(Object... input)
@@ -32,6 +35,6 @@ public class ExportedOption
 	@Override
 	public String toString()
 	{
-		return this.paramName + " - [" + this.setter.getName() + " " + this.getter.getName() + "]";
+		return this.paramName + " - [" + this.setter.getName() + " " + this.getter.getName() + ":" + this.getter.getReturnType() + "]";
 	}
 }

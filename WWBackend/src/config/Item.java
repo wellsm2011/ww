@@ -2,6 +2,8 @@ package config;
 
 import java.util.LinkedList;
 
+import config.explorer.GettableParameter;
+import config.explorer.SettableParameter;
 import backend.json.JSONArray;
 import backend.json.JSONObject;
 
@@ -47,22 +49,25 @@ public class Item implements ConfigMember
 		return res;
 	}
 
-	public double getOptExampleA()
+	@GettableParameter
+	public double getExampleA()
 	{
 		return this.exampleA;
 	}
 
-	public LinkedList<Double> getOptExampleB()
+	@GettableParameter
+	public LinkedList<Double> getExampleB()
 	{
 		return this.exampleB;
 	}
 
-	public void setOptExampleA(double input)
+	public void setExampleA(double input)
 	{
 		this.exampleA = input;
 	}
 
-	public void setOptExampleB(LinkedList<Double> input)
+	@SettableParameter
+	public void setExampleB(LinkedList<Double> input)
 	{
 		this.exampleB = input;
 	}
