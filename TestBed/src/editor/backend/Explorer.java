@@ -14,26 +14,26 @@ import config.explorer.SettableParameter;
 
 public class Explorer
 {
-	private static final String													SETTER_EXPORT_DEF	= "set";
-	private static final String													GETTER_EXPORT_DEF	= "get";
-	private Config																config;
-	private LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>>	mappedInfo;
+	private static final String														SETTER_EXPORT_DEF	= "set";
+	private static final String														GETTER_EXPORT_DEF	= "get";
+	private Config																	config;
+	private LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>>	mappedInfo;
 
 	public Explorer(Config config)
 	{
 		this.config = config;
-		this.mappedInfo = new LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>>();
+		this.mappedInfo = new LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>>();
 
 		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curSection : this.config.getAllMaps().entrySet())
 		{
 			String sectionName = curSection.getKey();
-			this.mappedInfo.put(sectionName, new LinkedHashMap<String, List<ExportedOption>>());
+			this.mappedInfo.put(sectionName, new LinkedHashMap<String, List<ExportedParameter>>());
 			for (Entry<String, ? extends ConfigMember> curElem : curSection.getValue().entrySet())
 				this.mappedInfo.get(sectionName).put(curElem.getKey(), this.findExportedOptions(curElem.getValue()));
 		}
 	}
 
-	private List<ExportedOption> findExportedOptions(ConfigMember input)
+	private List<ExportedParameter> findExportedOptions(ConfigMember input)
 	{
 		LinkedHashMap<String, Method> setters = new LinkedHashMap<String, Method>();
 		LinkedHashMap<String, Method> getters = new LinkedHashMap<String, Method>();
@@ -46,17 +46,17 @@ public class Explorer
 
 		U.p("Getters: " + getters);
 		U.p("Setters: " + setters);
-		LinkedList<ExportedOption> exportedOptions = new LinkedList<ExportedOption>();
+		LinkedList<ExportedParameter> exportedOptions = new LinkedList<ExportedParameter>();
 		for (String curOption : getters.keySet())
 			if (setters.containsKey(curOption))
 				exportedOptions.add(new ExportedOption(curOption, setters.get(curOption), getters.get(curOption), input));
 			else
-				exportedOptions.add(new ExportedOption(curOption, null, getters.get(curOption), input));
+				exportedOptions.add(new ExportedView(curOption, getters.get(curOption), input));
 
 		return exportedOptions;
 	}
 
-	public LinkedHashMap<String, LinkedHashMap<String, List<ExportedOption>>> getMappedInfo()
+	public LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>> getMappedInfo()
 	{
 		return this.mappedInfo;
 	}

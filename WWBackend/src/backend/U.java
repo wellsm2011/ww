@@ -72,6 +72,7 @@ public class U
 	 *             by the method.
 	 */
 
+	@SuppressWarnings("unchecked")
 	public static <T> T carefulCall(Method method, Object... input) throws InvalidParameterException
 	{
 		int i = 0;

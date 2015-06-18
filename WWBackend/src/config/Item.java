@@ -2,10 +2,10 @@ package config;
 
 import java.util.LinkedList;
 
-import config.explorer.GettableParameter;
-import config.explorer.SettableParameter;
 import backend.json.JSONArray;
 import backend.json.JSONObject;
+import config.explorer.GettableParameter;
+import config.explorer.SettableParameter;
 
 /**
  * Currently serves as a little example for future reference: parses itself from
