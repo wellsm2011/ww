@@ -1,35 +1,118 @@
 {
 	"actions" : {
-		"exAction" : {
+		"maul" : {
+			"tags" : ["kill"],
+			"priority" : 10,
+			"appliedAtomics" : {
+				"ChatPost" : "Some message",
+				"AddStatus" : "Hurt,Turning",
+				"GrantAbility" : "EatBrainz"
+			},
+			"appliedActions" : {
+			}
+		}
+		"lynch" : {
+			"tags" : ["kill"],
 			"priority" : 5,
 			"appliedAtomics" : {
 				"ChatPost" : "Some message",
-				"AddStatus" : "Deaderer",
+				"AddStatus" : "Dead",
 				"GrantAbility" : "EatBrainz"
+			},
+			"appliedActions" : {
 			}
 		}
+	},
+	"abilities" : {
+		"Start Lynch Vote" : {
+			"trigger": {
+				"on": "use"
+			},
+			"targeting": {
+				"type":"vote[role!=Fool]",
+				"filter":"",
+				"selection": "list"
+			},
+			"appliedActions": ["lynch"]
+		},
+		"Maul Face": {
+			"trigger": {
+				"on": "use"
+			},
+			"targeting": {
+				"type":"vote[role=Werewolf]",
+				"filter":"",
+				"selection": "list"
+			},
+			"appliedActions": ["maul"]
+		},
+		"Brutal Death": {
+			"trigger": {
+				"on": "event[statusChange]",
+				"filter" : "tag=dead"
+			},
+			"targeting": {
+				"type": "causers",
+				"filter":"",
+				"selection": "list"
+			},
+			"appliedActions": ["maul"]
+		}
 	}
-    "roles": {},
+	"gameCons" : {
+		"Dead Baddies": {
+			"type" : "count",
+			"value" : 0,
+			"targetTags" : ["baddie"],
+			"resultAtomic" : {
+			
+			}
+		},
+		"Dead Targets": {
+			"type" : "count"
+			"value": 0,
+			"targetTags" : ["target"],
+			"resultAtomic" : {
+			
+			}
+		}
+	},
+    "roles": {
+		"Villager": {
+			"access": "public",
+			"tags" : ["target"],
+			"chatChannels" : ["public"],
+			"winCondition" : ["DeadBaddies"],
+			"grantedAbilities" :["startLynchVote"]
+		},
+		"Werewolf" : {
+			"access" : "private",
+			"tags" : ["baddie"],
+			"chatChannels" : ["public", "werewolfchat"],
+			"winCondition" : ["DeadTargets"],
+			"grantedAbilities": ["Maul Face", "Brutal Death"]
+		}
+	},
     "items": {
-"ExampleItem2": {
-"exampleA": 0,
-"exampleB": [
-	10,
-	4,
-	265,
-	4,
-	7,
-	4
-]
-},
-"ExampleItem": {
-"exampleA": 5,
-"exampleB": [
-	10,
-	4,
-	265,
-	4,
-	7,
+		"ExampleItem2": {
+			"exampleA": 0,
+			"exampleB": [
+				10,
+				4,
+				265,
+				4,
+				7,
+				4
+			]
+		},
+		"ExampleItem": {
+			"exampleA": 5,
+			"exampleB": [
+				10,
+				4,
+				265,
+				4,
+				7,
                 4
             ]
         }
