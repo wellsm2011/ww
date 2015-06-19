@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import editor.explorer.Explorer;
-import editor.explorer.interfaces.ExportedParameter;
+import editor.explorer.ExportedParameter;
 import global.Globals;
 
 public class EditorGui
@@ -23,7 +23,7 @@ public class EditorGui
 
 	public EditorGui(Explorer explorer)
 	{
-		this.data = explorer.getMappedInfo();
+		this.data = explorer.getMappedOptions();
 
 		this.guiThread = new Thread(() -> {
 			Display display = new Display();

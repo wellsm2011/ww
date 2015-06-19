@@ -1,4 +1,4 @@
-package config;
+package config.core;
 
 import global.Globals;
 
@@ -11,6 +11,9 @@ import java.util.Map.Entry;
 import backend.U;
 import backend.json.JSONException;
 import backend.json.JSONObject;
+import config.Item;
+import config.Role;
+import config.Status;
 
 /**
  * <p>

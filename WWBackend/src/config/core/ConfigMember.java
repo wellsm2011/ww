@@ -1,4 +1,4 @@
-package config;
+package config.core;
 
 import backend.json.JSONObject;
 

@@ -1,6 +1,7 @@
 package config;
 
 import backend.json.JSONObject;
+import config.core.ConfigMember;
 
 public class Role implements ConfigMember
 {

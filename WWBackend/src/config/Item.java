@@ -4,8 +4,10 @@ import java.util.LinkedList;
 
 import backend.json.JSONArray;
 import backend.json.JSONObject;
-import config.explorer.GettableParameter;
-import config.explorer.SettableParameter;
+import config.core.ConfigMember;
+import config.explorer.ExportedParam;
+import config.explorer.ExportedParam.DType;
+import config.explorer.ExportedParam.MType;
 
 /**
  * Currently serves as a little example for future reference: parses itself from
@@ -49,13 +51,13 @@ public class Item implements ConfigMember
 		return res;
 	}
 
-	@GettableParameter
+	@ExportedParam(datatype = DType.NUMBER, key = "exampleA", methodtype = MType.GETTER, jsonStored = true)
 	public double getExampleA()
 	{
 		return this.exampleA;
 	}
 
-	@GettableParameter
+	@ExportedParam(datatype = DType.NUMCOLLECTION, key = "exampleB", methodtype = MType.GETTER, jsonStored = true)
 	public LinkedList<Double> getExampleB()
 	{
 		return this.exampleB;
@@ -66,7 +68,7 @@ public class Item implements ConfigMember
 		this.exampleA = input;
 	}
 
-	@SettableParameter
+	@ExportedParam(datatype = DType.NUMCOLLECTION, key = "exampleB", methodtype = MType.SETTER, jsonStored = true)
 	public void setExampleB(LinkedList<Double> input)
 	{
 		this.exampleB = input;
