@@ -10,7 +10,7 @@
 			},
 			"appliedActions" : {
 			}
-		}
+		},
 		"lynch" : {
 			"tags" : ["kill"],
 			"priority" : 5,
@@ -67,7 +67,7 @@
 			"appliedAtomics": {
 			}
 		}
-	}
+	},
 	"gameCons" : {
 		"Dead Baddies": {
 			"trigger": {
@@ -156,8 +156,8 @@
 		"MaulImmune":{
 			"priority" : 1,
 			"trigger":{
-				"on"="attemptedAbility",
-				"filter"="name=Maul Face"
+				"on":"attemptedAbility",
+				"filter":"name=Maul Face"
 			},
 			"effect":{
 				"targeting.filter":">>player!=_this"
@@ -169,8 +169,8 @@
 		"DeadOnDamage":{
 			"priority" : 1,
 			"trigger":{
-				"on"="ability",
-				"filter"="tag=dead|hurt"
+				"on":"ability",
+				"filter":"tag=dead|hurt"
 			},
 			"effect":{
 				"appliedAtomics":">>addStatus:Dead"
@@ -182,8 +182,8 @@
 		"Silence":{
 			"priority" : 1,
 			"trigger":{
-				"on"="attemptedAtomic",
-				"filter"="name=ChatPost"
+				"on":"attemptedAtomic",
+				"filter":"name=ChatPost"
 			},
 			"effect":{
 				"value":""
@@ -214,7 +214,7 @@
 				"ability[tag=nightending]","time[val=10min]"
 			]
 		}
-	}
+	},
     "items": {
 		"ExampleItem2": {
 			"exampleA": 0,

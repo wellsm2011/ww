@@ -138,7 +138,13 @@ public class Config
 			JSONObject data = new JSONObject(U.readFile(filename));
 			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>();
 			for (String curJSONKey : data.keySet())
-				this.parse(data, curJSONKey, configMembers.get(curJSONKey));
+			{
+				Class<? extends ConfigMember> type = configMembers.get(curJSONKey);
+				if (type != null)
+				this.parse(data, curJSONKey, type);
+				else
+					U.e("Unknown key " + curJSONKey + " in config file. Might want to look at that.");
+			}
 			for (Entry<String, Class<? extends ConfigMember>> configMembs : configMembers.entrySet())
 				if (!this.maps.containsKey(configMembs.getKey()))
 					this.parse(data, configMembs.getKey(), configMembs.getValue());

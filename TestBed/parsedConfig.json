@@ -1,5 +1,6 @@
 {
     "roles": {},
+    "statuses": {},
     "items": {
         "ExampleItem2": {
             "exampleA": 0,
@@ -23,6 +24,5 @@
                 4
             ]
         }
-    },
-    "statuses": {}
+    }
 }
