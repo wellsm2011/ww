@@ -173,11 +173,12 @@ public class Config
 								break;
 						}
 
-			} catch (SecurityException e)
+			} 
+		/*catch ( e)
 			{
 				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
 						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
-			} catch (InstantiationException e)
+			}*/ catch (InstantiationException e)
 			{
 				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
 						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
@@ -208,7 +209,7 @@ public class Config
 			{
 				Class<? extends ConfigMember> type = configMembers.get(curJSONKey);
 				if (type != null)
-					this.parse(data, curJSONKey, type);
+					this.intelliParse(data, curJSONKey, type);
 				else
 					U.e("Unknown key " + curJSONKey + " in config file. Might want to look at that.");
 			}
@@ -228,7 +229,7 @@ public class Config
 		}
 	}
 
-	/**
+/*	*//**
 	 * Based on a JSON config file, pulls the given key, and instantiates
 	 * objects into the passed class.
 	 *
@@ -238,7 +239,7 @@ public class Config
 	 *            the json key to pull things from
 	 * @param type
 	 *            the class type to instantiate.
-	 */
+	 *//*
 	private <T extends ConfigMember> void parse(JSONObject data, String key, Class<T> type)
 	{
 		JSONObject jsonData = data.optJSONObject(key);
@@ -268,7 +269,7 @@ public class Config
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
 			}
-	}
+	}*/
 
 	/**
 	 * Basic toString method, simply returns the string representation
