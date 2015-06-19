@@ -1,7 +1,9 @@
 package editor.gui;
 
+import global.Globals;
+
+import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
@@ -11,13 +13,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import editor.explorer.Explorer;
-import editor.explorer.ExportedParameter;
-import global.Globals;
+import config.explorer.Explorer;
+import config.explorer.ExportedParameter;
 
 public class EditorGui
 {
-	private LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>>	data;
+	private LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>>	data;
 	private Thread																	guiThread;
 	private boolean																	run;
 
@@ -52,11 +53,11 @@ public class EditorGui
 	{
 		final Tree tree = new Tree(shell, SWT.BORDER);
 
-		for (Entry<String, LinkedHashMap<String, List<ExportedParameter>>> curSection : this.data.entrySet())
+		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> curSection : this.data.entrySet())
 		{
 			TreeItem sectionItem = new TreeItem(tree, 0);
 			sectionItem.setText(curSection.getKey());
-			for (Entry<String, List<ExportedParameter>> curElem : curSection.getValue().entrySet())
+			for (Entry<String, Collection<ExportedParameter>> curElem : curSection.getValue().entrySet())
 			{
 				TreeItem elemItem = new TreeItem(sectionItem, 0);
 				elemItem.setText(curElem.getKey());

@@ -6,6 +6,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import backend.U;
@@ -14,6 +15,9 @@ import backend.json.JSONObject;
 import config.Item;
 import config.Role;
 import config.Status;
+import config.explorer.Explorer;
+import config.explorer.ExportedParam.MType;
+import config.explorer.ExportedParameter;
 
 /**
  * <p>
@@ -127,11 +131,6 @@ public class Config
 		return this.getMap(key);
 	}
 
-	@SuppressWarnings("unused")
-	private void intellLoadConfig(String filename, HashMap<String, Class<?>> condigMembers)
-	{
-	}
-
 	/**
 	 * Based on a given filename, as well as a set of config members, parses
 	 * them into their own classes.
@@ -158,7 +157,7 @@ public class Config
 			}
 			for (Entry<String, Class<? extends ConfigMember>> configMembs : configMembers.entrySet())
 				if (!this.maps.containsKey(configMembs.getKey()))
-					this.parse(data, configMembs.getKey(), configMembs.getValue());
+					this.intelliParse(data, configMembs.getKey(), configMembs.getValue());
 
 		} catch (JSONException e)
 		{
@@ -208,6 +207,57 @@ public class Config
 				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
 						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | JSONException e)
+			{
+				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
+				e.printStackTrace();
+			}
+	}
+
+	private <T extends ConfigMember> void intelliParse(JSONObject data, String key, Class<T> type)
+	{
+		JSONObject jsonData = data.optJSONObject(key);
+		if (jsonData == null)
+			jsonData = new JSONObject();
+		
+		for (String cur : jsonData.keySet())
+			try
+			{
+				JSONObject curJSONSection = jsonData.optJSONObject(cur);
+				if (curJSONSection == null)
+					curJSONSection = new JSONObject();
+				T curInstance = type.newInstance();
+				Map<String, ExportedParameter> map = Explorer.findParametersByFilter(curInstance, MType.GETTER, MType.SETTER);
+				for (String curKey : curJSONSection.keySet())
+					if (map.containsKey(curKey))
+						switch (map.get(curKey).getDatatype())
+						{
+							case NUMBER:
+								map.get(curKey).call(MType.SETTER, curJSONSection.getDouble(key));
+								break;
+							case NUMCOLLECTION:
+								break;
+							case NUMMAP:
+								break;
+							case STRCOLLECTION:
+								break;
+							case STRING:
+								map.get(curKey).call(MType.SETTER, curJSONSection.getString(key));
+								break;
+							case STRMAP:
+								break;
+							default:
+								break;
+						}
+
+			} catch (SecurityException e)
+			{
+				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
+						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
+			} catch (InstantiationException e)
+			{
+				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
+						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
+			} catch (IllegalAccessException | IllegalArgumentException | JSONException e)
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();

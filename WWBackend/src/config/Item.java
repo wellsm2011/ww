@@ -62,7 +62,8 @@ public class Item implements ConfigMember
 	{
 		return this.exampleB;
 	}
-
+	
+	@ExportedParam(datatype = DType.NUMBER, key = "exampleA", methodtype = MType.SETTER, jsonStored = true)
 	public void setExampleA(double input)
 	{
 		this.exampleA = input;

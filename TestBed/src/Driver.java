@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 import backend.U;
 import config.core.Config;
-import editor.explorer.Explorer;
+import config.explorer.Explorer;
 import editor.gui.EditorGui;
 
 public class Driver

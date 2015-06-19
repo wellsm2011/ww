@@ -1,14 +1,14 @@
-package editor.explorer;
+package config.explorer;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import config.core.Config;
 import config.core.ConfigMember;
-import config.explorer.ExportedParam;
+import config.explorer.ExportedParam.DType;
 import config.explorer.ExportedParam.MType;
 
 public class Explorer
@@ -20,10 +20,11 @@ public class Explorer
 		this.configMembers = config.getAllMaps();
 	}
 
-	private List<ExportedParameter> findMethodsByFilter(ConfigMember input, MType... filter)
+	public static Map<String, ExportedParameter> findParametersByFilter(ConfigMember input, MType... filter)
 	{
-		LinkedList<ExportedParameter> res = new LinkedList<ExportedParameter>();
+		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
 		LinkedHashMap<String, LinkedHashMap<MType, Method>> map = new LinkedHashMap<String, LinkedHashMap<MType, Method>>();
+		LinkedHashMap<String, DType> keyToDataTypeMap = new LinkedHashMap<String, DType>();
 		for (Method curMethod : input.getClass().getDeclaredMethods())
 			if (curMethod.isAnnotationPresent(ExportedParam.class))
 			{
@@ -31,11 +32,12 @@ public class Explorer
 				if (!map.containsKey(paramData.key()))
 					map.put(paramData.key(), new LinkedHashMap<MType, Method>());
 				map.get(paramData.key()).put(paramData.methodtype(), curMethod);
+				keyToDataTypeMap.put(paramData.key(), paramData.datatype());
 			}
 
 		if (filter.length <= 0)
 			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
-				res.add(new ExportedParameter(curParam.getKey(), input, curParam.getValue()));
+				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), input, curParam.getValue(), keyToDataTypeMap.get(curParam.getKey())));
 
 		if (filter.length > 0)
 			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
@@ -43,21 +45,21 @@ public class Explorer
 				LinkedHashMap<MType, Method> methods = new LinkedHashMap<MType, Method>();
 				for (MType curFilter : filter)
 					methods.put(curFilter, curParam.getValue().get(curFilter));
-				res.add(new ExportedParameter(curParam.getKey(), input, methods));
+				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), input, methods, keyToDataTypeMap.get(curParam.getKey())));
 			}
 		return res;
 	}
 
-	public LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>> getMappedOptions()
+	public LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>> getMappedOptions()
 	{
-		LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>> mappedOptions = new LinkedHashMap<String, LinkedHashMap<String, List<ExportedParameter>>>();
+		LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>> mappedOptions = new LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>>();
 
 		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curSection : this.configMembers.entrySet())
 		{
 			String sectionName = curSection.getKey();
-			mappedOptions.put(sectionName, new LinkedHashMap<String, List<ExportedParameter>>());
+			mappedOptions.put(sectionName, new LinkedHashMap<String, Collection<ExportedParameter>>());
 			for (Entry<String, ? extends ConfigMember> curElem : curSection.getValue().entrySet())
-				mappedOptions.get(sectionName).put(curElem.getKey(), this.findMethodsByFilter(curElem.getValue()));
+				mappedOptions.get(sectionName).put(curElem.getKey(), Explorer.findParametersByFilter(curElem.getValue()).values());
 		}
 		return mappedOptions;
 	}
@@ -90,7 +92,7 @@ public class Explorer
 	 * LinkedHashMap<String, Method> setters = new LinkedHashMap<String,
 	 * Method>(); LinkedHashMap<String, Method> getters = new
 	 * LinkedHashMap<String, Method>();
-	 *
+	 * 
 	 * for (Method curMethod : input.getClass().getDeclaredMethods()) if
 	 * (curMethod.isAnnotationPresent(ExportedParam.class)) if
 	 * (curMethod.getAnnotation(ExportedParam.class).methodtype() ==
@@ -101,13 +103,13 @@ public class Explorer
 	 * MType.SETTER)
 	 * setters.put(curMethod.getAnnotation(ExportedParam.class).key(),
 	 * curMethod);
-	 *
+	 * 
 	 * LinkedList<ExportedParameter> exportedOptions = new
 	 * LinkedList<ExportedParameter>(); for (String curOption :
 	 * getters.keySet()) if (setters.containsKey(curOption))
 	 * exportedOptions.add(new ExportedOption(curOption, setters.get(curOption),
 	 * getters.get(curOption), input));
-	 *
+	 * 
 	 * return exportedOptions; }
 	 */
 }
