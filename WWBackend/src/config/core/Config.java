@@ -63,6 +63,13 @@ public class Config
 		// Note: If it shows an error, make sure that your <something>.class
 		// implements JSONExportable.
 
+		/*
+		 * Reflections reflections = new Reflections("my.project.prefix");
+		 * 
+		 * Set<Class<? extends Object>> allClasses =
+		 * reflections.getSubTypesOf(Object.class);
+		 */
+
 		configMembers.put("items", Item.class);
 		configMembers.put("statuses", Status.class);
 		configMembers.put("roles", Role.class);
@@ -146,6 +153,10 @@ public class Config
 			e.printStackTrace();
 			Globals.exit();
 		}
+	}
+
+	private void intellLoadConfig(String filename, HashMap<String, Class<?>> condigMembers)
+	{
 	}
 
 	/**

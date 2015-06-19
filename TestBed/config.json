@@ -1,4 +1,14 @@
 {
+	"actions" : {
+		"exAction" : {
+			"priority" : 5,
+			"appliedAtomics" : {
+				"ChatPost" : "Some message",
+				"AddStatus" : "exStatusB",
+				
+			}
+		}
+	}
     "roles": {},
     "items": {
 "ExampleItem2": {
