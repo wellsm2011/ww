@@ -36,7 +36,7 @@ public class Explorer
 		if (filter.length <= 0)
 			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
 				res.add(new ExportedParameter(curParam.getKey(), input, curParam.getValue()));
-		
+
 		if (filter.length > 0)
 			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
 			{
@@ -90,7 +90,7 @@ public class Explorer
 	 * LinkedHashMap<String, Method> setters = new LinkedHashMap<String,
 	 * Method>(); LinkedHashMap<String, Method> getters = new
 	 * LinkedHashMap<String, Method>();
-	 * 
+	 *
 	 * for (Method curMethod : input.getClass().getDeclaredMethods()) if
 	 * (curMethod.isAnnotationPresent(ExportedParam.class)) if
 	 * (curMethod.getAnnotation(ExportedParam.class).methodtype() ==
@@ -101,13 +101,13 @@ public class Explorer
 	 * MType.SETTER)
 	 * setters.put(curMethod.getAnnotation(ExportedParam.class).key(),
 	 * curMethod);
-	 * 
+	 *
 	 * LinkedList<ExportedParameter> exportedOptions = new
 	 * LinkedList<ExportedParameter>(); for (String curOption :
 	 * getters.keySet()) if (setters.containsKey(curOption))
 	 * exportedOptions.add(new ExportedOption(curOption, setters.get(curOption),
 	 * getters.get(curOption), input));
-	 * 
+	 *
 	 * return exportedOptions; }
 	 */
 }

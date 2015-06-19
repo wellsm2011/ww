@@ -1,6 +1,11 @@
 {
+    "actions": {},
+    "abilities": {},
+    "gameCons": {},
     "roles": {},
     "statuses": {},
+    "actionMods": {},
+    "rounds": {},
     "items": {
         "ExampleItem2": {
             "exampleA": 0,

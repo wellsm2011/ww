@@ -20,11 +20,6 @@ public class Item implements ConfigMember
 
 	private double				exampleA;
 	private LinkedList<Double>	exampleB;
-	
-	private Item()
-	{
-		
-	}
 
 	public Item(String name, JSONObject data)
 	{

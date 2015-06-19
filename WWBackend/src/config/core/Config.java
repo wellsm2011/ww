@@ -73,6 +73,12 @@ public class Config
 		configMembers.put("items", Item.class);
 		configMembers.put("statuses", Status.class);
 		configMembers.put("roles", Role.class);
+		configMembers.put("actions", Action.class);
+		configMembers.put("abilities", Ability.class);
+		configMembers.put("gameCons", GameCon.class);
+		configMembers.put("actionMods", ActionModifier.class);
+		configMembers.put("rounds", Rounds.class);
+
 		// Add new config sections here, order here merely changes the default
 		// export ordering.
 
@@ -121,6 +127,11 @@ public class Config
 		return this.getMap(key);
 	}
 
+	@SuppressWarnings("unused")
+	private void intellLoadConfig(String filename, HashMap<String, Class<?>> condigMembers)
+	{
+	}
+
 	/**
 	 * Based on a given filename, as well as a set of config members, parses
 	 * them into their own classes.
@@ -141,7 +152,7 @@ public class Config
 			{
 				Class<? extends ConfigMember> type = configMembers.get(curJSONKey);
 				if (type != null)
-				this.parse(data, curJSONKey, type);
+					this.parse(data, curJSONKey, type);
 				else
 					U.e("Unknown key " + curJSONKey + " in config file. Might want to look at that.");
 			}
@@ -159,10 +170,6 @@ public class Config
 			e.printStackTrace();
 			Globals.exit();
 		}
-	}
-
-	private void intellLoadConfig(String filename, HashMap<String, Class<?>> condigMembers)
-	{
 	}
 
 	/**

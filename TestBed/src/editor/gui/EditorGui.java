@@ -66,6 +66,7 @@ public class EditorGui
 					exportItem.setText(e.toString());
 				}
 			}
+			sectionItem.setExpanded(true);
 		}
 	}
 
