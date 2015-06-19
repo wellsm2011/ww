@@ -4,8 +4,8 @@
 			"priority" : 5,
 			"appliedAtomics" : {
 				"ChatPost" : "Some message",
-				"AddStatus" : "exStatusB",
-				
+				"AddStatus" : "Deaderer",
+				"GrantAbility" : "EatBrainz"
 			}
 		}
 	}
