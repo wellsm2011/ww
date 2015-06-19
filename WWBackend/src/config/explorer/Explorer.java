@@ -13,13 +13,6 @@ import config.explorer.ExportedParam.MType;
 
 public class Explorer
 {
-	private LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>	configMembers;
-
-	public Explorer(Config config)
-	{
-		this.configMembers = config.getAllMaps();
-	}
-
 	public static Map<String, ExportedParameter> findParametersByFilter(ConfigMember input, MType... filter)
 	{
 		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
@@ -48,6 +41,13 @@ public class Explorer
 				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), input, methods, keyToDataTypeMap.get(curParam.getKey())));
 			}
 		return res;
+	}
+
+	private LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>	configMembers;
+
+	public Explorer(Config config)
+	{
+		this.configMembers = config.getAllMaps();
 	}
 
 	public LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>> getMappedOptions()
@@ -92,7 +92,7 @@ public class Explorer
 	 * LinkedHashMap<String, Method> setters = new LinkedHashMap<String,
 	 * Method>(); LinkedHashMap<String, Method> getters = new
 	 * LinkedHashMap<String, Method>();
-	 * 
+	 *
 	 * for (Method curMethod : input.getClass().getDeclaredMethods()) if
 	 * (curMethod.isAnnotationPresent(ExportedParam.class)) if
 	 * (curMethod.getAnnotation(ExportedParam.class).methodtype() ==
@@ -103,13 +103,13 @@ public class Explorer
 	 * MType.SETTER)
 	 * setters.put(curMethod.getAnnotation(ExportedParam.class).key(),
 	 * curMethod);
-	 * 
+	 *
 	 * LinkedList<ExportedParameter> exportedOptions = new
 	 * LinkedList<ExportedParameter>(); for (String curOption :
 	 * getters.keySet()) if (setters.containsKey(curOption))
 	 * exportedOptions.add(new ExportedOption(curOption, setters.get(curOption),
 	 * getters.get(curOption), input));
-	 * 
+	 *
 	 * return exportedOptions; }
 	 */
 }

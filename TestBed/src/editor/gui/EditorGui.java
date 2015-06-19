@@ -19,8 +19,8 @@ import config.explorer.ExportedParameter;
 public class EditorGui
 {
 	private LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>>	data;
-	private Thread																	guiThread;
-	private boolean																	run;
+	private Thread																		guiThread;
+	private boolean																		run;
 
 	public EditorGui(Explorer explorer)
 	{

@@ -27,14 +27,14 @@ public class ExportedParameter
 		return U.carefulCall(this.methods.get(targMethod), this.target, params);
 	}
 
-	public String getParamName()
-	{
-		return paramName;
-	}
-
 	public DType getDatatype()
 	{
-		return datatype;
+		return this.datatype;
+	}
+
+	public String getParamName()
+	{
+		return this.paramName;
 	}
 
 	@Override

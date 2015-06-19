@@ -69,7 +69,7 @@ public class Config
 
 		/*
 		 * Reflections reflections = new Reflections("my.project.prefix");
-		 * 
+		 *
 		 * Set<Class<? extends Object>> allClasses =
 		 * reflections.getSubTypesOf(Object.class);
 		 */
@@ -129,6 +129,63 @@ public class Config
 	public <T extends ConfigMember> HashMap<String, T> getSection(String key)
 	{
 		return this.getMap(key);
+	}
+
+	private JSONObject intelliGen(ConfigMember value)
+	{
+		// curMemberItem.getValue().exportAsJSON()
+		return new JSONObject();
+	}
+
+	private <T extends ConfigMember> void intelliParse(JSONObject data, String key, Class<T> type)
+	{
+		JSONObject jsonData = data.optJSONObject(key);
+		if (jsonData == null)
+			jsonData = new JSONObject();
+
+		for (String cur : jsonData.keySet())
+			try
+			{
+				JSONObject curJSONSection = jsonData.optJSONObject(cur);
+				if (curJSONSection == null)
+					curJSONSection = new JSONObject();
+				T curInstance = type.newInstance();
+				Map<String, ExportedParameter> map = Explorer.findParametersByFilter(curInstance, MType.GETTER, MType.SETTER);
+				for (String curKey : curJSONSection.keySet())
+					if (map.containsKey(curKey))
+						switch (map.get(curKey).getDatatype())
+						{
+							case NUMBER:
+								map.get(curKey).call(MType.SETTER, curJSONSection.getDouble(key));
+								break;
+							case NUMCOLLECTION:
+								break;
+							case NUMMAP:
+								break;
+							case STRCOLLECTION:
+								break;
+							case STRING:
+								map.get(curKey).call(MType.SETTER, curJSONSection.getString(key));
+								break;
+							case STRMAP:
+								break;
+							default:
+								break;
+						}
+
+			} catch (SecurityException e)
+			{
+				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
+						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
+			} catch (InstantiationException e)
+			{
+				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
+						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
+			} catch (IllegalAccessException | IllegalArgumentException | JSONException e)
+			{
+				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
+				e.printStackTrace();
+			}
 	}
 
 	/**
@@ -213,57 +270,6 @@ public class Config
 			}
 	}
 
-	private <T extends ConfigMember> void intelliParse(JSONObject data, String key, Class<T> type)
-	{
-		JSONObject jsonData = data.optJSONObject(key);
-		if (jsonData == null)
-			jsonData = new JSONObject();
-		
-		for (String cur : jsonData.keySet())
-			try
-			{
-				JSONObject curJSONSection = jsonData.optJSONObject(cur);
-				if (curJSONSection == null)
-					curJSONSection = new JSONObject();
-				T curInstance = type.newInstance();
-				Map<String, ExportedParameter> map = Explorer.findParametersByFilter(curInstance, MType.GETTER, MType.SETTER);
-				for (String curKey : curJSONSection.keySet())
-					if (map.containsKey(curKey))
-						switch (map.get(curKey).getDatatype())
-						{
-							case NUMBER:
-								map.get(curKey).call(MType.SETTER, curJSONSection.getDouble(key));
-								break;
-							case NUMCOLLECTION:
-								break;
-							case NUMMAP:
-								break;
-							case STRCOLLECTION:
-								break;
-							case STRING:
-								map.get(curKey).call(MType.SETTER, curJSONSection.getString(key));
-								break;
-							case STRMAP:
-								break;
-							default:
-								break;
-						}
-
-			} catch (SecurityException e)
-			{
-				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
-						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
-			} catch (InstantiationException e)
-			{
-				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
-						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
-			} catch (IllegalAccessException | IllegalArgumentException | JSONException e)
-			{
-				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
-				e.printStackTrace();
-			}
-	}
-
 	/**
 	 * Basic toString method, simply returns the string representation
 	 */
@@ -286,7 +292,7 @@ public class Config
 		{
 			JSONObject member = new JSONObject();
 			for (Entry<String, ? extends ConfigMember> curMemberItem : curConfigMember.getValue().entrySet())
-				member.putOpt(curMemberItem.getKey(), curMemberItem.getValue().exportAsJSON());
+				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue()));
 			output.putOnce(curConfigMember.getKey(), member);
 		}
 		U.writeToFile(filename, output.toString(4));
