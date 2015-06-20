@@ -2,11 +2,39 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import lol.*; //from lol import *
+import lol.Caitlyn;
+import lol.Champion; //from lol import *
+import lol.Fizz;
+import lol.Graves;
+import lol.Zyra;
 import backend.U;
 
 public class HelloWorld
 {
+	public static void loopExample()
+	{
+		// First example: for loop
+		for (int i = 0; i < 5; ++i)
+			U.p(i);
+
+		// Second example: for each loop
+		int[] ary = new int[]
+		{ 0, 1, 2, 3, 4 };
+		for (int i : ary)
+			U.p(i);
+
+		// Third example: while loop
+		int i = 0;
+		while (i < 5)
+			U.p(i++);
+
+		// fourth example: do while loop
+		i = 0;
+		do
+			U.p(i++);
+		while (i < 5);
+	}
+
 	public static void main(String[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
 	{
 		Scanner keyboard = new Scanner(System.in);
@@ -62,7 +90,7 @@ public class HelloWorld
 
 	/**
 	 * Repeats the given string a given number of times and returns.
-	 * 
+	 *
 	 * @param seq
 	 *            The sequence to be repeated.
 	 * @param repeat
@@ -79,29 +107,5 @@ public class HelloWorld
 			output += seq;
 
 		return output;
-	}
-
-	public static void loopExample()
-	{
-		// First example: for loop
-		for (int i = 0; i < 5; ++i)
-			U.p(i);
-
-		// Second example: for each loop
-		int[] ary = new int[]
-		{ 0, 1, 2, 3, 4 };
-		for (int i : ary)
-			U.p(i);
-
-		// Third example: while loop
-		int i = 0;
-		while (i < 5)
-			U.p(i++);
-
-		// fourth example: do while loop
-		i = 0;
-		do
-			U.p(i++);
-		while (i < 5);
 	}
 }

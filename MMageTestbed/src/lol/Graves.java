@@ -2,7 +2,8 @@ package lol;
 
 public class Graves extends Champion
 {
-	public Graves(){
+	public Graves()
+	{
 		this.ultName = "Collateral Damage";
 	}
 }

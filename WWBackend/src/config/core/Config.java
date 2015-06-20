@@ -2,8 +2,6 @@ package config.core;
 
 import global.Globals;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -173,12 +171,14 @@ public class Config
 								break;
 						}
 
-			} 
-		/*catch ( e)
-			{
-				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
-						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
-			}*/ catch (InstantiationException e)
+			}
+			/*
+			 * catch ( e) { U.e("Error finding proper constructor for class " +
+			 * type.getName() + " for config section " + key + ". Make sure " +
+			 * type.getName() +
+			 * " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the "
+			 * ); }
+			 */catch (InstantiationException e)
 			{
 				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
 						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
@@ -229,7 +229,7 @@ public class Config
 		}
 	}
 
-/*	*//**
+	/*	*//**
 	 * Based on a JSON config file, pulls the given key, and instantiates
 	 * objects into the passed class.
 	 *
@@ -239,37 +239,33 @@ public class Config
 	 *            the json key to pull things from
 	 * @param type
 	 *            the class type to instantiate.
-	 *//*
-	private <T extends ConfigMember> void parse(JSONObject data, String key, Class<T> type)
-	{
-		JSONObject jsonData = data.optJSONObject(key);
-		if (jsonData == null)
-			jsonData = new JSONObject();
-		HashMap<String, T> parsed = this.getMap(key);
-
-		for (String cur : jsonData.keySet())
-			try
-			{
-				Constructor<T> constructor = type.getConstructor(String.class, JSONObject.class);
-				JSONObject curJSONSection = jsonData.optJSONObject(cur);
-				if (curJSONSection == null)
-					curJSONSection = new JSONObject();
-				parsed.put(cur, constructor.newInstance(cur, curJSONSection));
-
-			} catch (NoSuchMethodException | SecurityException e)
-			{
-				U.e("Error finding proper constructor for class " + type.getName() + " for config section " + key + ". Make sure " + type.getName()
-						+ " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the ");
-			} catch (InstantiationException e)
-			{
-				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
-						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | JSONException e)
-			{
-				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
-				e.printStackTrace();
-			}
-	}*/
+	 */
+	/*
+	 * private <T extends ConfigMember> void parse(JSONObject data, String key,
+	 * Class<T> type) { JSONObject jsonData = data.optJSONObject(key); if
+	 * (jsonData == null) jsonData = new JSONObject(); HashMap<String, T> parsed
+	 * = this.getMap(key);
+	 *
+	 * for (String cur : jsonData.keySet()) try { Constructor<T> constructor =
+	 * type.getConstructor(String.class, JSONObject.class); JSONObject
+	 * curJSONSection = jsonData.optJSONObject(cur); if (curJSONSection == null)
+	 * curJSONSection = new JSONObject(); parsed.put(cur,
+	 * constructor.newInstance(cur, curJSONSection));
+	 *
+	 * } catch (NoSuchMethodException | SecurityException e) {
+	 * U.e("Error finding proper constructor for class " + type.getName() +
+	 * " for config section " + key + ". Make sure " + type.getName() +
+	 * " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the "
+	 * ); } catch (InstantiationException e) { U.e("Error instantiating class "
+	 * + type.getName() +
+	 * " for what reason did you try and use an abstract class or interface or something?"
+	 * + " Make sure you are using the correct type for key " + key +
+	 * " in the Config class.", e); } catch (IllegalAccessException |
+	 * IllegalArgumentException | InvocationTargetException | JSONException e) {
+	 * U.e("Issue parsing " + key +
+	 * " during config loading. Probably an internal error with the \"" + key +
+	 * "\" handler."); e.printStackTrace(); } }
+	 */
 
 	/**
 	 * Basic toString method, simply returns the string representation
