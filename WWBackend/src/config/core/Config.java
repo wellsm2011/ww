@@ -82,7 +82,6 @@ public class Config
 
 		/*
 		 * Reflections reflections = new Reflections("my.project.prefix");
-		 * 
 		 * Set<Class<? extends Object>> allClasses =
 		 * reflections.getSubTypesOf(Object.class);
 		 */

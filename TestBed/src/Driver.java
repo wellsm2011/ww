@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import backend.U;
-import config.Action;
 import config.core.Config;
 import config.explorer.Explorer;
 import editor.gui.EditorGui;

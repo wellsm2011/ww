@@ -14,7 +14,6 @@ public class Action implements ConfigMember
 	private Map<String, String>	appliedAtomics;
 	private List<String>		appliedActions;
 	private double				priority;
-	private double				fred;
 
 	@ExportedParam(datatype = DType.STRLIST, key = "appliedActions", methodtype = MType.GETTER, sortVal = 4)
 	public List<String> getAppliedActions()
