@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -36,12 +37,12 @@ import backend.lzmastreams.LzmaOutputStream;
  */
 public class U
 {
-	private static PrintStream		output;
-	private static int				debugging			= 0;
-	private static SimpleDateFormat	outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
-	private static SimpleDateFormat	timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
-	private static Scanner			input;
-	private static Random			rand;
+	private static PrintStream								output;
+	private static int										debugging			= 0;
+	private static SimpleDateFormat							outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
+	private static SimpleDateFormat							timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
+	private static Scanner									input;
+	private static Random									rand;
 
 	/**
 	 * Static constructor, used to initialize output to the system.out
@@ -54,6 +55,8 @@ public class U
 		U.input = new Scanner(System.in);
 		U.rand = new Random();
 	}
+
+	private static final LinkedHashMap<Class<?>, Class<?>>	WRAPPER_TYPES		= U.getWrapperTypes();
 
 	/**
 	 * Calls the specified method with the specified parameters, checking to
@@ -73,16 +76,19 @@ public class U
 	 */
 
 	@SuppressWarnings("unchecked")
-	public static <T> T carefulCall(Method method, Object... input) throws InvalidParameterException
+	public static <T> T carefulCall(Method method, Object target, Object... params) throws InvalidParameterException
 	{
-		int i = 0;
 		Object res = null;
-		for (Class<?> c : method.getParameterTypes())
-			if (!c.isInstance(input[i++]))
-				throw new InvalidParameterException("Input item " + input[i - 1].getClass().getName() + " is incompatible with required parameter " + c.getName() + " for method " + method.getName());
+		// int i = 0;
+		// for (Class<?> c : method.getParameterTypes())
+		// if (!c.equals(U.getUnBoxedType(params[i++].getClass())))
+		// U.w("Input item " + params[i - 1].getClass().getName() +
+		// " may be incompatible with " + c.getName() + " for method " +
+		// method.getName());
+
 		try
 		{
-			res = method.invoke(input);
+			res = method.invoke(target, params);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 		{
 			U.e("Error, could not properly call method " + method.getName(), e);
@@ -192,11 +198,60 @@ public class U
 	public static void e(String in, Exception E)
 	{
 		U.printWithTag(in + " - " + E, "ERROR");
+		E.printStackTrace();
 	}
 
 	public static String getTimestamp()
 	{
 		return U.timeStampFormatter.format(Calendar.getInstance().getTime());
+	}
+
+	/**
+	 * <p>
+	 * Returns the unboxed version of this class if this is boxed.
+	 * </p>
+	 * <p>
+	 * Example: given Double.class this will return double.class
+	 * </p>
+	 * <p>
+	 * Returns input if the passed type isn't a wrapper type.
+	 *
+	 * @param input
+	 *            the type to unbox
+	 * @return the unboxed type
+	 */
+	public static Class<?> getUnBoxedType(Class<?> input)
+	{
+		if (U.WRAPPER_TYPES.containsKey(input))
+			return U.WRAPPER_TYPES.get(input);
+		return input;
+	}
+
+	private static LinkedHashMap<Class<?>, Class<?>> getWrapperTypes()
+	{
+		LinkedHashMap<Class<?>, Class<?>> ret = new LinkedHashMap<Class<?>, Class<?>>();
+		ret.put(Boolean.class, boolean.class);
+		ret.put(Character.class, char.class);
+		ret.put(Byte.class, byte.class);
+		ret.put(Short.class, short.class);
+		ret.put(Integer.class, int.class);
+		ret.put(Long.class, long.class);
+		ret.put(Float.class, float.class);
+		ret.put(Double.class, double.class);
+		ret.put(Void.class, void.class);
+		return ret;
+	}
+
+	/**
+	 * Checks if the passed class is a wrapper type (Double, Integer, etc)
+	 *
+	 * @param clazz
+	 *            the class to check
+	 * @return true of this is a wrapper class, false otherwise.
+	 */
+	public static boolean isWrapperType(Class<?> clazz)
+	{
+		return U.WRAPPER_TYPES.containsKey(clazz);
 	}
 
 	/**
@@ -485,6 +540,17 @@ public class U
 			{
 				U.e(message, e);
 			}
+	}
+
+	/**
+	 * Prints the specified warning
+	 *
+	 * @param input
+	 *            some warning text
+	 */
+	public static void w(String input)
+	{
+		U.printWithTag(input, "WARNING");
 	}
 
 	/**

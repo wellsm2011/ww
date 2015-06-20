@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
 
 import config.core.Config;
 import config.core.ConfigMember;
@@ -18,7 +19,8 @@ public class Explorer
 		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
 		LinkedHashMap<String, LinkedHashMap<MType, Method>> map = new LinkedHashMap<String, LinkedHashMap<MType, Method>>();
 		LinkedHashMap<String, DType> keyToDataTypeMap = new LinkedHashMap<String, DType>();
-		for (Method curMethod : input.getClass().getDeclaredMethods())
+
+		for (Method curMethod : Explorer.getSortedMethods(input))
 			if (curMethod.isAnnotationPresent(ExportedParam.class))
 			{
 				ExportedParam paramData = curMethod.getAnnotation(ExportedParam.class);
@@ -40,6 +42,24 @@ public class Explorer
 					methods.put(curFilter, curParam.getValue().get(curFilter));
 				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), input, methods, keyToDataTypeMap.get(curParam.getKey())));
 			}
+		return res;
+	}
+
+	private static Method[] getSortedMethods(ConfigMember input)
+	{
+		PriorityQueue<Method> sorted = new PriorityQueue<Method>((Method a, Method b) -> {
+			int aOrd = a.getAnnotation(ExportedParam.class).sortVal();
+			int bOrd = b.getAnnotation(ExportedParam.class).sortVal();
+			return aOrd - bOrd;
+		});
+		Method[] declaredMethods = input.getClass().getDeclaredMethods();
+		for (Method m : declaredMethods)
+			if (m.isAnnotationPresent(ExportedParam.class))
+				sorted.offer(m);
+		Method[] res = new Method[sorted.size()];
+		int i = 0;
+		while (!sorted.isEmpty())
+			res[i++] = sorted.poll();
 		return res;
 	}
 
@@ -92,7 +112,7 @@ public class Explorer
 	 * LinkedHashMap<String, Method> setters = new LinkedHashMap<String,
 	 * Method>(); LinkedHashMap<String, Method> getters = new
 	 * LinkedHashMap<String, Method>();
-	 *
+	 * 
 	 * for (Method curMethod : input.getClass().getDeclaredMethods()) if
 	 * (curMethod.isAnnotationPresent(ExportedParam.class)) if
 	 * (curMethod.getAnnotation(ExportedParam.class).methodtype() ==
@@ -103,13 +123,13 @@ public class Explorer
 	 * MType.SETTER)
 	 * setters.put(curMethod.getAnnotation(ExportedParam.class).key(),
 	 * curMethod);
-	 *
+	 * 
 	 * LinkedList<ExportedParameter> exportedOptions = new
 	 * LinkedList<ExportedParameter>(); for (String curOption :
 	 * getters.keySet()) if (setters.containsKey(curOption))
 	 * exportedOptions.add(new ExportedOption(curOption, setters.get(curOption),
 	 * getters.get(curOption), input));
-	 *
+	 * 
 	 * return exportedOptions; }
 	 */
 }

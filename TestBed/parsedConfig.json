@@ -1,1 +1,178 @@
-{}
+{
+    "actions": {
+        "maul": {
+            "tags": ["kill"],
+            "priority": 10,
+            "appliedAtomics": {
+                "ChatPost": "Some message",
+                "AddStatus": "Hurt,Turning",
+                "GrantAbility": "EatBrainz"
+            },
+            "appliedActions": []
+        },
+        "lynch": {
+            "tags": ["kill"],
+            "priority": 5,
+            "appliedAtomics": {
+                "ChatPost": "Some message",
+                "AddStatus": "Dead",
+                "GrantAbility": "EatBrainz"
+            },
+            "appliedActions": []
+        }
+    },
+    "abilities": {
+        "Start Lynch Vote": {
+            "tags": ["dayending"],
+            "trigger": {"on": "use"},
+            "targeting": {
+                "type": "vote[role!=Fool,reqMajority=51%]",
+                "filter": "",
+                "selection": "list"
+            },
+            "appliedActions": ["lynch"],
+            "appliedAtomics": {}
+        },
+        "Maul Face": {
+            "tags": [
+                "hurt",
+                "nightending"
+            ],
+            "trigger": {"on": "use"},
+            "targeting": {
+                "type": "vote[role=Werewolf]",
+                "filter": "",
+                "selection": "list"
+            },
+            "appliedActions": ["maul"],
+            "appliedAtomics": {}
+        },
+        "Brutal Death": {
+            "tags": ["death"],
+            "trigger": {
+                "on": "event[statusChange]",
+                "filter": "tag=dead"
+            },
+            "targeting": {
+                "type": "causers",
+                "filter": "",
+                "selection": "list"
+            },
+            "appliedActions": ["maul"],
+            "appliedAtomics": {}
+        }
+    },
+    "gameCons": {
+        "Dead Baddies": {
+            "trigger": {
+                "type": "count",
+                "value": "0",
+                "targetTags": "baddie"
+            },
+            "resultAtomics": {}
+        },
+        "Dead Targets": {
+            "trigger": {
+                "type": "parity",
+                "value": "1.0",
+                "targetTags": "target,anothertag"
+            },
+            "resultAtomics": {}
+        }
+    },
+    "roles": {
+        "Villager": {
+            "access": "public",
+            "tags": ["target"],
+            "chatChannels": ["public"],
+            "winCondition": ["DeadBaddies"],
+            "grantedAbilities": ["startLynchVote"],
+            "grantedStatuses": []
+        },
+        "Werewolf": {
+            "access": "private",
+            "tags": ["baddie"],
+            "chatChannels": [
+                "public",
+                "werewolfchat"
+            ],
+            "winCondition": ["DeadTargets"],
+            "grantedAbilities": [
+                "Maul Face",
+                "Brutal Death"
+            ],
+            "grantedStatuses": []
+        }
+    },
+    "statuses": {
+        "Dead": {
+            "access": "public",
+            "tags": ["dead"],
+            "actionMods": ["Silence"],
+            "application": {
+                "type": "continuous",
+                "timeout": "inf"
+            },
+            "onEndActions": [],
+            "onEndAtomics": {}
+        },
+        "Hurt": {
+            "access": "private",
+            "tags": ["bleeding"],
+            "actionMods": ["DeadOnDamage"],
+            "application": {
+                "type": "Timed",
+                "timeout": "2"
+            },
+            "onEndActions": [],
+            "onEndAtomics": {"delStatus": "Hurt"}
+        },
+        "Turning": {
+            "access": "hidden",
+            "tags": [""],
+            "actionMods": ["MaulImmune"],
+            "application": {
+                "type": "continuous",
+                "timeout": "inf"
+            },
+            "onEndActions": [],
+            "onEndAtomics": {
+                "delStatus": "Turning,[tag=bleeding]",
+                "replRole": "Werewolf"
+            }
+        }
+    },
+    "actionMods": {
+        "MaulImmune": {"priority": 1},
+        "DeadOnDamage": {"priority": 1},
+        "Silence": {"priority": 1}
+    },
+    "rounds": {
+        "Daytime": {},
+        "Nighttime": {}
+    },
+    "items": {
+        "ExampleItem2": {
+            "exampleA": 42.352,
+            "exampleB": [
+                10,
+                4,
+                265,
+                4,
+                7,
+                4
+            ]
+        },
+        "ExampleItem": {
+            "exampleA": 0,
+            "exampleB": [
+                10,
+                4,
+                265,
+                4,
+                7,
+                4
+            ]
+        }
+    }
+}

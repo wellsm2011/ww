@@ -72,20 +72,20 @@
 		"Dead Baddies": {
 			"trigger": {
 				"type" : "count",
-				"value" : 0,
-				"targetTags" : ["baddie"],
+				"value" : "0",
+				"targetTags" : "baddie",
 			},
-			"resultAtomic" : {
+			"resultAtomics" : {
 			
 			}
 		},
 		"Dead Targets": {
 			"trigger": {
 				"type" : "parity",
-				"value" : 1.0,
-				"targetTags" : ["target"]
+				"value" : "1.0",
+				"targetTags" : "target,anothertag"
 			},
-			"resultAtomic" : {
+			"resultAtomics" : {
 			
 			}
 		}
@@ -217,7 +217,7 @@
 	},
     "items": {
 		"ExampleItem2": {
-			"exampleA": 0,
+			"exampleA": 42.352,
 			"exampleB": [
 				10,
 				4,
@@ -228,7 +228,6 @@
 			]
 		},
 		"ExampleItem": {
-			"exampleA": 5,
 			"exampleB": [
 				10,
 				4,

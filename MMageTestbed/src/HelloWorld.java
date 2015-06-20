@@ -57,6 +57,8 @@ public class HelloWorld
 			U.p("Burrito");
 
 		LinkedList<Champion> champList = new LinkedList<>();
+		// Labeled breaks are usually a bit of bad practice unless heavily
+		// documented -Sudo
 		champLoop: while (true)
 		{
 			U.p("What champion do you want to look up?");

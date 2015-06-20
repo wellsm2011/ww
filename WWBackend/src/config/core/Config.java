@@ -4,14 +4,22 @@ import global.Globals;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import backend.U;
+import backend.json.JSONArray;
 import backend.json.JSONException;
 import backend.json.JSONObject;
+import config.Ability;
+import config.Action;
+import config.ActionModifier;
+import config.GameCon;
 import config.Item;
 import config.Role;
+import config.Rounds;
 import config.Status;
 import config.explorer.Explorer;
 import config.explorer.ExportedParam.MType;
@@ -50,6 +58,13 @@ import config.explorer.ExportedParameter;
  */
 public class Config
 {
+	private static MType[]															stdParamFilter;
+	static
+	{
+		Config.stdParamFilter = new MType[]
+		{ MType.GETTER, MType.SETTER };
+	}
+
 	private LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>	maps;
 
 	/**
@@ -67,7 +82,7 @@ public class Config
 
 		/*
 		 * Reflections reflections = new Reflections("my.project.prefix");
-		 *
+		 * 
 		 * Set<Class<? extends Object>> allClasses =
 		 * reflections.getSubTypesOf(Object.class);
 		 */
@@ -102,6 +117,42 @@ public class Config
 	}
 
 	/**
+	 * Wrapper, simply returns an empty/default JSONArray instead of null
+	 *
+	 * @param curJSONSection
+	 *            the original JSONObject to extract from
+	 * @param curKey
+	 *            the key to extract from
+	 * @return the resulting JSONArray
+	 */
+	private JSONArray getJSONArr(JSONObject curJSONSection, String curKey)
+	{
+		JSONArray val;
+		val = curJSONSection.optJSONArray(curKey);
+		if (val == null)
+			val = new JSONArray();
+		return val;
+	}
+
+	/**
+	 * Wrapper, simply returns an empty/default JSONObject instead of null
+	 *
+	 * @param curJSONSection
+	 *            the original JSONObject to extract from
+	 * @param curKey
+	 *            the key to extract from
+	 * @return the resulting JSONObject
+	 */
+	private JSONObject getJSONObj(JSONObject curJSONSection, String curKey)
+	{
+		JSONObject obj;
+		obj = curJSONSection.optJSONObject(curKey);
+		if (obj == null)
+			obj = new JSONObject();
+		return obj;
+	}
+
+	/**
 	 * Internal map getter, for a given name either returns, or makes and
 	 * returns a hashmap that corresponds to the given key.
 	 *
@@ -110,11 +161,11 @@ public class Config
 	 * @return a hashmap from strings to the implied type
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends ConfigMember> HashMap<String, T> getMap(String name)
+	private <T extends ConfigMember> LinkedHashMap<String, T> getMap(String name)
 	{
 		if (!this.maps.containsKey(name))
 			this.maps.put(name, new LinkedHashMap<String, T>());
-		return (HashMap<String, T>) this.maps.get(name);
+		return (LinkedHashMap<String, T>) this.maps.get(name);
 	}
 
 	/**
@@ -124,23 +175,46 @@ public class Config
 	 *            the key for the config section required
 	 * @return a hashmap of strings to the implied type.
 	 */
-	public <T extends ConfigMember> HashMap<String, T> getSection(String key)
+	public <T extends ConfigMember> LinkedHashMap<String, T> getSection(String key)
 	{
 		return this.getMap(key);
 	}
 
+	/**
+	 * Intelligently generates a JSONRepresentation of the specified object
+	 * based on pre-specified annotations.
+	 *
+	 * @param value
+	 *            the input object to create a representation of
+	 * @return the resulting JSON representation
+	 */
 	private JSONObject intelliGen(ConfigMember value)
 	{
-		// curMemberItem.getValue().exportAsJSON()
-		return new JSONObject();
+		JSONObject res = new JSONObject();
+		Map<String, ExportedParameter> paramMap = Explorer.findParametersByFilter(value, Config.stdParamFilter);
+		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())
+			res.put(curExport.getKey(), curExport.getValue().call(MType.GETTER));
+		return res;
 	}
 
+	/**
+	 * Intelligently parses the specified data from the json object and the
+	 * specified type. Uses the standard annotations (ExportedParam) to
+	 * correctly parse the methods as needed
+	 *
+	 * @param data
+	 *            the JSON Data to attempt to parse
+	 * @param key
+	 *            the key for this section
+	 * @param type
+	 *            the type to attempt to use for this part of the config file
+	 */
 	private <T extends ConfigMember> void intelliParse(JSONObject data, String key, Class<T> type)
 	{
 		JSONObject jsonData = data.optJSONObject(key);
 		if (jsonData == null)
 			jsonData = new JSONObject();
-
+		HashMap<String, T> parsed = this.getMap(key);
 		for (String cur : jsonData.keySet())
 			try
 			{
@@ -148,41 +222,17 @@ public class Config
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
 				T curInstance = type.newInstance();
-				Map<String, ExportedParameter> map = Explorer.findParametersByFilter(curInstance, MType.GETTER, MType.SETTER);
+				Map<String, ExportedParameter> paramMap = Explorer.findParametersByFilter(curInstance, Config.stdParamFilter);
 				for (String curKey : curJSONSection.keySet())
-					if (map.containsKey(curKey))
-						switch (map.get(curKey).getDatatype())
-						{
-							case NUMBER:
-								map.get(curKey).call(MType.SETTER, curJSONSection.getDouble(key));
-								break;
-							case NUMCOLLECTION:
-								break;
-							case NUMMAP:
-								break;
-							case STRCOLLECTION:
-								break;
-							case STRING:
-								map.get(curKey).call(MType.SETTER, curJSONSection.getString(key));
-								break;
-							case STRMAP:
-								break;
-							default:
-								break;
-						}
+					if (paramMap.containsKey(curKey))
+						this.parseParam(curJSONSection, curKey, paramMap.get(curKey));
+				parsed.put(cur, curInstance);
 
-			}
-			/*
-			 * catch ( e) { U.e("Error finding proper constructor for class " +
-			 * type.getName() + " for config section " + key + ". Make sure " +
-			 * type.getName() +
-			 * " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the "
-			 * ); }
-			 */catch (InstantiationException e)
+			} catch (InstantiationException e)
 			{
 				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
 						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
-			} catch (IllegalAccessException | IllegalArgumentException | JSONException e)
+			} catch (IllegalAccessException | JSONException e)
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
@@ -229,43 +279,61 @@ public class Config
 		}
 	}
 
-	/*	*//**
-	 * Based on a JSON config file, pulls the given key, and instantiates
-	 * objects into the passed class.
+	/**
+	 * From the given JSONSection, and the specified key, parses the data into
+	 * the passed exported parameter.
 	 *
-	 * @param data
-	 *            the json data to load from
-	 * @param key
-	 *            the json key to pull things from
-	 * @param type
-	 *            the class type to instantiate.
+	 * @param curJSONSection
+	 *            the json section to parse from
+	 * @param curKey
+	 *            the key to pull the data from
+	 * @param curParam
+	 *            the parameter to attempt to parse
 	 */
-	/*
-	 * private <T extends ConfigMember> void parse(JSONObject data, String key,
-	 * Class<T> type) { JSONObject jsonData = data.optJSONObject(key); if
-	 * (jsonData == null) jsonData = new JSONObject(); HashMap<String, T> parsed
-	 * = this.getMap(key);
-	 *
-	 * for (String cur : jsonData.keySet()) try { Constructor<T> constructor =
-	 * type.getConstructor(String.class, JSONObject.class); JSONObject
-	 * curJSONSection = jsonData.optJSONObject(cur); if (curJSONSection == null)
-	 * curJSONSection = new JSONObject(); parsed.put(cur,
-	 * constructor.newInstance(cur, curJSONSection));
-	 *
-	 * } catch (NoSuchMethodException | SecurityException e) {
-	 * U.e("Error finding proper constructor for class " + type.getName() +
-	 * " for config section " + key + ". Make sure " + type.getName() +
-	 * " actually has a constructor compatible with the standard. (As in, it should take a String for the name, and a JSONObject for the "
-	 * ); } catch (InstantiationException e) { U.e("Error instantiating class "
-	 * + type.getName() +
-	 * " for what reason did you try and use an abstract class or interface or something?"
-	 * + " Make sure you are using the correct type for key " + key +
-	 * " in the Config class.", e); } catch (IllegalAccessException |
-	 * IllegalArgumentException | InvocationTargetException | JSONException e) {
-	 * U.e("Issue parsing " + key +
-	 * " during config loading. Probably an internal error with the \"" + key +
-	 * "\" handler."); e.printStackTrace(); } }
-	 */
+	private void parseParam(JSONObject curJSONSection, String curKey, ExportedParameter curParam)
+	{
+		JSONObject obj;
+		JSONArray val;
+		switch (curParam.getDatatype())
+		{
+			case NUM:
+				curParam.call(MType.SETTER, curJSONSection.optDouble(curKey, 0.0));
+				break;
+			case STRING:
+				curParam.call(MType.SETTER, curJSONSection.optString(curKey, ""));
+				break;
+			case NUMLIST:
+				val = this.getJSONArr(curJSONSection, curKey);
+				List<Double> numList = new LinkedList<Double>();
+				for (int i = 0; i < val.length(); i++)
+					numList.add(val.optDouble(i, 0));
+				curParam.call(MType.SETTER, numList);
+				break;
+			case STRLIST:
+				val = this.getJSONArr(curJSONSection, curKey);
+				List<String> strList = new LinkedList<String>();
+				for (int i = 0; i < val.length(); i++)
+					strList.add(val.optString(i, ""));
+				curParam.call(MType.SETTER, strList);
+				break;
+			case NUMMAP:
+				obj = this.getJSONObj(curJSONSection, curKey);
+				Map<String, Double> numMap = new LinkedHashMap<String, Double>();
+				for (String mapKey : obj.keySet())
+					numMap.put(mapKey, obj.getDouble(mapKey));
+				curParam.call(MType.SETTER, numMap);
+				break;
+			case STRMAP:
+				obj = this.getJSONObj(curJSONSection, curKey);
+				Map<String, String> strMap = new LinkedHashMap<String, String>();
+				for (String mapKey : obj.keySet())
+					strMap.put(mapKey, obj.getString(mapKey));
+				curParam.call(MType.SETTER, strMap);
+				break;
+			default:
+				break;
+		}
+	}
 
 	/**
 	 * Basic toString method, simply returns the string representation

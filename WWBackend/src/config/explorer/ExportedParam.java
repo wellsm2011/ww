@@ -12,7 +12,7 @@ public @interface ExportedParam
 {
 	public enum DType
 	{
-		NUMBER, STRING, NUMCOLLECTION, STRCOLLECTION, NUMMAP, STRMAP
+		NUM, STRING, NUMLIST, STRLIST, NUMMAP, STRMAP
 	}
 
 	public enum MType
@@ -27,4 +27,6 @@ public @interface ExportedParam
 	String key() default "";
 
 	MType methodtype() default MType.GETTER;
+
+	int sortVal() default 1000;
 }

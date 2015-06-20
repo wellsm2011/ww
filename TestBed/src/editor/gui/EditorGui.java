@@ -64,8 +64,9 @@ public class EditorGui
 				for (ExportedParameter e : curElem.getValue())
 				{
 					TreeItem exportItem = new TreeItem(elemItem, 0);
-					exportItem.setText(e.toString());
+					exportItem.setText(e.getParamName() + " - " + e.getGettableVal());
 				}
+				elemItem.setExpanded(true);
 			}
 			sectionItem.setExpanded(true);
 		}
