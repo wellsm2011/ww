@@ -25,8 +25,8 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-import backend.lzmastreams.LzmaInputStream;
-import backend.lzmastreams.LzmaOutputStream;
+import backend.lib.lzmastreams.LzmaInputStream;
+import backend.lib.lzmastreams.LzmaOutputStream;
 
 /**
  * Utility class, handles printing output nicely, as well as multiple levels of

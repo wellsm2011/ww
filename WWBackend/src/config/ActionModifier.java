@@ -7,16 +7,16 @@ import config.explorer.ExportedParam.MType;
 
 public class ActionModifier implements ConfigMember
 {
-	private Double	priority;
+	private double	priority;
 
 	@ExportedParam(datatype = DType.NUM, key = "priority", methodtype = MType.GETTER, sortVal = 1)
-	public Double getTags()
+	public double getTags()
 	{
 		return this.priority;
 	}
 
 	@ExportedParam(datatype = DType.NUM, key = "priority", methodtype = MType.SETTER, sortVal = 1)
-	public void setTags(Double input)
+	public void setTags(double input)
 	{
 		this.priority = input;
 	}
