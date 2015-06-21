@@ -11,30 +11,6 @@ import backend.U;
 
 public class HelloWorld
 {
-	public static void loopExample()
-	{
-		// First example: for loop
-		for (int i = 0; i < 5; ++i)
-			U.p(i);
-
-		// Second example: for each loop
-		int[] ary = new int[]
-		{ 0, 1, 2, 3, 4 };
-		for (int i : ary)
-			U.p(i);
-
-		// Third example: while loop
-		int i = 0;
-		while (i < 5)
-			U.p(i++);
-
-		// fourth example: do while loop
-		i = 0;
-		do
-			U.p(i++);
-		while (i < 5);
-	}
-
 	public static void main(String[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
 	{
 		Scanner keyboard = new Scanner(System.in);
@@ -88,6 +64,30 @@ public class HelloWorld
 			U.p(i.getClass().getSimpleName() + "'s ult is named: " + i.getUltName() + "!");
 
 		// if (champ == "Caitlyn");
+	}
+
+	public static void loopExample()
+	{
+		// First example: for loop
+		for (int i = 0; i < 5; ++i)
+			U.p(i);
+
+		// Second example: for each loop
+		int[] ary = new int[]
+		{ 0, 1, 2, 3, 4 };
+		for (int i : ary)
+			U.p(i);
+
+		// Third example: while loop
+		int i = 0;
+		while (i < 5)
+			U.p(i++);
+
+		// fourth example: do while loop
+		i = 0;
+		do
+			U.p(i++);
+		while (i < 5);
 	}
 
 	/**
