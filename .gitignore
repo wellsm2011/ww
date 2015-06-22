@@ -39,3 +39,6 @@ local.properties
 # KDE
 .directory
 test.db
+
+# Ignored projects
+GuiTests/
