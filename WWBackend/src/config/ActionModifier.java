@@ -64,7 +64,7 @@ public class ActionModifier implements ConfigMember
 		this.effectData = input;
 	}
 
-	@ExportedParam(datatype = DType.STRMAP, key = "effect", methodtype = MType.SETTER, sortVal = 4)
+	@ExportedParam(datatype = DType.STRMAP, key = "triggeredActions", methodtype = MType.SETTER, sortVal = 4)
 	public void setTriggeredActions(List<String> input)
 	{
 		this.triggeredActions = input;

@@ -15,7 +15,6 @@ import config.explorer.ExportedParam.MType;
  */
 public class Item implements ConfigMember
 {
-
 	private double			exampleA;
 	private List<Double>	exampleB;
 
