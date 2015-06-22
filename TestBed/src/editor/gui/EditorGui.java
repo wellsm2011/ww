@@ -32,7 +32,7 @@ public class EditorGui
 			Display display = new Display();
 			Shell shell = new Shell(display);
 			shell.setLayout(new FillLayout());
-			this.createConfigBrowser(shell, explorer, this.createParamEditor(shell));
+			buildGui(shell);
 			shell.open();
 			while (!shell.isDisposed() && this.run)
 				if (!display.readAndDispatch())
@@ -51,28 +51,32 @@ public class EditorGui
 		});
 	}
 
-	private Handler<String> createParamEditor(Shell shell)
+	private void buildGui(Shell shell)
 	{
+		Tree tree = new Tree(shell, SWT.BORDER);
 		Composite paramEditorParent = new Composite(shell, SWT.BORDER);
+		this.createConfigBrowser(tree, this.createParamEditor(paramEditorParent));
+	}
+
+	private Handler<String> createParamEditor(Composite paramEditorParent)
+	{
+
 		Label label = new Label(paramEditorParent, SWT.SHADOW_NONE);
 		Text text = new Text(paramEditorParent, SWT.BORDER);
 		Rectangle clientArea = paramEditorParent.getClientArea();
 		label.setLocation(clientArea.x, clientArea.y);
 		label.setText("Testsetsetsetsetsetsett");
 		label.pack();
-		text.setBounds(clientArea.x+100, clientArea.y+10, 150,20);
 		// paramEditorParent.
 		return (in) -> {
 			label.setText(in);
+			label.pack();
 		};
 	}
 
-	private void createConfigBrowser(Shell shell, Explorer explorer, Handler<String> onSelect)
+	private void createConfigBrowser(Tree tree, Handler<String> onSelect)
 	{
-		final Tree tree = new Tree(shell, SWT.BORDER);
-		tree.setData(explorer);
 		tree.addMouseListener(new ConfigTreeListener(onSelect));
-
 		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> curSection : this.data.entrySet())
 		{
 			TreeItem sectionItem = new TreeItem(tree, 0);

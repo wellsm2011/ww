@@ -1,6 +1,8 @@
 package editor.gui;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -50,8 +52,26 @@ public class ConfigTreeListener implements MouseListener
 			TreeItem item = ((Tree) event.getSource()).getItem(point);
 			if (item != null)
 				if (item.getData().hashCode() == this.cur.hashCode())
-					this.onSelect.handle(item.getData().toString());
+					this.onSelect.handle(nicelyFormat(item.getData()));
 		}
+	}
+
+	private String nicelyFormat(Object item)
+	{
+		StringBuilder res = new StringBuilder();
+		if (item instanceof Collection)
+		{
+			Collection<?> coll = (Collection<?>) item;
+			for (Object cur : coll)
+				res.append(cur.toString() + "\n");
+		}
+		if (item instanceof Map)
+		{
+			Map<?, ?> coll = (Map<?, ?>) item;
+			for (Entry<?, ?> cur : coll.entrySet())
+				res.append(cur.getKey() + " : " + cur.getValue() + "\n");
+		}
+		return res.toString();
 	}
 
 }
