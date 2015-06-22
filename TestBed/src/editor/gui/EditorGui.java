@@ -7,12 +7,14 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
 
+import backend.U;
+import backend.functionInterfaces.Handler;
 import config.explorer.Explorer;
 import config.explorer.ExportedParameter;
 
@@ -30,7 +32,7 @@ public class EditorGui
 			Display display = new Display();
 			Shell shell = new Shell(display);
 			shell.setLayout(new FillLayout());
-			this.createContents(shell, explorer);
+			this.createConfigBrowser(shell, explorer, this.createParamEditor(shell));
 			shell.open();
 			while (!shell.isDisposed() && this.run)
 				if (!display.readAndDispatch())
@@ -49,23 +51,38 @@ public class EditorGui
 		});
 	}
 
-	private void createContents(Shell shell, Explorer explorer)
+	private Handler<String> createParamEditor(Shell shell)
+	{
+		Composite paramEditorParent = new Composite(shell, SWT.BORDER);
+		Label label = new Label(paramEditorParent, SWT.SHADOW_NONE);
+		Text text = new Text(paramEditorParent, SWT.BORDER);
+		Rectangle clientArea = paramEditorParent.getClientArea();
+		label.setLocation(clientArea.x, clientArea.y);
+		label.setText("Testsetsetsetsetsetsett");
+		label.pack();
+		text.setBounds(clientArea.x+100, clientArea.y+10, 150,20);
+		// paramEditorParent.
+		return (in) -> {
+			label.setText(in);
+		};
+	}
+
+	private void createConfigBrowser(Shell shell, Explorer explorer, Handler<String> onSelect)
 	{
 		final Tree tree = new Tree(shell, SWT.BORDER);
+		tree.setData(explorer);
+		tree.addMouseListener(new ConfigTreeListener(onSelect));
 
 		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> curSection : this.data.entrySet())
 		{
 			TreeItem sectionItem = new TreeItem(tree, 0);
 			sectionItem.setText(curSection.getKey());
+			sectionItem.setData(curSection.getValue());
 			for (Entry<String, Collection<ExportedParameter>> curElem : curSection.getValue().entrySet())
 			{
 				TreeItem elemItem = new TreeItem(sectionItem, 0);
 				elemItem.setText(curElem.getKey());
-				for (ExportedParameter e : curElem.getValue())
-				{
-					TreeItem exportItem = new TreeItem(elemItem, 0);
-					exportItem.setText(e.getParamName() + " - " + e.getGettableVal());
-				}
+				elemItem.setData(curElem.getValue());
 				elemItem.setExpanded(true);
 			}
 			sectionItem.setExpanded(true);

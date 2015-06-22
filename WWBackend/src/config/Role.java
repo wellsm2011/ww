@@ -16,7 +16,7 @@ public class Role implements ConfigMember
 	private List<String>	grantedAbilities;
 	private List<String>	grantedStatuses;
 
-	@ExportedParam(datatype = DType.STRING, key = "access", methodtype = MType.GETTER, sortVal = 1)
+	@ExportedParam(datatype = DType.STR, key = "access", methodtype = MType.GETTER, sortVal = 1)
 	public String getAccess()
 	{
 		return this.access;
@@ -52,7 +52,7 @@ public class Role implements ConfigMember
 		return this.winCondition;
 	}
 
-	@ExportedParam(datatype = DType.STRING, key = "access", methodtype = MType.SETTER, sortVal = 1)
+	@ExportedParam(datatype = DType.STR, key = "access", methodtype = MType.SETTER, sortVal = 1)
 	public void setAccess(String input)
 	{
 		this.access = input;

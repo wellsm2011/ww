@@ -298,7 +298,7 @@ public class Config
 			case NUM:
 				curParam.call(MType.SETTER, curJSONSection.optDouble(curKey, 0.0));
 				break;
-			case STRING:
+			case STR:
 				curParam.call(MType.SETTER, curJSONSection.optString(curKey, ""));
 				break;
 			case NUMLIST:
