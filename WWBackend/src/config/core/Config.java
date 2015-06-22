@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import backend.U;
-import backend.json.JSONArray;
-import backend.json.JSONException;
-import backend.json.JSONObject;
+import backend.lib.json.JSONArray;
+import backend.lib.json.JSONException;
+import backend.lib.json.JSONObject;
 import config.Ability;
 import config.Action;
 import config.ActionModifier;
@@ -298,7 +298,7 @@ public class Config
 			case NUM:
 				curParam.call(MType.SETTER, curJSONSection.optDouble(curKey, 0.0));
 				break;
-			case STRING:
+			case STR:
 				curParam.call(MType.SETTER, curJSONSection.optString(curKey, ""));
 				break;
 			case NUMLIST:

@@ -21,12 +21,14 @@ import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-import backend.lzmastreams.LzmaInputStream;
-import backend.lzmastreams.LzmaOutputStream;
+import config.explorer.ExportedParameter;
+import backend.lib.lzmastreams.LzmaInputStream;
+import backend.lib.lzmastreams.LzmaOutputStream;
 
 /**
  * Utility class, handles printing output nicely, as well as multiple levels of
@@ -606,5 +608,18 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
+	}
+
+	/**
+	 * Casting wrapper, centralizes the "unchecked" warning needs.
+	 * 
+	 * @param cur
+	 *            the object to cast
+	 * @return the object casted to the specified type.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T cleanCast(Object cur)
+	{
+		return (T) cur;
 	}
 }

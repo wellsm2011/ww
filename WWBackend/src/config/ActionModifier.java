@@ -17,7 +17,7 @@ public class ActionModifier implements ConfigMember
 	private Double	priority;
 
 	@ExportedParam(datatype = DType.NUM, key = "priority", methodtype = MType.GETTER, sortVal = 1)
-	public Double getTags()
+	public double getTags()
 	{
 		return this.priority;
 	}
@@ -47,7 +47,7 @@ public class ActionModifier implements ConfigMember
 	}
 
 	@ExportedParam(datatype = DType.NUM, key = "priority", methodtype = MType.SETTER, sortVal = 1)
-	public void setTags(Double input)
+	public void setTags(double input)
 	{
 		this.priority = input;
 	}

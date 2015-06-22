@@ -19,25 +19,25 @@ public class Item implements ConfigMember
 	private double			exampleA;
 	private List<Double>	exampleB;
 
-	@ExportedParam(datatype = DType.NUM, key = "exampleA", methodtype = MType.GETTER, jsonStored = true)
+	@ExportedParam(datatype = DType.NUM, key = "exampleA", methodtype = MType.GETTER)
 	public double getExampleA()
 	{
 		return this.exampleA;
 	}
 
-	@ExportedParam(datatype = DType.NUMLIST, key = "exampleB", methodtype = MType.GETTER, jsonStored = true)
+	@ExportedParam(datatype = DType.NUMLIST, key = "exampleB", methodtype = MType.GETTER)
 	public List<Double> getExampleB()
 	{
 		return this.exampleB;
 	}
 
-	@ExportedParam(datatype = DType.NUM, key = "exampleA", methodtype = MType.SETTER, jsonStored = true)
+	@ExportedParam(datatype = DType.NUM, key = "exampleA", methodtype = MType.SETTER)
 	public void setExampleA(double input)
 	{
 		this.exampleA = input;
 	}
 
-	@ExportedParam(datatype = DType.NUMLIST, key = "exampleB", methodtype = MType.SETTER, jsonStored = true)
+	@ExportedParam(datatype = DType.NUMLIST, key = "exampleB", methodtype = MType.SETTER)
 	public void setExampleB(List<Double> input)
 	{
 		this.exampleB = input;
