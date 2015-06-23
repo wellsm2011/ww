@@ -47,6 +47,6 @@ public class ExportedParameter
 	@Override
 	public String toString()
 	{
-		return this.paramName + " - [" + this.methods + "]";
+		return this.paramName + " - [" + this.call(MType.GETTER) + "]";
 	}
 }

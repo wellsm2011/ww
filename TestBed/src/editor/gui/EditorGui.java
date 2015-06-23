@@ -81,7 +81,7 @@ public class EditorGui
 		{
 			TreeItem sectionItem = new TreeItem(tree, 0);
 			sectionItem.setText(curSection.getKey());
-			sectionItem.setData(curSection.getValue());
+			sectionItem.setData(curSection.getValue().keySet());
 			for (Entry<String, Collection<ExportedParameter>> curElem : curSection.getValue().entrySet())
 			{
 				TreeItem elemItem = new TreeItem(sectionItem, 0);

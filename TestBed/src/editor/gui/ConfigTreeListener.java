@@ -65,12 +65,6 @@ public class ConfigTreeListener implements MouseListener
 			for (Object cur : coll)
 				res.append(cur.toString() + "\n");
 		}
-		if (item instanceof Map)
-		{
-			Map<?, ?> coll = (Map<?, ?>) item;
-			for (Entry<?, ?> cur : coll.entrySet())
-				res.append(cur.getKey() + " : " + cur.getValue() + "\n");
-		}
 		return res.toString();
 	}
 
