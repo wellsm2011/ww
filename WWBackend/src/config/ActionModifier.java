@@ -12,9 +12,15 @@ public class ActionModifier implements ConfigMember
 {
 	private Map<String, String>	triggerData;
 	private Map<String, String>	effectData;
-	private List<String>	triggeredActions;
+	private List<String>		triggeredActions;
 	private Map<String, String>	triggeredAtomics;
-	private Double	priority;
+	private Double				priority;
+
+	@ExportedParam(datatype = DType.STRMAP, key = "effect", methodtype = MType.GETTER, sortVal = 3)
+	public Map<String, String> getEffectData()
+	{
+		return this.effectData;
+	}
 
 	@ExportedParam(datatype = DType.NUM, key = "priority", methodtype = MType.GETTER, sortVal = 1)
 	public double getTags()
@@ -26,12 +32,6 @@ public class ActionModifier implements ConfigMember
 	public Map<String, String> getTriggerData()
 	{
 		return this.triggerData;
-	}
-
-	@ExportedParam(datatype = DType.STRMAP, key = "effect", methodtype = MType.GETTER, sortVal = 3)
-	public Map<String, String> getEffectData()
-	{
-		return this.effectData;
 	}
 
 	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.GETTER, sortVal = 4)
@@ -46,6 +46,12 @@ public class ActionModifier implements ConfigMember
 		return this.triggeredAtomics;
 	}
 
+	@ExportedParam(datatype = DType.STRMAP, key = "effect", methodtype = MType.SETTER, sortVal = 3)
+	public void setEffectData(Map<String, String> input)
+	{
+		this.effectData = input;
+	}
+
 	@ExportedParam(datatype = DType.NUM, key = "priority", methodtype = MType.SETTER, sortVal = 1)
 	public void setTags(double input)
 	{
@@ -56,12 +62,6 @@ public class ActionModifier implements ConfigMember
 	public void setTriggerData(Map<String, String> input)
 	{
 		this.triggerData = input;
-	}
-
-	@ExportedParam(datatype = DType.STRMAP, key = "effect", methodtype = MType.SETTER, sortVal = 3)
-	public void setEffectData(Map<String, String> input)
-	{
-		this.effectData = input;
 	}
 
 	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.SETTER, sortVal = 4)

@@ -13,14 +13,6 @@ import backend.U;
 import backend.lib.json.JSONArray;
 import backend.lib.json.JSONException;
 import backend.lib.json.JSONObject;
-import config.Ability;
-import config.Action;
-import config.ActionModifier;
-import config.GameCon;
-import config.Item;
-import config.Role;
-import config.Rounds;
-import config.Status;
 import config.explorer.Explorer;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
@@ -75,30 +67,7 @@ public class Config
 	 */
 	public Config(String filename)
 	{
-		LinkedHashMap<String, Class<? extends ConfigMember>> configMembers = new LinkedHashMap<String, Class<? extends ConfigMember>>();
-
-		// Note: If it shows an error, make sure that your <something>.class
-		// implements JSONExportable.
-
-		/*
-		 * Reflections reflections = new Reflections("my.project.prefix");
-		 * Set<Class<? extends Object>> allClasses =
-		 * reflections.getSubTypesOf(Object.class);
-		 */
-
-		configMembers.put("items", Item.class);
-		configMembers.put("statuses", Status.class);
-		configMembers.put("roles", Role.class);
-		configMembers.put("actions", Action.class);
-		configMembers.put("abilities", Ability.class);
-		configMembers.put("gameCons", GameCon.class);
-		configMembers.put("actionMods", ActionModifier.class);
-		configMembers.put("rounds", Rounds.class);
-
-		// Add new config sections here, order here merely changes the default
-		// export ordering.
-
-		this.loadConfig(filename, configMembers);
+		this.loadConfig(filename);
 	}
 
 	/**
@@ -112,6 +81,7 @@ public class Config
 	 */
 	public LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>> getAllMaps()
 	{
+		// TODO: Don't expose internal data members.
 		return this.maps;
 	}
 
@@ -217,6 +187,8 @@ public class Config
 		for (String cur : jsonData.keySet())
 			try
 			{
+				// Get the current JSON object, instantiate it to the given type
+				// and populate the class.
 				JSONObject curJSONSection = jsonData.optJSONObject(cur);
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
@@ -225,12 +197,12 @@ public class Config
 				for (String curKey : curJSONSection.keySet())
 					if (paramMap.containsKey(curKey))
 						this.parseParam(curJSONSection, curKey, paramMap.get(curKey));
+					else
+						U.d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
 				parsed.put(cur, curInstance);
-
 			} catch (InstantiationException e)
 			{
-				U.e("Error instantiating class " + type.getName() + " for what reason did you try and use an abstract class or interface or something?"
-						+ " Make sure you are using the correct type for key " + key + " in the Config class.", e);
+				U.e("Error instantiating class " + type.getName() + ". Make sure you are using the correct type for the key '" + key + "' in the Config class.", e);
 			} catch (IllegalAccessException | JSONException e)
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
@@ -244,28 +216,23 @@ public class Config
 	 *
 	 * @param filename
 	 *            the filename to open
-	 * @param configMembers
-	 *            the config categories to parse, maps strings to class
-	 *            definitions
 	 */
-	private void loadConfig(String filename, HashMap<String, Class<? extends ConfigMember>> configMembers)
+	private void loadConfig(String filename)
 	{
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
 			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>();
 			for (String curJSONKey : data.keySet())
-			{
-				Class<? extends ConfigMember> type = configMembers.get(curJSONKey);
-				if (type != null)
+				try
+				{
+					@SuppressWarnings("unchecked")
+					Class<? extends ConfigMember> type = (Class<? extends ConfigMember>) Class.forName("config." + curJSONKey);
 					this.intelliParse(data, curJSONKey, type);
-				else
-					U.e("Unknown key " + curJSONKey + " in config file. Might want to look at that.");
-			}
-			for (Entry<String, Class<? extends ConfigMember>> configMembs : configMembers.entrySet())
-				if (!this.maps.containsKey(configMembs.getKey()))
-					this.intelliParse(data, configMembs.getKey(), configMembs.getValue());
-
+				} catch (ClassCastException | ClassNotFoundException ex)
+				{
+					U.d("Extra key found in JSON file: " + curJSONKey + ". Did you spell the name correctly?", 1);
+				}
 		} catch (JSONException e)
 		{
 			U.e("Error parsing config file", e);
@@ -329,7 +296,10 @@ public class Config
 					strMap.put(mapKey, obj.getString(mapKey));
 				curParam.call(MType.SETTER, strMap);
 				break;
+			case OBJ:
+				obj = this.getJSONObj(curJSONSection, curKey);
 			default:
+				U.d("Unknown exported parameter found.", 2);
 				break;
 		}
 	}
