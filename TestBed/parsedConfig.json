@@ -142,6 +142,58 @@
             }
         }
     },
+    "ActionModifier": {
+        "MaulImmune": {
+            "priority": 1,
+            "trigger": {
+                "on": "attemptedAbility",
+                "filter": "name=Maul Face"
+            },
+            "effect": {"targeting.filter": ">>player!=_this"},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        },
+        "DeadOnDamage": {
+            "priority": 1,
+            "trigger": {
+                "on": "ability",
+                "filter": "tag=dead|hurt"
+            },
+            "effect": {"appliedAtomics": ">>addStatus:Dead"},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        },
+        "Silence": {
+            "priority": 1,
+            "trigger": {
+                "on": "attemptedAtomic",
+                "filter": "name=ChatPost"
+            },
+            "effect": {"value": ""},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        }
+    },
+    "Phase": {
+        "Daytime": {
+            "triggeredActions": [],
+            "triggeredAtomics": {},
+            "activeMods": [],
+            "continueReqs": [
+                "ability[tag=dayending]",
+                "time[val=10min]"
+            ]
+        },
+        "Nighttime": {
+            "triggeredActions": [],
+            "triggeredAtomics": {},
+            "activeMods": [],
+            "continueReqs": [
+                "ability[tag=nightending]",
+                "time[val=10min]"
+            ]
+        }
+    },
     "Item": {
         "ExampleItem2": {
             "exampleA": 42.352,

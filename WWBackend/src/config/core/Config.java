@@ -13,40 +13,22 @@ import static backend.U.*;
 import backend.lib.json.JSONArray;
 import backend.lib.json.JSONException;
 import backend.lib.json.JSONObject;
+
 import config.explorer.Explorer;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
 
 /**
- * <p>
  * Testbed config, uses the JSON parser to parse different parts of a given
  * config file. Maintains ordering of original config file, as well as adding
  * config sections during writing out that were not in the original config file.
  * Assumes that JSONExportable classes properly export themselves, this also
  * allows for full, pretty-printed config writing.
- * </p>
- *
  * <p>
  * Future: Currently has a simple example for items, in the future, order of
- * loading will probably matter, for example: Actions will probably need to be
+ * loading might matter, for example: Actions will might need to be
  * loaded before Items, if Items refer to Actions, etc, etc. Bi-directional
  * links would be nice to avoid architecturely, but wouldn't be a show-stopper.
- * </p>
- *
- * <p>
- * Procedure to add a new config file section: Add line in Constructor line
- * like...
- * </p>
- *
- * <p>
- * <code>configMembers.put(<json key here>, <parseing class>.class);</code>
- * </p>
- *
- * <p>
- * and write the parsing class. Done!
- * </p>
- *
- *
  */
 public class Config
 {

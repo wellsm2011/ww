@@ -8,7 +8,7 @@ import config.explorer.ExportedParam;
 import config.explorer.ExportedParam.DType;
 import config.explorer.ExportedParam.MType;
 
-public class Rounds implements ConfigMember
+public class Phase implements ConfigMember
 {
 	private List<String>		triggeredActions;
 	private Map<String, String>	triggeredAtomics;

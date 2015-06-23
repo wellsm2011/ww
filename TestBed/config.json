@@ -142,7 +142,7 @@
             }
         }
     },
-    "ActionMod": {
+    "ActionModifier": {
         "MaulImmune": {
             "priority": 1,
             "trigger": {
@@ -174,7 +174,7 @@
             "triggeredAtomics": {}
         }
     },
-    "Round": {
+    "Phase": {
         "Daytime": {
             "triggeredActions": [],
             "triggeredAtomics": {},
