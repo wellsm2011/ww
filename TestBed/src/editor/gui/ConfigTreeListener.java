@@ -1,15 +1,12 @@
 package editor.gui;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.*;
 
-import config.explorer.ExportedParameter;
 import backend.U;
 import backend.functionInterfaces.Handler;
 

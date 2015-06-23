@@ -7,13 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-import backend.U;
 import backend.functionInterfaces.Handler;
 import config.explorer.Explorer;
 import config.explorer.ExportedParameter;
@@ -62,7 +59,7 @@ public class EditorGui
 	{
 
 		Label label = new Label(paramEditorParent, SWT.SHADOW_NONE);
-		Text text = new Text(paramEditorParent, SWT.BORDER);
+		//Text text = new Text(paramEditorParent, SWT.BORDER);
 		Rectangle clientArea = paramEditorParent.getClientArea();
 		label.setLocation(clientArea.x, clientArea.y);
 		label.setText("Testsetsetsetsetsetsett");

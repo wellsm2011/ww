@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import backend.U;
+import static backend.U.*;
 import backend.lib.json.JSONArray;
 import backend.lib.json.JSONException;
 import backend.lib.json.JSONObject;
@@ -198,14 +198,14 @@ public class Config
 					if (paramMap.containsKey(curKey))
 						this.parseParam(curJSONSection, curKey, paramMap.get(curKey));
 					else
-						U.d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
+						d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
 				parsed.put(cur, curInstance);
 			} catch (InstantiationException e)
 			{
-				U.e("Error instantiating class " + type.getName() + ". Make sure you are using the correct type for the key '" + key + "' in the Config class.", e);
+				e("Error instantiating class " + type.getName() + ". Make sure you are using the correct type for the key '" + key + "' in the Config class.", e);
 			} catch (IllegalAccessException | JSONException e)
 			{
-				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
+				e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
 			}
 	}
@@ -221,25 +221,24 @@ public class Config
 	{
 		try
 		{
-			JSONObject data = new JSONObject(U.readFile(filename));
+			JSONObject data = new JSONObject(readFile(filename));
 			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>();
 			for (String curJSONKey : data.keySet())
 				try
 				{
-					@SuppressWarnings("unchecked")
-					Class<? extends ConfigMember> type = (Class<? extends ConfigMember>) Class.forName("config." + curJSONKey);
+					Class<? extends ConfigMember> type = cleanCast(Class.forName("config." + curJSONKey));
 					this.intelliParse(data, curJSONKey, type);
 				} catch (ClassCastException | ClassNotFoundException ex)
 				{
-					U.d("Extra key found in JSON file: " + curJSONKey + ". Did you spell the name correctly?", 1);
+					d("Extra key found in JSON file: " + curJSONKey + ". Did you spell the name correctly?", 1);
 				}
 		} catch (JSONException e)
 		{
-			U.e("Error parsing config file", e);
+			e("Error parsing config file", e);
 			Globals.exit();
 		} catch (NullPointerException e)
 		{
-			U.e("Internal error parsing config file.");
+			e("Internal error parsing config file.");
 			e.printStackTrace();
 			Globals.exit();
 		}
@@ -299,7 +298,7 @@ public class Config
 			case OBJ:
 				obj = this.getJSONObj(curJSONSection, curKey);
 			default:
-				U.d("Unknown exported parameter found.", 2);
+				d("Unknown exported parameter found.", 2);
 				break;
 		}
 	}
@@ -319,7 +318,7 @@ public class Config
 	 * @param filename
 	 *            the file to export to
 	 */
-	public void writeToFile(String filename)
+	public void outputToFile(String filename)
 	{
 		JSONObject output = new JSONObject();
 		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curConfigMember : this.maps.entrySet())
@@ -329,6 +328,6 @@ public class Config
 				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue()));
 			output.putOnce(curConfigMember.getKey(), member);
 		}
-		U.writeToFile(filename, output.toString(4));
+		writeToFile(filename, output.toString(4));
 	}
 }
