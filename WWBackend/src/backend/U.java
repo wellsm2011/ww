@@ -21,12 +21,10 @@ import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-import config.explorer.ExportedParameter;
 import backend.lib.lzmastreams.LzmaInputStream;
 import backend.lib.lzmastreams.LzmaOutputStream;
 
@@ -40,7 +38,7 @@ import backend.lib.lzmastreams.LzmaOutputStream;
 public class U
 {
 	private static PrintStream								output;
-	private static int										debugging			= 0;
+	private static int										debugging			= 2;
 	private static SimpleDateFormat							outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
 	private static SimpleDateFormat							timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
 	private static Scanner									input;
@@ -96,6 +94,19 @@ public class U
 			U.e("Error, could not properly call method " + method.getName(), e);
 		}
 		return (T) res;
+	}
+
+	/**
+	 * Casting wrapper, centralizes the "unchecked" warning needs.
+	 *
+	 * @param cur
+	 *            the object to cast
+	 * @return the object casted to the specified type.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T cleanCast(Object cur)
+	{
+		return (T) cur;
 	}
 
 	/**
@@ -157,7 +168,7 @@ public class U
 	public static void d(String in, int level)
 	{
 		if (U.debugging >= level)
-			U.printWithTag(in, "DEBUG");
+			U.printWithTag(in, "DEBUG-" + level);
 	}
 
 	/**
@@ -608,18 +619,5 @@ public class U
 	public float rand(float min, float max)
 	{
 		return U.rand.nextFloat() * (max - min) + min;
-	}
-
-	/**
-	 * Casting wrapper, centralizes the "unchecked" warning needs.
-	 * 
-	 * @param cur
-	 *            the object to cast
-	 * @return the object casted to the specified type.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T cleanCast(Object cur)
-	{
-		return (T) cur;
 	}
 }
