@@ -1,6 +1,5 @@
 package backend.functionInterfaces;
 
-
 @FunctionalInterface
 public interface Handler<T>
 {

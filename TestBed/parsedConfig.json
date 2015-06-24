@@ -1,5 +1,5 @@
 {
-    "actions": {
+    "Action": {
         "maul": {
             "tags": ["kill"],
             "priority": 10,
@@ -21,7 +21,7 @@
             "appliedActions": []
         }
     },
-    "abilities": {
+    "Ability": {
         "Start Lynch Vote": {
             "tags": ["dayending"],
             "trigger": {"on": "use"},
@@ -62,7 +62,7 @@
             "appliedAtomics": {}
         }
     },
-    "gameCons": {
+    "GameCon": {
         "Dead Baddies": {
             "trigger": {
                 "type": "count",
@@ -80,7 +80,7 @@
             "resultAtomics": {}
         }
     },
-    "roles": {
+    "Role": {
         "Villager": {
             "access": "public",
             "tags": ["target"],
@@ -104,7 +104,7 @@
             "grantedStatuses": []
         }
     },
-    "statuses": {
+    "Status": {
         "Dead": {
             "access": "public",
             "tags": ["dead"],
@@ -142,7 +142,7 @@
             }
         }
     },
-    "actionMods": {
+    "ActionModifier": {
         "MaulImmune": {
             "priority": 1,
             "trigger": {
@@ -174,7 +174,7 @@
             "triggeredAtomics": {}
         }
     },
-    "rounds": {
+    "Phase": {
         "Daytime": {
             "triggeredActions": [],
             "triggeredAtomics": {},
@@ -194,7 +194,7 @@
             ]
         }
     },
-    "items": {
+    "Item": {
         "ExampleItem2": {
             "exampleA": 42.352,
             "exampleB": [

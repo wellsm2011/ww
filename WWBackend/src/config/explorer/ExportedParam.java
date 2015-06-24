@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 // can use in method only.
 /**
  * An annotation for marking up data-type classes for use in JSON config storage and loading, also adds support to being able to edit the memory-resident datastructures with the same functionality.
- * 
+ *
  * @author Andrew Binns
  */
 public @interface ExportedParam
@@ -37,11 +37,11 @@ public @interface ExportedParam
 	 * <p>
 	 * STRMAP is mapped to Map&lt;String, String&gt;
 	 * </p>
-	 * 
+	 *
 	 */
 	public enum DType
 	{
-		NUM, STR, NUMLIST, STRLIST, NUMMAP, STRMAP
+		NUM, STR, NUMLIST, STRLIST, NUMMAP, STRMAP, OBJ
 	}
 
 	/**

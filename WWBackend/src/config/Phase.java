@@ -1,31 +1,19 @@
 package config;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import config.core.ConfigMember;
 import config.explorer.ExportedParam;
 import config.explorer.ExportedParam.DType;
 import config.explorer.ExportedParam.MType;
 
-public class Rounds implements ConfigMember
+public class Phase implements ConfigMember
 {
 	private List<String>		triggeredActions;
 	private Map<String, String>	triggeredAtomics;
 	private List<String>		activeMods;
 	private List<String>		continueReqs;
-
-	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.GETTER, sortVal = 1)
-	public List<String> getTriggeredActions()
-	{
-		return this.triggeredActions;
-	}
-
-	@ExportedParam(datatype = DType.STRMAP, key = "triggeredAtomics", methodtype = MType.GETTER, sortVal = 2)
-	public Map<String, String> getTriggeredAtomics()
-	{
-		return this.triggeredAtomics;
-	}
 
 	@ExportedParam(datatype = DType.STRLIST, key = "activeMods", methodtype = MType.GETTER, sortVal = 3)
 	public List<String> getactiveMods()
@@ -39,16 +27,16 @@ public class Rounds implements ConfigMember
 		return this.continueReqs;
 	}
 
-	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.SETTER, sortVal = 1)
-	public void setTriggeredActions(List<String> input)
+	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.GETTER, sortVal = 1)
+	public List<String> getTriggeredActions()
 	{
-		this.triggeredActions = input;
+		return this.triggeredActions;
 	}
 
-	@ExportedParam(datatype = DType.STRMAP, key = "triggeredAtomics", methodtype = MType.SETTER, sortVal = 2)
-	public void setTriggeredAtomics(Map<String, String> input)
+	@ExportedParam(datatype = DType.STRMAP, key = "triggeredAtomics", methodtype = MType.GETTER, sortVal = 2)
+	public Map<String, String> getTriggeredAtomics()
 	{
-		this.triggeredAtomics = input;
+		return this.triggeredAtomics;
 	}
 
 	@ExportedParam(datatype = DType.STRLIST, key = "activeMods", methodtype = MType.SETTER, sortVal = 3)
@@ -61,5 +49,17 @@ public class Rounds implements ConfigMember
 	public void setContinueReqs(List<String> input)
 	{
 		this.continueReqs = input;
+	}
+
+	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.SETTER, sortVal = 1)
+	public void setTriggeredActions(List<String> input)
+	{
+		this.triggeredActions = input;
+	}
+
+	@ExportedParam(datatype = DType.STRMAP, key = "triggeredAtomics", methodtype = MType.SETTER, sortVal = 2)
+	public void setTriggeredAtomics(Map<String, String> input)
+	{
+		this.triggeredAtomics = input;
 	}
 }

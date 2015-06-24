@@ -7,8 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
@@ -71,8 +69,7 @@ public class EditorGui
 			label.setLocation(clientArea.x, clientArea.y);
 			label.setText(cur.getKey());
 			label.pack();
-			this.edMap.get(cur.getKey()).setVisible(false);
-		}
+		} // paramEditorParent.
 		return (in) -> {
 			U.p(in);
 		};

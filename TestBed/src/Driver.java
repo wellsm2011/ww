@@ -19,7 +19,7 @@ public class Driver
 	{
 		Config config = new Config("config.json");
 		U.p(config);
-		config.writeToFile("parsedConfig.json");
+		config.outputToFile("parsedConfig.json");
 		Explorer e = new Explorer(config);
 		EditorGui gui = new EditorGui(e);
 		gui.init();
