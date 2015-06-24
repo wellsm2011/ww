@@ -23,6 +23,7 @@ public class EditorGui
 	private LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>>	data;
 	private Thread																		guiThread;
 	private boolean																		run;
+	private LinkedHashMap<String, Composite>											edMap;
 
 	public EditorGui(Explorer explorer)
 	{
@@ -55,38 +56,47 @@ public class EditorGui
 	{
 		Tree tree = new Tree(shell, SWT.BORDER);
 		Composite paramEditorParent = new Composite(shell, SWT.BORDER);
-		this.createConfigBrowser(tree, this.createParamEditor(paramEditorParent));
+		Handler<Class<?>> updateHandler = this.createParamEditor(paramEditorParent);
+		this.createConfigBrowser(tree, updateHandler);
 	}
 
-	private Handler<String> createParamEditor(Composite paramEditorParent)
+	private Handler<Class<?>> createParamEditor(Composite paramEditorParent)
 	{
-
-		Label label = new Label(paramEditorParent, SWT.SHADOW_NONE);
-		Text text = new Text(paramEditorParent, SWT.BORDER);
-		Rectangle clientArea = paramEditorParent.getClientArea();
-		label.setLocation(clientArea.x, clientArea.y);
-		label.setText("Testsetsetsetsetsetsett");
-		label.pack();
-		// paramEditorParent.
-		return (in) -> {
-			label.setText(in);
+		this.edMap = new LinkedHashMap<String, Composite>();
+		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> cur : this.data.entrySet())
+		{
+			this.edMap.put(cur.getKey(), new Composite(paramEditorParent, SWT.BORDER));
+			Label label = new Label(this.edMap.get(cur.getKey()), SWT.SHADOW_NONE);
+			Rectangle clientArea = this.edMap.get(cur.getKey()).getClientArea();
+			label.setLocation(clientArea.x, clientArea.y);
+			label.setText(cur.getKey());
 			label.pack();
+			this.edMap.get(cur.getKey()).setVisible(false);
+		}
+		return (in) -> {
+			U.p(in);
 		};
 	}
 
-	private void createConfigBrowser(Tree tree, Handler<String> onSelect)
+	private void createConfigBrowser(Tree tree, Handler<Class<?>> updateHandler)
 	{
-		tree.addMouseListener(new ConfigTreeListener(onSelect));
+		tree.addMouseListener(new ConfigTreeListener<Class<?>>(updateHandler));
+		boolean initialized = false;
 		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> curSection : this.data.entrySet())
 		{
 			TreeItem sectionItem = new TreeItem(tree, 0);
 			sectionItem.setText(curSection.getKey());
-			sectionItem.setData(curSection.getValue().keySet());
+			sectionItem.setData(curSection.getValue().keySet().toArray()[0].getClass());
+			if (!initialized)
+			{
+				initialized = true;
+				updateHandler.handle(curSection.getValue().keySet().toArray()[0].getClass());
+			}
 			for (Entry<String, Collection<ExportedParameter>> curElem : curSection.getValue().entrySet())
 			{
 				TreeItem elemItem = new TreeItem(sectionItem, 0);
 				elemItem.setText(curElem.getKey());
-				elemItem.setData(curElem.getValue());
+				elemItem.setData(curElem.getValue().toArray()[0].getClass());
 				elemItem.setExpanded(true);
 			}
 			sectionItem.setExpanded(true);

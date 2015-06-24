@@ -1,27 +1,25 @@
 package editor.gui;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
-import config.explorer.ExportedParameter;
 import backend.U;
 import backend.functionInterfaces.Handler;
 
-public class ConfigTreeListener implements MouseListener
+public class ConfigTreeListener<T> implements MouseListener
 {
 
-	private Handler<String>	onSelect;
-	private Object			cur;
+	private Handler<T>	onSelect;
+	private Object		cur;
 
-	public ConfigTreeListener(Handler<String> onSelect)
+	public ConfigTreeListener(Handler<T> updateHandler)
 	{
-		this.onSelect = onSelect;
+		this.onSelect = updateHandler;
 	}
 
 	@Override
@@ -52,20 +50,14 @@ public class ConfigTreeListener implements MouseListener
 			TreeItem item = ((Tree) event.getSource()).getItem(point);
 			if (item != null)
 				if (item.getData().hashCode() == this.cur.hashCode())
-					this.onSelect.handle(nicelyFormat(item.getData()));
+					handle(item.getData());
 		}
 	}
 
-	private String nicelyFormat(Object item)
+	private void handle(Object item)
 	{
-		StringBuilder res = new StringBuilder();
-		if (item instanceof Collection)
-		{
-			Collection<?> coll = (Collection<?>) item;
-			for (Object cur : coll)
-				res.append(cur.toString() + "\n");
-		}
-		return res.toString();
+		T coll = (T) item;
+		this.onSelect.handle(coll);
 	}
 
 }
