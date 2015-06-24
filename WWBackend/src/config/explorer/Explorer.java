@@ -9,12 +9,13 @@ import java.util.PriorityQueue;
 
 import config.core.Config;
 import config.core.ConfigMember;
+import config.core.SectionManager;
 import config.explorer.ExportedParam.DType;
 import config.explorer.ExportedParam.MType;
 
 public class Explorer
 {
-	public static Map<String, ExportedParameter> findParametersByFilter(ConfigMember input, MType... filter)
+	public static Map<String, ExportedParameter> findParametersByFilter(Object input, MType... filter)
 	{
 		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
 		LinkedHashMap<String, LinkedHashMap<MType, Method>> map = new LinkedHashMap<String, LinkedHashMap<MType, Method>>();
@@ -45,7 +46,7 @@ public class Explorer
 		return res;
 	}
 
-	private static Method[] getSortedMethods(ConfigMember input)
+	private static Method[] getSortedMethods(Object input)
 	{
 		PriorityQueue<Method> sorted = new PriorityQueue<Method>((Method a, Method b) -> {
 			int aOrd = a.getAnnotation(ExportedParam.class).sortVal();
@@ -63,18 +64,18 @@ public class Explorer
 		return res;
 	}
 
-	private LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>	configMembers;
+	private LinkedHashMap<String, SectionManager>	configMembers;
 
 	public Explorer(Config config)
 	{
 		this.configMembers = config.getAllMaps();
 	}
 
-	public LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>> getMappedOptions()
+	public LinkedHashMap<String, SectionManager> getMappedOptions()
 	{
 		LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>> mappedOptions = new LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>>();
 
-		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curSection : this.configMembers.entrySet())
+		for (Entry<String, SectionManager> curSection : this.configMembers.entrySet())
 		{
 			String sectionName = curSection.getKey();
 			mappedOptions.put(sectionName, new LinkedHashMap<String, Collection<ExportedParameter>>());

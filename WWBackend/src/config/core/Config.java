@@ -9,12 +9,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
+
+
+
+
 //Static import of U not used due to cleanup and proper styling, as well as basic readability.
 import backend.U;
+import backend.lib.annovention.ClasspathDiscoverer;
+import backend.lib.annovention.Discoverer;
 import backend.lib.json.JSONArray;
 import backend.lib.json.JSONException;
 import backend.lib.json.JSONObject;
 import config.explorer.Explorer;
+import config.explorer.FinderListener;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
 
@@ -34,7 +42,7 @@ public class Config
 		{ MType.GETTER, MType.SETTER };
 	}
 
-	private LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>	maps;
+	private LinkedHashMap<String, SectionManager>	maps;
 
 	/**
 	 * Attempts to load a config from the file passed.
@@ -56,9 +64,10 @@ public class Config
 	 *
 	 * @return
 	 */
-	public LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>> getAllMaps()
+	public LinkedHashMap<String, SectionManager> getAllMaps()
 	{
 		// TODO: Don't expose internal data members.
+		// TODONT: mistake internal data members for general datastructure, stop trying to make bad code by mass memory copy.
 		return this.maps;
 	}
 
@@ -107,11 +116,11 @@ public class Config
 	 * @return a hashmap from strings to the implied type
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends ConfigMember> LinkedHashMap<String, T> getMap(String name)
+	private  SectionManager getManager(String name, Class<?> type)
 	{
 		if (!this.maps.containsKey(name))
-			this.maps.put(name, new LinkedHashMap<String, T>());
-		return (LinkedHashMap<String, T>) this.maps.get(name);
+			this.maps.put(name, new SectionManager(type));
+		return this.maps.get(name);
 	}
 
 	/**
@@ -121,9 +130,9 @@ public class Config
 	 *            the key for the config section required
 	 * @return a hashmap of strings to the implied type.
 	 */
-	public <T extends ConfigMember> LinkedHashMap<String, T> getSection(String key)
+	public SectionManager getSection(String key)
 	{
-		return this.getMap(key);
+		return this.getManager(key, null);
 	}
 
 	/**
@@ -155,12 +164,12 @@ public class Config
 	 * @param type
 	 *            the type to attempt to use for this part of the config file
 	 */
-	private <T extends ConfigMember> void intelliParse(JSONObject data, String key, Class<T> type)
+	private void intelliParse(JSONObject data, String key, Class<?> type)
 	{
 		JSONObject jsonData = data.optJSONObject(key);
 		if (jsonData == null)
 			jsonData = new JSONObject();
-		HashMap<String, T> parsed = this.getMap(key);
+		SectionManager parsed = this.getManager(key, type);
 		for (String cur : jsonData.keySet())
 			try
 			{
@@ -169,14 +178,14 @@ public class Config
 				JSONObject curJSONSection = jsonData.optJSONObject(cur);
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
-				T curInstance = type.newInstance();
-				Map<String, ExportedParameter> paramMap = Explorer.findParametersByFilter(curInstance, Config.stdParamFilter);
+				Object curInstance = type.newInstance();
+				Map<String, ExportedParameter> paramMap = Explorer.findParametersByFilter(type.newInstance(), Config.stdParamFilter);
 				for (String curKey : curJSONSection.keySet())
 					if (paramMap.containsKey(curKey))
 						this.parseParam(curJSONSection, curKey, paramMap.get(curKey));
 					else
 						U.d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
-				parsed.put(cur, curInstance);
+				parsed.offer(cur, curInstance);
 			} catch (InstantiationException e)
 			{
 				U.e("Error instantiating class " + type.getName() + ". Make sure you are using the correct type for the key '" + key + "' in the Config class.", e);
@@ -196,6 +205,8 @@ public class Config
 	 */
 	private void loadConfig(String filename)
 	{
+		Map<String, Class<? extends ConfigMember>> configMembers = findConfigMembers();
+		U.p(configMembers);
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
@@ -203,11 +214,14 @@ public class Config
 			for (String curJSONKey : data.keySet())
 				try
 				{
-					Class<? extends ConfigMember> type = U.cleanCast(Class.forName("config." + curJSONKey));
+					Class<? extends ConfigMember> type = configMembers.get(curJSONKey);
+					if (type == null)
+						throw new ClassCastException();
 					this.intelliParse(data, curJSONKey, type);
-				} catch (ClassCastException | ClassNotFoundException ex)
+				} catch (ClassCastException ex)
 				{
 					U.d("Extra key found in JSON file: " + curJSONKey + ". Did you spell the name correctly?", 1);
+					ex.printStackTrace();
 				}
 		} catch (JSONException e)
 		{
@@ -306,5 +320,23 @@ public class Config
 			output.putOnce(curConfigMember.getKey(), member);
 		}
 		U.writeToFile(filename, output.toString(4));
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Map<String, Class<? extends ConfigMember>> findConfigMembers()
+	{
+		Map<String, Class<? extends ConfigMember>> res = new LinkedHashMap<String, Class<? extends ConfigMember>>();
+		Discoverer discoverer = new ClasspathDiscoverer();
+		discoverer.addAnnotationListener(new FinderListener((in) -> {
+			try
+			{
+				res.put(Class.forName(in).getAnnotation(ConfigMember.class).sectionKey(), (Class<? extends ConfigMember>) Class.forName(in));
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}, ConfigMember.class));
+		discoverer.discover();
+		return res;
 	}
 }

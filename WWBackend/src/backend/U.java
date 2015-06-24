@@ -170,7 +170,7 @@ public class U
 	public static void d(String in, int level)
 	{
 		if (U.debugging >= level)
-			U.printWithTag(in, "DEBUG-" + level);
+			U.printWithTag(in, "DEBUG:" + level);
 	}
 
 	/**
