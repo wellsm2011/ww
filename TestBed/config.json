@@ -31,7 +31,9 @@
                 "selection": "list"
             },
             "appliedActions": ["lynch"],
-            "appliedAtomics": {}
+            "appliedAtomics": {
+				"ChatPost":"system:Starting Lynch Vote!->villager"
+			}
         },
         "Maul Face": {
             "tags": [
