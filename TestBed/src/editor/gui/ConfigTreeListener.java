@@ -1,7 +1,5 @@
 package editor.gui;
 
-import java.util.Collection;
-
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
@@ -22,6 +20,13 @@ public class ConfigTreeListener<T> implements MouseListener
 		this.onSelect = updateHandler;
 	}
 
+	private void handle(Object item)
+	{
+		@SuppressWarnings("unchecked")
+		T coll = (T) item;
+		this.onSelect.handle(coll);
+	}
+
 	@Override
 	public void mouseDoubleClick(MouseEvent event)
 	{
@@ -37,7 +42,7 @@ public class ConfigTreeListener<T> implements MouseListener
 			Point point = new Point(event.x, event.y);
 			TreeItem item = ((Tree) event.getSource()).getItem(point);
 			if (item != null)
-				cur = item.getData();
+				this.cur = item.getData();
 		}
 	}
 
@@ -50,14 +55,8 @@ public class ConfigTreeListener<T> implements MouseListener
 			TreeItem item = ((Tree) event.getSource()).getItem(point);
 			if (item != null)
 				if (item.getData().hashCode() == this.cur.hashCode())
-					handle(item.getData());
+					this.handle(item.getData());
 		}
-	}
-
-	private void handle(Object item)
-	{
-		T coll = (T) item;
-		this.onSelect.handle(coll);
 	}
 
 }

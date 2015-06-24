@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+//Static import of U not used due to cleanup and proper styling, as well as basic readability.
 import backend.U;
 import backend.lib.json.JSONArray;
 import backend.lib.json.JSONException;
@@ -21,13 +22,8 @@ import config.explorer.ExportedParameter;
  * Testbed config, uses the JSON parser to parse different parts of a given
  * config file. Maintains ordering of original config file, as well as adding
  * config sections during writing out that were not in the original config file.
- * Assumes that JSONExportable classes properly export themselves, this also
- * allows for full, pretty-printed config writing.
- * <p>
- * Future: Currently has a simple example for items, in the future, order of
- * loading might matter, for example: Actions will might need to be loaded
- * before Items, if Items refer to Actions, etc, etc. Bi-directional links would
- * be nice to avoid architecturely, but wouldn't be a show-stopper.
+ *
+ * Rest under development.
  */
 public class Config
 {
@@ -226,25 +222,6 @@ public class Config
 	}
 
 	/**
-	 * Writes to file a JSON equivalent of this loaded config.
-	 *
-	 * @param filename
-	 *            the file to export to
-	 */
-	public void outputToFile(String filename)
-	{
-		JSONObject output = new JSONObject();
-		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curConfigMember : this.maps.entrySet())
-		{
-			JSONObject member = new JSONObject();
-			for (Entry<String, ? extends ConfigMember> curMemberItem : curConfigMember.getValue().entrySet())
-				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue()));
-			output.putOnce(curConfigMember.getKey(), member);
-		}
-		U.writeToFile(filename, output.toString(4));
-	}
-
-	/**
 	 * From the given JSONSection, and the specified key, parses the data into
 	 * the passed exported parameter.
 	 *
@@ -310,5 +287,24 @@ public class Config
 	public String toString()
 	{
 		return this.maps.toString();
+	}
+
+	/**
+	 * Writes to file a JSON equivalent of this loaded config.
+	 *
+	 * @param filename
+	 *            the file to export to
+	 */
+	public void writeToFile(String filename)
+	{
+		JSONObject output = new JSONObject();
+		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curConfigMember : this.maps.entrySet())
+		{
+			JSONObject member = new JSONObject();
+			for (Entry<String, ? extends ConfigMember> curMemberItem : curConfigMember.getValue().entrySet())
+				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue()));
+			output.putOnce(curConfigMember.getKey(), member);
+		}
+		U.writeToFile(filename, output.toString(4));
 	}
 }

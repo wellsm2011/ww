@@ -16,6 +16,11 @@ public class GenericsExample
 		}
 	}
 
+	public static <T> Pair<T, String> getStuff(T thing)
+	{
+		return new Pair<T, String>(thing, "Stuff");
+	}
+
 	public static void main(String... cheese)
 	{
 		LinkedList<String> list1 = new LinkedList<>();
@@ -28,12 +33,7 @@ public class GenericsExample
 		Pair<Pair<String, Integer>, String> example2 = new Pair<>(examplePair, "Scrub");
 		U.p(examplePair.first + examplePair.second);
 
-		Pair<Integer, String> stuff = getStuff(5);
+		Pair<Integer, String> stuff = GenericsExample.getStuff(5);
 		U.p(stuff.first + stuff.second);
-	}
-
-	public static <T> Pair<T, String> getStuff(T thing)
-	{
-		return new Pair<T, String>(thing, "Stuff");
 	}
 }

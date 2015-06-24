@@ -11,6 +11,8 @@ public class Driver
 
 	public static void main(String[] args)
 	{
+		//Since people can't apparently figure out how to do this themselves and have to go editing source code instead <_<
+		U.setDebugLevel(9001);
 		// testLoadStore();
 		Driver.testConfig();
 	}
@@ -19,7 +21,7 @@ public class Driver
 	{
 		Config config = new Config("config.json");
 		U.p(config);
-		config.outputToFile("parsedConfig.json");
+		config.writeToFile("parsedConfig.json");
 		Explorer e = new Explorer(config);
 		EditorGui gui = new EditorGui(e);
 		gui.init();

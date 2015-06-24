@@ -38,7 +38,9 @@ import backend.lib.lzmastreams.LzmaOutputStream;
 public class U
 {
 	private static PrintStream								output;
-	private static int										debugging			= 2;
+	// Note, don't go changing this, go use the mother-fucking correct way of
+	// setting debug level, the function exists for a reason.
+	private static int										debugging			= 0;
 	private static SimpleDateFormat							outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
 	private static SimpleDateFormat							timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
 	private static Scanner									input;

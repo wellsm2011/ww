@@ -8,8 +8,13 @@ import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 import backend.U;
 import backend.functionInterfaces.Handler;
@@ -31,7 +36,7 @@ public class EditorGui
 			Display display = new Display();
 			Shell shell = new Shell(display);
 			shell.setLayout(new FillLayout());
-			buildGui(shell);
+			this.buildGui(shell);
 			shell.open();
 			while (!shell.isDisposed() && this.run)
 				if (!display.readAndDispatch())
@@ -58,23 +63,6 @@ public class EditorGui
 		this.createConfigBrowser(tree, updateHandler);
 	}
 
-	private Handler<Class<?>> createParamEditor(Composite paramEditorParent)
-	{
-		this.edMap = new LinkedHashMap<String, Composite>();
-		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> cur : this.data.entrySet())
-		{
-			this.edMap.put(cur.getKey(), new Composite(paramEditorParent, SWT.BORDER));
-			Label label = new Label(this.edMap.get(cur.getKey()), SWT.SHADOW_NONE);
-			Rectangle clientArea = this.edMap.get(cur.getKey()).getClientArea();
-			label.setLocation(clientArea.x, clientArea.y);
-			label.setText(cur.getKey());
-			label.pack();
-		} // paramEditorParent.
-		return (in) -> {
-			U.p(in);
-		};
-	}
-
 	private void createConfigBrowser(Tree tree, Handler<Class<?>> updateHandler)
 	{
 		tree.addMouseListener(new ConfigTreeListener<Class<?>>(updateHandler));
@@ -98,6 +86,23 @@ public class EditorGui
 			}
 			sectionItem.setExpanded(true);
 		}
+	}
+
+	private Handler<Class<?>> createParamEditor(Composite paramEditorParent)
+	{
+		this.edMap = new LinkedHashMap<String, Composite>();
+		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> cur : this.data.entrySet())
+		{
+			this.edMap.put(cur.getKey(), new Composite(paramEditorParent, SWT.BORDER));
+			Label label = new Label(this.edMap.get(cur.getKey()), SWT.SHADOW_NONE);
+			Rectangle clientArea = this.edMap.get(cur.getKey()).getClientArea();
+			label.setLocation(clientArea.x, clientArea.y);
+			label.setText(cur.getKey());
+			label.pack();
+		} // paramEditorParent.
+		return (in) -> {
+			U.p(in);
+		};
 	}
 
 	public void end()
