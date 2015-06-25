@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import backend.lib.lzmastreams.sevenzip.compression.lzma.Decoder;
+import sevenzip.compression.lzma.Decoder;
 
 class DecoderThread implements Runnable
 {

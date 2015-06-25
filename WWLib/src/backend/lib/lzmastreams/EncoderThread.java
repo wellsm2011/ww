@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import backend.lib.lzmastreams.sevenzip.compression.lzma.Encoder;
+import sevenzip.compression.lzma.Encoder;
 
 class EncoderThread implements Runnable
 {
