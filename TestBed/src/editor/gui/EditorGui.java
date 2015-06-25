@@ -72,7 +72,7 @@ public class EditorGui
 
 	private void createConfigBrowser(Tree tree, Handler<Object> updateHandler)
 	{
-		tree.addMouseListener(new ConfigTreeListener(updateHandler));
+		tree.addMouseListener(new EditorTreeListener(updateHandler));
 		boolean initialized = false;
 		for (Entry<String, SectionManager> curConfMember : this.configMemberMap.entrySet())
 		{
@@ -108,7 +108,7 @@ public class EditorGui
 			label.setLocation(clientArea.x, clientArea.y);
 			label.setText(cur.getKey());
 			label.pack();
-			// curPane.setVisible(tr);
+			
 			this.edMap.put(curDisplayType, curPane);
 		}
 		return (in) -> {

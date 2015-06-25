@@ -9,13 +9,13 @@ import org.eclipse.swt.widgets.TreeItem;
 import backend.U;
 import backend.functionInterfaces.Handler;
 
-public class ConfigTreeListener implements MouseListener
+public class EditorTreeListener implements MouseListener
 {
 
 	private Handler<Object>	onSelect;
 	private Object		cur;
 
-	public ConfigTreeListener(Handler<Object> updateHandler)
+	public EditorTreeListener(Handler<Object> updateHandler)
 	{
 		this.onSelect = updateHandler;
 	}
@@ -28,7 +28,6 @@ public class ConfigTreeListener implements MouseListener
 	@Override
 	public void mouseDoubleClick(MouseEvent event)
 	{
-		// TODO Auto-generated method stub
 		U.p("Double Click on " + event.widget.getData());
 	}
 
