@@ -2,16 +2,11 @@ package config.core;
 
 import global.Globals;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-
-
-
 
 
 //Static import of U not used due to cleanup and proper styling, as well as basic readability.
@@ -21,10 +16,9 @@ import backend.lib.annovention.Discoverer;
 import backend.lib.json.JSONArray;
 import backend.lib.json.JSONException;
 import backend.lib.json.JSONObject;
-import config.explorer.Explorer;
-import config.explorer.FinderListener;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
+import config.explorer.FinderListener;
 
 /**
  * Testbed config, uses the JSON parser to parse different parts of a given
@@ -35,14 +29,27 @@ import config.explorer.ExportedParameter;
  */
 public class Config
 {
-	private static MType[]															stdParamFilter;
-	static
+
+	@SuppressWarnings("unchecked")
+	public static Map<String, Class<?>> findConfigMembers()
 	{
-		Config.stdParamFilter = new MType[]
-		{ MType.GETTER, MType.SETTER };
+		Map<String, Class<?>> res = new LinkedHashMap<String, Class<?>>();
+		Discoverer discoverer = new ClasspathDiscoverer();
+		discoverer.addAnnotationListener(new FinderListener((in) -> {
+			try
+			{
+				res.put(Class.forName(in).getAnnotation(ConfigMember.class).sectionKey(), (Class<? extends ConfigMember>) Class.forName(in));
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}, ConfigMember.class));
+		discoverer.discover();
+		return res;
 	}
 
 	private LinkedHashMap<String, SectionManager>	maps;
+	private Map<Class<?>, SectionManager>	classToSectionMap;
 
 	/**
 	 * Attempts to load a config from the file passed.
@@ -52,6 +59,8 @@ public class Config
 	 */
 	public Config(String filename)
 	{
+		this.maps = new LinkedHashMap<String, SectionManager>();
+		this.classToSectionMap = new LinkedHashMap<Class<?>, SectionManager>();
 		this.loadConfig(filename);
 	}
 
@@ -67,7 +76,8 @@ public class Config
 	public LinkedHashMap<String, SectionManager> getAllMaps()
 	{
 		// TODO: Don't expose internal data members.
-		// TODONT: mistake internal data members for general datastructure, stop trying to make bad code by mass memory copy.
+		// TODONT: mistake internal data members for general datastructure, stop
+		// trying to make bad code by mass memory copy.
 		return this.maps;
 	}
 
@@ -115,11 +125,14 @@ public class Config
 	 *            the key of the section
 	 * @return a hashmap from strings to the implied type
 	 */
-	@SuppressWarnings("unchecked")
-	private  SectionManager getManager(String name, Class<?> type)
+	private SectionManager getManager(String name, Class<?> type)
 	{
 		if (!this.maps.containsKey(name))
-			this.maps.put(name, new SectionManager(type));
+		{
+			SectionManager secMan = new SectionManager(type);
+			this.maps.put(name, secMan);
+			this.classToSectionMap.put(type, secMan);
+		}
 		return this.maps.get(name);
 	}
 
@@ -134,21 +147,26 @@ public class Config
 	{
 		return this.getManager(key, null);
 	}
+	
+	public SectionManager getSectionByClass(Class<?> type)
+	{
+		return this.classToSectionMap.get(type);
+	}
 
 	/**
 	 * Intelligently generates a JSONRepresentation of the specified object
 	 * based on pre-specified annotations.
 	 *
-	 * @param value
+	 * @param object
 	 *            the input object to create a representation of
 	 * @return the resulting JSON representation
 	 */
-	private JSONObject intelliGen(ConfigMember value)
+	private JSONObject intelliGen(Object input, SectionManager secMan)
 	{
 		JSONObject res = new JSONObject();
-		Map<String, ExportedParameter> paramMap = Explorer.findParametersByFilter(value, Config.stdParamFilter);
+		Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())
-			res.put(curExport.getKey(), curExport.getValue().call(MType.GETTER));
+			res.put(curExport.getKey(), curExport.getValue().call(input, MType.GETTER));
 		return res;
 	}
 
@@ -169,7 +187,7 @@ public class Config
 		JSONObject jsonData = data.optJSONObject(key);
 		if (jsonData == null)
 			jsonData = new JSONObject();
-		SectionManager parsed = this.getManager(key, type);
+		SectionManager secMan = this.getManager(key, type);
 		for (String cur : jsonData.keySet())
 			try
 			{
@@ -179,13 +197,13 @@ public class Config
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
 				Object curInstance = type.newInstance();
-				Map<String, ExportedParameter> paramMap = Explorer.findParametersByFilter(type.newInstance(), Config.stdParamFilter);
+				Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 				for (String curKey : curJSONSection.keySet())
 					if (paramMap.containsKey(curKey))
-						this.parseParam(curJSONSection, curKey, paramMap.get(curKey));
+						this.parseParam(curJSONSection, curKey, paramMap.get(curKey), curInstance);
 					else
 						U.d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
-				parsed.offer(cur, curInstance);
+				secMan.offer(cur, curInstance);
 			} catch (InstantiationException e)
 			{
 				U.e("Error instantiating class " + type.getName() + ". Make sure you are using the correct type for the key '" + key + "' in the Config class.", e);
@@ -205,16 +223,15 @@ public class Config
 	 */
 	private void loadConfig(String filename)
 	{
-		Map<String, Class<? extends ConfigMember>> configMembers = findConfigMembers();
+		Map<String, Class<?>> configMembers = Config.findConfigMembers();
 		U.p(configMembers);
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
-			this.maps = new LinkedHashMap<String, LinkedHashMap<String, ? extends ConfigMember>>();
 			for (String curJSONKey : data.keySet())
 				try
 				{
-					Class<? extends ConfigMember> type = configMembers.get(curJSONKey);
+					Class<?> type = configMembers.get(curJSONKey);
 					if (type == null)
 						throw new ClassCastException();
 					this.intelliParse(data, curJSONKey, type);
@@ -246,45 +263,45 @@ public class Config
 	 * @param curParam
 	 *            the parameter to attempt to parse
 	 */
-	private void parseParam(JSONObject curJSONSection, String curKey, ExportedParameter curParam)
+	private void parseParam(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
 	{
 		JSONObject obj;
 		JSONArray val;
 		switch (curParam.getDatatype())
 		{
 			case NUM:
-				curParam.call(MType.SETTER, curJSONSection.optDouble(curKey, 0.0));
+				curParam.call(instance, MType.SETTER, curJSONSection.optDouble(curKey, 0.0));
 				break;
 			case STR:
-				curParam.call(MType.SETTER, curJSONSection.optString(curKey, ""));
+				curParam.call(instance, MType.SETTER, curJSONSection.optString(curKey, ""));
 				break;
 			case NUMLIST:
 				val = this.getJSONArr(curJSONSection, curKey);
 				List<Double> numList = new LinkedList<Double>();
 				for (int i = 0; i < val.length(); i++)
 					numList.add(val.optDouble(i, 0));
-				curParam.call(MType.SETTER, numList);
+				curParam.call(instance, MType.SETTER, numList);
 				break;
 			case STRLIST:
 				val = this.getJSONArr(curJSONSection, curKey);
 				List<String> strList = new LinkedList<String>();
 				for (int i = 0; i < val.length(); i++)
 					strList.add(val.optString(i, ""));
-				curParam.call(MType.SETTER, strList);
+				curParam.call(instance, MType.SETTER, strList);
 				break;
 			case NUMMAP:
 				obj = this.getJSONObj(curJSONSection, curKey);
 				Map<String, Double> numMap = new LinkedHashMap<String, Double>();
 				for (String mapKey : obj.keySet())
 					numMap.put(mapKey, obj.getDouble(mapKey));
-				curParam.call(MType.SETTER, numMap);
+				curParam.call(instance, MType.SETTER, numMap);
 				break;
 			case STRMAP:
 				obj = this.getJSONObj(curJSONSection, curKey);
 				Map<String, String> strMap = new LinkedHashMap<String, String>();
 				for (String mapKey : obj.keySet())
 					strMap.put(mapKey, obj.getString(mapKey));
-				curParam.call(MType.SETTER, strMap);
+				curParam.call(instance, MType.SETTER,strMap);
 				break;
 			case OBJ:
 				obj = this.getJSONObj(curJSONSection, curKey);
@@ -312,31 +329,19 @@ public class Config
 	public void writeToFile(String filename)
 	{
 		JSONObject output = new JSONObject();
-		for (Entry<String, LinkedHashMap<String, ? extends ConfigMember>> curConfigMember : this.maps.entrySet())
+		for (Entry<String, SectionManager> curConfigMember : this.maps.entrySet())
 		{
 			JSONObject member = new JSONObject();
-			for (Entry<String, ? extends ConfigMember> curMemberItem : curConfigMember.getValue().entrySet())
-				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue()));
+			SectionManager curSecMan = curConfigMember.getValue();
+			for (Entry<String, Object> curMemberItem : curSecMan.getEntries().entrySet())
+				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue(), curSecMan));
 			output.putOnce(curConfigMember.getKey(), member);
 		}
 		U.writeToFile(filename, output.toString(4));
 	}
 
-	@SuppressWarnings("unchecked")
-	public static Map<String, Class<? extends ConfigMember>> findConfigMembers()
+	public Map<Class<?>, SectionManager> getClassToSectionManagerMap()
 	{
-		Map<String, Class<? extends ConfigMember>> res = new LinkedHashMap<String, Class<? extends ConfigMember>>();
-		Discoverer discoverer = new ClasspathDiscoverer();
-		discoverer.addAnnotationListener(new FinderListener((in) -> {
-			try
-			{
-				res.put(Class.forName(in).getAnnotation(ConfigMember.class).sectionKey(), (Class<? extends ConfigMember>) Class.forName(in));
-			} catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}, ConfigMember.class));
-		discoverer.discover();
-		return res;
+		return this.classToSectionMap;
 	}
 }

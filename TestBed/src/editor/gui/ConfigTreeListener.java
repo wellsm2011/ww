@@ -9,22 +9,20 @@ import org.eclipse.swt.widgets.TreeItem;
 import backend.U;
 import backend.functionInterfaces.Handler;
 
-public class ConfigTreeListener<T> implements MouseListener
+public class ConfigTreeListener implements MouseListener
 {
 
-	private Handler<T>	onSelect;
+	private Handler<Object>	onSelect;
 	private Object		cur;
 
-	public ConfigTreeListener(Handler<T> updateHandler)
+	public ConfigTreeListener(Handler<Object> updateHandler)
 	{
 		this.onSelect = updateHandler;
 	}
 
 	private void handle(Object item)
 	{
-		@SuppressWarnings("unchecked")
-		T coll = (T) item;
-		this.onSelect.handle(coll);
+		this.onSelect.handle(item);
 	}
 
 	@Override

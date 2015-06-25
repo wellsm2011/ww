@@ -1,10 +1,221 @@
 {
-    "actions": {},
-    "abilities": {},
-    "gameCons": {},
-    "roles": {},
-    "statuses": {},
-    "actionMods": {},
-    "phases": {},
-    "items": {}
+    "actions": {
+        "maul": {
+            "tags": ["kill"],
+            "priority": 10,
+            "appliedAtomics": {
+                "ChatPost": "Some message",
+                "AddStatus": "Hurt,Turning",
+                "GrantAbility": "EatBrainz"
+            },
+            "appliedActions": []
+        },
+        "lynch": {
+            "tags": ["kill"],
+            "priority": 5,
+            "appliedAtomics": {
+                "ChatPost": "Some message",
+                "AddStatus": "Dead",
+                "GrantAbility": "EatBrainz"
+            },
+            "appliedActions": []
+        }
+    },
+    "abilities": {
+        "Start Lynch Vote": {
+            "tags": ["dayending"],
+            "trigger": {"on": "use"},
+            "targeting": {
+                "type": "vote[role!=Fool,reqMajority=51%]",
+                "filter": "",
+                "selection": "list"
+            },
+            "appliedActions": ["lynch"],
+            "appliedAtomics": {"ChatPost": "system:Starting Lynch Vote!->villager"}
+        },
+        "Maul Face": {
+            "tags": [
+                "hurt",
+                "nightending"
+            ],
+            "trigger": {"on": "use"},
+            "targeting": {
+                "type": "vote[role=Werewolf]",
+                "filter": "",
+                "selection": "list"
+            },
+            "appliedActions": ["maul"],
+            "appliedAtomics": {}
+        },
+        "Brutal Death": {
+            "tags": ["death"],
+            "trigger": {
+                "on": "event[statusChange]",
+                "filter": "tag=dead"
+            },
+            "targeting": {
+                "type": "causers",
+                "filter": "",
+                "selection": "list"
+            },
+            "appliedActions": ["maul"],
+            "appliedAtomics": {}
+        }
+    },
+    "gameCons": {
+        "Dead Baddies": {
+            "trigger": {
+                "type": "count",
+                "value": "0",
+                "targetTags": "baddie"
+            },
+            "resultAtomics": {}
+        },
+        "Dead Targets": {
+            "trigger": {
+                "type": "parity",
+                "value": "1.0",
+                "targetTags": "target,anothertag"
+            },
+            "resultAtomics": {}
+        }
+    },
+    "roles": {
+        "Villager": {
+            "access": "public",
+            "tags": ["target"],
+            "chatChannels": ["public"],
+            "winCondition": ["DeadBaddies"],
+            "grantedAbilities": ["startLynchVote"],
+            "grantedStatuses": []
+        },
+        "Werewolf": {
+            "access": "private",
+            "tags": ["baddie"],
+            "chatChannels": [
+                "public",
+                "werewolfchat"
+            ],
+            "winCondition": ["DeadTargets"],
+            "grantedAbilities": [
+                "Maul Face",
+                "Brutal Death"
+            ],
+            "grantedStatuses": []
+        }
+    },
+    "statuses": {
+        "Dead": {
+            "access": "public",
+            "tags": ["dead"],
+            "actionMods": ["Silence"],
+            "application": {
+                "type": "continuous",
+                "timeout": "inf"
+            },
+            "onEndActions": [],
+            "onEndAtomics": {}
+        },
+        "Hurt": {
+            "access": "private",
+            "tags": ["bleeding"],
+            "actionMods": ["DeadOnDamage"],
+            "application": {
+                "type": "Timed",
+                "timeout": "2"
+            },
+            "onEndActions": [],
+            "onEndAtomics": {"delStatus": "Hurt"}
+        },
+        "Turning": {
+            "access": "hidden",
+            "tags": [""],
+            "actionMods": ["MaulImmune"],
+            "application": {
+                "type": "continuous",
+                "timeout": "inf"
+            },
+            "onEndActions": [],
+            "onEndAtomics": {
+                "delStatus": "Turning,[tag=bleeding]",
+                "replRole": "Werewolf"
+            }
+        }
+    },
+    "actionMods": {
+        "MaulImmune": {
+            "priority": 1,
+            "trigger": {
+                "on": "attemptedAbility",
+                "filter": "name=Maul Face"
+            },
+            "effect": {"targeting.filter": ">>player!=_this"},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        },
+        "DeadOnDamage": {
+            "priority": 1,
+            "trigger": {
+                "on": "ability",
+                "filter": "tag=dead|hurt"
+            },
+            "effect": {"appliedAtomics": ">>addStatus:Dead"},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        },
+        "Silence": {
+            "priority": 1,
+            "trigger": {
+                "on": "attemptedAtomic",
+                "filter": "name=ChatPost"
+            },
+            "effect": {"value": ""},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        }
+    },
+    "phases": {
+        "Daytime": {
+            "triggeredActions": [],
+            "triggeredAtomics": {},
+            "activeMods": [],
+            "continueReqs": [
+                "ability[tag=dayending]",
+                "time[val=10min]"
+            ]
+        },
+        "Nighttime": {
+            "triggeredActions": [],
+            "triggeredAtomics": {},
+            "activeMods": [],
+            "continueReqs": [
+                "ability[tag=nightending]",
+                "time[val=10min]"
+            ]
+        }
+    },
+    "items": {
+        "ExampleItem2": {
+            "exampleA": 42.352,
+            "exampleB": [
+                10,
+                4,
+                265,
+                4,
+                7,
+                4
+            ]
+        },
+        "ExampleItem": {
+            "exampleA": 0,
+            "exampleB": [
+                10,
+                4,
+                265,
+                4,
+                7,
+                4
+            ]
+        }
+    }
 }

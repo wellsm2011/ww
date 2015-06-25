@@ -1,7 +1,7 @@
 package config.explorer;
 
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 import backend.U;
 import config.explorer.ExportedParam.DType;
@@ -9,22 +9,20 @@ import config.explorer.ExportedParam.MType;
 
 public class ExportedParameter
 {
-	private String							paramName;
-	private Object							target;
-	private LinkedHashMap<MType, Method>	methods;
-	private DType							datatype;
+	private String				paramName;
+	private Map<MType, Method>	methods;
+	private DType				datatype;
 
-	public ExportedParameter(String name, Object target, LinkedHashMap<MType, Method> methods, DType datatype)
+	public ExportedParameter(String name, Map<MType, Method> methods, DType datatype)
 	{
 		this.paramName = name;
 		this.methods = methods;
-		this.target = target;
 		this.datatype = datatype;
 	}
 
-	public <T> T call(MType targMethod, Object... params)
+	public <T> T call(Object target, MType targMethod, Object... params)
 	{
-		return U.carefulCall(this.methods.get(targMethod), this.target, params);
+		return U.carefulCall(this.methods.get(targMethod), target, params);
 	}
 
 	public DType getDatatype()
@@ -32,10 +30,10 @@ public class ExportedParameter
 		return this.datatype;
 	}
 
-	public String getGettableVal()
+	public String getGettableVal(Object input)
 	{
 		if (this.methods.containsKey(MType.GETTER))
-			return "[" + this.call(MType.GETTER) + "]";
+			return "[" + this.call(input, MType.GETTER) + "]";
 		return "[]";
 	}
 
@@ -47,6 +45,6 @@ public class ExportedParameter
 	@Override
 	public String toString()
 	{
-		return this.paramName + " - [" + this.call(MType.GETTER) + "]";
+		return this.paramName + " - [" + this.methods.get(MType.GETTER).getName() + "]";
 	}
 }

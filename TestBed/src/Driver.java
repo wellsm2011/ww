@@ -1,16 +1,8 @@
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import backend.U;
-import backend.lib.annovention.ClasspathDiscoverer;
-import backend.lib.annovention.Discoverer;
-import backend.lib.annovention.listener.ClassAnnotationDiscoveryListener;
-import backend.lib.annovention.listener.MethodAnnotationDiscoveryListener;
 import config.core.Config;
-import config.core.ConfigMember;
-import config.explorer.Explorer;
 import editor.gui.EditorGui;
 
 public class Driver
@@ -30,8 +22,7 @@ public class Driver
 		Config config = new Config("config.json");
 		U.p(config);
 		config.writeToFile("parsedConfig.json");
-		Explorer e = new Explorer(config);
-		EditorGui gui = new EditorGui(e);
+		EditorGui gui = new EditorGui(config);
 		gui.init();
 
 	}

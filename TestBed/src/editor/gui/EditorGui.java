@@ -2,11 +2,12 @@ package editor.gui;
 
 import global.Globals;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -18,19 +19,23 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import backend.U;
 import backend.functionInterfaces.Handler;
-import config.explorer.Explorer;
-import config.explorer.ExportedParameter;
+import config.core.Config;
+import config.core.SectionManager;
 
 public class EditorGui
 {
-	private LinkedHashMap<String, LinkedHashMap<String, Collection<ExportedParameter>>>	data;
-	private Thread																		guiThread;
-	private boolean																		run;
-	private LinkedHashMap<String, Composite>											edMap;
+	private Map<String, SectionManager>			configMemberMap;
+	private Thread								guiThread;
+	private boolean								run;
+	private LinkedHashMap<Class<?>, Composite>	edMap;
+	private Map<Class<?>, SectionManager>		classToSecMap;
+	private Class<?>							curDisplayType;
+	private Object								curDisplayItem;
 
-	public EditorGui(Explorer explorer)
+	public EditorGui(Config config)
 	{
-		this.data = explorer.getMappedOptions();
+		this.configMemberMap = config.getAllMaps();
+		this.classToSecMap = config.getClassToSectionManagerMap();
 
 		this.guiThread = new Thread(() -> {
 			Display display = new Display();
@@ -59,49 +64,68 @@ public class EditorGui
 	{
 		Tree tree = new Tree(shell, SWT.BORDER);
 		Composite paramEditorParent = new Composite(shell, SWT.BORDER);
-		Handler<Class<?>> updateHandler = this.createParamEditor(paramEditorParent);
+		StackLayout layout = new StackLayout();
+		paramEditorParent.setLayout(layout);
+		Handler<Object> updateHandler = this.createParamEditor(paramEditorParent, layout);
 		this.createConfigBrowser(tree, updateHandler);
 	}
 
-	private void createConfigBrowser(Tree tree, Handler<Class<?>> updateHandler)
+	private void createConfigBrowser(Tree tree, Handler<Object> updateHandler)
 	{
-		tree.addMouseListener(new ConfigTreeListener<Class<?>>(updateHandler));
+		tree.addMouseListener(new ConfigTreeListener(updateHandler));
 		boolean initialized = false;
-		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> curSection : this.data.entrySet())
+		for (Entry<String, SectionManager> curConfMember : this.configMemberMap.entrySet())
 		{
 			TreeItem sectionItem = new TreeItem(tree, 0);
-			sectionItem.setText(curSection.getKey());
-			sectionItem.setData(curSection.getValue().keySet().toArray()[0].getClass());
+			sectionItem.setText(curConfMember.getKey());
+			SectionManager curSectionManager = curConfMember.getValue();
+			sectionItem.setData(curSectionManager);
 			if (!initialized)
 			{
 				initialized = true;
-				updateHandler.handle(curSection.getValue().keySet().toArray()[0].getClass());
+				updateHandler.handle(curSectionManager);
 			}
-			for (Entry<String, Collection<ExportedParameter>> curElem : curSection.getValue().entrySet())
+			for (Entry<String, Object> curElem : curSectionManager.getEntries().entrySet())
 			{
 				TreeItem elemItem = new TreeItem(sectionItem, 0);
 				elemItem.setText(curElem.getKey());
-				elemItem.setData(curElem.getValue().toArray()[0].getClass());
+				elemItem.setData(curElem.getValue());
 				elemItem.setExpanded(true);
 			}
 			sectionItem.setExpanded(true);
 		}
 	}
 
-	private Handler<Class<?>> createParamEditor(Composite paramEditorParent)
+	private Handler<Object> createParamEditor(Composite paramEditorParent, StackLayout layout)
 	{
-		this.edMap = new LinkedHashMap<String, Composite>();
-		for (Entry<String, LinkedHashMap<String, Collection<ExportedParameter>>> cur : this.data.entrySet())
+		this.edMap = new LinkedHashMap<Class<?>, Composite>();
+		for (Entry<String, SectionManager> cur : this.configMemberMap.entrySet())
 		{
-			this.edMap.put(cur.getKey(), new Composite(paramEditorParent, SWT.BORDER));
-			Label label = new Label(this.edMap.get(cur.getKey()), SWT.SHADOW_NONE);
-			Rectangle clientArea = this.edMap.get(cur.getKey()).getClientArea();
+			this.curDisplayType = cur.getValue().getType();
+			Composite curPane = new Composite(paramEditorParent, SWT.NONE);
+			Label label = new Label(curPane, SWT.SHADOW_NONE);
+			Rectangle clientArea = curPane.getClientArea();
 			label.setLocation(clientArea.x, clientArea.y);
 			label.setText(cur.getKey());
 			label.pack();
-		} // paramEditorParent.
+			// curPane.setVisible(tr);
+			this.edMap.put(curDisplayType, curPane);
+		}
 		return (in) -> {
-			U.p(in);
+			if (this.classToSecMap.containsKey(in.getClass()))
+			{
+				if (!this.curDisplayType.equals(in.getClass()))
+				{
+					layout.topControl = this.edMap.get(in.getClass());
+					this.curDisplayType = in.getClass();
+					this.curDisplayItem = in;
+					paramEditorParent.layout();
+				}
+				if (!this.curDisplayItem.equals(in)){
+					
+				}
+			} else
+				U.p("Nothing found..." + in);
 		};
 	}
 
