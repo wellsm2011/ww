@@ -7,8 +7,6 @@ import java.util.Map.Entry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -41,28 +39,49 @@ public class EditorPaneHandler
 		this.populateLoaders(secMan.getParamMappings());
 	}
 
+	private void initTitle(String name, Composite curPane)
+	{
+		this.label = new Label(this.pane, SWT.SHADOW_NONE | SWT.PUSH);
+		this.label.setText("Editor for " + name);
+		FontData[] fontData = this.label.getFont().getFontData();
+		for (int i = 0; i < fontData.length; ++i)
+			fontData[i].setHeight(14);
+
+		final Font newFont = new Font(curPane.getDisplay(), fontData);
+		this.label.setFont(newFont);
+		// Since you created the font, you must dispose it
+		this.label.addDisposeListener(new DisposeListener()
+		{
+			@Override
+			public void widgetDisposed(DisposeEvent e)
+			{
+				newFont.dispose();
+			}
+		});
+	}
+
 	private void populateLoaders(Map<String, ExportedParameter> paramMappings)
 	{
 		for (Entry<String, ExportedParameter> curParam : paramMappings.entrySet())
 			switch (curParam.getValue().getDatatype())
 			{
 				case NUM:
-					setupNumberField(curParam);
+					this.setupNumberField(curParam);
 					break;
 				case NUMLIST:
-					setupNumberListField(curParam);
+					this.setupNumberListField(curParam);
 					break;
 				case NUMMAP:
-					setupNumberMapField(curParam);
+					this.setupNumberMapField(curParam);
 					break;
 				case STR:
-					setupStringField(curParam);
+					this.setupStringField(curParam);
 					break;
 				case STRLIST:
-					setupStringListField(curParam);
+					this.setupStringListField(curParam);
 					break;
 				case STRMAP:
-					setupStringMapField(curParam);
+					this.setupStringMapField(curParam);
 					break;
 				default:
 					break;
@@ -75,7 +94,7 @@ public class EditorPaneHandler
 		myPanel.setLayout(new GridLayout(2, false));
 		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
 		Text input = new Text(myPanel, SWT.BORDER);
-		input.addMouseListener(new ClickMapper(()->{
+		input.addMouseListener(new ClickMapper(() -> {
 			input.setSelection(0, input.getText().length());
 		}));
 		caption.setText(curParam.getValue().getParamName());
@@ -110,7 +129,7 @@ public class EditorPaneHandler
 		myPanel.setLayout(new GridLayout(2, false));
 		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
 		Text input = new Text(myPanel, SWT.BORDER);
-		input.addMouseListener(new ClickMapper(()->{
+		input.addMouseListener(new ClickMapper(() -> {
 			input.setSelection(0, input.getText().length());
 		}));
 		caption.setText(curParam.getValue().getParamName());
@@ -137,27 +156,6 @@ public class EditorPaneHandler
 		numLabel.setText(curParam.getValue().getParamName());
 		this.loaders.add((in) -> {
 			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
-		});
-	}
-
-	private void initTitle(String name, Composite curPane)
-	{
-		this.label = new Label(this.pane, SWT.SHADOW_NONE | SWT.PUSH);
-		this.label.setText("Editor for " + name);
-		FontData[] fontData = this.label.getFont().getFontData();
-		for (int i = 0; i < fontData.length; ++i)
-			fontData[i].setHeight(14);
-
-		final Font newFont = new Font(curPane.getDisplay(), fontData);
-		this.label.setFont(newFont);
-		// Since you created the font, you must dispose it
-		this.label.addDisposeListener(new DisposeListener()
-		{
-			@Override
-			public void widgetDisposed(DisposeEvent e)
-			{
-				newFont.dispose();
-			}
 		});
 	}
 

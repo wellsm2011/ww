@@ -9,28 +9,34 @@ import backend.functionInterfaces.Func;
 
 public class ClickMapper implements MouseListener
 {
-	private BiConsumer<MouseEvent, ClickType>	handler;
-	public enum ClickType{
+	public enum ClickType
+	{
 		MOUSEUP, MOUSEDOWN, DOUBLECLICK
 	}
-	public ClickMapper(Func onClick, ClickType... type)
-	{
-		this.handler = (event, cType)->{
-			for(ClickType cur : type)
-				if (cType == cur)
-					onClick.exec();
-		};
-	}
-	public ClickMapper(Func onClick)
-	{
-		this.handler = (event, cType)->{
-			onClick.exec();
-		};
-	}
+
+	private BiConsumer<MouseEvent, ClickType>	handler;
+
 	public ClickMapper(BiConsumer<MouseEvent, ClickType> eventHandler)
 	{
 		this.handler = eventHandler;
 	}
+
+	public ClickMapper(Func onClick)
+	{
+		this.handler = (event, cType) -> {
+			onClick.exec();
+		};
+	}
+
+	public ClickMapper(Func onClick, ClickType... type)
+	{
+		this.handler = (event, cType) -> {
+			for (ClickType cur : type)
+				if (cType == cur)
+					onClick.exec();
+		};
+	}
+
 	@Override
 	public void mouseDoubleClick(MouseEvent e)
 	{
