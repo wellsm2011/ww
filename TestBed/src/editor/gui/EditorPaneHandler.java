@@ -75,28 +75,9 @@ public class EditorPaneHandler
 		myPanel.setLayout(new GridLayout(2, false));
 		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
 		Text input = new Text(myPanel, SWT.BORDER);
-		input.addMouseListener(new MouseListener()
-		{
-
-			@Override
-			public void mouseDoubleClick(MouseEvent arg0)
-			{
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent arg0)
-			{
-				input.setSelection(0, input.getText().length());
-			}
-
-			@Override
-			public void mouseUp(MouseEvent arg0)
-			{
-				input.setSelection(0, input.getText().length());
-			}
-
-		});
+		input.addMouseListener(new ClickMapper(()->{
+			input.setSelection(0, input.getText().length());
+		}));
 		caption.setText(curParam.getValue().getParamName());
 		input.setText(curParam.getValue().getParamName());
 		myPanel.pack();
@@ -129,28 +110,9 @@ public class EditorPaneHandler
 		myPanel.setLayout(new GridLayout(2, false));
 		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
 		Text input = new Text(myPanel, SWT.BORDER);
-		input.addMouseListener(new MouseListener()
-		{
-
-			@Override
-			public void mouseDoubleClick(MouseEvent arg0)
-			{
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent arg0)
-			{
-				input.setSelection(0, input.getText().length());
-			}
-
-			@Override
-			public void mouseUp(MouseEvent arg0)
-			{
-				input.setSelection(0, input.getText().length());
-			}
-
-		});
+		input.addMouseListener(new ClickMapper(()->{
+			input.setSelection(0, input.getText().length());
+		}));
 		caption.setText(curParam.getValue().getParamName());
 		input.setText(curParam.getValue().getParamName());
 		myPanel.pack();
