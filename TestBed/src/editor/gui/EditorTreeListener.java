@@ -51,8 +51,9 @@ public class EditorTreeListener implements MouseListener
 			Point point = new Point(event.x, event.y);
 			TreeItem item = ((Tree) event.getSource()).getItem(point);
 			if (item != null)
-				if (item.getData().hashCode() == this.cur.hashCode())
-					this.handle(item.getData());
+				if (this.cur != null)
+					if (item.getData().hashCode() == this.cur.hashCode())
+						this.handle(item.getData());
 		}
 	}
 

@@ -114,4 +114,16 @@ public class SectionManager
 			U.e("Error, was passed " + curInstance.toString() + " for type " + this.type);
 		this.dataItems.put(key, curInstance);
 	}
+
+	public Object getExample()
+	{
+		try
+		{
+			return this.type.newInstance();
+		} catch (InstantiationException | IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
