@@ -7,12 +7,15 @@ import java.util.Map.Entry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import backend.functionInterfaces.Handler;
 import config.core.SectionManager;
@@ -34,61 +37,145 @@ public class EditorPaneHandler
 		this.layout = new GridLayout(1, false);
 		this.pane.setLayout(this.layout);
 		this.initTitle(secMan.getKey(), curPane);
-		this.loaders = this.genLoaders(secMan.getParamMappings());
+		this.loaders = new LinkedList<Handler<Object>>();
+		this.populateLoaders(secMan.getParamMappings());
 	}
 
-	private LinkedList<Handler<Object>> genLoaders(Map<String, ExportedParameter> paramMappings)
+	private void populateLoaders(Map<String, ExportedParameter> paramMappings)
 	{
-		LinkedList<Handler<Object>> res = new LinkedList<Handler<Object>>();
 		for (Entry<String, ExportedParameter> curParam : paramMappings.entrySet())
 			switch (curParam.getValue().getDatatype())
 			{
 				case NUM:
-					Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
-					numLabel.setText(curParam.getValue().getParamName());
-					res.add((in) -> {
-						numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableVal(in));
-					});
+					setupNumberField(curParam);
 					break;
 				case NUMLIST:
-					Label numListLabel = new Label(this.pane, SWT.SHADOW_NONE);
-					numListLabel.setText(curParam.getValue().getParamName());
-					res.add((in) -> {
-						numListLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableVal(in));
-					});
+					setupNumberListField(curParam);
 					break;
 				case NUMMAP:
-					Label numMapLabel = new Label(this.pane, SWT.SHADOW_NONE);
-					numMapLabel.setText(curParam.getValue().getParamName());
-					res.add((in) -> {
-						numMapLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableVal(in));
-					});
+					setupNumberMapField(curParam);
 					break;
 				case STR:
-					Label strLabel = new Label(this.pane, SWT.SHADOW_NONE);
-					strLabel.setText(curParam.getValue().getParamName());
-					res.add((in) -> {
-						strLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableVal(in));
-					});
+					setupStringField(curParam);
 					break;
 				case STRLIST:
-					Label strListLabel = new Label(this.pane, SWT.SHADOW_NONE);
-					strListLabel.setText(curParam.getValue().getParamName());
-					res.add((in) -> {
-						strListLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableVal(in));
-					});
+					setupStringListField(curParam);
 					break;
 				case STRMAP:
-					Label strMapLabel = new Label(this.pane, SWT.SHADOW_NONE);
-					strMapLabel.setText(curParam.getValue().getParamName());
-					res.add((in) -> {
-						strMapLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableVal(in));
-					});
+					setupStringMapField(curParam);
 					break;
 				default:
 					break;
 			}
-		return res;
+	}
+
+	private void setupNumberField(Entry<String, ExportedParameter> curParam)
+	{
+		Composite myPanel = new Composite(this.pane, SWT.SHADOW_NONE);
+		myPanel.setLayout(new GridLayout(2, false));
+		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
+		Text input = new Text(myPanel, SWT.BORDER);
+		input.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseDoubleClick(MouseEvent arg0)
+			{
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent arg0)
+			{
+				input.setSelection(0, input.getText().length());
+			}
+
+			@Override
+			public void mouseUp(MouseEvent arg0)
+			{
+				input.setSelection(0, input.getText().length());
+			}
+
+		});
+		caption.setText(curParam.getValue().getParamName());
+		input.setText(curParam.getValue().getParamName());
+		myPanel.pack();
+		this.loaders.add((in) -> {
+			input.setText(curParam.getValue().getGettableAsString(in));
+		});
+	}
+
+	private void setupNumberListField(Entry<String, ExportedParameter> curParam)
+	{
+		Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
+		numLabel.setText(curParam.getValue().getParamName());
+		this.loaders.add((in) -> {
+			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
+		});
+	}
+
+	private void setupNumberMapField(Entry<String, ExportedParameter> curParam)
+	{
+		Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
+		numLabel.setText(curParam.getValue().getParamName());
+		this.loaders.add((in) -> {
+			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
+		});
+	}
+
+	private void setupStringField(Entry<String, ExportedParameter> curParam)
+	{
+		Composite myPanel = new Composite(this.pane, SWT.SHADOW_NONE);
+		myPanel.setLayout(new GridLayout(2, false));
+		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
+		Text input = new Text(myPanel, SWT.BORDER);
+		input.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseDoubleClick(MouseEvent arg0)
+			{
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent arg0)
+			{
+				input.setSelection(0, input.getText().length());
+			}
+
+			@Override
+			public void mouseUp(MouseEvent arg0)
+			{
+				input.setSelection(0, input.getText().length());
+			}
+
+		});
+		caption.setText(curParam.getValue().getParamName());
+		input.setText(curParam.getValue().getParamName());
+		myPanel.pack();
+		this.loaders.add((in) -> {
+			input.setText(curParam.getValue().getGettableAsString(in));
+			myPanel.pack();
+		});
+	}
+
+	private void setupStringListField(Entry<String, ExportedParameter> curParam)
+	{
+		Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
+		numLabel.setText(curParam.getValue().getParamName());
+		this.loaders.add((in) -> {
+			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
+		});
+	}
+
+	private void setupStringMapField(Entry<String, ExportedParameter> curParam)
+	{
+		Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
+		numLabel.setText(curParam.getValue().getParamName());
+		this.loaders.add((in) -> {
+			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
+		});
 	}
 
 	private void initTitle(String name, Composite curPane)

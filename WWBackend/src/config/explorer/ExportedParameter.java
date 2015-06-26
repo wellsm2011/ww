@@ -30,11 +30,11 @@ public class ExportedParameter
 		return this.datatype;
 	}
 
-	public String getGettableVal(Object input)
+	public String getGettableAsString(Object input)
 	{
 		if (this.methods.containsKey(MType.GETTER))
-			return "[" + this.call(input, MType.GETTER) + "]";
-		return "[]";
+			return this.call(input, MType.GETTER).toString();
+		return "";
 	}
 
 	public String getParamName()
