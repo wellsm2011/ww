@@ -170,7 +170,6 @@ public class MethodCall extends Expr
 	/**
 	 * Replaces the method call with the bytecode derived from the given source
 	 * text.
-	 *
 	 * <p>
 	 * $0 is available even if the called method is static.
 	 *
@@ -253,17 +252,15 @@ public class MethodCall extends Expr
 	}
 
 	/*
-	 * Returns the parameter types of the called method.
-	 * 
-	 * public CtClass[] getParameterTypes() throws NotFoundException { return
+	 * Returns the parameter types of the called method. public CtClass[]
+	 * getParameterTypes() throws NotFoundException { return
 	 * Descriptor.getParameterTypes(getMethodDesc(), thisClass.getClassPool());
 	 * }
 	 */
 
 	/*
-	 * Returns the return type of the called method.
-	 * 
-	 * public CtClass getReturnType() throws NotFoundException { return
+	 * Returns the return type of the called method. public CtClass
+	 * getReturnType() throws NotFoundException { return
 	 * Descriptor.getReturnType(getMethodDesc(), thisClass.getClassPool()); }
 	 */
 

@@ -24,8 +24,12 @@ import javassist.compiler.TokenId;
  */
 public class IntConst extends ASTree
 {
-	protected long	value;
-	protected int	type;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	protected long				value;
+	protected int				type;
 
 	public IntConst(long v, int tokenId)
 	{

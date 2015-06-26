@@ -22,7 +22,11 @@ import javassist.compiler.ast.Declarator;
 
 public final class SymbolTable extends HashMap
 {
-	private SymbolTable	parent;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	private SymbolTable			parent;
 
 	public SymbolTable()
 	{

@@ -24,10 +24,8 @@ import javassist.CtBehavior;
 
 /**
  * Creates bytecode that when executed calls back to the instance's result
- * method.
+ * method. Example of how to create and insert a callback:
  *
- * Example of how to create and insert a callback:
- * 
  * <pre>
  * {@code
  * ctMethod.insertAfter(new Callback("Thread.currentThread()") {
@@ -39,10 +37,10 @@ import javassist.CtBehavior;
  * }.sourceCode());
  * }
  * </pre>
- * 
+ *
  * Contains utility methods for inserts callbacks in <code>CtBehaviour</code>,
  * example:
- * 
+ *
  * <pre>
  * {@code
  * insertAfter(ctBehaviour, new Callback("Thread.currentThread(), dummyString") {
@@ -71,7 +69,6 @@ public abstract class Callback
 	 *            The behaviour to insert callback in
 	 * @param callback
 	 *            The callback
-	 *
 	 * @see CtBehavior#insertAfter(String, boolean)
 	 */
 	public static void insertAfter(CtBehavior behavior, Callback callback) throws CannotCompileException
@@ -93,7 +90,6 @@ public abstract class Callback
 	 *            normally returns but also when an exception is thrown. If this
 	 *            parameter is true, the inserted code cannot access local
 	 *            variables.
-	 *
 	 * @see CtBehavior#insertAfter(String, boolean)
 	 */
 	public static void insertAfter(CtBehavior behavior, Callback callback, boolean asFinally) throws CannotCompileException
@@ -111,9 +107,7 @@ public abstract class Callback
 	 * @param lineNum
 	 *            The line number. The callback is inserted at the beginning of
 	 *            the code at the line specified by this line number.
-	 *
 	 * @return The line number at which the callback has been inserted.
-	 *
 	 * @see CtBehavior#insertAt(int, String)
 	 */
 	public static int insertAt(CtBehavior behavior, Callback callback, int lineNum) throws CannotCompileException
@@ -126,7 +120,6 @@ public abstract class Callback
 	 *
 	 * @param callback
 	 *            The callback
-	 *
 	 * @see CtBehavior#insertBefore(String)
 	 */
 	public static void insertBefore(CtBehavior behavior, Callback callback) throws CannotCompileException

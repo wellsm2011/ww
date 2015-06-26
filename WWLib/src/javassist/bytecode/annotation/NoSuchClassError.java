@@ -22,7 +22,11 @@ package javassist.bytecode.annotation;
  */
 public class NoSuchClassError extends Error
 {
-	private String	className;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	private String				className;
 
 	/**
 	 * Constructs an exception.

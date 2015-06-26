@@ -77,14 +77,10 @@ public class NewExpr extends Expr
 	int		newPos;
 
 	/*
-	 * Not used
-	 * 
-	 * private int getNameAndType(ConstPool cp) { int pos = currentPos; int c =
-	 * iterator.byteAt(pos); int index = iterator.u16bitAt(pos + 1);
-	 * 
-	 * if (c == INVOKEINTERFACE) return
-	 * cp.getInterfaceMethodrefNameAndType(index); else return
-	 * cp.getMethodrefNameAndType(index); }
+	 * Not used private int getNameAndType(ConstPool cp) { int pos = currentPos;
+	 * int c = iterator.byteAt(pos); int index = iterator.u16bitAt(pos + 1); if
+	 * (c == INVOKEINTERFACE) return cp.getInterfaceMethodrefNameAndType(index);
+	 * else return cp.getMethodrefNameAndType(index); }
 	 */
 
 	/**
@@ -161,10 +157,9 @@ public class NewExpr extends Expr
 	}
 
 	/**
-	 * Get the signature of the constructor
-	 *
-	 * The signature is represented by a character string called method
-	 * descriptor, which is defined in the JVM specification.
+	 * Get the signature of the constructor The signature is represented by a
+	 * character string called method descriptor, which is defined in the JVM
+	 * specification.
 	 *
 	 * @see javassist.CtBehavior#getSignature()
 	 * @see javassist.bytecode.Descriptor
@@ -178,11 +173,10 @@ public class NewExpr extends Expr
 	}
 
 	/*
-	 * Returns the parameter types of the constructor.
-	 * 
-	 * public CtClass[] getParameterTypes() throws NotFoundException { ConstPool
-	 * cp = getConstPool(); int index = iterator.u16bitAt(currentPos + 1);
-	 * String desc = cp.getMethodrefType(index); return
+	 * Returns the parameter types of the constructor. public CtClass[]
+	 * getParameterTypes() throws NotFoundException { ConstPool cp =
+	 * getConstPool(); int index = iterator.u16bitAt(currentPos + 1); String
+	 * desc = cp.getMethodrefType(index); return
 	 * Descriptor.getParameterTypes(desc, thisClass.getClassPool()); }
 	 */
 
@@ -201,7 +195,6 @@ public class NewExpr extends Expr
 	/**
 	 * Replaces the <tt>new</tt> expression with the bytecode derived from the
 	 * given source text.
-	 *
 	 * <p>
 	 * $0 is available but the value is null.
 	 *

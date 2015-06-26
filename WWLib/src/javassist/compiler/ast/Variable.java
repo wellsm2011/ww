@@ -23,7 +23,11 @@ import javassist.compiler.CompileError;
  */
 public class Variable extends Symbol
 {
-	protected Declarator	declarator;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	protected Declarator		declarator;
 
 	public Variable(String sym, Declarator d)
 	{

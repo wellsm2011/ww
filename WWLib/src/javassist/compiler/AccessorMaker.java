@@ -221,7 +221,6 @@ public class AccessorMaker
 	 *            the descriptor of the accessor method. The first parameter
 	 *            type is <code>clazz</code>. If the private method is static,
 	 *            <code>accDesc</code> must be identical to <code>desc</code>.
-	 * 
 	 * @param orig
 	 *            the method info of the private method.
 	 * @return

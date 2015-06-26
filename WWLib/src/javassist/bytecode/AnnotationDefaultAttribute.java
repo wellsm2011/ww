@@ -27,7 +27,6 @@ import javassist.bytecode.annotation.MemberValue;
 
 /**
  * A class representing <code>AnnotationDefault_attribute</code>.
- *
  * <p>
  * For example, if you declare the following annotation type:
  *
@@ -39,7 +38,6 @@ import javassist.bytecode.annotation.MemberValue;
  * 	int age() default 99;
  * }
  * </pre>
- *
  * <p>
  * The defautl values of <code>name</code> and <code>age</code> are stored as
  * annotation default attributes in <code>Author.class</code>. The following
@@ -55,7 +53,6 @@ import javassist.bytecode.annotation.MemberValue;
  *           minfo.getAttribute(AnnotationDefaultAttribute.tag);
  * MemberValue value = ada.getDefaultValue());    // default value of age
  * </pre>
- *
  * <p>
  * If the following statement is executed after the code above, the default
  * value of age is set to 80:

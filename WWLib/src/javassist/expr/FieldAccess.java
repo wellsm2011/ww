@@ -274,7 +274,6 @@ public class FieldAccess extends Expr
 	/**
 	 * Replaces the method call with the bytecode derived from the given source
 	 * text.
-	 *
 	 * <p>
 	 * $0 is available even if the called method is static. If the field access
 	 * is writing, $_ is available but the value of $_ is ignored.

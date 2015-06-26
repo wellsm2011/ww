@@ -29,7 +29,11 @@ import java.lang.reflect.InvocationTargetException;
 public class CannotInvokeException extends RuntimeException
 {
 
-	private Throwable	err	= null;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	private Throwable			err					= null;
 
 	/**
 	 * Constructs a CannotInvokeException with an ClassNotFoundException.

@@ -246,30 +246,18 @@ public final class Parser implements TokenId
 
 	/*
 	 * logical.or.expr 10 (operator precedence) : logical.and.expr |
-	 * logical.or.expr OROR logical.and.expr left-to-right
-	 * 
-	 * logical.and.expr 9 : inclusive.or.expr | logical.and.expr ANDAND
-	 * inclusive.or.expr
-	 * 
+	 * logical.or.expr OROR logical.and.expr left-to-right logical.and.expr 9 :
+	 * inclusive.or.expr | logical.and.expr ANDAND inclusive.or.expr
 	 * inclusive.or.expr 8 : exclusive.or.expr | inclusive.or.expr "|"
-	 * exclusive.or.expr
-	 * 
-	 * exclusive.or.expr 7 : and.expr | exclusive.or.expr "^" and.expr
-	 * 
-	 * and.expr 6 : equality.expr | and.expr "&" equality.expr
-	 * 
+	 * exclusive.or.expr exclusive.or.expr 7 : and.expr | exclusive.or.expr "^"
+	 * and.expr and.expr 6 : equality.expr | and.expr "&" equality.expr
 	 * equality.expr 5 : relational.expr | equality.expr (EQ | NEQ)
-	 * relational.expr
-	 * 
-	 * relational.expr 4 : shift.expr | relational.expr (LE | GE | "<" | ">")
-	 * shift.expr | relational.expr INSTANCEOF class.type ("[" "]")*
-	 * 
-	 * shift.expr 3 : additive.expr | shift.expr (LSHIFT | RSHIFT | ARSHIFT)
-	 * additive.expr
-	 * 
-	 * additive.expr 2 : multiply.expr | additive.expr ("+" | "-") multiply.expr
-	 * 
-	 * multiply.expr 1 : unary.expr | multiply.expr ("*" | "/" | "%") unary.expr
+	 * relational.expr relational.expr 4 : shift.expr | relational.expr (LE | GE
+	 * | "<" | ">") shift.expr | relational.expr INSTANCEOF class.type ("["
+	 * "]")* shift.expr 3 : additive.expr | shift.expr (LSHIFT | RSHIFT |
+	 * ARSHIFT) additive.expr additive.expr 2 : multiply.expr | additive.expr
+	 * ("+" | "-") multiply.expr multiply.expr 1 : unary.expr | multiply.expr
+	 * ("*" | "/" | "%") unary.expr
 	 */
 	private ASTree parseBinaryExpr(SymbolTable tbl) throws CompileError
 	{
@@ -319,12 +307,9 @@ public final class Parser implements TokenId
 
 	/*
 	 * cast.expr : "(" builtin.type ("[" "]")* ")" unary.expr | "(" class.type
-	 * ("[" "]")* ")" unary.expr2
-	 * 
-	 * unary.expr2 is a unary.expr beginning with "(", NULL, StringL,
-	 * Identifier, THIS, SUPER, or NEW.
-	 * 
-	 * Either "(int.class)" or "(String[].class)" is a not cast expression.
+	 * ("[" "]")* ")" unary.expr2 unary.expr2 is a unary.expr beginning with
+	 * "(", NULL, StringL, Identifier, THIS, SUPER, or NEW. Either "(int.class)"
+	 * or "(String[].class)" is a not cast expression.
 	 */
 	private ASTree parseCast(SymbolTable tbl) throws CompileError
 	{
@@ -415,9 +400,8 @@ public final class Parser implements TokenId
 	/*
 	 * declaration.or.expression : [ FINAL ] built-in-type array.dimension
 	 * declarators | [ FINAL ] class.type array.dimension declarators |
-	 * expression ';' | expr.list ';' if exprList is true
-	 * 
-	 * Note: FINAL is currently ignored. This must be fixed in future.
+	 * expression ';' | expr.list ';' if exprList is true Note: FINAL is
+	 * currently ignored. This must be fixed in future.
 	 */
 	private Stmnt parseDeclarationOrExpression(SymbolTable tbl, boolean exprList) throws CompileError
 	{
@@ -828,9 +812,8 @@ public final class Parser implements TokenId
 	/*
 	 * method.declaration : member.modifiers [ formal.type ] Identifier "(" [
 	 * formal.parameter ( "," formal.parameter )* ] ")" array.dimension [ THROWS
-	 * class.type ( "," class.type ) ] ( block.statement | ";" )
-	 * 
-	 * Note that a method body is not parsed.
+	 * class.type ( "," class.type ) ] ( block.statement | ";" ) Note that a
+	 * method body is not parsed.
 	 */
 	private MethodDecl parseMethod1(SymbolTable tbl, boolean isConstructor, ASTList mods, Declarator d) throws CompileError
 	{
@@ -970,12 +953,11 @@ public final class Parser implements TokenId
 	 * postfix.expr : number.literal | primary.expr | method.expr | postfix.expr
 	 * "++" | "--" | postfix.expr "[" array.size "]" | postfix.expr "."
 	 * Identifier | postfix.expr ( "[" "]" )* "." CLASS | postfix.expr "#"
-	 * Identifier | postfix.expr "." SUPER
-	 * 
-	 * "#" is not an operator of regular Java. It separates a class name and a
-	 * member name in an expression for static member access. For example,
-	 * java.lang.Integer.toString(3) in regular Java can be written like this:
-	 * java.lang.Integer#toString(3) for this compiler.
+	 * Identifier | postfix.expr "." SUPER "#" is not an operator of regular
+	 * Java. It separates a class name and a member name in an expression for
+	 * static member access. For example, java.lang.Integer.toString(3) in
+	 * regular Java can be written like this: java.lang.Integer#toString(3) for
+	 * this compiler.
 	 */
 	private ASTree parsePostfix(SymbolTable tbl) throws CompileError
 	{
@@ -1058,7 +1040,6 @@ public final class Parser implements TokenId
 	/*
 	 * primary.expr : THIS | SUPER | TRUE | FALSE | NULL | StringL | Identifier
 	 * | NEW new.expr | "(" expression ")" | builtin.type ( "[" "]" )* "." CLASS
-	 * 
 	 * Identifier represents either a local variable name, a member name, or a
 	 * class name.
 	 */
@@ -1123,14 +1104,12 @@ public final class Parser implements TokenId
 	}
 
 	/*
-	 * statement : [ label ":" ]* labeled.statement
-	 * 
-	 * labeled.statement : block.statement | if.statement | while.statement |
-	 * do.statement | for.statement | switch.statement | try.statement |
-	 * return.statement | thorw.statement | break.statement | continue.statement
-	 * | declaration.or.expression | ";"
-	 * 
-	 * This method may return null (empty statement).
+	 * statement : [ label ":" ]* labeled.statement labeled.statement :
+	 * block.statement | if.statement | while.statement | do.statement |
+	 * for.statement | switch.statement | try.statement | return.statement |
+	 * thorw.statement | break.statement | continue.statement |
+	 * declaration.or.expression | ";" This method may return null (empty
+	 * statement).
 	 */
 	public Stmnt parseStatement(SymbolTable tbl) throws CompileError
 	{
@@ -1194,10 +1173,8 @@ public final class Parser implements TokenId
 
 	/*
 	 * switch.statement : SWITCH "(" expression ")" "{" switch.block "}"
-	 * 
-	 * swtich.block : ( switch.label statement* )*
-	 * 
-	 * swtich.label : DEFAULT ":" | CASE const.expression ":"
+	 * swtich.block : ( switch.label statement* )* swtich.label : DEFAULT ":" |
+	 * CASE const.expression ":"
 	 */
 	private Stmnt parseSwitch(SymbolTable tbl) throws CompileError
 	{
@@ -1310,10 +1287,8 @@ public final class Parser implements TokenId
 
 	/*
 	 * unary.expr : "++"|"--" unary.expr | "+"|"-" unary.expr | "!"|"~"
-	 * unary.expr | cast.expr | postfix.expr
-	 * 
-	 * unary.expr.not.plus.minus is a unary expression starting without "+",
-	 * "-", "++", or "--".
+	 * unary.expr | cast.expr | postfix.expr unary.expr.not.plus.minus is a
+	 * unary expression starting without "+", "-", "++", or "--".
 	 */
 	private ASTree parseUnaryExpr(SymbolTable tbl) throws CompileError
 	{

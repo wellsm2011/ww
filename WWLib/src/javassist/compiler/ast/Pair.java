@@ -24,7 +24,11 @@ import javassist.compiler.CompileError;
  */
 public class Pair extends ASTree
 {
-	protected ASTree	left, right;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	protected ASTree			left, right;
 
 	public Pair(ASTree _left, ASTree _right)
 	{

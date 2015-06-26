@@ -261,7 +261,6 @@ public class AttributeInfo
 	/**
 	 * Returns the <code>info</code> field of this <code>attribute_info</code>
 	 * structure.
-	 *
 	 * <p>
 	 * This method is not available if the object is an instance of
 	 * <code>CodeAttribute</code>.
@@ -316,7 +315,6 @@ public class AttributeInfo
 	/**
 	 * Sets the <code>info</code> field of this <code>attribute_info</code>
 	 * structure.
-	 *
 	 * <p>
 	 * This method is not available if the object is an instance of
 	 * <code>CodeAttribute</code>.

@@ -7,12 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -83,6 +82,7 @@ public class EditorGui
 			if (!initialized)
 			{
 				initialized = true;
+				this.curDisplayItem = curSectionManager;
 				updateHandler.handle(curSectionManager);
 			}
 			for (Entry<String, Object> curElem : curSectionManager.getEntries().entrySet())
@@ -102,14 +102,12 @@ public class EditorGui
 		for (Entry<String, SectionManager> cur : this.configMemberMap.entrySet())
 		{
 			this.curDisplayType = cur.getValue().getType();
-			Composite curPane = new Composite(paramEditorParent, SWT.NONE);
-			Label label = new Label(curPane, SWT.SHADOW_NONE);
-			Rectangle clientArea = curPane.getClientArea();
-			label.setLocation(clientArea.x, clientArea.y);
-			label.setText(cur.getKey());
-			label.pack();
-			
-			this.edMap.put(curDisplayType, curPane);
+			ScrolledComposite parent = new ScrolledComposite(paramEditorParent, SWT.H_SCROLL | SWT.V_SCROLL);
+			Composite curPane = new Composite(parent, SWT.NONE);
+			curPane.setData(new EditorPaneHandler(cur.getValue(), curPane));
+			curPane.pack();
+			parent.setContent(curPane);
+			this.edMap.put(this.curDisplayType, parent);
 		}
 		return (in) -> {
 			if (this.classToSecMap.containsKey(in.getClass()))
@@ -118,12 +116,16 @@ public class EditorGui
 				{
 					layout.topControl = this.edMap.get(in.getClass());
 					this.curDisplayType = in.getClass();
-					this.curDisplayItem = in;
 					paramEditorParent.layout();
 				}
-				if (!this.curDisplayItem.equals(in)){
-					
+				if (!this.curDisplayItem.equals(in))
+				{
+					ScrolledComposite scrollComp = (ScrolledComposite) layout.topControl;
+					EditorPaneHandler edPanelHandler = (EditorPaneHandler) scrollComp.getContent().getData();
+					edPanelHandler.update(in);
 				}
+
+				this.curDisplayItem = in;
 			} else
 				U.p("Nothing found..." + in);
 		};

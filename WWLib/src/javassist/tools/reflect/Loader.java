@@ -22,7 +22,6 @@ import javassist.NotFoundException;
 
 /**
  * A class loader for reflection.
- *
  * <p>
  * To run a program, say <code>MyApp</code>, including a reflective class, you
  * must write a start-up program as follows:
@@ -38,21 +37,18 @@ import javassist.NotFoundException;
  * 	}
  * }
  * </pre>
- *
  * <p>
  * Then run this program as follows:
  *
  * <pre>
  * % java javassist.tools.reflect.Loader Main arg1, ...
  * </pre>
- *
  * <p>
  * This command runs <code>Main.main()</code> with <code>arg1</code>, ... and
  * <code>Main.main()</code> runs <code>MyApp.main()</code> with
  * <code>arg1</code>, ... The <code>Person</code> class is modified to be a
  * reflective class. Method calls on a <code>Person</code> object are
  * intercepted by an instance of <code>MyMetaobject</code>.
- *
  * <p>
  * Also, you can run <code>MyApp</code> in a slightly different way:
  *
@@ -67,14 +63,12 @@ import javassist.NotFoundException;
  * 	}
  * }
  * </pre>
- *
  * <p>
  * This program is run as follows:
  *
  * <pre>
  * % java Main2 arg1, ...
  * </pre>
- *
  * <p>
  * The difference from the former one is that the class <code>Main</code> is
  * loaded by <code>javassist.tools.reflect.Loader</code> whereas the class
@@ -83,7 +77,6 @@ import javassist.NotFoundException;
  * not; <code>Main2</code> belongs to the same name space as
  * <code>javassist.tools.reflect.Loader</code>. For more details, see the notes
  * in the manual page of <code>javassist.Loader</code>.
- *
  * <p>
  * The class <code>Main2</code> is equivalent to this class:
  *
@@ -99,16 +92,13 @@ import javassist.NotFoundException;
  * 	}
  * }
  * </pre>
- *
  * <p>
  * <b>Note:</b>
- *
  * <p>
  * <code>javassist.tools.reflect.Loader</code> does not make a class reflective
  * if that class is in a <code>java.*</code> or <code>javax.*</code> pacakge
  * because of the specifications on the class loading algorithm of Java. The JVM
  * does not allow to load such a system class with a user class loader.
- *
  * <p>
  * To avoid this limitation, those classes should be statically modified with
  * <code>javassist.tools.reflect.Compiler</code> and the original class files
@@ -165,7 +155,6 @@ public class Loader extends javassist.Loader
 	 *            the class of the class metaobject. It must be a subclass of
 	 *            <code>ClassMetaobject</code>.
 	 * @return <code>false</code> if the class is already reflective.
-	 *
 	 * @see javassist.tools.reflect.Metaobject
 	 * @see javassist.tools.reflect.ClassMetaobject
 	 */

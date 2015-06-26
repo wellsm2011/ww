@@ -842,9 +842,8 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 	}
 
 	/*
-	 * op is either =, %=, &=, *=, /=, +=, -=, ^=, |=, <<=, >>=, or >>>=.
-	 * 
-	 * expr and var can be null.
+	 * op is either =, %=, &=, *=, /=, +=, -=, ^=, |=, <<=, >>=, or >>>=. expr
+	 * and var can be null.
 	 */
 	private void atVariableAssign(Expr expr, int op, Variable var, Declarator d, ASTree right) throws CompileError
 	{
@@ -966,17 +965,11 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 				/*
 				 * If a filed name is the same name as a package's, a static
 				 * member of a class in that package is not visible. For
-				 * example,
-				 * 
-				 * class Foo { int javassist; }
-				 * 
-				 * It is impossible to add the following method:
-				 * 
-				 * String m() { return javassist.CtClass.intType.toString(); }
-				 * 
-				 * because javassist is a field name. However, this is often
-				 * inconvenient, this compiler allows it. The following code is
-				 * for that.
+				 * example, class Foo { int javassist; } It is impossible to add
+				 * the following method: String m() { return
+				 * javassist.CtClass.intType.toString(); } because javassist is
+				 * a field name. However, this is often inconvenient, this
+				 * compiler allows it. The following code is for that.
 				 */
 				ASTree oprnd1 = e.oprand1();
 				if (oprnd1 instanceof Symbol)
@@ -1083,10 +1076,9 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 	}
 
 	/*
-	 * Converts a class name into a JVM-internal representation.
-	 * 
-	 * It may also expand a simple class name to java.lang.*. For example, this
-	 * converts Object into java/lang/Object.
+	 * Converts a class name into a JVM-internal representation. It may also
+	 * expand a simple class name to java.lang.*. For example, this converts
+	 * Object into java/lang/Object.
 	 */
 	protected String resolveClassName(ASTList name) throws CompileError
 	{

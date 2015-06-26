@@ -22,8 +22,12 @@ package javassist.tools.rmi;
  */
 public class RemoteRef implements java.io.Serializable
 {
-	public int		oid;
-	public String	classname;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	public int					oid;
+	public String				classname;
 
 	public RemoteRef(int i)
 	{

@@ -22,10 +22,9 @@ import javassist.bytecode.analysis.FramePrinter;
 /**
  * framedump is a tool for viewing a merged combination of the instructions and
  * frame state of all methods in a class.
- *
  * <p>
  * For example,
- * 
+ *
  * <pre>
  * % java javassist.tools.framedump foo.class
  * </pre>

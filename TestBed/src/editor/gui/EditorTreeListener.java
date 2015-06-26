@@ -13,7 +13,7 @@ public class EditorTreeListener implements MouseListener
 {
 
 	private Handler<Object>	onSelect;
-	private Object		cur;
+	private Object			cur;
 
 	public EditorTreeListener(Handler<Object> updateHandler)
 	{

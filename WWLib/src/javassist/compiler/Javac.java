@@ -144,7 +144,6 @@ public class Javac
 	/**
 	 * Compiles a method, constructor, or field declaration to a class. A field
 	 * declaration can declare only one field.
-	 *
 	 * <p>
 	 * In a method or constructor body, $0, $1, ... and $_ are not available.
 	 *
@@ -228,7 +227,6 @@ public class Javac
 	/**
 	 * Compiles an exression. <code>recordParams()</code> must be called before
 	 * invoking this method.
-	 *
 	 * <p>
 	 * Local variables are not accessible within the compiled source text.
 	 * Fields and method parameters ($0, $1, ..) are available if
@@ -243,7 +241,6 @@ public class Javac
 	/**
 	 * Compiles an exression. <code>recordParams()</code> must be called before
 	 * invoking this method.
-	 *
 	 * <p>
 	 * Local variables are not accessible within the compiled source text.
 	 * Fields and method parameters ($0, $1, ..) are available if
@@ -310,7 +307,6 @@ public class Javac
 	/**
 	 * Compiles a statement (or a block). <code>recordParams()</code> must be
 	 * called before invoking this method.
-	 *
 	 * <p>
 	 * Local variables that are not declared in the compiled source text might
 	 * not be accessible within that source text. Fields and method parameters
@@ -394,7 +390,6 @@ public class Javac
 	 * Makes variables $0 (this), $1, $2, ..., and $args represent method
 	 * parameters. $args represents an array of all the parameters. It also
 	 * makes $$ available as a parameter list of method call.
-	 *
 	 * <p>
 	 * This must be called before calling <code>compileStmnt()</code> and
 	 * <code>compileExpr()</code>. The correct value of <code>isStatic</code>
@@ -411,7 +406,6 @@ public class Javac
 	 * $args represents an array of all the parameters. It also makes $$
 	 * available as a parameter list of method call. $0 can represent a local
 	 * variable other than THIS (variable 0). $class is also made available.
-	 *
 	 * <p>
 	 * This must be called before calling <code>compileStmnt()</code> and
 	 * <code>compileExpr()</code>. The correct value of <code>isStatic</code>
@@ -492,7 +486,6 @@ public class Javac
 	 * Prepares to use cast $r, $w, $_, and $type. $type is made to represent
 	 * the specified return type. It also enables to write a return statement
 	 * with a return value for void method.
-	 *
 	 * <p>
 	 * If the return type is void, ($r) does nothing. The type of $_ is
 	 * java.lang.Object.
@@ -621,7 +614,6 @@ public class Javac
 	 * compiler the local variables that have been allocated for the rest of the
 	 * code. When the compiler needs new local variables, the local variables at
 	 * the index <code>max</code>, <code>max + 1</code>, ... are assigned.
-	 *
 	 * <p>
 	 * This method is indirectly called by <code>recordParams</code>.
 	 */

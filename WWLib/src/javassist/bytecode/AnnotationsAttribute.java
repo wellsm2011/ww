@@ -42,7 +42,6 @@ import javassist.bytecode.annotation.StringMemberValue;
 /**
  * A class representing <code>RuntimeVisibleAnnotations_attribute</code> and
  * <code>RuntimeInvisibleAnnotations_attribute</code>.
- *
  * <p>
  * To obtain an AnnotationAttribute object, invoke
  * <code>getAttribute(AnnotationsAttribute.visibleTag)</code> in
@@ -50,7 +49,6 @@ import javassist.bytecode.annotation.StringMemberValue;
  * The obtained attribute is a runtime visible annotations attribute. If the
  * parameter is <code>AnnotationAttribute.invisibleTag</code>, then the obtained
  * attribute is a runtime invisible one.
- *
  * <p>
  * For example,
  *
@@ -65,19 +63,16 @@ import javassist.bytecode.annotation.StringMemberValue;
  * String s = ((StringMemberValue)an.getMemberValue("name")).getValue();
  * System.out.println("@Author(name=" + s + ")");
  * </pre>
- *
  * <p>
  * This code snippet retrieves an annotation of the type <code>Author</code>
  * from the <code>MethodInfo</code> object specified by <code>minfo</code>.
  * Then, it prints the value of <code>name</code> in <code>Author</code>.
- *
  * <p>
  * If the annotation type <code>Author</code> is annotated by a meta annotation:
  *
  * <pre>
  * &#64;Retention(RetentionPolicy.RUNTIME)
  * </pre>
- *
  * <p>
  * Then <code>Author</code> is visible at runtime. Therefore, the third
  * statement of the code snippet above must be changed into:
@@ -85,11 +80,9 @@ import javassist.bytecode.annotation.StringMemberValue;
  * <pre>
  * AnnotationsAttribute	attr	= (AnnotationsAttribute) minfo.getAttribute(AnnotationsAttribute.visibleTag);
  * </pre>
- *
  * <p>
  * The attribute tag must be <code>visibleTag</code> instead of
  * <code>invisibleTag</code>.
- *
  * <p>
  * If the member value of an annotation is not specified, the default value is
  * used as that member value. If so, <code>getMemberValue()</code> in
@@ -97,7 +90,6 @@ import javassist.bytecode.annotation.StringMemberValue;
  * not included in the <code>AnnotationsAttribute</code>. It is included in the
  * <code>AnnotationDefaultAttribute</code> of the method declared in the
  * annotation type.
- *
  * <p>
  * If you want to record a new AnnotationAttribute object, execute the following
  * snippet:
@@ -113,7 +105,6 @@ import javassist.bytecode.annotation.StringMemberValue;
  * cf.addAttribute(attr);
  * cf.setVersionToJava5();
  * </pre>
- *
  * <p>
  * The last statement is necessary if the class file was produced by
  * <code>javac</code> of JDK 1.4 or earlier. Otherwise, it is not necessary.
@@ -812,7 +803,7 @@ public class AnnotationsAttribute extends AttributeInfo
 
 	/**
 	 * Changes the annotations. A call to this method is equivalent to:
-	 * 
+	 *
 	 * <pre>
 	 * setAnnotations(new Annotation[]
 	 * { annotation })

@@ -20,7 +20,6 @@ import javassist.compiler.CompileError;
 
 /**
  * Binary expression.
- *
  * <p>
  * If the operator is +, the right node might be null. See
  * TypeChecker.atBinExpr().
@@ -31,6 +30,11 @@ public class BinExpr extends Expr
 	 * operator must be either of: ||, &&, |, ^, &, ==, !=, <=, >=, <, >, <<,
 	 * >>, >>>, +, -, *, /, %
 	 */
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
 
 	public static BinExpr makeBin(int op, ASTree oprand1, ASTree oprand2)
 	{

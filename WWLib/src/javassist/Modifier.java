@@ -22,7 +22,6 @@ import javassist.bytecode.AccessFlag;
  * The Modifier class provides static methods and constants to decode class and
  * member access modifiers. The constant values are equivalent to the
  * corresponding values in <code>javassist.bytecode.AccessFlag</code>.
- *
  * <p>
  * All the methods/constants in this class are compatible with ones in
  * <code>java.lang.reflect.Modifier</code>.

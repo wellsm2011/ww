@@ -27,11 +27,9 @@ import javassist.bytecode.Opcode;
 
 /**
  * A translator of method bodies.
- *
  * <p>
  * The users can define a subclass of this class to customize how to modify a
  * method body. The overall architecture is similar to the strategy pattern.
- *
  * <p>
  * If <code>instrument()</code> is called in <code>CtMethod</code>, the method
  * body is scanned from the beginning to the end. Whenever an expression, such
@@ -40,7 +38,6 @@ import javassist.bytecode.Opcode;
  * can inspect and modify the given expression. The modification is reflected on
  * the original method body. If <code>edit()</code> does nothing, the original
  * method body is not changed.
- *
  * <p>
  * The following code is an example:
  *
@@ -54,7 +51,6 @@ import javassist.bytecode.Opcode;
  *     }
  * });
  * </pre>
- *
  * <p>
  * This code inspects all method calls appearing in the method represented by
  * <code>cm</code> and it prints the names and the line numbers of the methods
@@ -68,7 +64,6 @@ import javassist.bytecode.Opcode;
  * @see MethodCall
  * @see NewExpr
  * @see FieldAccess
- *
  * @see javassist.CodeConverter
  */
 public class ExprEditor
@@ -197,9 +192,7 @@ public class ExprEditor
 	/**
 	 * Edits a constructor call (overridable). The constructor call is either
 	 * <code>super()</code> or <code>this()</code> included in a constructor
-	 * body.
-	 *
-	 * The default implementation performs nothing.
+	 * body. The default implementation performs nothing.
 	 *
 	 * @see #edit(NewExpr)
 	 */
@@ -232,9 +225,8 @@ public class ExprEditor
 	}
 
 	/**
-	 * Edits a method call (overridable).
-	 *
-	 * The default implementation performs nothing.
+	 * Edits a method call (overridable). The default implementation performs
+	 * nothing.
 	 */
 	public void edit(MethodCall m) throws CannotCompileException
 	{

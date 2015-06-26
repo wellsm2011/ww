@@ -24,6 +24,11 @@ import javassist.compiler.TokenId;
  */
 public class NewExpr extends ASTList implements TokenId
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public static NewExpr makeObjectArray(ASTList className, ASTList arraySize, ArrayInit init)
 	{
 		NewExpr e = new NewExpr(className, arraySize);

@@ -1301,9 +1301,7 @@ class CtClassType extends CtClass
 
 	/*
 	 * Inherited from CtClass. Called by get() in ClassPool.
-	 * 
 	 * @see javassist.CtClass#incGetCounter()
-	 * 
 	 * @see #toBytecode(DataOutputStream)
 	 */
 	@Override

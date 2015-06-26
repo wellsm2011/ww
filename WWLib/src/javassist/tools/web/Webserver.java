@@ -59,13 +59,11 @@ class ServiceThread extends Thread
 
 /**
  * A web server for running sample programs.
- *
  * <p>
  * This enables a Java program to instrument class files loaded by web browsers
  * for applets. Since the (standard) security manager does not allow an applet
  * to create and use a class loader, instrumenting class files must be done by
  * this web server.
- *
  * <p>
  * <b>Note:</b> although this class is included in the Javassist API, it is
  * provided as a sample implementation of the web server using Javassist.
@@ -115,7 +113,6 @@ public class Webserver
 	 * as the directory separator. Javassist automatically translates "/" into a
 	 * platform-dependent character.) If this field is null, the top directory
 	 * is the current one where the JVM is running.
-	 *
 	 * <p>
 	 * If the given URL indicates a class file and the class file is not found
 	 * under the directory specified by this variable, then

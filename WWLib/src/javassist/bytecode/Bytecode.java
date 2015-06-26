@@ -21,7 +21,6 @@ import javassist.CtPrimitiveType;
 
 /**
  * A utility class for producing a bytecode sequence.
- *
  * <p>
  * A <code>Bytecode</code> object is an unbounded array containing bytecode. For
  * example,
@@ -33,7 +32,6 @@ import javassist.CtPrimitiveType;
  * b.addReturn(CtClass.intType);
  * CodeAttribute ca = b.toCodeAttribute();
  * </pre>
- *
  * <p>
  * This program produces a Code attribute including a bytecode sequence:
  *
@@ -62,7 +60,7 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 * Constructs a <code>Bytecode</code> object with an empty bytecode
 	 * sequence. The initial values of <code>max_stack</code> and
 	 * <code>max_locals</code> are zero.
-	 * 
+	 *
 	 * @param cp
 	 *            constant pool table.
 	 * @see Bytecode#setMaxStack(int)
@@ -76,7 +74,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	/**
 	 * Constructs a <code>Bytecode</code> object with an empty bytecode
 	 * sequence.
-	 *
 	 * <p>
 	 * The parameters <code>stacksize</code> and <code>localvars</code> specify
 	 * initial values of <code>max_stack</code> and <code>max_locals</code>.
@@ -399,7 +396,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the field name.
 	 * @param type
 	 *            the descriptor of the field type.
-	 *
 	 * @see Descriptor#of(CtClass)
 	 */
 	public void addGetfield(CtClass c, String name, String type)
@@ -419,7 +415,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the field name.
 	 * @param type
 	 *            the descriptor of the field type.
-	 *
 	 * @see Descriptor#of(CtClass)
 	 */
 	public void addGetfield(String c, String name, String type)
@@ -439,7 +434,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the field name
 	 * @param type
 	 *            the descriptor of the field type.
-	 *
 	 * @see Descriptor#of(CtClass)
 	 */
 	public void addGetstatic(CtClass c, String name, String type)
@@ -459,7 +453,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the field name
 	 * @param type
 	 *            the descriptor of the field type.
-	 *
 	 * @see Descriptor#of(CtClass)
 	 */
 	public void addGetstatic(String c, String name, String type)
@@ -591,7 +584,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the descriptor of the method signature.
 	 * @param count
 	 *            the count operand of the instruction.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokeinterface(CtClass clazz, String name, String desc, int count)
@@ -610,7 +602,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the descriptor of the method signature.
 	 * @param count
 	 *            the count operand of the instruction.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokeinterface(int clazz, String name, String desc, int count)
@@ -633,7 +624,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the descriptor of the method signature.
 	 * @param count
 	 *            the count operand of the instruction.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokeinterface(String classname, String name, String desc, int count)
@@ -653,7 +643,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 * @see Descriptor#ofConstructor(CtClass[])
 	 */
@@ -697,7 +686,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 * @see Descriptor#ofConstructor(CtClass[])
 	 */
@@ -717,7 +705,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 * @see Descriptor#ofConstructor(CtClass[])
 	 */
@@ -736,7 +723,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 * @see Descriptor#ofConstructor(CtClass[])
 	 */
@@ -772,7 +758,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokestatic(CtClass clazz, String name, String desc)
@@ -789,7 +774,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokestatic(int clazz, String name, String desc)
@@ -808,7 +792,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokestatic(String classname, String name, String desc)
@@ -818,7 +801,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 
 	/**
 	 * Appends INVOKEVIRTUAL.
-	 *
 	 * <p>
 	 * The specified method must not be an inherited method. It must be directly
 	 * declared in the class specified in <code>clazz</code>.
@@ -840,7 +822,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 
 	/**
 	 * Appends INVOKEVIRTUAL.
-	 *
 	 * <p>
 	 * The specified method must not be an inherited method. It must be directly
 	 * declared in the class specified in <code>clazz</code>.
@@ -851,7 +832,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokevirtual(CtClass clazz, String name, String desc)
@@ -861,7 +841,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 
 	/**
 	 * Appends INVOKEVIRTUAL.
-	 *
 	 * <p>
 	 * The specified method must not be an inherited method. It must be directly
 	 * declared in the class specified by <code>clazz</code>.
@@ -872,7 +851,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokevirtual(int clazz, String name, String desc)
@@ -884,7 +862,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 
 	/**
 	 * Appends INVOKEVIRTUAL.
-	 *
 	 * <p>
 	 * The specified method must not be an inherited method. It must be directly
 	 * declared in the class specified in <code>classname</code>.
@@ -895,7 +872,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 *            the method name
 	 * @param desc
 	 *            the descriptor of the method signature.
-	 *
 	 * @see Descriptor#ofMethod(CtClass,CtClass[])
 	 */
 	public void addInvokevirtual(String classname, String name, String desc)
@@ -1184,7 +1160,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 * Appends an 8bit opcode to the end of the bytecode sequence. The current
 	 * stack depth is updated. <code>max_stack</code> is updated if the current
 	 * stack depth is the deepest so far.
-	 *
 	 * <p>
 	 * Note: some instructions such as INVOKEVIRTUAL does not update the current
 	 * stack depth since the increment depends on the method signature.
@@ -1501,7 +1476,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 
 	/**
 	 * Sets <code>max_locals</code>.
-	 *
 	 * <p>
 	 * This computes the number of local variables used to pass method
 	 * parameters and sets <code>max_locals</code> to that number plus
@@ -1549,7 +1523,6 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 
 	/**
 	 * Sets <code>max_stack</code>.
-	 *
 	 * <p>
 	 * This value may be automatically updated when an instruction is appended.
 	 * A <code>Bytecode</code> object maintains the current stack depth whenever

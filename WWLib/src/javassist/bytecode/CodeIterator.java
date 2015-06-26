@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 /**
  * An iterator for editing a code attribute.
- *
  * <p>
  * To directly read or edit a bytecode sequence, call {@link #byteAt(int)},
  * {@link #s16bitAt(int)}, {@link #writeByte(int, int)},
@@ -34,17 +33,14 @@ import java.util.ArrayList;
  * CodeIterator ci = ca.iterator();
  * ci.writeByte(Opcode.NOP, 0);
  * </pre>
- *
  * <p>
  * To visit every instruction, call {@link #next()} on a
  * <code>CodeIterator</code>. It returns the index of the first byte of the next
  * instruction.
- *
  * <p>
  * If there are multiple <code>CodeIterator</code>s referring to the same
  * <code>Code_attribute</code>, then inserting a gap by one
  * <code>CodeIterator</code> will break the other <code>CodeIterator</code>.
- *
  * <p>
  * This iterator does not provide <code>remove()</code>. If a piece of code in a
  * <code>Code_attribute</code> is unnecessary, it should be overwritten with
@@ -56,6 +52,11 @@ public class CodeIterator implements Opcode
 {
 	static class AlignmentException extends Exception
 	{
+
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= 1L;
 	}
 
 	static abstract class Branch
@@ -746,14 +747,12 @@ public class CodeIterator implements Opcode
 
 	/**
 	 * insertGapCore0() inserts a gap (some NOPs). It cannot handle a long code
-	 * sequence more than 32K. All branch offsets must be signed 16bits.
-	 *
-	 * If "where" is the beginning of a block statement and exclusive is false,
+	 * sequence more than 32K. All branch offsets must be signed 16bits. If
+	 * "where" is the beginning of a block statement and exclusive is false,
 	 * then the inserted gap is also included in the block statement. "where"
 	 * must indicate the first byte of an opcode. The inserted gap is filled
-	 * with NOP. gapLength may be extended to a multiple of 4.
-	 *
-	 * This method was also called from CodeAttribute.LdcEntry.doit().
+	 * with NOP. gapLength may be extended to a multiple of 4. This method was
+	 * also called from CodeAttribute.LdcEntry.doit().
 	 *
 	 * @param where
 	 *            It must indicate the first byte of an opcode.
@@ -1127,11 +1126,9 @@ public class CodeIterator implements Opcode
 	 * would be returned by <code>next()</code> (not before the instruction
 	 * returned by the last call to <code>next()</code>). Branch offsets and the
 	 * exception table are also updated.
-	 *
 	 * <p>
 	 * If the next instruction is at the beginning of a block statement, then
 	 * the bytecode is inserted within that block.
-	 *
 	 * <p>
 	 * An extra gap may be inserted at the end of the inserted bytecode sequence
 	 * for adjusting alignment if the code attribute includes
@@ -1164,16 +1161,13 @@ public class CodeIterator implements Opcode
 	 * Inserts the given bytecode sequence before the instruction at the given
 	 * index <code>pos</code>. Branch offsets and the exception table are also
 	 * updated.
-	 *
 	 * <p>
 	 * If the instruction at the given index is at the beginning of a block
 	 * statement, then the bytecode is inserted within that block.
-	 *
 	 * <p>
 	 * An extra gap may be inserted at the end of the inserted bytecode sequence
 	 * for adjusting alignment if the code attribute includes
 	 * <code>LOOKUPSWITCH</code> or <code>TABLESWITCH</code>.
-	 *
 	 * <p>
 	 * The index at which the byte sequence is actually inserted might be
 	 * different from pos since some other bytes might be inserted at other
@@ -1213,11 +1207,9 @@ public class CodeIterator implements Opcode
 	 * Inserts the given bytecode sequence before the instruction at the given
 	 * index <code>pos</code>. Branch offsets and the exception table are also
 	 * updated.
-	 *
 	 * <p>
 	 * If the instruction at the given index is at the beginning of a block
 	 * statement, then the bytecode is inserted within that block.
-	 *
 	 * <p>
 	 * An extra gap may be inserted at the end of the inserted bytecode sequence
 	 * for adjusting alignment if the code attribute includes
@@ -1241,11 +1233,9 @@ public class CodeIterator implements Opcode
 	 * instruction that would be returned by <code>next()</code> (not before the
 	 * instruction returned by tha last call to <code>next()</code>). Branch
 	 * offsets and the exception table are also updated.
-	 *
 	 * <p>
 	 * If the next instruction is at the beginning of a block statement, then
 	 * the bytecode is excluded from that block.
-	 *
 	 * <p>
 	 * An extra gap may be inserted at the end of the inserted bytecode sequence
 	 * for adjusting alignment if the code attribute includes
@@ -1265,16 +1255,13 @@ public class CodeIterator implements Opcode
 	 * Inserts the given bytecode sequence exclusively before the instruction at
 	 * the given index <code>pos</code>. Branch offsets and the exception table
 	 * are also updated.
-	 *
 	 * <p>
 	 * If the instruction at the given index is at the beginning of a block
 	 * statement, then the bytecode is excluded from that block.
-	 *
 	 * <p>
 	 * An extra gap may be inserted at the end of the inserted bytecode sequence
 	 * for adjusting alignment if the code attribute includes
 	 * <code>LOOKUPSWITCH</code> or <code>TABLESWITCH</code>.
-	 *
 	 * <p>
 	 * The index at which the byte sequence is actually inserted might be
 	 * different from pos since some other bytes might be inserted at other
@@ -1294,11 +1281,9 @@ public class CodeIterator implements Opcode
 	 * Inserts the given bytecode sequence exclusively before the instruction at
 	 * the given index <code>pos</code>. Branch offsets and the exception table
 	 * are also updated.
-	 *
 	 * <p>
 	 * If the instruction at the given index is at the beginning of a block
 	 * statement, then the bytecode is excluded from that block.
-	 *
 	 * <p>
 	 * An extra gap may be inserted at the end of the inserted bytecode sequence
 	 * for adjusting alignment if the code attribute includes
@@ -1323,7 +1308,6 @@ public class CodeIterator implements Opcode
 	 * the last call to <code>next()</code>). Branch offsets and the exception
 	 * table are also updated. The inserted gap is filled with NOP. The gap
 	 * length may be extended to a multiple of 4.
-	 *
 	 * <p>
 	 * If the next instruction is at the beginning of a block statement, then
 	 * the gap is excluded from that block.
@@ -1344,7 +1328,6 @@ public class CodeIterator implements Opcode
 	 * <code>pos</code>. Branch offsets and the exception table are also
 	 * updated. The inserted gap is filled with NOP. The gap length may be
 	 * extended to a multiple of 4.
-	 *
 	 * <p>
 	 * If the instruction at the given index is at the beginning of a block
 	 * statement, then the gap is excluded from that block.
@@ -1367,7 +1350,6 @@ public class CodeIterator implements Opcode
 	 * to <code>next()</code>). Branch offsets and the exception table are also
 	 * updated. The inserted gap is filled with NOP. The gap length may be
 	 * extended to a multiple of 4.
-	 *
 	 * <p>
 	 * If the next instruction is at the beginning of a block statement, then
 	 * the gap is inserted within that block.
@@ -1386,7 +1368,6 @@ public class CodeIterator implements Opcode
 	 * <code>pos</code>. Branch offsets and the exception table are also
 	 * updated. The inserted gap is filled with NOP. The gap length may be
 	 * extended to a multiple of 4.
-	 *
 	 * <p>
 	 * If the instruction at the given index is at the beginning of a block
 	 * statement, then the gap is inserted within that block.
@@ -1408,18 +1389,15 @@ public class CodeIterator implements Opcode
 	 * given index <code>pos</code>. Branch offsets and the exception table in
 	 * the method body are also updated. The inserted gap is filled with NOP.
 	 * The gap length may be extended to a multiple of 4.
-	 *
 	 * <p>
 	 * Suppose that the instruction at the given index is at the beginning of a
 	 * block statement. If the gap is inclusive, then it is included within that
 	 * block. If the gap is exclusive, then it is excluded from that block.
-	 *
 	 * <p>
 	 * The index at which the gap is actually inserted might be different from
 	 * pos since some other bytes might be inserted at other positions (e.g. to
 	 * change <code>GOTO</code> to <code>GOTO_W</code>). The index is available
 	 * from the <code>Gap</code> object returned by this method.
-	 *
 	 * <p>
 	 * Suppose that the gap is inserted at the position of the next instruction
 	 * that would be returned by <code>next()</code> (not the last instruction
@@ -1485,12 +1463,8 @@ public class CodeIterator implements Opcode
 	 * insertGapCore0w() can handle a long code sequence more than 32K. It
 	 * guarantees that the length of the inserted gap (NOPs) is equal to
 	 * gapLength. No other NOPs except some NOPs following TABLESWITCH or
-	 * LOOKUPSWITCH will not be inserted.
-	 * 
-	 * Note: currentPos might be moved.
-	 * 
+	 * LOOKUPSWITCH will not be inserted. Note: currentPos might be moved.
 	 * @param where It must indicate the first byte of an opcode.
-	 * 
 	 * @param newWhere It contains the updated index of the position where a gap
 	 * is inserted and the length of the gap. It must not be null.
 	 */
@@ -1518,7 +1492,6 @@ public class CodeIterator implements Opcode
 
 	/**
 	 * Obtains the value that the next call to <code>next()</code> will return.
-	 *
 	 * <p>
 	 * This method is side-effects free. Successive calls to
 	 * <code>lookAhead()</code> return the same value until <code>next()</code>
@@ -1531,12 +1504,10 @@ public class CodeIterator implements Opcode
 
 	/**
 	 * Moves to the given index.
-	 *
 	 * <p>
 	 * The index of the next instruction is set to the given index. The
 	 * successive call to <code>next()</code> returns the index that has been
 	 * given to <code>move()</code>.
-	 *
 	 * <p>
 	 * Note that the index is into the byte array returned by
 	 * <code>get().getCode()</code>.
@@ -1551,7 +1522,6 @@ public class CodeIterator implements Opcode
 	/**
 	 * Returns the index of the next instruction (not the operand following the
 	 * current opcode).
-	 *
 	 * <p>
 	 * Note that the index is into the byte array returned by
 	 * <code>get().getCode()</code>.
@@ -1607,18 +1577,15 @@ public class CodeIterator implements Opcode
 	/**
 	 * Moves to the instruction for either <code>super()</code> or
 	 * <code>this()</code>.
-	 *
 	 * <p>
 	 * This method skips all the instructions for computing arguments to
 	 * <code>super()</code> or <code>this()</code>, which should be placed at
 	 * the beginning of a constructor body.
-	 *
 	 * <p>
 	 * This method returns the index of INVOKESPECIAL instruction executing
 	 * <code>super()</code> or <code>this()</code>. A successive call to
 	 * <code>next()</code> returns the index of the next instruction following
 	 * that INVOKESPECIAL.
-	 *
 	 * <p>
 	 * This method works only for a constructor.
 	 *
@@ -1632,17 +1599,14 @@ public class CodeIterator implements Opcode
 
 	/**
 	 * Moves to the instruction for <code>super()</code>.
-	 *
 	 * <p>
 	 * This method skips all the instructions for computing arguments to
 	 * <code>super()</code>, which should be placed at the beginning of a
 	 * constructor body.
-	 *
 	 * <p>
 	 * This method returns the index of INVOKESPECIAL instruction executing
 	 * <code>super()</code>. A successive call to <code>next()</code> returns
 	 * the index of the next instruction following that INVOKESPECIAL.
-	 *
 	 * <p>
 	 * This method works only for a constructor.
 	 *
@@ -1694,17 +1658,14 @@ public class CodeIterator implements Opcode
 
 	/**
 	 * Moves to the instruction for <code>this()</code>.
-	 *
 	 * <p>
 	 * This method skips all the instructions for computing arguments to
 	 * <code>this()</code>, which should be placed at the beginning of a
 	 * constructor body.
-	 *
 	 * <p>
 	 * This method returns the index of INVOKESPECIAL instruction executing
 	 * <code>this()</code>. A successive call to <code>next()</code> returns the
 	 * index of the next instruction following that INVOKESPECIAL.
-	 *
 	 * <p>
 	 * This method works only for a constructor.
 	 *

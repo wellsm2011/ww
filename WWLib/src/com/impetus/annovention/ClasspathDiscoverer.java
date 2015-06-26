@@ -44,7 +44,7 @@ public class ClasspathDiscoverer extends Discoverer
 
 	/**
 	 * Uses java.class.path system-property to fetch URLs
-	 * 
+	 *
 	 * @return the URL[]
 	 */
 	@SuppressWarnings("deprecation")

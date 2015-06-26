@@ -26,14 +26,12 @@ import javassist.bytecode.ClassFilePrinter;
 /**
  * Dump is a tool for viewing the class definition in the given class file.
  * Unlike the JDK javap tool, Dump works even if the class file is broken.
- *
  * <p>
  * For example,
- * 
+ *
  * <pre>
  * % java javassist.tools.Dump foo.class
  * </pre>
- *
  * <p>
  * prints the contents of the constant pool and the list of methods and fields.
  */

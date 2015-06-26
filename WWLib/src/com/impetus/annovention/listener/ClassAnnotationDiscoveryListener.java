@@ -26,7 +26,7 @@ public interface ClassAnnotationDiscoveryListener extends AnnotationDiscoveryLis
 	/**
 	 * Gets called by the Discoverer with class-name of the class where
 	 * annotation is found.
-	 * 
+	 *
 	 * @param clazz
 	 * @param annotation
 	 */

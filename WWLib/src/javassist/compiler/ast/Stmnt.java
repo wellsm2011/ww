@@ -24,6 +24,11 @@ import javassist.compiler.TokenId;
  */
 public class Stmnt extends ASTList implements TokenId
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public static Stmnt make(int op, ASTree oprand1, ASTree oprand2)
 	{
 		return new Stmnt(op, oprand1, new ASTList(oprand2));

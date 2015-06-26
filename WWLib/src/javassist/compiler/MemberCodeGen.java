@@ -535,9 +535,7 @@ public class MemberCodeGen extends CodeGen
 
 	/*
 	 * atMethodCallCore() is also called by doit() in NewExpr.ProceedForNew
-	 * 
 	 * @param targetClass the class at which method lookup starts.
-	 * 
 	 * @param found not null if the method look has been already done.
 	 */
 	public void atMethodCallCore(CtClass targetClass, String mname, ASTList args, boolean isStatic, boolean isSpecial, int aload0pos, MemberResolver.Method found) throws CompileError
@@ -885,7 +883,6 @@ public class MemberCodeGen extends CodeGen
 
 	/*
 	 * This method also returns a value in resultStatic.
-	 * 
 	 * @param acceptLength true if array length is acceptable
 	 */
 	protected CtField fieldAccess(ASTree expr, boolean acceptLength) throws CompileError
@@ -977,13 +974,9 @@ public class MemberCodeGen extends CodeGen
 	/*
 	 * Finds (or adds if necessary) a hidden constructor if the given
 	 * constructor is in an enclosing class.
-	 * 
 	 * @param desc the descriptor of the constructor.
-	 * 
 	 * @param declClass the class declaring the constructor.
-	 * 
 	 * @param minfo the method info of the constructor.
-	 * 
 	 * @return the descriptor of the hidden constructor.
 	 */
 	protected String getAccessibleConstructor(String desc, CtClass declClass, MethodInfo minfo) throws CompileError
@@ -1001,9 +994,7 @@ public class MemberCodeGen extends CodeGen
 	/*
 	 * Finds (or adds if necessary) a hidden accessor if the method is in an
 	 * enclosing class.
-	 * 
 	 * @param desc the descriptor of the method.
-	 * 
 	 * @param declClass the class declaring the method.
 	 */
 	protected String getAccessiblePrivate(String methodName, String desc, String newDesc, MethodInfo minfo, CtClass declClass) throws CompileError
@@ -1146,10 +1137,9 @@ public class MemberCodeGen extends CodeGen
 	}
 
 	/*
-	 * Converts a class name into a JVM-internal representation.
-	 * 
-	 * It may also expand a simple class name to java.lang.*. For example, this
-	 * converts Object into java/lang/Object.
+	 * Converts a class name into a JVM-internal representation. It may also
+	 * expand a simple class name to java.lang.*. For example, this converts
+	 * Object into java/lang/Object.
 	 */
 	@Override
 	protected String resolveClassName(ASTList name) throws CompileError

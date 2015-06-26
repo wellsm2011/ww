@@ -366,7 +366,6 @@ public class JSONTokener
 	 *
 	 * @throws JSONException
 	 *             If syntax error.
-	 *
 	 * @return An object.
 	 */
 	public Object nextValue() throws JSONException

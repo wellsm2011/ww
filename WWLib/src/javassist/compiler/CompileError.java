@@ -21,8 +21,12 @@ import javassist.NotFoundException;
 
 public class CompileError extends Exception
 {
-	private Lex		lex;
-	private String	reason;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	private Lex					lex;
+	private String				reason;
 
 	public CompileError(CannotCompileException e)
 	{

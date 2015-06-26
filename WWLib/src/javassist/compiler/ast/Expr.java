@@ -30,6 +30,11 @@ public class Expr extends ASTList implements TokenId
 	 * instance of a subclass.
 	 */
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public static Expr make(int op, ASTree oprand1)
 	{
 		return new Expr(op, oprand1);

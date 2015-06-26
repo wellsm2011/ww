@@ -29,18 +29,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javassist.bytecode.AnnotationsAttribute;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.FieldInfo;
+import javassist.bytecode.MethodInfo;
+import javassist.bytecode.annotation.Annotation;
+
 import com.impetus.annovention.listener.ClassAnnotationDiscoveryListener;
 import com.impetus.annovention.listener.FieldAnnotationDiscoveryListener;
 import com.impetus.annovention.listener.MethodAnnotationDiscoveryListener;
 import com.impetus.annovention.resource.ClassFileIterator;
 import com.impetus.annovention.resource.JarFileIterator;
 import com.impetus.annovention.resource.ResourceIterator;
-
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.FieldInfo;
-import javassist.bytecode.MethodInfo;
-import javassist.bytecode.annotation.Annotation;
 
 /**
  * Base annotation discoverer.
@@ -68,7 +68,7 @@ public abstract class Discoverer
 
 	/**
 	 * Adds ClassAnnotationDiscoveryListener
-	 * 
+	 *
 	 * @param listener
 	 */
 	public final void addAnnotationListener(ClassAnnotationDiscoveryListener listener)
@@ -78,7 +78,7 @@ public abstract class Discoverer
 
 	/**
 	 * Adds FieldAnnotationDiscoveryListener
-	 * 
+	 *
 	 * @param listener
 	 */
 	public final void addAnnotationListener(FieldAnnotationDiscoveryListener listener)
@@ -89,7 +89,7 @@ public abstract class Discoverer
 	/**
 	 * Helper class to find supported annotations of a listener and register
 	 * them
-	 * 
+	 *
 	 * @param <L>
 	 * @param map
 	 * @param listener
@@ -117,7 +117,7 @@ public abstract class Discoverer
 
 	/**
 	 * Adds MethodAnnotationDiscoveryListener
-	 * 
+	 *
 	 * @param listener
 	 */
 	public final void addAnnotationListener(MethodAnnotationDiscoveryListener listener)
@@ -167,7 +167,7 @@ public abstract class Discoverer
 
 	/**
 	 * Discovers Class Annotations
-	 * 
+	 *
 	 * @param classFile
 	 */
 	private void discoverAndIntimateForClassAnnotations(ClassFile classFile)
@@ -196,7 +196,7 @@ public abstract class Discoverer
 
 	/**
 	 * Discovers Field Annotations
-	 * 
+	 *
 	 * @param classFile
 	 */
 	private void discoverAndIntimateForFieldAnnotations(ClassFile classFile)
@@ -233,7 +233,7 @@ public abstract class Discoverer
 
 	/**
 	 * Discovers Method Annotations
-	 * 
+	 *
 	 * @param classFile
 	 */
 	private void discoverAndIntimateForMethodAnnotations(ClassFile classFile)
@@ -278,14 +278,14 @@ public abstract class Discoverer
 
 	/**
 	 * Gets the filter implementation.
-	 * 
+	 *
 	 * @return the filter
 	 */
 	public abstract Filter getFilter();
 
 	/**
 	 * Gets the Resource iterator for URL with Filter.
-	 * 
+	 *
 	 * @param url
 	 * @param filter
 	 * @return

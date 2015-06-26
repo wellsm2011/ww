@@ -51,7 +51,7 @@ public class ClassFileIterator implements ResourceIterator
 
 	/**
 	 * Instantiates a new class file iterator.
-	 * 
+	 *
 	 * @param file
 	 * @param filter
 	 */

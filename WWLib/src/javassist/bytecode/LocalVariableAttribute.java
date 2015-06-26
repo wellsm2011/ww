@@ -317,7 +317,6 @@ public class LocalVariableAttribute extends AttributeInfo
 	 * represents a LocalVariableTypeTable attribute, this method should be used
 	 * instead of <code>descriptor()</code> since the method name is more
 	 * appropriate.
-	 *
 	 * <p>
 	 * To parse the string, call <code>toFieldSignature(String)</code> in
 	 * <code>SignatureAttribute</code>.
@@ -337,7 +336,7 @@ public class LocalVariableAttribute extends AttributeInfo
 	 * attribute represents a LocalVariableTypeTable attribute, this method
 	 * should be used instead of <code>descriptorIndex()</code> since the method
 	 * name is more appropriate.
-	 * 
+	 *
 	 * @param i
 	 *            the i-th entry.
 	 * @see #descriptorIndex(int)

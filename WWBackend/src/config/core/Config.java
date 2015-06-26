@@ -8,19 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//Static import of U not used due to cleanup and proper styling, as well as basic readability.
+import backend.U;
+
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
 
-
-//Static import of U not used due to cleanup and proper styling, as well as basic readability.
-import backend.U;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
 import config.explorer.FinderListener;
@@ -29,13 +26,18 @@ import config.explorer.FinderListener;
  * Testbed config, uses the JSON parser to parse different parts of a given
  * config file. Maintains ordering of original config file, as well as adding
  * config sections during writing out that were not in the original config file.
- *
  * Rest under development.
  */
 public class Config
 {
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Looks through all classes, and finds those with the ConfigMember
+	 * interface.
+	 *
+	 * @return a map of classnames to class objects that are annotated with the
+	 *         ConfigMember annotation
+	 */
 	public static Map<String, Class<?>> findConfigMembers()
 	{
 		Map<String, Class<?>> res = new LinkedHashMap<String, Class<?>>();
@@ -43,7 +45,7 @@ public class Config
 		discoverer.addAnnotationListener(new FinderListener((in) -> {
 			try
 			{
-				res.put(Class.forName(in).getAnnotation(ConfigMember.class).sectionKey(), (Class<? extends ConfigMember>) Class.forName(in));
+				res.put(Class.forName(in).getAnnotation(ConfigMember.class).sectionKey(), Class.forName(in));
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -54,7 +56,7 @@ public class Config
 	}
 
 	private LinkedHashMap<String, SectionManager>	maps;
-	private Map<Class<?>, SectionManager>	classToSectionMap;
+	private Map<Class<?>, SectionManager>			classToSectionMap;
 
 	/**
 	 * Attempts to load a config from the file passed.
@@ -84,6 +86,11 @@ public class Config
 		// TODONT: mistake internal data members for general datastructure, stop
 		// trying to make bad code by mass memory copy.
 		return this.maps;
+	}
+
+	public Map<Class<?>, SectionManager> getClassToSectionManagerMap()
+	{
+		return this.classToSectionMap;
 	}
 
 	/**
@@ -152,7 +159,7 @@ public class Config
 	{
 		return this.getManager(key, null);
 	}
-	
+
 	public SectionManager getSectionByClass(Class<?> type)
 	{
 		return this.classToSectionMap.get(type);
@@ -306,10 +313,10 @@ public class Config
 				Map<String, String> strMap = new LinkedHashMap<String, String>();
 				for (String mapKey : obj.keySet())
 					strMap.put(mapKey, obj.getString(mapKey));
-				curParam.call(instance, MType.SETTER,strMap);
+				curParam.call(instance, MType.SETTER, strMap);
 				break;
-			case OBJ:
-				obj = this.getJSONObj(curJSONSection, curKey);
+			// case OBJ:
+			// obj = this.getJSONObj(curJSONSection, curKey);
 			default:
 				U.d("Unknown exported parameter found.", 2);
 				break;
@@ -343,10 +350,5 @@ public class Config
 			output.putOnce(curConfigMember.getKey(), member);
 		}
 		U.writeToFile(filename, output.toString(4));
-	}
-
-	public Map<Class<?>, SectionManager> getClassToSectionManagerMap()
-	{
-		return this.classToSectionMap;
 	}
 }

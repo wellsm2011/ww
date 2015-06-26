@@ -26,10 +26,9 @@ public class Desc
 
 	/**
 	 * Specifies how a <code>java.lang.Class</code> object is loaded.
-	 *
 	 * <p>
 	 * If true, it is loaded by:
-	 * 
+	 *
 	 * <pre>
 	 * Thread.currentThread().getContextClassLoader().loadClass()
 	 * </pre>

@@ -76,15 +76,24 @@ public class SectionManager
 
 	private Map<String, ExportedParameter>	paramMappings;
 
+	private String							keyName;
+
 	public SectionManager(Class<?> type)
 	{
 		this.type = type;
 		this.dataItems = new LinkedHashMap<String, Object>();
+		if (this.type.isAnnotationPresent(ConfigMember.class))
+			this.keyName = this.type.getAnnotation(ConfigMember.class).sectionKey();
 	}
 
 	public Map<String, Object> getEntries()
 	{
 		return this.dataItems;
+	}
+
+	public String getKey()
+	{
+		return this.keyName;
 	}
 
 	public Map<String, ExportedParameter> getParamMappings()
@@ -94,15 +103,15 @@ public class SectionManager
 		return this.paramMappings;
 	}
 
+	public Class<?> getType()
+	{
+		return this.type;
+	}
+
 	public void offer(String key, Object curInstance)
 	{
 		if (!this.type.isInstance(curInstance))
 			U.e("Error, was passed " + curInstance.toString() + " for type " + this.type);
 		this.dataItems.put(key, curInstance);
-	}
-
-	public Class<?> getType()
-	{
-		return this.type;
 	}
 }

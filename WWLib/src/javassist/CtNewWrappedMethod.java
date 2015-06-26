@@ -67,7 +67,6 @@ class CtNewWrappedMethod
 
 	/*
 	 * compileParameterList() returns the stack size used by the produced code.
-	 * 
 	 * @param regno the index of the local variable in which the first argument
 	 * is received. (0: static method, 1: regular method.)
 	 */

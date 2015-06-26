@@ -30,10 +30,14 @@ import java.security.PrivilegedExceptionAction;
  */
 class SerializedProxy implements Serializable
 {
-	private String			superClass;
-	private String[]		interfaces;
-	private byte[]			filterSignature;
-	private MethodHandler	handler;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	private String				superClass;
+	private String[]			interfaces;
+	private byte[]				filterSignature;
+	private MethodHandler		handler;
 
 	SerializedProxy(Class proxy, byte[] sig, MethodHandler h)
 	{

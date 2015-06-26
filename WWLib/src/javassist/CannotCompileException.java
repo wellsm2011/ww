@@ -23,9 +23,14 @@ import javassist.compiler.CompileError;
  */
 public class CannotCompileException extends Exception
 {
-	private Throwable	myCause;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
 
-	private String		message;
+	private Throwable			myCause;
+
+	private String				message;
 
 	/**
 	 * Constructs a CannotCompileException with a ClassFormatError.

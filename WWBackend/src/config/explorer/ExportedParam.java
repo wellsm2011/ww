@@ -37,11 +37,10 @@ public @interface ExportedParam
 	 * <p>
 	 * STRMAP is mapped to Map&lt;String, String&gt;
 	 * </p>
-	 *
 	 */
 	public enum DType
 	{
-		NUM, STR, NUMLIST, STRLIST, NUMMAP, STRMAP, OBJ
+		NUM, STR, NUMLIST, STRLIST, NUMMAP, STRMAP// , OBJ
 	}
 
 	/**

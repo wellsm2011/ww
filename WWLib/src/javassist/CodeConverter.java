@@ -35,16 +35,14 @@ import javassist.convert.Transformer;
 /**
  * Simple translator of method bodies (also see the <code>javassist.expr</code>
  * package).
- *
  * <p>
  * Instances of this class specifies how to instrument of the bytecodes
  * representing a method body. They are passed to
  * <code>CtClass.instrument()</code> or <code>CtMethod.instrument()</code> as a
  * parameter.
- *
  * <p>
  * Example:
- * 
+ *
  * <pre>
  * ClassPool cp = ClassPool.getDefault();
  * CtClass point = cp.get(&quot;Point&quot;);
@@ -54,7 +52,6 @@ import javassist.convert.Transformer;
  * conv.replaceNew(point, singleton, &quot;makePoint&quot;);
  * client.instrument(conv);
  * </pre>
- *
  * <p>
  * This program substitutes "<code>Singleton.makePoint()</code>" for all
  * occurrences of "<code>new Point()</code>" appearing in methods declared in a
@@ -425,7 +422,6 @@ public class CodeConverter
 	 * 	Point move(int x, int y) { ... }
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * Then the after method must be something like this:
 	 *
@@ -435,14 +431,12 @@ public class CodeConverter
 	 * 	static void print(Point target, int x, int y) { ... }
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * The <code>CodeConverter</code> would translate bytecode equivalent to:
 	 *
 	 * <pre>
 	 * Point	p2	= p.move(x + y, 0);
 	 * </pre>
-	 *
 	 * <p>
 	 * into the bytecode equivalent to:
 	 *
@@ -482,7 +476,6 @@ public class CodeConverter
 	 * 	Point move(int x, int y) { ... }
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * Then the before method must be something like this:
 	 *
@@ -492,14 +485,12 @@ public class CodeConverter
 	 * 	static void print(Point target, int x, int y) { ... }
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * The <code>CodeConverter</code> would translate bytecode equivalent to:
 	 *
 	 * <pre>
 	 * Point	p2	= p.move(x + y, 0);
 	 * </pre>
-	 *
 	 * <p>
 	 * into the bytecode equivalent to:
 	 *
@@ -529,13 +520,11 @@ public class CodeConverter
 	/**
 	 * Modify a method body so that field read/write expressions access a
 	 * different field from the original one.
-	 *
 	 * <p>
 	 * Note that this method changes only the filed name and the class declaring
 	 * the field; the type of the target object does not change. Therefore, the
 	 * substituted field must be declared in the same class or a superclass of
 	 * the original class.
-	 *
 	 * <p>
 	 * Also, <code>clazz</code> and <code>newClass</code> must specify the class
 	 * directly declaring the field. They must not specify a subclass of that
@@ -556,7 +545,6 @@ public class CodeConverter
 	/**
 	 * Modify method invocations in a method body so that a different method
 	 * will be invoked.
-	 *
 	 * <p>
 	 * Note that the target object, the parameters, or the type of invocation
 	 * (static method call, interface call, or private method call) are not
@@ -589,11 +577,9 @@ public class CodeConverter
 	 * Correct invocations to a method that has been renamed. If a method is
 	 * renamed, calls to that method must be also modified so that the method
 	 * with the new name will be called.
-	 *
 	 * <p>
 	 * The method must be declared in the same class before and after it is
 	 * renamed.
-	 *
 	 * <p>
 	 * Note that the target object, the parameters, or the type of invocation
 	 * (static method call, interface call, or private method call) are not
@@ -618,7 +604,6 @@ public class CodeConverter
 	 * read from the array. If writing to an array, this is replaced with a call
 	 * to a static method with the array, index and new value as parameters, the
 	 * return value of the static method is <code>void</code>.
-	 * 
 	 * <p>
 	 * The <code>calledClass</code> parameter is the class containing the static
 	 * methods to be used for array replacement. The <code>names</code>
@@ -631,7 +616,6 @@ public class CodeConverter
 	 * If the implementation of <code>ArrayAccessReplacementMethodNames</code>
 	 * does not contain the name for access for a type of array, that access is
 	 * not replaced.
-	 * 
 	 * <p>
 	 * A default implementation of
 	 * <code>ArrayAccessReplacementMethodNames</code> called
@@ -639,10 +623,9 @@ public class CodeConverter
 	 * and is what is used in the following example. This also assumes that
 	 * <code>'foo.ArrayAdvisor'</code> is the name of the <code>CtClass</code>
 	 * passed in.
-	 * 
 	 * <p>
 	 * If we have the following class:
-	 * 
+	 *
 	 * <pre>
 	 * class POJO
 	 * {
@@ -656,9 +639,9 @@ public class CodeConverter
 	 * 							{ new Integer(10) };
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * and this is accessed as:
-	 * 
+	 *
 	 * <pre>
 	 * POJO p = new POJO();
 	 * 
@@ -687,9 +670,9 @@ public class CodeConverter
 	 * // Read from Object array
 	 * integer = p.integers[0];
 	 * </pre>
-	 * 
+	 *
 	 * Following instrumentation we will have
-	 * 
+	 *
 	 * <pre>
 	 * POJO p = new POJO();
 	 * 
@@ -718,9 +701,8 @@ public class CodeConverter
 	 * // Read from Object array
 	 * integer = ArrayAdvisor.arrayWriteObject(p.integers, 0);
 	 * </pre>
-	 * 
+	 *
 	 * @see DefaultArrayAccessReplacementMethodNames
-	 * 
 	 * @param calledClass
 	 *            the class containing the static methods.
 	 * @param names
@@ -737,7 +719,6 @@ public class CodeConverter
 	 * replaced with a call to the specified <i>static</i> method. This static
 	 * method receives the target object of the original read expression as a
 	 * parameter. It must return a value of the same type as the field.
-	 *
 	 * <p>
 	 * For example, the program below
 	 *
@@ -745,7 +726,6 @@ public class CodeConverter
 	 * Point	p	= new Point();
 	 * 							int	newX	= p.x + 3;
 	 * </pre>
-	 *
 	 * <p>
 	 * can be translated into:
 	 *
@@ -753,7 +733,6 @@ public class CodeConverter
 	 * Point	p	= new Point();
 	 * 							int	newX	= Accessor.readX(p) + 3;
 	 * </pre>
-	 *
 	 * <p>
 	 * where
 	 *
@@ -763,7 +742,6 @@ public class CodeConverter
 	 * 	public static int readX(Object target) { ... }
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * The type of the parameter of <code>readX()</code> must be
 	 * <code>java.lang.Object</code> independently of the actual type of
@@ -787,7 +765,6 @@ public class CodeConverter
 	 * receives two parameters: the target object of the original write
 	 * expression and the assigned value. The return type of the static method
 	 * is <code>void</code>.
-	 *
 	 * <p>
 	 * For example, the program below
 	 *
@@ -795,7 +772,6 @@ public class CodeConverter
 	 * Point p = new Point();
 	 * p.x = 3;
 	 * </pre>
-	 *
 	 * <p>
 	 * can be translated into:
 	 *
@@ -803,7 +779,6 @@ public class CodeConverter
 	 * Point p = new Point();
 	 * Accessor.writeX(3);
 	 * </pre>
-	 *
 	 * <p>
 	 * where
 	 *
@@ -813,7 +788,6 @@ public class CodeConverter
 	 * 	public static void writeX(Object target, int value) { ... }
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * The type of the first parameter of <code>writeX()</code> must be
 	 * <code>java.lang.Object</code> independently of the actual type of
@@ -850,7 +824,6 @@ public class CodeConverter
 	 * <pre>
 	 * new Point2(x, y)
 	 * </pre>
-	 *
 	 * <p>
 	 * Note that <code>Point2</code> must be type-compatible with
 	 * <code>Point</code>. It must have the same set of methods, fields, and
@@ -878,7 +851,6 @@ public class CodeConverter
 	 * <pre>
 	 * Singleton.createPoint(x, y)
 	 * </pre>
-	 *
 	 * <p>
 	 * This enables to intercept instantiation of <code>Point</code> and change
 	 * the samentics. For example, the following <code>createPoint()</code>
@@ -892,14 +864,12 @@ public class CodeConverter
 	 * 	return aPoint;
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * The static method call substituted for the original <code>new</code>
 	 * expression must be able to receive the same set of parameters as the
 	 * original constructor. If there are multiple constructors with different
 	 * parameter types, then there must be multiple static methods with the same
 	 * name but different parameter types.
-	 *
 	 * <p>
 	 * The return type of the substituted static method must be the exactly same
 	 * as the type of the instantiated class specified by <code>newClass</code>.

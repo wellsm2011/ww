@@ -31,7 +31,6 @@ import com.impetus.annovention.Filter;
  */
 /**
  * @author animesh.kumar
- *
  */
 public final class JarFileIterator implements ResourceIterator
 {
@@ -122,7 +121,7 @@ public final class JarFileIterator implements ResourceIterator
 
 	/**
 	 * Instantiates a new jar file iterator.
-	 * 
+	 *
 	 * @param file
 	 * @param filter
 	 * @throws IOException
@@ -134,7 +133,7 @@ public final class JarFileIterator implements ResourceIterator
 
 	/**
 	 * Instantiates a new jar file iterator.
-	 * 
+	 *
 	 * @param is
 	 * @param filter
 	 * @throws IOException

@@ -21,7 +21,11 @@ package javassist.tools.web;
  */
 public class BadHttpRequest extends Exception
 {
-	private Exception	e;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	private Exception			e;
 
 	public BadHttpRequest()
 	{

@@ -43,7 +43,6 @@ import javassist.expr.ExprEditor;
  * <code>CtBehavior</code> represents a method, a constructor, or a static
  * constructor (class initializer). It is the abstract super class of
  * <code>CtMethod</code> and <code>CtConstructor</code>.
- *
  * <p>
  * To directly read or modify bytecode, obtain <code>MethodInfo</code> objects.
  *
@@ -163,7 +162,6 @@ public abstract class CtBehavior extends CtMember
 	 * method body. The initial value of that variable is not set. The declared
 	 * variable can be accessed in the code snippet inserted by
 	 * <code>insertBefore()</code>, <code>insertAfter()</code>, etc.
-	 *
 	 * <p>
 	 * If the second parameter <code>asFinally</code> to
 	 * <code>insertAfter()</code> is true, the declared local variable is not
@@ -349,7 +347,6 @@ public abstract class CtBehavior extends CtMember
 	/**
 	 * Obtains an attribute with the given name. If that attribute is not found
 	 * in the class file, this method returns null.
-	 *
 	 * <p>
 	 * Note that an attribute is a data block specified by the class file
 	 * format. It is not an annotation. See
@@ -372,7 +369,7 @@ public abstract class CtBehavior extends CtMember
 	 * Returns the annotations associated with this method or constructor. If
 	 * any annotations are not on the classpath, they are not included in the
 	 * returned array.
-	 * 
+	 *
 	 * @return an array of annotation-type objects.
 	 * @see #getAnnotations()
 	 * @since 3.3
@@ -393,12 +390,11 @@ public abstract class CtBehavior extends CtMember
 	 * Returns the parameter annotations associated with this method or
 	 * constructor. If any annotations are not on the classpath, they are not
 	 * included in the returned array.
-	 * 
+	 *
 	 * @return an array of annotation-type objects. The length of the returned
 	 *         array is equal to the number of the formal parameters. If each
 	 *         parameter has no annotation, the elements of the returned array
 	 *         are empty arrays.
-	 *
 	 * @see #getParameterAnnotations()
 	 * @see #getAvailableAnnotations()
 	 * @since 3.3
@@ -456,7 +452,6 @@ public abstract class CtBehavior extends CtMember
 	/**
 	 * Returns the <code>MethodInfo</code> representing this method/constructor
 	 * in the class file.
-	 *
 	 * <p>
 	 * If you modify the bytecode through the returned <code>MethodInfo</code>
 	 * object, you might have to explicitly rebuild a stack map table. Javassist
@@ -474,13 +469,11 @@ public abstract class CtBehavior extends CtMember
 	 * Returns the <code>MethodInfo</code> representing the method/constructor
 	 * in the class file (read only). Normal applications do not need calling
 	 * this method. Use <code>getMethodInfo()</code>.
-	 *
 	 * <p>
 	 * The <code>MethodInfo</code> object obtained by this method is read only.
 	 * Changes to this object might not be reflected on a class file generated
 	 * by <code>toBytecode()</code>, <code>toClass()</code>, etc in
 	 * <code>CtClass</code>.
-	 *
 	 * <p>
 	 * This method is available even if the <code>CtClass</code> containing this
 	 * method is frozen. However, if the class is frozen, the
@@ -515,7 +508,6 @@ public abstract class CtBehavior extends CtMember
 	 *         array is equal to the number of the formal parameters. If each
 	 *         parameter has no annotation, the elements of the returned array
 	 *         are empty arrays.
-	 *
 	 * @see #getAvailableParameterAnnotations()
 	 * @see #getAnnotations()
 	 * @since 3.1
@@ -556,7 +548,6 @@ public abstract class CtBehavior extends CtMember
 	 * methods/constructors have the same parameter types and the return type,
 	 * <code>getSignature()</code> returns the same string (the return type of
 	 * constructors is <code>void</code>).
-	 *
 	 * <p>
 	 * Note that the returned string is not the type signature contained in the
 	 * <code>SignatureAttirbute</code>. It is a descriptor.
@@ -775,7 +766,6 @@ public abstract class CtBehavior extends CtMember
 
 	/**
 	 * Inserts bytecode at the specified line in the body.
-	 *
 	 * <p>
 	 * If there is not a statement at the specified line, the bytecode might be
 	 * inserted at the line including the first statement after that line
@@ -852,12 +842,8 @@ public abstract class CtBehavior extends CtMember
 	}
 
 	/**
-	 * Inserts bytecode at the specified line in the body. It is equivalent to:
-	 *
-	 * <br>
-	 * <code>insertAt(lineNum, true, src)</code>
-	 *
-	 * <br>
+	 * Inserts bytecode at the specified line in the body. It is equivalent to: <br>
+	 * <code>insertAt(lineNum, true, src)</code> <br>
 	 * See this method as well.
 	 *
 	 * @param lineNum
@@ -867,7 +853,6 @@ public abstract class CtBehavior extends CtMember
 	 *            the source code representing the inserted bytecode. It must be
 	 *            a single statement or block.
 	 * @return the line number at which the bytecode has been inserted.
-	 *
 	 * @see CtBehavior#insertAt(int,boolean,String)
 	 */
 	public int insertAt(int lineNum, String src) throws CannotCompileException
@@ -877,7 +862,6 @@ public abstract class CtBehavior extends CtMember
 
 	/**
 	 * Inserts bytecode at the beginning of the body.
-	 *
 	 * <p>
 	 * If this object represents a constructor, the bytecode is inserted before
 	 * a constructor in the super class or this class is called. Therefore, the
@@ -1009,7 +993,6 @@ public abstract class CtBehavior extends CtMember
 
 	/**
 	 * Modifies the method/constructor body.
-	 *
 	 * <p>
 	 * While executing this method, only <code>replace()</code> in
 	 * <code>Expr</code> is available for bytecode modification. Other methods
@@ -1039,7 +1022,6 @@ public abstract class CtBehavior extends CtMember
 
 	/**
 	 * Adds an attribute. The attribute is saved in the class file.
-	 *
 	 * <p>
 	 * Note that an attribute is a data block specified by the class file
 	 * format. It is not an annotation. See
@@ -1071,10 +1053,8 @@ public abstract class CtBehavior extends CtMember
 	}
 
 	/*
-	 * -- OLD version --
-	 * 
-	 * public void insertAfter(String src) throws CannotCompileException {
-	 * declaringClass.checkModify(); CodeAttribute ca =
+	 * -- OLD version -- public void insertAfter(String src) throws
+	 * CannotCompileException { declaringClass.checkModify(); CodeAttribute ca =
 	 * methodInfo.getCodeAttribute(); CodeIterator iterator = ca.iterator();
 	 * Bytecode b = new Bytecode(methodInfo.getConstPool(), ca.getMaxStack(),
 	 * ca.getMaxLocals()); b.setStackDepth(ca.getMaxStack()); Javac jv = new
@@ -1083,9 +1063,8 @@ public abstract class CtBehavior extends CtMember
 	 * varNo = jv.recordReturnType(rtype, true); boolean isVoid = rtype ==
 	 * CtClass.voidType; if (isVoid) { b.addOpcode(Opcode.ACONST_NULL);
 	 * b.addAstore(varNo); jv.compileStmnt(src); } else { b.addStore(varNo,
-	 * rtype); jv.compileStmnt(src); b.addLoad(varNo, rtype); }
-	 * 
-	 * byte[] code = b.get(); ca.setMaxStack(b.getMaxStack());
+	 * rtype); jv.compileStmnt(src); b.addLoad(varNo, rtype); } byte[] code =
+	 * b.get(); ca.setMaxStack(b.getMaxStack());
 	 * ca.setMaxLocals(b.getMaxLocals()); while (iterator.hasNext()) { int pos =
 	 * iterator.next(); int c = iterator.byteAt(pos); if (c == Opcode.ARETURN ||
 	 * c == Opcode.IRETURN || c == Opcode.FRETURN || c == Opcode.LRETURN || c ==
@@ -1178,7 +1157,6 @@ public abstract class CtBehavior extends CtMember
 
 	/**
 	 * Sets the encoded modifiers of the method/constructor.
-	 *
 	 * <p>
 	 * Changing the modifiers may cause a problem. For example, if a non-static
 	 * method is changed to static, the method will be rejected by the bytecode
@@ -1198,7 +1176,6 @@ public abstract class CtBehavior extends CtMember
 	 * <code>$cflow</code> is used, the class files modified with Javassist
 	 * requires a support class <code>javassist.runtime.Cflow</code> at runtime
 	 * (other Javassist classes are not required at runtime).
-	 *
 	 * <p>
 	 * Every <code>$cflow</code> variable is given a unique name. For example,
 	 * if the given name is <code>"Point.paint"</code>, then the variable is
@@ -1207,7 +1184,6 @@ public abstract class CtBehavior extends CtMember
 	 * @param name
 	 *            <code>$cflow</code> name. It can include alphabets, numbers,
 	 *            <code>_</code>, <code>$</code>, and <code>.</code> (dot).
-	 *
 	 * @see javassist.runtime.Cflow
 	 */
 	public void useCflow(String name) throws CannotCompileException

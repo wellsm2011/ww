@@ -28,6 +28,11 @@ import javassist.compiler.CompileError;
 public abstract class ASTree implements Serializable
 {
 	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
+	/**
 	 * Is a method for the visitor pattern. It calls <code>atXXX()</code> on the
 	 * given visitor, where <code>XXX</code> is the class name of the node
 	 * object.

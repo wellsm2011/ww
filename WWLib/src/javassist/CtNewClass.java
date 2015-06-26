@@ -65,7 +65,6 @@ class CtNewClass extends CtClassType
 
 	/**
 	 * Adds constructors inhrited from the super class.
-	 *
 	 * <p>
 	 * After this method is called, the class inherits all the constructors from
 	 * the super class. The added constructor calls the super's constructor with

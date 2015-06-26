@@ -35,7 +35,7 @@ public class ProxyObjectOutputStream extends ObjectOutputStream
 	/**
 	 * create an output stream which can be used to serialize an object graph
 	 * which includes proxies created using class ProxyFactory
-	 * 
+	 *
 	 * @param out
 	 * @throws IOException
 	 *             whenever ObjectOutputStream would also do so

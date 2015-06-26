@@ -133,7 +133,6 @@ public class Cast extends Expr
 	/**
 	 * Replaces the explicit cast operator with the bytecode derived from the
 	 * given source text.
-	 *
 	 * <p>
 	 * $0 is available but the value is <code>null</code>.
 	 *

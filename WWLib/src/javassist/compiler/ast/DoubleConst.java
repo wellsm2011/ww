@@ -24,6 +24,11 @@ import javassist.compiler.TokenId;
  */
 public class DoubleConst extends ASTree
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	private static DoubleConst compute(int op, double value1, double value2, int newType)
 	{
 		double newValue;

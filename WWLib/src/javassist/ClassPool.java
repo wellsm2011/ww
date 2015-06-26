@@ -41,10 +41,8 @@ import javassist.bytecode.Descriptor;
  * object, it searches various sources represented by <code>ClassPath</code> to
  * find a class file and then it creates a <code>CtClass</code> object
  * representing that class file. The created object is returned to the caller.
- *
  * <p>
  * <b>Memory consumption memo:</b>
- *
  * <p>
  * <code>ClassPool</code> objects hold all the <code>CtClass</code>es that have
  * been created so that the consistency among modified classes can be
@@ -54,10 +52,8 @@ import javassist.bytecode.Descriptor;
  * hundred classes processed. Note that <code>getDefault()</code> is a singleton
  * factory. Otherwise, <code>detach()</code> in <code>CtClass</code> should be
  * used to avoid huge memory consumption.
- *
  * <p>
  * <b><code>ClassPool</code> hierarchy:</b>
- *
  * <p>
  * <code>ClassPool</code>s can make a parent-child hierarchy as
  * <code>java.lang.ClassLoader</code>s. If a <code>ClassPool</code> has a parent
@@ -105,13 +101,11 @@ public class ClassPool
 
 	/**
 	 * Turning the automatic pruning on/off.
-	 *
 	 * <p>
 	 * If this field is true, <code>CtClass</code> objects are automatically
 	 * pruned by default when <code>toBytecode()</code> etc. are called. The
 	 * automatic pruning can be turned on/off individually for each
 	 * <code>CtClass</code> object.
-	 *
 	 * <p>
 	 * The initial value is false.
 	 *
@@ -126,7 +120,6 @@ public class ClassPool
 	/**
 	 * If true, unmodified and not-recently-used class files are periodically
 	 * released for saving memory.
-	 *
 	 * <p>
 	 * The initial value is true.
 	 */
@@ -151,13 +144,11 @@ public class ClassPool
 	/**
 	 * Returns the default class pool. The returned object is always identical
 	 * since this method is a singleton factory.
-	 *
 	 * <p>
 	 * The default class pool searches the system search path, which usually
 	 * includes the platform library, extension libraries, and the search path
 	 * specified by the <code>-classpath</code> option or the
 	 * <code>CLASSPATH</code> environment variable.
-	 *
 	 * <p>
 	 * When this method is called for the first time, the default class pool is
 	 * created with the following code snippet:
@@ -166,7 +157,6 @@ public class ClassPool
 	 * ClassPool cp = new ClassPool();
 	 * cp.appendSystemPath();
 	 * </pre>
-	 *
 	 * <p>
 	 * If the default class pool cannot find any class files, try
 	 * <code>ClassClassPath</code> and <code>LoaderClassPath</code>.
@@ -199,13 +189,11 @@ public class ClassPool
 
 	/**
 	 * Determines the search order.
-	 *
 	 * <p>
 	 * If this field is true, <code>get()</code> first searches the class path
 	 * associated to this <code>ClassPool</code> and then the class path
 	 * associated with the parent <code>ClassPool</code>. Otherwise, the class
 	 * path associated with the parent is searched first.
-	 *
 	 * <p>
 	 * The default value is false.
 	 */
@@ -296,7 +284,6 @@ public class ClassPool
 	 *            the path name of the directory or jar file. It must not end
 	 *            with a path separator ("/"). If the path name ends with "/*",
 	 *            then all the jar files matching the path name are appended.
-	 *
 	 * @return the appended class path.
 	 * @throws NotFoundException
 	 *             if the jar file is not found.
@@ -308,7 +295,6 @@ public class ClassPool
 
 	/**
 	 * Appends directories and jar files for search.
-	 *
 	 * <p>
 	 * The elements of the given path list must be separated by colons in Unix
 	 * or semi-colons in Windows.
@@ -366,7 +352,6 @@ public class ClassPool
 	/*
 	 * This method returns null if this or its parent class pool does not
 	 * contain a CtClass object with the class name.
-	 * 
 	 * @see checkNotFrozen(String)
 	 */
 	CtClass checkNotExists(String classname)
@@ -388,7 +373,6 @@ public class ClassPool
 	 * Is invoked by CtClassType.setName() and methods in this class. This
 	 * method throws an exception if the class is already frozen or if this
 	 * class pool cannot edit the class since it is in a parent class pool.
-	 * 
 	 * @see checkNotExists(String)
 	 */
 	void checkNotFrozen(String classname) throws RuntimeException
@@ -501,11 +485,9 @@ public class ClassPool
 	 * file has been already read, this method returns a reference to the
 	 * <code>CtClass</code> created when that class file was read at the first
 	 * time.
-	 *
 	 * <p>
 	 * If <code>classname</code> ends with "[]", then this method returns a
 	 * <code>CtClass</code> object for that array type.
-	 *
 	 * <p>
 	 * To obtain an inner class, use "$" instead of "." for separating the
 	 * enclosing class name and the inner class name.
@@ -533,7 +515,6 @@ public class ClassPool
 	/**
 	 * Reads class files from the source and returns an array of
 	 * <code>CtClass</code> objects representing those class files.
-	 *
 	 * <p>
 	 * If an element of <code>classnames</code> ends with "[]", then this method
 	 * returns a <code>CtClass</code> object for that array type.
@@ -639,10 +620,9 @@ public class ClassPool
 	/**
 	 * Get the classloader for <code>toClass()</code>,
 	 * <code>getAnnotations()</code> in <code>CtClass</code>, etc.
-	 * 
 	 * <p>
 	 * The default is the context class loader.
-	 * 
+	 *
 	 * @return the classloader for the pool
 	 * @see #toClass(CtClass)
 	 * @see CtClass#getAnnotations()
@@ -657,7 +637,6 @@ public class ClassPool
 	 * equivalent to <code>get(String)</code> except that classname can be an
 	 * array-type "descriptor" (an encoded type name) such as
 	 * <code>[Ljava/lang/Object;</code>.
-	 *
 	 * <p>
 	 * Using this method is not recommended; this method should be used only to
 	 * obtain the <code>CtClass</code> object with a name returned from
@@ -747,11 +726,9 @@ public class ClassPool
 	 * Record a package name so that the Javassist compiler searches the package
 	 * to resolve a class name. Don't record the <code>java.lang</code> package,
 	 * which has been implicitly recorded by default.
-	 *
 	 * <p>
 	 * Since version 3.14, <code>packageName</code> can be a fully-qualified
 	 * class name.
-	 *
 	 * <p>
 	 * Note that <code>get()</code> in <code>ClassPool</code> does not search
 	 * the recorded package. Only the compiler searches it.
@@ -787,7 +764,6 @@ public class ClassPool
 	 *            the path name of the directory or jar file. It must not end
 	 *            with a path separator ("/"). If the path name ends with "/*",
 	 *            then all the jar files matching the path name are inserted.
-	 *
 	 * @return the inserted class path.
 	 * @throws NotFoundException
 	 *             if the jar file is not found.
@@ -840,7 +816,6 @@ public class ClassPool
 	 * Creates a new class (or interface) from the given class file. If there
 	 * already exists a class with the same name, the new class overwrites that
 	 * previous class.
-	 *
 	 * <p>
 	 * This method is used for creating a <code>CtClass</code> object directly
 	 * from a class file. The qualified class name is obtained from the class
@@ -861,7 +836,6 @@ public class ClassPool
 	 * Creates a new class (or interface) from the given class file. If there
 	 * already exists a class with the same name, the new class overwrites that
 	 * previous class.
-	 *
 	 * <p>
 	 * This method is used for creating a <code>CtClass</code> object directly
 	 * from a class file. The qualified class name is obtained from the class
@@ -891,7 +865,6 @@ public class ClassPool
 	 * Creates a new class (or interface) from the given class file. If there
 	 * already exists a class with the same name, the new class overwrites that
 	 * previous class.
-	 *
 	 * <p>
 	 * This method is used for creating a <code>CtClass</code> object directly
 	 * from a class file. The qualified class name is obtained from the class
@@ -913,7 +886,6 @@ public class ClassPool
 	 * Creates a new class (or interface) from the given class file. If there
 	 * already exists a class with the same name, the new class overwrites that
 	 * previous class.
-	 *
 	 * <p>
 	 * This method is used for creating a <code>CtClass</code> object directly
 	 * from a class file. The qualified class name is obtained from the class
@@ -943,7 +915,6 @@ public class ClassPool
 	/**
 	 * Creates a new public class. If there already exists a class with the same
 	 * name, the new class overwrites that previous class.
-	 *
 	 * <p>
 	 * If no constructor is explicitly added to the created new class, Javassist
 	 * generates constructors and adds it when the class file is generated. It
@@ -965,7 +936,6 @@ public class ClassPool
 	/**
 	 * Creates a new public class. If there already exists a class/interface
 	 * with the same name, the new class overwrites that previous class.
-	 *
 	 * <p>
 	 * If no constructor is explicitly added to the created new class, Javassist
 	 * generates constructors and adds it when the class file is generated. It
@@ -993,7 +963,6 @@ public class ClassPool
 	 * Creates a new class (or interface) from the given class file. If there
 	 * already exists a class with the same name, this method returns the
 	 * existing class; a new class is never created from the given class file.
-	 *
 	 * <p>
 	 * This method is used for creating a <code>CtClass</code> object directly
 	 * from a class file. The qualified class name is obtained from the class
@@ -1074,7 +1043,6 @@ public class ClassPool
 	/**
 	 * Defines a new package. If the package is already defined, this method
 	 * performs nothing.
-	 *
 	 * <p>
 	 * You do not necessarily need to call this method. If this method is
 	 * called, then <code>getPackage()</code> on the <code>Class</code> object
@@ -1151,7 +1119,6 @@ public class ClassPool
 	 * since <code>get()</code> quickly throw an exception without searching the
 	 * class path at all if the given name is an invalid name recorded by this
 	 * method. Note that searching the class path takes relatively long time.
-	 *
 	 * <p>
 	 * The current implementation of this method performs nothing.
 	 *
@@ -1190,17 +1157,14 @@ public class ClassPool
 	 * this method is called, further modifications are not allowed any more. To
 	 * load the class, this method uses the context class loader of the current
 	 * thread. It is obtained by calling <code>getClassLoader()</code>.
-	 * 
 	 * <p>
 	 * This behavior can be changed by subclassing the pool and changing the
 	 * <code>getClassLoader()</code> method. If the program is running on some
 	 * application server, the context class loader might be inappropriate to
 	 * load the class.
-	 *
 	 * <p>
 	 * This method is provided for convenience. If you need more complex
 	 * functionality, you should write your own class loader.
-	 *
 	 * <p>
 	 * <b>Warining:</b> A Class object returned by this method may not work with
 	 * a security manager or a signed jar file because a protection domain is
@@ -1222,7 +1186,6 @@ public class ClassPool
 	 * Converts the class to a <code>java.lang.Class</code> object. Do not
 	 * override this method any more at a subclass because
 	 * <code>toClass(CtClass)</code> never calls this method.
-	 *
 	 * <p>
 	 * <b>Warining:</b> A Class object returned by this method may not work with
 	 * a security manager or a signed jar file because a protection domain is
@@ -1243,18 +1206,15 @@ public class ClassPool
 	/**
 	 * Converts the class to a <code>java.lang.Class</code> object. Once this
 	 * method is called, further modifications are not allowed any more.
-	 *
 	 * <p>
 	 * The class file represented by the given <code>CtClass</code> is loaded by
 	 * the given class loader to construct a <code>java.lang.Class</code>
 	 * object. Since a private method on the class loader is invoked through the
 	 * reflection API, the caller must have permissions to do that.
-	 *
 	 * <p>
 	 * An easy way to obtain <code>ProtectionDomain</code> object is to call
 	 * <code>getProtectionDomain()</code> in <code>java.lang.Class</code>. It
 	 * returns the domain that the class belongs to.
-	 *
 	 * <p>
 	 * This method is provided for convenience. If you need more complex
 	 * functionality, you should write your own class loader.
@@ -1267,7 +1227,6 @@ public class ClassPool
 	 *            the protection domain for the class. If it is null, the
 	 *            default domain created by <code>java.lang.ClassLoader</code>
 	 *            is used.
-	 *
 	 * @see #getClassLoader()
 	 * @since 3.3
 	 */

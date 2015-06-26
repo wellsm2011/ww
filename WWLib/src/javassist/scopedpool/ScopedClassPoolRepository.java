@@ -36,7 +36,7 @@ public interface ScopedClassPoolRepository
 
 	/**
 	 * Create a scoped classpool.
-	 * 
+	 *
 	 * @param cl
 	 *            the classloader.
 	 * @param src
@@ -47,7 +47,7 @@ public interface ScopedClassPoolRepository
 
 	/**
 	 * Finds a scoped classpool registered under the passed in classloader.
-	 * 
+	 *
 	 * @param cl
 	 *            the classloader.
 	 * @return the classpool.
@@ -61,21 +61,21 @@ public interface ScopedClassPoolRepository
 
 	/**
 	 * Get the registered classloaders.
-	 * 
+	 *
 	 * @return the registered classloaders.
 	 */
 	Map getRegisteredCLs();
 
 	/**
 	 * Returns whether or not the class pool is pruned.
-	 * 
+	 *
 	 * @return the prune.
 	 */
 	boolean isPrune();
 
 	/**
 	 * Register a classloader.
-	 * 
+	 *
 	 * @param ucl
 	 *            the classloader.
 	 * @return the classpool.
@@ -89,7 +89,7 @@ public interface ScopedClassPoolRepository
 
 	/**
 	 * Sets the prune flag.
-	 * 
+	 *
 	 * @param prune
 	 *            a new value.
 	 */
@@ -97,7 +97,7 @@ public interface ScopedClassPoolRepository
 
 	/**
 	 * Unregisters a classpool and unregisters its classloader.
-	 * 
+	 *
 	 * @param cl
 	 *            the classloader the pool is stored under.
 	 */

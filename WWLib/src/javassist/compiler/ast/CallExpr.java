@@ -25,6 +25,11 @@ import javassist.compiler.TokenId;
  */
 public class CallExpr extends Expr
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public static CallExpr makeCall(ASTree target, ASTree args)
 	{
 		return new CallExpr(target, new ASTList(args));

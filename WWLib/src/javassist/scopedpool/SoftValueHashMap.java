@@ -70,10 +70,9 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	/**
 	 * Constructs a new, empty <code>WeakHashMap</code> with the given initial
 	 * capacity and the default load factor, which is <code>0.75</code>.
-	 * 
+	 *
 	 * @param initialCapacity
 	 *            The initial capacity of the <code>WeakHashMap</code>
-	 * 
 	 * @throws IllegalArgumentException
 	 *             If the initial capacity is less than zero
 	 */
@@ -87,13 +86,11 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	/**
 	 * Constructs a new, empty <code>WeakHashMap</code> with the given initial
 	 * capacity and the given load factor.
-	 * 
+	 *
 	 * @param initialCapacity
 	 *            The initial capacity of the <code>WeakHashMap</code>
-	 * 
 	 * @param loadFactor
 	 *            The load factor of the <code>WeakHashMap</code>
-	 * 
 	 * @throws IllegalArgumentException
 	 *             If the initial capacity is less than zero, or if the load
 	 *             factor is nonpositive
@@ -109,7 +106,7 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	 * initial capacity of twice the number of mappings in the specified map or
 	 * 11 (whichever is greater), and a default load factor, which is
 	 * <tt>0.75</tt>.
-	 * 
+	 *
 	 * @param t
 	 *            the map whose mappings are to be placed in this map.
 	 */
@@ -132,7 +129,7 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	/**
 	 * Returns <code>true</code> if this map contains a mapping for the
 	 * specified key.
-	 * 
+	 *
 	 * @param key
 	 *            The key whose presence in this map is to be tested.
 	 */
@@ -159,7 +156,7 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	 * Returns the value to which this map maps the specified <code>key</code>.
 	 * If this map does not contain a value for this key, then return
 	 * <code>null</code>.
-	 * 
+	 *
 	 * @param key
 	 *            The key whose associated value, if any, is to be returned.
 	 */
@@ -204,12 +201,11 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	 * <code>value</code>. If the map previously contained a mapping for
 	 * <code>key</code> then that mapping is replaced and the previous value is
 	 * returned.
-	 * 
+	 *
 	 * @param key
 	 *            The key that is to be mapped to the given <code>value</code>
 	 * @param value
 	 *            The value to which the given <code>key</code> is to be mapped
-	 * 
 	 * @return The previous value to which this key was mapped, or
 	 *         <code>null</code> if if there was no mapping for the key
 	 */
@@ -226,10 +222,9 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	/**
 	 * Removes the mapping for the given <code>key</code> from this map, if
 	 * present.
-	 * 
+	 *
 	 * @param key
 	 *            The key whose mapping is to be removed.
-	 * 
 	 * @return The value to which this key was mapped, or <code>null</code> if
 	 *         there was no mapping for the key.
 	 */

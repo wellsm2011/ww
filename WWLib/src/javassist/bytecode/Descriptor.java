@@ -25,7 +25,6 @@ import javassist.NotFoundException;
 
 /**
  * A support class for dealing with descriptors.
- *
  * <p>
  * See chapter 4.3 in "The Java Virtual Machine Specification (2nd ed.)"
  */
@@ -211,7 +210,6 @@ public class Descriptor
 	/**
 	 * Appends a parameter type to the parameter list represented by the given
 	 * descriptor.
-	 *
 	 * <p>
 	 * <code>classname</code> must not be an array type.
 	 *
@@ -257,7 +255,6 @@ public class Descriptor
 
 	/**
 	 * Changes the return type included in the given descriptor.
-	 *
 	 * <p>
 	 * <code>classname</code> must not be an array type.
 	 *
@@ -285,7 +282,6 @@ public class Descriptor
 	/**
 	 * Computes the data size specified by the given descriptor. For example, if
 	 * the descriptor is "D", this method returns 2.
-	 *
 	 * <p>
 	 * If the descriptor represents a method type, this method returns (the size
 	 * of the returned value) - (the sum of the data sizes of all the
@@ -446,7 +442,6 @@ public class Descriptor
 	/**
 	 * Inserts a parameter type at the beginning of the parameter list
 	 * represented by the given descriptor.
-	 *
 	 * <p>
 	 * <code>classname</code> must not be an array type.
 	 *
@@ -590,7 +585,7 @@ public class Descriptor
 	 * type, the size of that parameter is 2 words. For example, if the given
 	 * descriptor is <code>"(IJ)D"</code>, then this method returns 3. The size
 	 * of the return type is not computed.
-	 * 
+	 *
 	 * @param desc
 	 *            a method descriptor.
 	 */
@@ -659,7 +654,6 @@ public class Descriptor
 	 *            replaced JVM class name
 	 * @param newname
 	 *            substituted JVM class name
-	 *
 	 * @see Descriptor#toJvmName(String)
 	 */
 	public static String rename(String desc, String oldname, String newname)
@@ -826,7 +820,6 @@ public class Descriptor
 	/**
 	 * Returns a <code>CtClass</code> object representing the type specified by
 	 * the given descriptor.
-	 *
 	 * <p>
 	 * This method works even if the package-class separator is not
 	 * <code>/</code> but <code>.</code> (period). For example, it accepts
@@ -904,7 +897,6 @@ public class Descriptor
 
 	/**
 	 * Converts a class name into the internal representation used in the JVM.
-	 *
 	 * <p>
 	 * Note that <code>toJvmName(toJvmName(s))</code> is equivalent to
 	 * <code>toJvmName(s)</code>.

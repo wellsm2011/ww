@@ -260,7 +260,6 @@ public class CtField extends CtMember
 	 * Instances of this class specify how to initialize a field.
 	 * <code>Initializer</code> is passed to <code>CtClass.addField()</code>
 	 * with a <code>CtField</code>.
-	 *
 	 * <p>
 	 * This class cannot be instantiated with the <code>new</code> operator.
 	 * Factory methods such as <code>byParameter()</code> and <code>byNew</code>
@@ -273,19 +272,15 @@ public class CtField extends CtMember
 	{
 		/**
 		 * Makes an initializer calling a static method.
-		 *
 		 * <p>
 		 * This initializer calls a static method and uses the returned value as
 		 * the initial value of the field. The called method receives the
 		 * parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.
-		 *
 		 * <p>
 		 * If the initialized field is static, then the method does not receive
 		 * any parameters.
-		 *
 		 * <p>
 		 * The type of the returned value must be the same as the field type.
 		 *
@@ -306,21 +301,17 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer calling a static method.
-		 *
 		 * <p>
 		 * This initializer calls a static method and uses the returned value as
 		 * the initial value of the field. The called method receives the
 		 * parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.<br>
 		 * <code>String[] strs</code> - the character strings specified by
 		 * <code>stringParams</code><br>
-		 *
 		 * <p>
 		 * If the initialized field is static, then the method receive only
 		 * <code>strs</code>.
-		 *
 		 * <p>
 		 * The type of the returned value must be the same as the field type.
 		 *
@@ -343,21 +334,17 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer calling a static method.
-		 *
 		 * <p>
 		 * This initializer calls a static method and uses the returned value as
 		 * the initial value of the field. The called method receives the
 		 * parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.<br>
 		 * <code>Object[] args</code> - the parameters passed to the constructor
 		 * of the object including the filed.
-		 *
 		 * <p>
 		 * If the initialized field is static, then the method does not receive
 		 * any parameters.
-		 *
 		 * <p>
 		 * The type of the returned value must be the same as the field type.
 		 *
@@ -378,23 +365,19 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer calling a static method.
-		 *
 		 * <p>
 		 * This initializer calls a static method and uses the returned value as
 		 * the initial value of the field. The called method receives the
 		 * parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.<br>
 		 * <code>String[] strs</code> - the character strings specified by
 		 * <code>stringParams</code><br>
 		 * <code>Object[] args</code> - the parameters passed to the constructor
 		 * of the object including the filed.
-		 *
 		 * <p>
 		 * If the initialized field is static, then the method receive only
 		 * <code>strs</code>.
-		 *
 		 * <p>
 		 * The type of the returned value must be the same as the field type.
 		 *
@@ -433,15 +416,12 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer creating a new object.
-		 *
 		 * <p>
 		 * This initializer creates a new object and uses it as the initial
 		 * value of the field. The constructor of the created object receives
 		 * the parameter:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.
-		 *
 		 * <p>
 		 * If the initialized field is static, then the constructor does not
 		 * receive any parameters.
@@ -460,17 +440,14 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer creating a new object.
-		 *
 		 * <p>
 		 * This initializer creates a new object and uses it as the initial
 		 * value of the field. The constructor of the created object receives
 		 * the parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.<br>
 		 * <code>String[] strs</code> - the character strings specified by
 		 * <code>stringParams</code><br>
-		 *
 		 * <p>
 		 * If the initialized field is static, then the constructor receives
 		 * only <code>strs</code>.
@@ -521,24 +498,20 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer creating a new object.
-		 *
 		 * <p>
 		 * This initializer creates a new object and uses it as the initial
 		 * value of the field. The constructor of the created object receives
 		 * the parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.<br>
 		 * <code>Object[] args</code> - the parameters passed to the constructor
 		 * of the object including the filed.
-		 *
 		 * <p>
 		 * If the initialized field is static, then the constructor does not
 		 * receive any parameters.
 		 *
 		 * @param objectType
 		 *            the class instantiated for the initial value.
-		 *
 		 * @see javassist.CtField.Initializer#byNewArray(CtClass,int)
 		 * @see javassist.CtField.Initializer#byNewArray(CtClass,int[])
 		 */
@@ -553,19 +526,16 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer creating a new object.
-		 *
 		 * <p>
 		 * This initializer creates a new object and uses it as the initial
 		 * value of the field. The constructor of the created object receives
 		 * the parameters:
-		 *
 		 * <p>
 		 * <code>Object obj</code> - the object including the field.<br>
 		 * <code>String[] strs</code> - the character strings specified by
 		 * <code>stringParams</code><br>
 		 * <code>Object[] args</code> - the parameters passed to the constructor
 		 * of the object including the filed.
-		 *
 		 * <p>
 		 * If the initialized field is static, then the constructor receives
 		 * only <code>strs</code>.
@@ -586,7 +556,6 @@ public class CtField extends CtMember
 
 		/**
 		 * Makes an initializer using a constructor parameter.
-		 *
 		 * <p>
 		 * The initial value is the N-th parameter given to the constructor of
 		 * the object including the field. If the constructor takes less than N
@@ -1109,7 +1078,6 @@ public class CtField extends CtMember
 	 * "public String name;"
 	 * "public int k = 3;"
 	 * </pre>
-	 *
 	 * <p>
 	 * Note that the source code ends with <code>';'</code> (semicolon).
 	 *
@@ -1140,7 +1108,6 @@ public class CtField extends CtMember
 	 * Creates a <code>CtField</code> object. The created field must be added to
 	 * a class with <code>CtClass.addField()</code>. An initial value of the
 	 * field is specified by a <code>CtField.Initializer</code> object.
-	 *
 	 * <p>
 	 * If getter and setter methods are needed, call
 	 * <code>CtNewMethod.getter()</code> and <code>CtNewMethod.setter()</code>.
@@ -1151,7 +1118,6 @@ public class CtField extends CtMember
 	 *            field name
 	 * @param declaring
 	 *            the class to which the field will be added.
-	 *
 	 * @see CtClass#addField(CtField)
 	 * @see CtNewMethod#getter(String,CtField)
 	 * @see CtNewMethod#setter(String,CtField)
@@ -1166,7 +1132,6 @@ public class CtField extends CtMember
 	 * Creates a copy of the given field. The created field must be added to a
 	 * class with <code>CtClass.addField()</code>. An initial value of the field
 	 * is specified by a <code>CtField.Initializer</code> object.
-	 *
 	 * <p>
 	 * If getter and setter methods are needed, call
 	 * <code>CtNewMethod.getter()</code> and <code>CtNewMethod.setter()</code>.
@@ -1262,7 +1227,6 @@ public class CtField extends CtMember
 	/**
 	 * Obtains an attribute with the given name. If that attribute is not found
 	 * in the class file, this method returns null.
-	 *
 	 * <p>
 	 * Note that an attribute is a data block specified by the class file
 	 * format. See {@link javassist.bytecode.AttributeInfo}.
@@ -1367,13 +1331,11 @@ public class CtField extends CtMember
 	 * Returns the FieldInfo representing the field in the class file (read
 	 * only). Normal applications do not need calling this method. Use
 	 * <code>getFieldInfo()</code>.
-	 *
 	 * <p>
 	 * The <code>FieldInfo</code> object obtained by this method is read only.
 	 * Changes to this object might not be reflected on a class file generated
 	 * by <code>toBytecode()</code>, <code>toClass()</code>, etc in
 	 * <code>CtClass</code>.
-	 *
 	 * <p>
 	 * This method is available even if the <code>CtClass</code> containing this
 	 * field is frozen. However, if the class is frozen, the
@@ -1449,7 +1411,6 @@ public class CtField extends CtMember
 	 * field signature is represented by a character string called a field
 	 * descriptor, which is defined in the JVM specification. If two fields have
 	 * the same type, <code>getSignature()</code> returns the same string.
-	 *
 	 * <p>
 	 * Note that the returned string is not the type signature contained in the
 	 * <code>SignatureAttirbute</code>. It is a descriptor.
@@ -1491,7 +1452,6 @@ public class CtField extends CtMember
 
 	/**
 	 * Adds an attribute. The attribute is saved in the class file.
-	 *
 	 * <p>
 	 * Note that an attribute is a data block specified by the class file
 	 * format. See {@link javassist.bytecode.AttributeInfo}.

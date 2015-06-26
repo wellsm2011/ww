@@ -44,7 +44,6 @@ public interface MethodHandler
 	 *            parameter type is a primitive type, the type of the array
 	 *            element is a wrapper class.
 	 * @return the resulting value of the method invocation.
-	 *
 	 * @throws Throwable
 	 *             if the method invocation fails.
 	 */

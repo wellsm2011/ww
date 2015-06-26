@@ -45,7 +45,7 @@ public class ProxyObjectInputStream extends ObjectInputStream
 	 * used to resolve proxy superclass and interface names read from the input
 	 * stream will default to the current thread's context class loader or the
 	 * system classloader if the context class loader is null.
-	 * 
+	 *
 	 * @param in
 	 * @throws java.io.StreamCorruptedException
 	 *             whenever ObjectInputStream would also do so
@@ -98,7 +98,7 @@ public class ProxyObjectInputStream extends ObjectInputStream
 
 	/**
 	 * Reset the loader to be
-	 * 
+	 *
 	 * @param loader
 	 */
 	public void setClassLoader(ClassLoader loader)

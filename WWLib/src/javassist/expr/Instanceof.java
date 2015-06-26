@@ -131,7 +131,6 @@ public class Instanceof extends Expr
 	/**
 	 * Replaces the instanceof operator with the bytecode derived from the given
 	 * source text.
-	 *
 	 * <p>
 	 * $0 is available but the value is <code>null</code>.
 	 *

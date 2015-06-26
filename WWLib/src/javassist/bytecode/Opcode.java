@@ -18,7 +18,6 @@ package javassist.bytecode;
 
 /**
  * JVM Instruction Set.
- *
  * <p>
  * This interface defines opcodes and array types for the NEWARRAY instruction.
  *

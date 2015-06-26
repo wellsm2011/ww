@@ -23,7 +23,11 @@ import javassist.compiler.CompileError;
  */
 public class Keyword extends ASTree
 {
-	protected int	tokenId;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	protected int				tokenId;
 
 	public Keyword(int token)
 	{

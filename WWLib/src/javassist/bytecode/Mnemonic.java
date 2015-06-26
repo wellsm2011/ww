@@ -18,7 +18,6 @@ package javassist.bytecode;
 
 /**
  * JVM Instruction Names.
- *
  * <p>
  * This interface has been separated from javassist.bytecode.Opcode because
  * typical bytecode translators do not use mnemonics. If this interface were

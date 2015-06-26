@@ -36,7 +36,6 @@ import javassist.bytecode.Opcode;
  * variable table at every reachable instruction in a method. During analysis,
  * bytecode verification is performed in a similar manner to that described in
  * the JVM specification.
- *
  * <p>
  * Example:
  * </p>
@@ -119,10 +118,8 @@ public class Analyzer implements Opcode
 	 * instruction position, containing the starting frame state of all
 	 * reachable instructions. Non-reachable code, and illegal code offsets are
 	 * represented as a null in the frame state array. This can be used to
-	 * detect dead code.
-	 *
-	 * If the method does not contain code (it is either native or abstract),
-	 * null is returned.
+	 * detect dead code. If the method does not contain code (it is either
+	 * native or abstract), null is returned.
 	 *
 	 * @param clazz
 	 *            the declaring class of the method
@@ -166,10 +163,8 @@ public class Analyzer implements Opcode
 	 * instruction position, containing the starting frame state of all
 	 * reachable instructions. Non-reachable code, and illegal code offsets are
 	 * represented as a null in the frame state array. This can be used to
-	 * detect dead code.
-	 *
-	 * If the method does not contain code (it is either native or abstract),
-	 * null is returned.
+	 * detect dead code. If the method does not contain code (it is either
+	 * native or abstract), null is returned.
 	 *
 	 * @param method
 	 *            the method to analyze

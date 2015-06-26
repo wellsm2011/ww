@@ -25,11 +25,9 @@ import javassist.CannotCompileException;
 
 /**
  * Another <code>stack_map</code> attribute defined in CLDC 1.1 for J2ME.
- *
  * <p>
  * This is an entry in the attributes table of a Code attribute. It was
  * introduced by J2ME CLDC 1.1 (JSR 139) for pre-verification.
- *
  * <p>
  * According to the CLDC specification, the sizes of some fields are not 16bit
  * but 32bit if the code size is more than 64K or the number of the local
@@ -609,7 +607,6 @@ public class StackMap extends AttributeInfo
 	 *            the index of the <code>CONSTANT_Class_info</code> structure in
 	 *            a constant pool table. This should be zero unless the tag is
 	 *            <code>ITEM_Object</code>.
-	 *
 	 * @see javassist.CtBehavior#addParameter(javassist.CtClass)
 	 * @see StackMapTable#typeTagOf(char)
 	 * @see ConstPool
@@ -638,7 +635,6 @@ public class StackMap extends AttributeInfo
 
 	/**
 	 * Undocumented method. Do not use; internal-use only.
-	 *
 	 * <p>
 	 * This method is for javassist.convert.TransformNew. It is called to update
 	 * the stack map when the NEW opcode (and the following DUP) is removed.

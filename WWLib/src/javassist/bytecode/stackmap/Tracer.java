@@ -101,7 +101,6 @@ public abstract class Tracer implements TypeTag
 	/*
 	 * This is a constructor call on an uninitialized object. Sets flags of
 	 * other references to that object.
-	 * 
 	 * @param offset the offset where the object has been created.
 	 */
 	private void constructorCalled(TypeData target, int offset)
@@ -983,9 +982,7 @@ public abstract class Tracer implements TypeTag
 		/*
 		 * Since JSR pushes a return address onto the operand stack, the stack
 		 * map at the entry point of a subroutine is stackTypes resulting after
-		 * executing the following code:
-		 * 
-		 * stackTypes[stackTop++] = TOP;
+		 * executing the following code: stackTypes[stackTop++] = TOP;
 		 */
 	}
 

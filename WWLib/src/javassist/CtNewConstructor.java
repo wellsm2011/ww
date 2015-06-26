@@ -26,7 +26,6 @@ import javassist.compiler.Javac;
 /**
  * A collection of static methods for creating a <code>CtConstructor</code>. An
  * instance of this class does not make any sense.
- *
  * <p>
  * A class initializer (static constructor) cannot be created by the methods in
  * this class. Call <code>makeClassInitializer()</code> in <code>CtClass</code>
@@ -70,7 +69,6 @@ public class CtNewConstructor
 	 * @param map
 	 *            the hash table associating original class names with
 	 *            substituted names. It can be <code>null</code>.
-	 *
 	 * @see CtConstructor#CtConstructor(CtConstructor,CtClass,ClassMap)
 	 */
 	public static CtConstructor copy(CtConstructor c, CtClass declaring, ClassMap map) throws CannotCompileException
@@ -80,7 +78,6 @@ public class CtNewConstructor
 
 	/**
 	 * Creates a default (public) constructor.
-	 *
 	 * <p>
 	 * The created constructor takes no parameter. It calls <code>super()</code>.
 	 */
@@ -126,18 +123,15 @@ public class CtNewConstructor
 
 	/**
 	 * Creates a public constructor.
-	 *
 	 * <p>
 	 * If <code>howto</code> is <code>PASS_PARAMS</code>, the created
 	 * constructor calls the super's constructor with the same signature. The
 	 * superclass must contain a constructor taking the same set of parameters
 	 * as the created one.
-	 *
 	 * <p>
 	 * If <code>howto</code> is <code>PASS_NONE</code>, the created constructor
 	 * calls the super's default constructor. The superclass must contain a
 	 * constructor taking no parameters.
-	 *
 	 * <p>
 	 * If <code>howto</code> is <code>PASS_ARRAY</code>, the created constructor
 	 * calls the super's constructor with the given parameters in the form of an
@@ -147,25 +141,21 @@ public class CtNewConstructor
 	 * <pre>
 	 * constructor(Object[] params, &lt;type&gt; cvalue)
 	 * </pre>
-	 *
 	 * <p>
 	 * Here, <code>cvalue</code> is the constant value specified by
 	 * <code>cparam</code>.
-	 *
 	 * <p>
 	 * If <code>cparam</code> is <code>null</code>, the signature must be:
 	 *
 	 * <pre>
 	 * constructor(Object[] params)
 	 * </pre>
-	 *
 	 * <p>
 	 * If <code>body</code> is not null, a copy of that method is embedded in
 	 * the body of the created constructor. The embedded method is executed
 	 * after the super's constructor is called and the values of fields are
 	 * initialized. Note that <code>body</code> must not be a constructor but a
 	 * method.
-	 *
 	 * <p>
 	 * Since the embedded method is wrapped in parameter-conversion code as in
 	 * <code>CtNewMethod.wrapped()</code>, the constructor parameters are passed
@@ -175,18 +165,15 @@ public class CtNewConstructor
 	 * <pre>
 	 * Object method(Object[] params, &lt;type&gt; cvalue)
 	 * </pre>
-	 *
 	 * <p>
 	 * If <code>cparam</code> is <code>null</code>, the signature must be:
 	 *
 	 * <pre>
 	 * Object method(Object[] params)
 	 * </pre>
-	 *
 	 * <p>
 	 * Although the type of the returned value is <code>Object</code>, the value
 	 * must be always <code>null</code>.
-	 *
 	 * <p>
 	 * <i>Example:</i>
 	 *
@@ -201,7 +188,6 @@ public class CtNewConstructor
 	 *                                  PASS_PARAMS, method, cparam, xclass);
 	 * xclass.addConstructor(c);
 	 * </pre>
-	 *
 	 * <p>
 	 * where the class <code>Sample</code> is as follows:
 	 *
@@ -215,7 +201,6 @@ public class CtNewConstructor
 	 * 	}
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * This program produces the following class:
 	 *
@@ -251,7 +236,6 @@ public class CtNewConstructor
 	 *            constant parameter (may be <code>null</code>.)
 	 * @param declaring
 	 *            the class to which the created constructor is added.
-	 *
 	 * @see CtNewMethod#wrapped(CtClass,String,CtClass[],CtClass[],CtMethod,CtMethod.ConstParameter,CtClass)
 	 */
 	public static CtConstructor make(CtClass[] parameters, CtClass[] exceptions, int howto, CtMethod body, ConstParameter cparam, CtClass declaring) throws CannotCompileException
@@ -319,7 +303,6 @@ public class CtNewConstructor
 	 * class. The created constructor receives parameters specified by
 	 * <code>parameters</code> but calls the super's constructor without those
 	 * parameters (that is, it calls the default constructor).
-	 *
 	 * <p>
 	 * The parameters passed to the created constructor should be used for field
 	 * initialization. <code>CtField.Initializer</code> objects implicitly

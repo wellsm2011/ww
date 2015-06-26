@@ -29,14 +29,11 @@ import javassist.NotFoundException;
  * Represents a JVM type in data-flow analysis. This abstraction is necessary
  * since a JVM type not only includes all normal Java types, but also a few
  * special types that are used by the JVM internally. See the static field types
- * on this class for more info on these special types.
- *
- * All primitive and special types reuse the same instance, so identity
- * comparison can be used when examining them. Normal java types must use
- * {@link #equals(Object)} to compare type instances.
- *
- * In most cases, applications which consume this API, only need to call
- * {@link #getCtClass()} to obtain the needed type information.
+ * on this class for more info on these special types. All primitive and special
+ * types reuse the same instance, so identity comparison can be used when
+ * examining them. Normal java types must use {@link #equals(Object)} to compare
+ * type instances. In most cases, applications which consume this API, only need
+ * to call {@link #getCtClass()} to obtain the needed type information.
  *
  * @author Jason T. Greene
  */

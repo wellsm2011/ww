@@ -23,6 +23,11 @@ import javassist.compiler.CompileError;
  */
 public class CondExpr extends ASTList
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public CondExpr(ASTree cond, ASTree thenp, ASTree elsep)
 	{
 		super(cond, new ASTList(thenp, new ASTList(elsep)));

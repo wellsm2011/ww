@@ -27,12 +27,10 @@ import java.util.Arrays;
 
 /**
  * A runtime class metaobject.
- *
  * <p>
  * A <code>ClassMetaobject</code> is created for every class of reflective
  * objects. It can be used to hold values shared among the reflective objects of
  * the same class.
- *
  * <p>
  * To obtain a class metaobject, calls <code>_getClass()</code> on a reflective
  * object. For example,
@@ -47,18 +45,21 @@ import java.util.Arrays;
 public class ClassMetaobject implements Serializable
 {
 	/**
+	 * 
+	 */
+	private static final long	serialVersionUID		= 1L;
+	/**
 	 * The base-level methods controlled by a metaobject are renamed so that
 	 * they begin with <code>methodPrefix "_m_"</code>.
 	 */
-	static final String		methodPrefix			= "_m_";
-	static final int		methodPrefixLen			= 3;
+	static final String			methodPrefix			= "_m_";
+	static final int			methodPrefixLen			= 3;
 
 	/**
 	 * Specifies how a <code>java.lang.Class</code> object is loaded.
-	 *
 	 * <p>
 	 * If true, it is loaded by:
-	 * 
+	 *
 	 * <pre>
 	 * Thread.currentThread().getContextClassLoader().loadClass()
 	 * </pre>
@@ -66,7 +67,7 @@ public class ClassMetaobject implements Serializable
 	 * If false, it is loaded by <code>Class.forName()</code>. The default value
 	 * is false.
 	 */
-	public static boolean	useContextClassLoader	= false;
+	public static boolean		useContextClassLoader	= false;
 
 	/**
 	 * Invokes a method whose name begins with <code>methodPrefix "_m_"</code>
@@ -142,7 +143,6 @@ public class ClassMetaobject implements Serializable
 	/**
 	 * Returns the <code>java.lang.reflect.Method</code> object representing the
 	 * method specified by <code>identifier</code>.
-	 *
 	 * <p>
 	 * Note that the actual method returned will be have an altered, reflective
 	 * name i.e. <code>_m_2_..</code>.
@@ -161,13 +161,11 @@ public class ClassMetaobject implements Serializable
 	/**
 	 * Returns the identifier index of the method, as identified by its original
 	 * name.
-	 *
 	 * <p>
 	 * This method is useful, in conjuction with
 	 * {@link ClassMetaobject#getMethod(int)}, to obtain a quick reference to
 	 * the original method in the reflected class (i.e. not the proxy method),
 	 * using the original name of the method.
-	 *
 	 * <p>
 	 * Written by Brett Randall and Shigeru Chiba.
 	 *
@@ -178,7 +176,6 @@ public class ClassMetaobject implements Serializable
 	 * @return the identifier index of the original method
 	 * @throws NoSuchMethodException
 	 *             if the method does not exist
-	 * 
 	 * @see ClassMetaobject#getMethod(int)
 	 */
 	public final int getMethodIndex(String originalName, Class[] argTypes) throws NoSuchMethodException
@@ -333,7 +330,6 @@ public class ClassMetaobject implements Serializable
 	 * Is invoked when <code>static</code> fields of the base-level class are
 	 * read and the runtime system intercepts it. This method simply returns the
 	 * value of the field.
-	 *
 	 * <p>
 	 * Every subclass of this class should redefine this method.
 	 */
@@ -356,7 +352,6 @@ public class ClassMetaobject implements Serializable
 	 * Is invoked when <code>static</code> fields of the base-level class are
 	 * modified and the runtime system intercepts it. This method simply sets
 	 * the field to the given value.
-	 *
 	 * <p>
 	 * Every subclass of this class should redefine this method.
 	 */
@@ -380,7 +375,6 @@ public class ClassMetaobject implements Serializable
 	 * called and the runtime system intercepts it. This method simply executes
 	 * the intercepted method invocation with the original parameters and
 	 * returns the resulting value.
-	 *
 	 * <p>
 	 * Every subclass of this class should redefine this method.
 	 */

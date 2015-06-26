@@ -23,19 +23,16 @@ import java.util.Vector;
 
 /**
  * The class loader for Javassist.
- *
  * <p>
  * This is a sample class loader using <code>ClassPool</code>. Unlike a regular
  * class loader, this class loader obtains bytecode from a
  * <code>ClassPool</code>.
- *
  * <p>
  * Note that Javassist can be used without this class loader; programmers can
  * define their own versions of class loader. They can run a program even
  * without any user-defined class loader if that program is statically
  * translated with Javassist. This class loader is just provided as a utility
  * class.
- *
  * <p>
  * Suppose that an instance of <code>MyTranslator</code> implementing the
  * interface <code>Translator</code> is responsible for modifying class files.
@@ -57,32 +54,26 @@ import java.util.Vector;
  * 	}
  * }
  * </pre>
- *
  * <p>
  * Class <code>MyApp</code> is the main program of the application.
- *
  * <p>
  * This program should be executed as follows:
  *
  * <pre>
  * % java Main <i>arg1</i> <i>arg2</i>...
  * </pre>
- *
  * <p>
  * It modifies the class <code>MyApp</code> with a <code>MyTranslator</code>
  * object before the JVM loads it. Then it calls <code>main()</code> in
  * <code>MyApp</code> with arguments <i>arg1</i>, <i>arg2</i>, ...
- *
  * <p>
  * This program execution is equivalent to:
  *
  * <pre>
  * % java MyApp <i>arg1</i> <i>arg2</i>...
  * </pre>
- *
  * <p>
  * except that classes are translated by <code>MyTranslator</code> at load time.
- *
  * <p>
  * If only a particular class must be modified when it is loaded, the startup
  * program can be simpler; <code>MyTranslator</code> is unnecessary. For
@@ -96,14 +87,11 @@ import java.util.Vector;
  * ct.setSuperclass(cp.get(&quot;test.Point&quot;));
  * cl.run(&quot;MyApp&quot;, args);
  * </pre>
- *
  * <p>
  * This program changes the super class of the <code>test.Rectangle</code>
  * class.
- *
  * <p>
  * <b>Note 1:</b>
- *
  * <p>
  * This class loader does not allow the users to intercept the loading of
  * <code>java.*</code> and <code>javax.*</code> classes (and <code>sun.*</code>,
@@ -112,10 +100,8 @@ import java.util.Vector;
  * from loading a system class. Also see Note 2. If this behavior is not
  * appropriate, a subclass of <code>Loader</code> must be defined and
  * <code>loadClassByDelegation()</code> must be overridden.
- *
  * <p>
  * <b>Note 2:</b>
- *
  * <p>
  * If classes are loaded with different class loaders, they belong to separate
  * name spaces. If class <code>C</code> is loaded by a class loader
@@ -124,18 +110,15 @@ import java.util.Vector;
  * of the class <code>C</code> to <code>CL'</code>, then those classes that the
  * class <code>C</code> refers to are loaded by a parent class loader
  * <code>CL'</code> instead of <code>CL</code>.
- *
  * <p>
  * If an object of class <code>C</code> is assigned to a variable of class
  * <code>C</code> belonging to a different name space, then a
  * <code>ClassCastException</code> is thrown.
- *
  * <p>
  * Because of the fact above, this loader delegates only the loading of
  * <code>javassist.Loader</code> and classes included in package
  * <code>java.*</code> and <code>javax.*</code> to the parent class loader.
  * Other classes are directly loaded by this loader.
- *
  * <p>
  * For example, suppose that <code>java.lang.String</code> would be loaded by
  * this loader while <code>java.io.File</code> is loaded by the parent class
@@ -152,7 +135,6 @@ public class Loader extends ClassLoader
 	/**
 	 * Loads a class with an instance of <code>Loader</code> and calls
 	 * <code>main()</code> of that class.
-	 *
 	 * <p>
 	 * This method calls <code>run()</code>.
 	 *
@@ -161,7 +143,6 @@ public class Loader extends ClassLoader
 	 *            &nbsp;&nbsp;{@code args[0]} is the class name to be loaded. <br>
 	 *            &nbsp;&nbsp;{@code args[1..n]} are parameters passed to the
 	 *            target {@code main()}.
-	 *
 	 * @see javassist.Loader#run(String[])
 	 */
 	public static void main(String[] args) throws Throwable
@@ -179,13 +160,11 @@ public class Loader extends ClassLoader
 
 	/**
 	 * Specifies the algorithm of class loading.
-	 *
 	 * <p>
 	 * This class loader uses the parent class loader for <code>java.*</code>
 	 * and <code>javax.*</code> classes. If this variable
 	 * <code>doDelegation</code> is <code>false</code>, this class loader does
 	 * not delegate those classes to the parent class loader.
-	 *
 	 * <p>
 	 * The default value is <code>true</code>.
 	 */
@@ -247,7 +226,6 @@ public class Loader extends ClassLoader
 	/**
 	 * Records a class so that the loading of that class is delegated to the
 	 * parent class loader.
-	 *
 	 * <p>
 	 * If the given class name ends with <code>.</code> (dot), then that name is
 	 * interpreted as a package name. All the classes in that package and the
@@ -273,7 +251,6 @@ public class Loader extends ClassLoader
 	/**
 	 * Finds the specified class using <code>ClassPath</code>. If the source
 	 * throws an exception, this returns null.
-	 *
 	 * <p>
 	 * This method can be overridden by a subclass of <code>Loader</code>. Note
 	 * that the overridden method must not throw an exception when it just fails
@@ -430,9 +407,7 @@ public class Loader extends ClassLoader
 	 * Loads a class and calls <code>main()</code> in that class.
 	 *
 	 * @param args
-	 *            command line parameters.
-	 *
-	 * <br>
+	 *            command line parameters. <br>
 	 *            &nbsp;&nbsp;{@code args[0]} is the class name to be loaded. <br>
 	 *            &nbsp;&nbsp;{@code args[1..n]} are parameters passed to the
 	 *            target {@code main()}.

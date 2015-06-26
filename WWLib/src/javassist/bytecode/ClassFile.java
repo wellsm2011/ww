@@ -29,10 +29,9 @@ import javassist.CannotCompileException;
 /**
  * <code>ClassFile</code> represents a Java <code>.class</code> file, which
  * consists of a constant pool, methods, fields, and attributes.
- *
  * <p>
  * For example, <blockquote>
- * 
+ *
  * <pre>
  * ClassFile cf = new ClassFile(false, &quot;test.Foo&quot;, null);
  * cf.setInterfaces(new String[]
@@ -44,10 +43,10 @@ import javassist.CannotCompileException;
  * 
  * cf.write(new DataOutputStream(new FileOutputStream(&quot;Foo.class&quot;)));
  * </pre>
- * 
+ *
  * </blockquote> This code generates a class file <code>Foo.class</code> for the
  * following class: <blockquote>
- * 
+ *
  * <pre>
  * package test;
  * 
@@ -56,7 +55,7 @@ import javassist.CannotCompileException;
  * 	public int	width;
  * }
  * </pre>
- * 
+ *
  * </blockquote>
  * </p>
  *
@@ -191,7 +190,7 @@ public final class ClassFile
 
 	/**
 	 * Constructs a class file including no members.
-	 * 
+	 *
 	 * @param isInterface
 	 *            true if this is an interface. false if this is a class.
 	 * @param classname
@@ -359,7 +358,7 @@ public final class ClassFile
 
 	/**
 	 * Returns access flags.
-	 * 
+	 *
 	 * @see javassist.bytecode.AccessFlag
 	 */
 	public int getAccessFlags()
@@ -371,7 +370,7 @@ public final class ClassFile
 	 * Returns the attribute with the specified name. If there are multiple
 	 * attributes with that name, this method returns either of them. It returns
 	 * null if the specified attributed is not found.
-	 * 
+	 *
 	 * @param name
 	 *            attribute name
 	 * @see #getAttributes()
@@ -396,7 +395,7 @@ public final class ClassFile
 	 * attribute is also added to the classs file represented by this object. If
 	 * you remove an attribute from the list, it is also removed from the class
 	 * file.
-	 * 
+	 *
 	 * @return a list of <code>AttributeInfo</code> objects.
 	 * @see AttributeInfo
 	 */
@@ -415,7 +414,7 @@ public final class ClassFile
 
 	/**
 	 * Returns all the fields declared in the class.
-	 * 
+	 *
 	 * @return a list of <code>FieldInfo</code>.
 	 * @see FieldInfo
 	 */
@@ -427,7 +426,6 @@ public final class ClassFile
 	/**
 	 * Returns access and property flags of this nested class. This method
 	 * returns -1 if the class is not a nested class.
-	 *
 	 * <p>
 	 * The returned value is obtained from <code>inner_class_access_flags</code>
 	 * of the entry representing this nested class itself in
@@ -476,7 +474,7 @@ public final class ClassFile
 
 	/**
 	 * Get the Major version.
-	 * 
+	 *
 	 * @return the major version
 	 */
 	public int getMajorVersion()
@@ -487,7 +485,7 @@ public final class ClassFile
 	/**
 	 * Returns the method with the specified name. If there are multiple methods
 	 * with that name, this method returns one of them.
-	 * 
+	 *
 	 * @return null if no such method is found.
 	 */
 	public MethodInfo getMethod(String name)
@@ -506,7 +504,7 @@ public final class ClassFile
 
 	/**
 	 * Returns all the methods declared in the class.
-	 * 
+	 *
 	 * @return a list of <code>MethodInfo</code>.
 	 * @see MethodInfo
 	 */
@@ -517,7 +515,7 @@ public final class ClassFile
 
 	/**
 	 * Get the minor version.
-	 * 
+	 *
 	 * @return the minor version
 	 */
 	public int getMinorVersion()
@@ -565,7 +563,7 @@ public final class ClassFile
 
 	/**
 	 * Returns the source file containing this class.
-	 * 
+	 *
 	 * @return null if this information is not available.
 	 */
 	public String getSourceFile()
@@ -739,7 +737,7 @@ public final class ClassFile
 
 	/**
 	 * Replaces all occurrences of several class names in the class file.
-	 * 
+	 *
 	 * @param classnames
 	 *            specifies which class name is replaced with which new name.
 	 *            Class names must be described with the JVM-internal
@@ -778,13 +776,12 @@ public final class ClassFile
 
 	/**
 	 * Replaces all occurrences of a class name in the class file.
-	 * 
 	 * <p>
 	 * If class X is substituted for class Y in the class file, X and Y must
 	 * have the same signature. If Y provides a method m(), X must provide it
 	 * even if X inherits m() from the super class. If this fact is not
 	 * guaranteed, the bytecode verifier may cause an error.
-	 * 
+	 *
 	 * @param oldname
 	 *            the replaced class name
 	 * @param newname
@@ -829,7 +826,7 @@ public final class ClassFile
 
 	/**
 	 * Changes access flags.
-	 * 
+	 *
 	 * @see javassist.bytecode.AccessFlag
 	 */
 	public void setAccessFlags(int acc)
@@ -842,7 +839,7 @@ public final class ClassFile
 
 	/**
 	 * Sets the interfaces.
-	 * 
+	 *
 	 * @param nameList
 	 *            the names of the interfaces.
 	 */
@@ -860,7 +857,7 @@ public final class ClassFile
 
 	/**
 	 * Set the major version.
-	 * 
+	 *
 	 * @param major
 	 *            the major version
 	 */
@@ -871,7 +868,7 @@ public final class ClassFile
 
 	/**
 	 * Set the minor version.
-	 * 
+	 *
 	 * @param minor
 	 *            the minor version
 	 */
@@ -891,7 +888,6 @@ public final class ClassFile
 
 	/**
 	 * Sets the super class.
-	 * 
 	 * <p>
 	 * The new super class should inherit from the old super class. This method
 	 * modifies constructors so that they call constructors declared in the new
@@ -920,10 +916,8 @@ public final class ClassFile
 	}
 
 	/**
-	 * Sets the major and minor version to Java 5.
-	 *
-	 * If the major version is older than 49, Java 5 extensions such as
-	 * annotations are ignored by the JVM.
+	 * Sets the major and minor version to Java 5. If the major version is older
+	 * than 49, Java 5 extensions such as annotations are ignored by the JVM.
 	 */
 	public void setVersionToJava5()
 	{

@@ -25,7 +25,6 @@ import javassist.bytecode.ConstPool;
 /**
  * A convenience class for constructing a <code>..Annotations_attribute</code>.
  * See the source code of the <code>AnnotationsAttribute.Copier</code> class.
- *
  * <p>
  * The following code snippet is an example of use of this class:
  *
@@ -47,7 +46,6 @@ import javassist.bytecode.ConstPool;
  *     = new AnnotationsAttribute(pool, AnnotationsAttribute.visibleTag,
  *                                attribute_info);
  * </pre>
- *
  * <p>
  * The code snippet above generates the annotation attribute corresponding to
  * this annotation:
@@ -161,7 +159,6 @@ public class AnnotationsWriter
 
 	/**
 	 * Closes the output stream.
-	 *
 	 */
 	public void close() throws IOException
 	{

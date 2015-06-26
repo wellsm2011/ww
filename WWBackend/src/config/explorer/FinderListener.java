@@ -1,8 +1,8 @@
 package config.explorer;
 
-import com.impetus.annovention.listener.ClassAnnotationDiscoveryListener;
-
 import backend.functionInterfaces.Handler;
+
+import com.impetus.annovention.listener.ClassAnnotationDiscoveryListener;
 
 public class FinderListener implements ClassAnnotationDiscoveryListener
 {

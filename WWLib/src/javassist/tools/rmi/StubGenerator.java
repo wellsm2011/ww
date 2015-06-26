@@ -34,7 +34,6 @@ import javassist.Translator;
 
 /**
  * A stub-code generator. It is used for producing a proxy class.
- *
  * <p>
  * The proxy class for class A is as follows:
  *
@@ -50,7 +49,6 @@ import javassist.Translator;
  *   ... the same methods that the original class A declares ...
  * }
  * </pre>
- *
  * <p>
  * Instances of the proxy class is created by an <code>ObjectImporter</code>
  * object.
@@ -169,7 +167,7 @@ public class StubGenerator implements Translator
 
 	/**
 	 * Does nothing. This is a method declared in javassist.Translator.
-	 * 
+	 *
 	 * @see javassist.Translator#onLoad(ClassPool,String)
 	 */
 	@Override

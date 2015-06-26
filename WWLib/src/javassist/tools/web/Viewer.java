@@ -23,19 +23,16 @@ import java.net.URLConnection;
 
 /**
  * A sample applet viewer.
- *
  * <p>
  * This is a sort of applet viewer that can run any program even if the main
  * class is not a subclass of <code>Applet</code>. This viewwer first calls
  * <code>main()</code> in the main class.
- *
  * <p>
  * To run, you should type:
  *
  * <pre>
  * % java javassist.tools.web.Viewer <i>host port</i> Main arg1, ...
  * </pre>
- *
  * <p>
  * This command calls <code>Main.main()</code> with <code>arg1,...</code> All
  * classes including <code>Main</code> are fetched from a server
@@ -43,7 +40,6 @@ import java.net.URLConnection;
  * must exist on a local file system at the client side; even other
  * <code>javassist.*</code> classes are not needed at the client side.
  * <code>Viewer</code> uses only Java core API classes.
- *
  * <p>
  * Note: since a <code>Viewer</code> object is a class loader, a program loaded
  * by this object can call a method in <code>Viewer</code>. For example, you can
@@ -53,7 +49,6 @@ import java.net.URLConnection;
  * Viewer	v	= (Viewer) this.getClass().getClassLoader();
  * 															String	port	= v.getPort();
  * </pre>
- *
  */
 public class Viewer extends ClassLoader
 {
@@ -128,7 +123,6 @@ public class Viewer extends ClassLoader
 	 * class from the http server. If the class is either <code>java.*</code>,
 	 * <code>javax.*</code>, or <code>Viewer</code>, then it is loaded by the
 	 * parent class loader.
-	 *
 	 * <p>
 	 * This method can be overridden by a subclass of <code>Viewer</code>.
 	 */

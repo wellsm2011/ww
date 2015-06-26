@@ -42,39 +42,33 @@ import com.sun.jdi.request.MethodEntryRequest;
  * A utility class for dynamically reloading a class by the Java Platform
  * Debugger Architecture (JPDA), or <i>HotSwap</i>. It works only with JDK 1.4
  * and later.
- *
  * <p>
  * <b>Note:</b> The new definition of the reloaded class must declare the same
  * set of methods and fields as the original definition. The schema change
  * between the original and new definitions is not allowed by the JPDA.
- *
  * <p>
  * To use this class, the JVM must be launched with the following command line
  * options:
- *
  * <p>
  * For Java 1.4,<br>
- * 
+ *
  * <pre>
  * java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
  * </pre>
  * <p>
  * For Java 5,<br>
- * 
+ *
  * <pre>
  * java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
  * </pre>
- *
  * <p>
  * Note that 8000 is the port number used by <code>HotSwapper</code>. Any port
  * number can be specified. Since <code>HotSwapper</code> does not launch
  * another JVM for running a target application, this port number is used only
  * for inter-thread communication.
- *
  * <p>
  * Furthermore, <code>JAVA_HOME/lib/tools.jar</code> must be included in the
  * class path.
- *
  * <p>
  * Using <code>HotSwapper</code> is easy. See the following example:
  *
@@ -84,7 +78,6 @@ import com.sun.jdi.request.MethodEntryRequest;
  * HotSwapper hs = new HostSwapper(8000);  // 8000 is a port number.
  * hs.reload("Test", classFile);
  * </pre>
- *
  * <p>
  * <code>reload()</code> first unload the <code>Test</code> class and load a new
  * version of the <code>Test</code> class. <code>classFile</code> is a byte

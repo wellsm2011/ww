@@ -35,14 +35,12 @@ import javassist.bytecode.MethodInfo;
 
 /**
  * The class implementing the behavioral reflection mechanism.
- *
  * <p>
  * If a class is reflective, then all the method invocations on every instance
  * of that class are intercepted by the runtime metaobject controlling that
  * instance. The methods inherited from the super classes are also intercepted
  * except final methods. To intercept a final method in a super class, that
  * super class must be also reflective.
- *
  * <p>
  * To do this, the original class file representing a reflective class:
  *
@@ -57,7 +55,6 @@ import javassist.bytecode.MethodInfo;
  * 	public int	value;
  * }
  * </pre>
- *
  * <p>
  * is modified so that it represents a class:
  *
@@ -156,7 +153,6 @@ public class Reflection implements Translator
 	 *            the class of the class metaobject. It must be a subclass of
 	 *            <code>ClassMetaobject</code>.
 	 * @return <code>false</code> if the class is already reflective.
-	 *
 	 * @see javassist.tools.reflect.Metaobject
 	 * @see javassist.tools.reflect.ClassMetaobject
 	 */
@@ -179,7 +175,6 @@ public class Reflection implements Translator
 	 *            the class of the class metaobject. It must be a subclass of
 	 *            <code>ClassMetaobject</code>.
 	 * @return <code>false</code> if the class is already reflective.
-	 *
 	 * @see javassist.tools.reflect.Metaobject
 	 * @see javassist.tools.reflect.ClassMetaobject
 	 */
@@ -209,7 +204,6 @@ public class Reflection implements Translator
 	 * @param metaclass
 	 *            the class name of the class metaobject.
 	 * @return <code>false</code> if the class is already reflective.
-	 *
 	 * @see javassist.tools.reflect.Metaobject
 	 * @see javassist.tools.reflect.ClassMetaobject
 	 */

@@ -26,7 +26,7 @@ public interface FieldAnnotationDiscoveryListener extends AnnotationDiscoveryLis
 	/**
 	 * Gets called by the Discoverer with class-name of the class, field-name of
 	 * the field where annotation is found.
-	 * 
+	 *
 	 * @param clazz
 	 * @param field
 	 * @param annotation

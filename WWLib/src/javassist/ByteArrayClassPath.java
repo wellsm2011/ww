@@ -25,7 +25,6 @@ import java.net.URL;
  * A <code>ByteArrayClassPath</code> contains bytes that is served as a class
  * file to a <code>ClassPool</code>. It is useful to convert a byte array to a
  * <code>CtClass</code> object.
- *
  * <p>
  * For example, if you want to convert a byte array <code>b</code> into a
  * <code>CtClass</code> object representing the class with a name
@@ -36,11 +35,9 @@ import java.net.URL;
  * cp.insertClassPath(new ByteArrayClassPath(classname, b));
  * CtClass cc = cp.get(classname);
  * </pre>
- *
  * <p>
  * The <code>ClassPool</code> object <code>cp</code> uses the created
  * <code>ByteArrayClassPath</code> object as the source of the class file.
- *
  * <p>
  * A <code>ByteArrayClassPath</code> must be instantiated for every class. It
  * contains only a single class file.
@@ -57,9 +54,7 @@ public class ByteArrayClassPath implements ClassPath
 
 	/*
 	 * Creates a <code>ByteArrayClassPath</code> containing the given bytes.
-	 * 
 	 * @param name a fully qualified class name
-	 * 
 	 * @param classfile the contents of a class file.
 	 */
 	public ByteArrayClassPath(String name, byte[] classfile)

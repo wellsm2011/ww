@@ -27,7 +27,6 @@ import javassist.CannotCompileException;
 
 /**
  * <code>stack_map</code> attribute.
- *
  * <p>
  * This is an entry in the attributes table of a Code attribute. It was
  * introduced by J2SE 6 for the verification by typechecking.
@@ -311,6 +310,11 @@ public class StackMapTable extends AttributeInfo
 	 */
 	public static class RuntimeCopyException extends RuntimeException
 	{
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= 1L;
+
 		/**
 		 * Constructs an exception.
 		 */
@@ -636,7 +640,7 @@ public class StackMapTable extends AttributeInfo
 
 		/**
 		 * Invoked if the visited frame is a <code>chop_frame</code>.
-		 * 
+		 *
 		 * @param pos
 		 *            the position.
 		 * @param offsetDelta
@@ -846,7 +850,7 @@ public class StackMapTable extends AttributeInfo
 
 		/**
 		 * Constructs a writer.
-		 * 
+		 *
 		 * @param size
 		 *            the initial buffer size.
 		 */
@@ -1106,7 +1110,6 @@ public class StackMapTable extends AttributeInfo
 	 *                if a <code>BadBytecode</code> exception is thrown while
 	 *                copying, it is converted into
 	 *                <code>RuntimeCopyException</code>.
-	 *
 	 */
 	@Override
 	public AttributeInfo copy(ConstPool newCp, Map classnames) throws RuntimeCopyException
@@ -1132,7 +1135,6 @@ public class StackMapTable extends AttributeInfo
 	 *            the index of the <code>CONSTANT_Class_info</code> structure in
 	 *            a constant pool table. This should be zero unless the tag is
 	 *            <code>ITEM_Object</code>.
-	 *
 	 * @see javassist.CtBehavior#addParameter(javassist.CtClass)
 	 * @see #typeTagOf(char)
 	 * @see ConstPool
@@ -1164,7 +1166,6 @@ public class StackMapTable extends AttributeInfo
 
 	/**
 	 * Undocumented method. Do not use; internal-use only.
-	 *
 	 * <p>
 	 * This method is for javassist.convert.TransformNew. It is called to update
 	 * the stack map table when the NEW opcode (and the following DUP) is

@@ -20,7 +20,6 @@ import javassist.bytecode.Descriptor;
 
 /**
  * A hash table associating class names with different names.
- *
  * <p>
  * This hashtable is used for replacing class names in a class definition or a
  * method body. Define a subclass of this class if a more complex mapping
@@ -39,14 +38,12 @@ import javassist.bytecode.Descriptor;
  * 	}
  * }
  * </pre>
- *
  * <p>
  * This subclass maps <code>java.lang.String</code> to
  * <code>java2.lang.String</code>. Note that <code>get()</code> receives and
  * returns the internal representation of a class name. For example, the
  * internal representation of <code>java.lang.String</code> is
  * <code>java/lang/String</code>.
- *
  * <p>
  * Note that this is a map from <code>String</code> to <code>String</code>.
  *
@@ -56,6 +53,11 @@ import javassist.bytecode.Descriptor;
  */
 public class ClassMap extends java.util.HashMap
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	/**
 	 * Converts a class name from the internal representation used in the JVM to
 	 * the normal one used in Java.
@@ -108,7 +110,6 @@ public class ClassMap extends java.util.HashMap
 	/**
 	 * Returns the class name to wihch the given <code>jvmClassName</code> is
 	 * mapped. A subclass of this class should override this method.
-	 *
 	 * <p>
 	 * This method receives and returns the internal representation of class
 	 * name used in the JVM.
@@ -147,7 +148,6 @@ public class ClassMap extends java.util.HashMap
 	 * contains another mapping from the same class name, the old mapping is
 	 * replaced. This method translates the given class names into the internal
 	 * form used in the JVM before putting it in the hashtable.
-	 *
 	 * <p>
 	 * If <code>oldname</code> is identical to <code>newname</code>, then this
 	 * method does not perform anything; it does not record the mapping from

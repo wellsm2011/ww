@@ -22,20 +22,17 @@ import java.net.URL;
 
 /**
  * A class search-path representing a class loader.
- *
  * <p>
  * It is used for obtaining a class file from the given class loader by
  * <code>getResourceAsStream()</code>. The <code>LoaderClassPath</code> refers
  * to the class loader through <code>WeakReference</code>. If the class loader
  * is garbage collected, the other search pathes are examined.
- *
  * <p>
  * The given class loader must have both <code>getResourceAsStream()</code> and
  * <code>getResource()</code>.
  *
  * @author <a href="mailto:bill@jboss.org">Bill Burke</a>
  * @author Shigeru Chiba
- *
  * @see ClassPool#insertClassPath(ClassPath)
  * @see ClassPool#appendClassPath(ClassPath)
  * @see ClassClassPath

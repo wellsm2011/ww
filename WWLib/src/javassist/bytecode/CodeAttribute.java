@@ -25,7 +25,6 @@ import java.util.Map;
 
 /**
  * <code>Code_attribute</code>.
- *
  * <p>
  * To browse the <code>code</code> field of a <code>Code_attribute</code>
  * structure, use <code>CodeIterator</code>.
@@ -43,14 +42,11 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 				code = CodeIterator.changeLdcToLdcW(code, etable, ca, ldc);
 
 			/*
-			 * The original code was the following:
-			 * 
-			 * while (ldc != null) { int where = ldc.where; code =
-			 * CodeIterator.insertGapCore0(code, where, 1, false, etable, ca);
-			 * code[where] = (byte)Opcode.LDC_W; ByteArray.write16bit(ldc.index,
-			 * code, where + 1); ldc = ldc.next; }
-			 * 
-			 * But this code does not support a large method > 32KB.
+			 * The original code was the following: while (ldc != null) { int
+			 * where = ldc.where; code = CodeIterator.insertGapCore0(code,
+			 * where, 1, false, etable, ca); code[where] = (byte)Opcode.LDC_W;
+			 * ByteArray.write16bit(ldc.index, code, where + 1); ldc = ldc.next;
+			 * } But this code does not support a large method > 32KB.
 			 */
 
 			return code;
@@ -70,6 +66,11 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 	 */
 	public static class RuntimeCopyException extends RuntimeException
 	{
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= 1L;
+
 		/**
 		 * Constructs an exception.
 		 */
@@ -373,7 +374,6 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 	 * @exception RuntimeCopyException
 	 *                if a <code>BadBytecode</code> exception is thrown, it is
 	 *                converted into <code>RuntimeCopyException</code>.
-	 *
 	 * @return <code>CodeAttribute</code> object.
 	 */
 	@Override
@@ -504,7 +504,6 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 	 *            the index of the new parameter.
 	 * @param size
 	 *            the type size of the new parameter (1 or 2).
-	 *
 	 * @see LocalVariableAttribute#shiftIndex(int, int)
 	 * @see LocalVariableTypeAttribute#shiftIndex(int, int)
 	 * @see StackMapTable#insertLocal(int, int, int)

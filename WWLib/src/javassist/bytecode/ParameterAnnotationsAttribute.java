@@ -31,7 +31,6 @@ import javassist.bytecode.annotation.AnnotationsWriter;
 /**
  * A class representing <code>RuntimeVisibleAnnotations_attribute</code> and
  * <code>RuntimeInvisibleAnnotations_attribute</code>.
- *
  * <p>
  * To obtain an ParameterAnnotationAttribute object, invoke
  * <code>getAttribute(ParameterAnnotationsAttribute.invisibleTag)</code> in
@@ -127,7 +126,6 @@ public class ParameterAnnotationsAttribute extends AttributeInfo
 	 *
 	 * @return Each element of the returned array represents an array of
 	 *         annotations that are associated with each method parameter.
-	 * 
 	 * @see #setAnnotations(Annotation[][])
 	 */
 	public Annotation[][] getAnnotations()

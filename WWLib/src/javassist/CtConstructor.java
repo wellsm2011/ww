@@ -32,7 +32,6 @@ import javassist.compiler.Javac;
  * An instance of CtConstructor represents a constructor. It may represent a
  * static constructor (class initializer). To distinguish a constructor and a
  * class initializer, call <code>isClassInitializer()</code>.
- *
  * <p>
  * See the super class <code>CtBehavior</code> as well since a number of useful
  * methods are in <code>CtBehavior</code>.
@@ -79,7 +78,6 @@ public final class CtConstructor extends CtBehavior
 	/**
 	 * Creates a constructor with no constructor body. The created constructor
 	 * must be added to a class with <code>CtClass.addConstructor()</code>.
-	 *
 	 * <p>
 	 * The created constructor does not include a constructor body, which must
 	 * be specified with <code>setBody()</code>.
@@ -88,7 +86,6 @@ public final class CtConstructor extends CtBehavior
 	 *            the class to which the created method is added.
 	 * @param parameters
 	 *            a list of the parameter types
-	 *
 	 * @see CtClass#addConstructor(CtConstructor)
 	 * @see CtConstructor#setBody(String)
 	 * @see CtConstructor#setBody(CtConstructor,ClassMap)
@@ -106,12 +103,10 @@ public final class CtConstructor extends CtBehavior
 	 * Creates a copy of a <code>CtConstructor</code> object. The created
 	 * constructor must be added to a class with
 	 * <code>CtClass.addConstructor()</code>.
-	 *
 	 * <p>
 	 * All occurrences of class names in the created constructor are replaced
 	 * with names specified by <code>map</code> if <code>map</code> is not
 	 * <code>null</code>.
-	 *
 	 * <p>
 	 * By default, all the occurrences of the names of the class declaring
 	 * <code>src</code> and the superclass are replaced with the name of the
@@ -119,7 +114,6 @@ public final class CtConstructor extends CtBehavior
 	 * is done whichever <code>map</code> is null or not. To prevent this
 	 * replacement, call <code>ClassMap.fix()</code> or <code>put()</code> to
 	 * explicitly specify replacement.
-	 *
 	 * <p>
 	 * <b>Note:</b> if the <code>.class</code> notation (for example,
 	 * <code>String.class</code>) is included in an expression, the Javac
@@ -134,7 +128,6 @@ public final class CtConstructor extends CtBehavior
 	 * @param map
 	 *            the hashtable associating original class names with
 	 *            substituted names. It can be <code>null</code>.
-	 *
 	 * @see CtClass#addConstructor(CtConstructor)
 	 * @see ClassMap#fix(String)
 	 */
@@ -315,7 +308,6 @@ public final class CtConstructor extends CtBehavior
 
 	/**
 	 * Copies a constructor body from another constructor.
-	 *
 	 * <p>
 	 * All occurrences of the class names in the copied body are replaced with
 	 * the names specified by <code>map</code> if <code>map</code> is not
@@ -359,12 +351,10 @@ public final class CtConstructor extends CtBehavior
 	 * return type is <code>void</code>. The resulting method must be appended
 	 * to the class specified by <code>declaring</code>. If this constructor is
 	 * a static initializer, the resulting method takes no parameter.
-	 *
 	 * <p>
 	 * An occurrence of another constructor call <code>this()</code> or a super
 	 * constructor call <code>super()</code> is eliminated from the resulting
 	 * method.
-	 *
 	 * <p>
 	 * The immediate super class of the class declaring this constructor must be
 	 * also a super class of the class declaring the resulting method. If the
@@ -387,12 +377,10 @@ public final class CtConstructor extends CtBehavior
 	 * return type is <code>void</code>. The resulting method must be appended
 	 * to the class specified by <code>declaring</code>. If this constructor is
 	 * a static initializer, the resulting method takes no parameter.
-	 *
 	 * <p>
 	 * An occurrence of another constructor call <code>this()</code> or a super
 	 * constructor call <code>super()</code> is eliminated from the resulting
 	 * method.
-	 *
 	 * <p>
 	 * The immediate super class of the class declaring this constructor must be
 	 * also a super class of the class declaring the resulting method (this is

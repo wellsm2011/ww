@@ -249,12 +249,8 @@ public class MemberResolver implements TokenId
 
 	/*
 	 * Returns YES if actual parameter types matches the given signature.
-	 * 
-	 * argTypes, argDims, and argClassNames represent actual parameters.
-	 * 
-	 * This method does not correctly implement the Java method dispatch
-	 * algorithm.
-	 * 
+	 * argTypes, argDims, and argClassNames represent actual parameters. This
+	 * method does not correctly implement the Java method dispatch algorithm.
 	 * If some of the parameter types exactly match but others are subtypes of
 	 * the corresponding type in the signature, this method returns the number
 	 * of parameter types that do not exactly match.
@@ -623,10 +619,9 @@ public class MemberResolver implements TokenId
 	}
 
 	/*
-	 * Converts a class name into a JVM-internal representation.
-	 * 
-	 * It may also expand a simple class name to java.lang.*. For example, this
-	 * converts Object into java/lang/Object.
+	 * Converts a class name into a JVM-internal representation. It may also
+	 * expand a simple class name to java.lang.*. For example, this converts
+	 * Object into java/lang/Object.
 	 */
 	public String resolveClassName(ASTList name) throws CompileError
 	{

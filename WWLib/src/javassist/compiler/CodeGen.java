@@ -703,11 +703,9 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 		this.bytecode.addExceptionHandler(start, end, this.bytecode.currentPc(), "java.lang.ClassNotFoundException");
 
 		/*
-		 * -- the following code is for inlining a call to DotClass.fail().
-		 * 
-		 * int var = getMaxLocals(); incMaxLocals(1); bytecode.growStack(1);
+		 * -- the following code is for inlining a call to DotClass.fail(). int
+		 * var = getMaxLocals(); incMaxLocals(1); bytecode.growStack(1);
 		 * bytecode.addAstore(var);
-		 * 
 		 * bytecode.addNew("java.lang.NoClassDefFoundError");
 		 * bytecode.addOpcode(DUP); bytecode.addAload(var);
 		 * bytecode.addInvokevirtual("java.lang.ClassNotFoundException",
@@ -1600,9 +1598,8 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 	}
 
 	/*
-	 * op is either =, %=, &=, *=, /=, +=, -=, ^=, |=, <<=, >>=, or >>>=.
-	 * 
-	 * expr and var can be null.
+	 * op is either =, %=, &=, *=, /=, +=, -=, ^=, |=, <<=, >>=, or >>>=. expr
+	 * and var can be null.
 	 */
 	private void atVariableAssign(Expr expr, int op, Variable var, Declarator d, ASTree right, boolean doDup) throws CompileError
 	{
@@ -1688,7 +1685,6 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 	/*
 	 * Produces the opcode to branch if the condition is true. The oprand
 	 * (branch offset) is not produced.
-	 * 
 	 * @return true if the compiled code is GOTO (always branch). GOTO is not
 	 * produced.
 	 */
@@ -1772,9 +1768,7 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 
 	/*
 	 * Produces the opcode to branch if the condition is true. The oprands are
-	 * not produced.
-	 * 
-	 * Parameter expr - compare expression ==, !=, <=, >=, <, >
+	 * not produced. Parameter expr - compare expression ==, !=, <=, >=, <, >
 	 */
 	private void compareExpr(boolean branchIf, int token, int type1, BinExpr expr) throws CompileError
 	{
@@ -2055,10 +2049,9 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 	}
 
 	/*
-	 * Converts a class name into a JVM-internal representation.
-	 * 
-	 * It may also expand a simple class name to java.lang.*. For example, this
-	 * converts Object into java/lang/Object.
+	 * Converts a class name into a JVM-internal representation. It may also
+	 * expand a simple class name to java.lang.*. For example, this converts
+	 * Object into java/lang/Object.
 	 */
 	protected abstract String resolveClassName(ASTList name) throws CompileError;
 

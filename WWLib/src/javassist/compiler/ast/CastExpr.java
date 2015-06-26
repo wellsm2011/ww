@@ -24,8 +24,12 @@ import javassist.compiler.TokenId;
  */
 public class CastExpr extends ASTList implements TokenId
 {
-	protected int	castType;
-	protected int	arrayDim;
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+	protected int				castType;
+	protected int				arrayDim;
 
 	public CastExpr(ASTList className, int dim, ASTree expr)
 	{

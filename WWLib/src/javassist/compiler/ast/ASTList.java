@@ -24,6 +24,11 @@ import javassist.compiler.CompileError;
 public class ASTList extends ASTree
 {
 	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
+	/**
 	 * Appends an object to a list.
 	 */
 	public static ASTList append(ASTList a, ASTree b)

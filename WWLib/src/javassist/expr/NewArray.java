@@ -38,7 +38,6 @@ import javassist.compiler.ast.ASTList;
 
 /**
  * Array creation.
- *
  * <p>
  * This class does not provide methods for obtaining the initial values of array
  * elements.
@@ -213,7 +212,6 @@ public class NewArray extends Expr
 	/**
 	 * Replaces the array creation with the bytecode derived from the given
 	 * source text.
-	 *
 	 * <p>
 	 * $0 is available even if the called method is static. If the field access
 	 * is writing, $_ is available but the value of $_ is ignored.

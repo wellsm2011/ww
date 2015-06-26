@@ -30,7 +30,6 @@ import javassist.bytecode.Descriptor;
 
 /**
  * The <code>annotation</code> structure.
- *
  * <p>
  * An instance of this class is returned by <code>getAnnotations()</code> in
  * <code>AnnotationsAttribute</code> or in
@@ -41,7 +40,6 @@ import javassist.bytecode.Descriptor;
  * @see MemberValue
  * @see MemberValueVisitor
  * @see AnnotationsWriter
- *
  * @author <a href="mailto:bill@jboss.org">Bill Burke</a>
  * @author Shigeru Chiba
  * @author <a href="mailto:adrian@jboss.org">Adrian Brock</a>
@@ -156,7 +154,6 @@ public class Annotation
 	 *            repreenting the name of the annotation interface type.
 	 * @param cp
 	 *            the constant pool table.
-	 *
 	 * @see #addMemberValue(String, MemberValue)
 	 */
 	public Annotation(int type, ConstPool cp)
@@ -174,7 +171,6 @@ public class Annotation
 	 *            the name of the annotation interface type.
 	 * @param cp
 	 *            the constant pool table.
-	 *
 	 * @see #addMemberValue(String, MemberValue)
 	 */
 	public Annotation(String typeName, ConstPool cp)
@@ -271,7 +267,6 @@ public class Annotation
 
 	/**
 	 * Obtains the member value with the given name.
-	 *
 	 * <p>
 	 * If this annotation does not have a value for the specified member, this
 	 * method returns null. It does not return a <code>MemberValue</code> with
@@ -282,7 +277,6 @@ public class Annotation
 	 *            the member name
 	 * @return null if the member cannot be found or if the value is the default
 	 *         value.
-	 *
 	 * @see javassist.bytecode.AnnotationDefaultAttribute
 	 */
 	public MemberValue getMemberValue(String name)
@@ -301,7 +295,7 @@ public class Annotation
 
 	/**
 	 * Obtains the name of the annotation type.
-	 * 
+	 *
 	 * @return the type name
 	 */
 	public String getTypeName()
@@ -313,7 +307,7 @@ public class Annotation
 	 * Constructs an annotation-type object representing this annotation. For
 	 * example, if this annotation represents <code>@Author</code>, this method
 	 * returns an <code>Author</code> object.
-	 * 
+	 *
 	 * @param cl
 	 *            class loader for loading an annotation type.
 	 * @param cp

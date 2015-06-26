@@ -24,16 +24,13 @@ import java.lang.reflect.Method;
 
 /**
  * A runtime metaobject.
- *
  * <p>
  * A <code>Metaobject</code> is created for every object at the base level. A
  * different reflective object is associated with a different metaobject.
- *
  * <p>
  * The metaobject intercepts method calls on the reflective object at the
  * base-level. To change the behavior of the method calls, a subclass of
  * <code>Metaobject</code> should be defined.
- *
  * <p>
  * To obtain a metaobject, calls <code>_getMetaobject()</code> on a reflective
  * object. For example,
@@ -47,6 +44,10 @@ import java.lang.reflect.Method;
  */
 public class Metaobject implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
 	protected ClassMetaobject	classmetaobject;
 	protected Metalevel			baseobject;
 	protected Method[]			methods;
@@ -158,7 +159,6 @@ public class Metaobject implements Serializable
 	 * Is invoked when public fields of the base-level class are read and the
 	 * runtime system intercepts it. This method simply returns the value of the
 	 * field.
-	 *
 	 * <p>
 	 * Every subclass of this class should redefine this method.
 	 */
@@ -181,7 +181,6 @@ public class Metaobject implements Serializable
 	 * Is invoked when public fields of the base-level class are modified and
 	 * the runtime system intercepts it. This method simply sets the field to
 	 * the given value.
-	 *
 	 * <p>
 	 * Every subclass of this class should redefine this method.
 	 */
@@ -204,10 +203,8 @@ public class Metaobject implements Serializable
 	 * Is invoked when base-level method invocation is intercepted. This method
 	 * simply executes the intercepted method invocation with the original
 	 * parameters and returns the resulting value.
-	 *
 	 * <p>
 	 * Every subclass of this class should redefine this method.
-	 *
 	 * <p>
 	 * Note: this method is not invoked if the base-level method is invoked by a
 	 * constructor in the super class. For example,
@@ -237,7 +234,6 @@ public class Metaobject implements Serializable
 	 * 	}
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * if an instance of B is created, the invocation of initialize() in B is
 	 * intercepted only once. The first invocation by the constructor in A is

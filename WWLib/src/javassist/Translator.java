@@ -35,7 +35,6 @@ public interface Translator
 	 * </pre>
 	 *
 	 * to read the class file after <code>onLoad()</code> returns.
-	 *
 	 * <p>
 	 * <code>classname</code> may be the name of a class that has not been
 	 * created yet. If so, <code>onLoad()</code> must create that class so that

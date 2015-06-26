@@ -30,46 +30,38 @@ class CompiledClass
 
 /**
  * A bytecode translator for reflection.
- *
  * <p>
  * This translator directly modifies class files on a local disk so that the
  * classes represented by those class files are reflective. After the
  * modification, the class files can be run with the standard JVM without
  * <code>javassist.tools.reflect.Loader</code> or any other user-defined class
  * loader.
- *
  * <p>
  * The modified class files are given as the command-line parameters, which are
  * a sequence of fully-qualified class names followed by options:
- *
  * <p>
  * <code>-m <i>classname</i></code> : specifies the class of the metaobjects
  * associated with instances of the class followed by this option. The default
  * is <code>javassit.reflect.Metaobject</code>.
- *
  * <p>
  * <code>-c <i>classname</i></code> : specifies the class of the class
  * metaobjects associated with instances of the class followed by this option.
  * The default is <code>javassit.reflect.ClassMetaobject</code>.
- *
  * <p>
  * If a class name is not followed by any options, the class indicated by that
  * class name is not reflective.
- *
  * <p>
  * For example,
- * 
+ *
  * <pre>
  * % java Compiler Dog -m MetaDog -c CMetaDog Cat -m MetaCat Cow
  * </pre>
- *
  * <p>
  * modifies class files <code>Dog.class</code>, <code>Cat.class</code>, and
  * <code>Cow.class</code>. The metaobject of a Dog object is a MetaDog object
  * and the class metaobject is a CMetaDog object. The metaobject of a Cat object
  * is a MetaCat object but the class metaobject is a default one. Cow objects
  * are not reflective.
- *
  * <p>
  * Note that if the super class is also made reflective, it must be done before
  * the sub class.

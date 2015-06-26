@@ -46,9 +46,7 @@ public class JvstCodeGen extends MemberCodeGen
 
 	/*
 	 * compileParameterList() returns the stack size used by the produced code.
-	 * 
 	 * This method correctly computes the max_stack value.
-	 * 
 	 * @param regno the index of the local variable in which the first argument
 	 * is received. (0: static method, 1: regular method.)
 	 */
@@ -94,10 +92,8 @@ public class JvstCodeGen extends MemberCodeGen
 	}
 
 	/*
-	 * Syntax:
-	 * 
-	 * <cflow> : $cflow '(' <cflow name> ')' <cflow name> : <identifier> ('.'
-	 * <identifier>)*
+	 * Syntax: <cflow> : $cflow '(' <cflow name> ')' <cflow name> : <identifier>
+	 * ('.' <identifier>)*
 	 */
 	private static void makeCflowName(StringBuffer sbuf, ASTree name) throws CompileError
 	{
@@ -421,9 +417,8 @@ public class JvstCodeGen extends MemberCodeGen
 
 	/*
 	 * public int getMethodArgsLength(ASTList args) { if
-	 * (!isParamListName(args)) return super.getMethodArgsLength(args);
-	 * 
-	 * return paramTypeList.length; }
+	 * (!isParamListName(args)) return super.getMethodArgsLength(args); return
+	 * paramTypeList.length; }
 	 */
 
 	/*
@@ -468,14 +463,11 @@ public class JvstCodeGen extends MemberCodeGen
 	/*
 	 * public void atMethodArgs(ASTList args, int[] types, int[] dims, String[]
 	 * cnames) throws CompileError { if (!isParamListName(args)) {
-	 * super.atMethodArgs(args, types, dims, cnames); return; }
-	 * 
-	 * CtClass[] params = paramTypeList; if (params == null) return;
-	 * 
-	 * int n = params.length; int regno = indexOfParam1(); for (int i = 0; i <
-	 * n; ++i) { CtClass p = params[i]; regno += bytecode.addLoad(regno, p);
-	 * setType(p); types[i] = exprType; dims[i] = arrayDim; cnames[i] =
-	 * className; } }
+	 * super.atMethodArgs(args, types, dims, cnames); return; } CtClass[] params
+	 * = paramTypeList; if (params == null) return; int n = params.length; int
+	 * regno = indexOfParam1(); for (int i = 0; i < n; ++i) { CtClass p =
+	 * params[i]; regno += bytecode.addLoad(regno, p); setType(p); types[i] =
+	 * exprType; dims[i] = arrayDim; cnames[i] = className; } }
 	 */
 
 	/*
@@ -602,7 +594,6 @@ public class JvstCodeGen extends MemberCodeGen
 
 	/**
 	 * Makes a cast to the return type ($r) available. It also enables $_.
-	 *
 	 * <p>
 	 * If the return type is void, ($r) does nothing. The type of $_ is
 	 * java.lang.Object.
@@ -702,7 +693,6 @@ public class JvstCodeGen extends MemberCodeGen
 
 	/*
 	 * Records a ProceedHandler obejct.
-	 * 
 	 * @param name the name of the special method call. it is usually $proceed.
 	 */
 	public void setProceedHandler(ProceedHandler h, String name)

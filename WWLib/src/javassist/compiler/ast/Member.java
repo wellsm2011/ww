@@ -24,9 +24,13 @@ import javassist.compiler.CompileError;
  */
 public class Member extends Symbol
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
 	// cache maintained by fieldAccess() in TypeChecker.
 	// this is used to obtain the value of a static final field.
-	private CtField	field;
+	private CtField				field;
 
 	public Member(String name)
 	{

@@ -39,7 +39,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 
 	/**
 	 * Get the instance.
-	 * 
+	 *
 	 * @return the instance.
 	 */
 	public static ScopedClassPoolRepository getInstance()
@@ -107,7 +107,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 
 	/**
 	 * Create a scoped classpool.
-	 * 
+	 *
 	 * @param cl
 	 *            the classloader.
 	 * @param src
@@ -152,7 +152,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 
 	/**
 	 * Returns the value of the prune attribute.
-	 * 
+	 *
 	 * @return the prune.
 	 */
 	@Override
@@ -163,7 +163,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 
 	/**
 	 * Register a classloader.
-	 * 
+	 *
 	 * @param ucl
 	 *            the classloader.
 	 * @return the classpool
@@ -194,7 +194,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 
 	/**
 	 * Set the prune attribute.
-	 * 
+	 *
 	 * @param prune
 	 *            a new value.
 	 */

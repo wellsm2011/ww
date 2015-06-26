@@ -32,7 +32,6 @@ import java.net.URL;
  * The object importer enables applets to call a method on a remote object
  * running on the <code>Webserver</code> (the <b>main</b> class of this
  * package).
- *
  * <p>
  * To access the remote object, the applet first calls
  * <code>lookupObject()</code> and obtains a proxy object, which is a reference
@@ -43,25 +42,21 @@ import java.net.URL;
  * applet, therefore, the two objects are identical. The applet can access the
  * object on the server with the regular Java syntax without concern about the
  * actual location.
- *
  * <p>
  * The methods remotely called by the applet must be <code>public</code>. This
  * is true even if the applet's class and the remote object's classs belong to
  * the same package.
- *
  * <p>
  * If class X is a class of remote objects, a subclass of X must be also a class
  * of remote objects. On the other hand, this restriction is not applied to the
  * superclass of X. The class X does not have to contain a constructor taking no
  * arguments.
- *
  * <p>
  * The parameters to a remote method is passed in the <i>call-by-value</i>
  * manner. Thus all the parameter classes must implement
  * <code>java.io.Serializable</code>. However, if the parameter is the proxy
  * object, the reference to the remote object instead of a copy of the object is
  * passed to the method.
- *
  * <p>
  * Because of the limitations of the current implementation,
  * <ul>
@@ -69,7 +64,6 @@ import java.net.URL;
  * <li>If class <code>C</code> is of the remote object, then the applet cannot
  * instantiate <code>C</code> locally or remotely.
  * </ul>
- *
  * <p>
  * All the exceptions thrown by the remote object are converted into
  * <code>RemoteException</code>. Since this exception is a subclass of
@@ -83,6 +77,10 @@ import java.net.URL;
  */
 public class ObjectImporter implements java.io.Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long		serialVersionUID			= 1L;
 	private static final Class[]	proxyConstructorParamTypes	= new Class[]
 																{ ObjectImporter.class, int.class };
 	private final byte[]			endofline					=
@@ -96,7 +94,6 @@ public class ObjectImporter implements java.io.Serializable
 
 	/**
 	 * Constructs an object importer.
-	 *
 	 * <p>
 	 * Remote objects are imported from the web server that the given applet has
 	 * been loaded from.
@@ -113,7 +110,6 @@ public class ObjectImporter implements java.io.Serializable
 
 	/**
 	 * Constructs an object importer.
-	 *
 	 * <p>
 	 * If you run a program with <code>javassist.tools.web.Viewer</code>, you
 	 * can construct an object importer as follows:
@@ -134,7 +130,6 @@ public class ObjectImporter implements java.io.Serializable
 	/**
 	 * Calls a method on a remote object. It sends a POST request to the server
 	 * (via an http proxy server if needed).
-	 *
 	 * <p>
 	 * This method is called by only proxy objects.
 	 */
@@ -152,15 +147,11 @@ public class ObjectImporter implements java.io.Serializable
 			 * beyond a fire wall. To avoid this problem, the connection should
 			 * be established with a mechanism collaborating a proxy server.
 			 * Unfortunately, java.lang.URL does not seem to provide such a
-			 * mechanism.
-			 * 
-			 * You might think that using HttpURLConnection is a better way than
-			 * constructing a raw tcp connection. Unfortunately,
+			 * mechanism. You might think that using HttpURLConnection is a
+			 * better way than constructing a raw tcp connection. Unfortunately,
 			 * URL.openConnection() does not return an HttpURLConnection object
 			 * in Netscape's JVM. It returns a netscape.net.URLConnection
-			 * object.
-			 * 
-			 * lookupObject() has the same problem.
+			 * object. lookupObject() has the same problem.
 			 */
 			Socket sock = new Socket(this.servername, this.port);
 			OutputStream out = new BufferedOutputStream(sock.getOutputStream());

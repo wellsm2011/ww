@@ -406,7 +406,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_Class_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds a <code>CONSTANT_Utf8_info</code> structure for storing
 	 * the class name.
@@ -425,7 +424,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_Class_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds a <code>CONSTANT_Utf8_info</code> structure for storing
 	 * the class name.
@@ -476,7 +474,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_Fieldref_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds a new <code>CONSTANT_NameAndType_info</code> structure.
 	 *
@@ -532,7 +529,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_InterfaceMethodref_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds a new <code>CONSTANT_NameAndType_info</code> structure.
 	 *
@@ -560,7 +556,6 @@ public final class ConstPool
 	 * @param nameAndType
 	 *            <code>name_and_type_index</code>.
 	 * @return the index of the added entry.
-	 *
 	 * @since 3.17
 	 */
 	public int addInvokeDynamicInfo(int bootstrap, int nameAndType)
@@ -613,7 +608,6 @@ public final class ConstPool
 	 * @param index
 	 *            <code>reference_index</code>.
 	 * @return the index of the added entry.
-	 *
 	 * @since 3.17
 	 */
 	public int addMethodHandleInfo(int kind, int index)
@@ -637,7 +631,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_Methodref_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds a new <code>CONSTANT_NameAndType_info</code> structure.
 	 *
@@ -663,7 +656,6 @@ public final class ConstPool
 	 * @param desc
 	 *            <code>descriptor_index</code>.
 	 * @return the index of the added entry.
-	 *
 	 * @since 3.17
 	 */
 	public int addMethodTypeInfo(int desc)
@@ -687,7 +679,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_NameAndType_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds <code>CONSTANT_Utf8_info</code> structures.
 	 *
@@ -704,7 +695,6 @@ public final class ConstPool
 
 	/**
 	 * Adds a new <code>CONSTANT_String_info</code> structure.
-	 *
 	 * <p>
 	 * This also adds a new <code>CONSTANT_Utf8_info</code> structure.
 	 *
@@ -760,7 +750,6 @@ public final class ConstPool
 	 *            the descriptor of the member.
 	 * @param index
 	 *            the index into the constant pool table
-	 *
 	 * @return the name of the target class specified by the
 	 *         <code>..._info</code> structure at <code>index</code>. Otherwise,
 	 *         null if that structure does not match the given member name and
@@ -1385,7 +1374,6 @@ public final class ConstPool
 	 *            the member name
 	 * @param index
 	 *            the index into the constant pool table
-	 *
 	 * @return the <code>descriptor_index</code> specifying the type descriptor
 	 *         of that member. If it is not that member, <code>isMember()</code>
 	 *         returns 0.

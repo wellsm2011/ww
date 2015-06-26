@@ -110,7 +110,6 @@ public abstract class CtClass
 	 * example, if the value is <code>"./debug"</code>, then all class files are
 	 * saved there. The directory name must not end with a directory separator
 	 * such as <code>/</code>.
-	 *
 	 * <p>
 	 * The default value is null.
 	 *
@@ -209,7 +208,6 @@ public abstract class CtClass
 
 	/**
 	 * Prints the version number and the copyright notice.
-	 *
 	 * <p>
 	 * The following command invokes this method:
 	 *
@@ -243,7 +241,6 @@ public abstract class CtClass
 
 	/**
 	 * Adds a field.
-	 *
 	 * <p>
 	 * The <code>CtField</code> belonging to another <code>CtClass</code> cannot
 	 * be directly added to this class. Only a field created for this class can
@@ -258,12 +255,10 @@ public abstract class CtClass
 
 	/**
 	 * Adds a field with an initial value.
-	 *
 	 * <p>
 	 * The <code>CtField</code> belonging to another <code>CtClass</code> cannot
 	 * be directly added to this class. Only a field created for this class can
 	 * be added.
-	 *
 	 * <p>
 	 * For example,
 	 *
@@ -272,14 +267,12 @@ public abstract class CtClass
 	 * addField(new CtField(CtClass.intType, "i", cc),
 	 *          CtField.Initializer.constant(1));
 	 * </pre>
-	 *
 	 * <p>
 	 * This code adds an <code>int</code> field named "i". The initial value of
 	 * this field is 1.
 	 *
 	 * @param init
 	 *            specifies the initial value of the field.
-	 *
 	 * @see javassist.CtField#CtField(CtField,CtClass)
 	 */
 	public void addField(CtField f, CtField.Initializer init) throws CannotCompileException
@@ -289,12 +282,10 @@ public abstract class CtClass
 
 	/**
 	 * Adds a field with an initial value.
-	 *
 	 * <p>
 	 * The <code>CtField</code> belonging to another <code>CtClass</code> cannot
 	 * be directly added to this class. Only a field created for this class can
 	 * be added.
-	 *
 	 * <p>
 	 * The initial value is given as an expression written in Java. Any regular
 	 * Java expression can be used for specifying the initial value. The
@@ -305,11 +296,9 @@ public abstract class CtClass
 	 * cc.addField(f, "i + 1")           // i + 1.
 	 * cc.addField(f, "new Point()");    // a Point object.
 	 * </pre>
-	 *
 	 * <p>
 	 * Here, the type of variable <code>cc</code> is <code>CtClass</code>. The
 	 * type of <code>f</code> is <code>CtField</code>.
-	 *
 	 * <p>
 	 * Note: do not change the modifier of the field (in particular, do not add
 	 * or remove <code>static</code> to/from the modifier) after it is added to
@@ -317,7 +306,6 @@ public abstract class CtClass
 	 *
 	 * @param init
 	 *            an expression for the initial value.
-	 *
 	 * @see javassist.CtField.Initializer#byExpr(String)
 	 * @see javassist.CtField#CtField(CtField,CtClass)
 	 */
@@ -402,13 +390,11 @@ public abstract class CtClass
 
 	/**
 	 * Defrosts the class so that the class can be modified again.
-	 *
 	 * <p>
 	 * To avoid changes that will be never reflected, the class is frozen to be
 	 * unmodifiable if it is loaded or written out. This method should be called
 	 * only in a case that the class will be reloaded or written out later
 	 * again.
-	 *
 	 * <p>
 	 * If <code>defrost()</code> will be called later, pruning must be
 	 * disallowed in advance.
@@ -426,7 +412,6 @@ public abstract class CtClass
 	 * Removes this <code>CtClass</code> object from the <code>ClassPool</code>.
 	 * After this method is called, any method cannot be called on the removed
 	 * <code>CtClass</code> object.
-	 *
 	 * <p>
 	 * If <code>get()</code> in <code>ClassPool</code> is called with the name
 	 * of the removed method, the <code>ClassPool</code> will read the class
@@ -503,7 +488,6 @@ public abstract class CtClass
 	/**
 	 * Obtains an attribute with the given name. If that attribute is not found
 	 * in the class file, this method returns null.
-	 *
 	 * <p>
 	 * This is a convenient method mainly for obtaining a user-defined
 	 * attribute. For dealing with attributes, see the
@@ -541,7 +525,6 @@ public abstract class CtClass
 
 	/**
 	 * Returns a class file for this class.
-	 *
 	 * <p>
 	 * This method is not available if <code>isFrozen()</code> is true.
 	 */
@@ -554,12 +537,10 @@ public abstract class CtClass
 	/**
 	 * Returns a class file for this class (read only). Normal applications do
 	 * not need calling this method. Use <code>getClassFile()</code>.
-	 *
 	 * <p>
 	 * The <code>ClassFile</code> object obtained by this method is read only.
 	 * Changes to this object might not be reflected on a class file generated
 	 * by <code>toBytecode()</code>, <code>toClass()</code>, etc.
-	 *
 	 * <p>
 	 * This method is available even if <code>isFrozen()</code> is true.
 	 * However, if the class is frozen, it might be also pruned.
@@ -673,7 +654,6 @@ public abstract class CtClass
 	/**
 	 * Retrieves the field with the specified name among the fields declared in
 	 * the class.
-	 *
 	 * <p>
 	 * Note: this method does not search the super classes.
 	 */
@@ -686,7 +666,6 @@ public abstract class CtClass
 	 * Retrieves the field with the specified name and type among the fields
 	 * declared in the class. Unlike Java, the JVM allows a class to have
 	 * multiple fields with the same name but different types.
-	 *
 	 * <p>
 	 * Note: this method does not search the super classes.
 	 *
@@ -705,7 +684,6 @@ public abstract class CtClass
 	/**
 	 * Gets all the fields declared in the class. The inherited fields are not
 	 * included.
-	 *
 	 * <p>
 	 * Note: the result does not include inherited fields.
 	 */
@@ -718,7 +696,6 @@ public abstract class CtClass
 	 * Retrieves the method with the specified name among the methods declared
 	 * in the class. If there are multiple methods with the specified name, then
 	 * this method returns one of them.
-	 *
 	 * <p>
 	 * Note: this method does not search the superclasses.
 	 *
@@ -732,7 +709,6 @@ public abstract class CtClass
 	/**
 	 * Retrieves the method with the specified name and parameter types among
 	 * the methods declared in the class.
-	 *
 	 * <p>
 	 * Note: this method does not search the superclasses.
 	 *
@@ -761,7 +737,6 @@ public abstract class CtClass
 	/**
 	 * Retrieves methods with the specified name among the methods declared in
 	 * the class. Multiple methods with different parameters may be returned.
-	 *
 	 * <p>
 	 * Note: this method does not search the superclasses.
 	 * </p>
@@ -800,7 +775,7 @@ public abstract class CtClass
 	/**
 	 * Returns the immediately enclosing method of this class. This method works
 	 * only with JDK 1.5 or later.
-	 * 
+	 *
 	 * @return null if this class is not a local class or an anonymous class.
 	 * @deprecated The enclosing method might be a constructor. Use
 	 *             {@link #getEnclosingBehavior()}.
@@ -865,7 +840,6 @@ public abstract class CtClass
 
 	/**
 	 * Returns the generic signature of the class.
-	 *
 	 * <p>
 	 * The generics of Java is implemented by the erasure technique. After
 	 * compilation, all type parameters are dropped off from the main part of a
@@ -923,7 +897,6 @@ public abstract class CtClass
 	/**
 	 * Returns the modifiers for this class, encoded in an integer. For
 	 * decoding, use <code>javassist.Modifier</code>.
-	 *
 	 * <p>
 	 * If the class is a static nested class (a.k.a. static inner class), the
 	 * returned modifiers include <code>Modifier.STATIC</code>.
@@ -971,7 +944,6 @@ public abstract class CtClass
 	/**
 	 * Returns a collection of the names of all the classes referenced in this
 	 * class. That collection includes the name of this class.
-	 *
 	 * <p>
 	 * This method may return <code>null</code>.
 	 *
@@ -984,6 +956,11 @@ public abstract class CtClass
 		{
 			ClassMap cm = new ClassMap()
 			{
+				/**
+				 * 
+				 */
+				private static final long	serialVersionUID	= 1L;
+
 				@Override
 				public void fix(String name)
 				{
@@ -1026,7 +1003,6 @@ public abstract class CtClass
 	 * Obtains the class object representing the superclass of the class. It
 	 * returns null if this object represents the <code>java.lang.Object</code>
 	 * class and thus it does not have the super class.
-	 *
 	 * <p>
 	 * If this object represents an interface, this method always returns the
 	 * <code>java.lang.Object</code> class. To obtain the super interfaces
@@ -1190,7 +1166,6 @@ public abstract class CtClass
 	 * Makes a new public nested class. If this method is called, the
 	 * <code>CtClass</code>, which encloses the nested class, is modified since
 	 * a class file includes a list of nested classes.
-	 *
 	 * <p>
 	 * The current implementation only supports a static nested class.
 	 * <code>isStatic</code> must be true.
@@ -1227,12 +1202,10 @@ public abstract class CtClass
 	 * <code>writeFile()</code>, <code>toClass()</code>, or
 	 * <code>instrument()</code> cannot be called. However, the method names and
 	 * signatures in the class etc. are still accessible.
-	 *
 	 * <p>
 	 * <code>toBytecode()</code>, <code>writeFile()</code>, and
 	 * <code>toClass()</code> internally call this method if automatic pruning
 	 * is on.
-	 *
 	 * <p>
 	 * According to some experiments, pruning does not really reduce memory
 	 * consumption. Only about 20%. Since pruning takes time, it might not pay
@@ -1241,7 +1214,6 @@ public abstract class CtClass
 	 * @see #stopPruning(boolean)
 	 * @see #detach()
 	 * @see ClassPool#doPruning
-	 *
 	 * @see #toBytecode()
 	 * @see #toClass()
 	 * @see #writeFile()
@@ -1308,7 +1280,6 @@ public abstract class CtClass
 	/**
 	 * Changes class names appearing in the class file according to the given
 	 * <code>map</code>.
-	 *
 	 * <p>
 	 * All the class names appearing in the class file are tested with
 	 * <code>map</code> to determine whether each class name is replaced or not.
@@ -1348,7 +1319,6 @@ public abstract class CtClass
 	 * attributes with the non-reserved names are ignored when a class file is
 	 * loaded into the JVM. If there is already an attribute with the same name,
 	 * this method substitutes the new one for it.
-	 *
 	 * <p>
 	 * This is a convenient method mainly for adding a user-defined attribute.
 	 * For dealing with attributes, see the <code>javassist.bytecode</code>
@@ -1372,13 +1342,11 @@ public abstract class CtClass
 
 	/**
 	 * Sets the generic signature of the class.
-	 *
 	 * <p>
 	 * The generics of Java is implemented by the erasure technique. After
 	 * compilation, all type parameters are dropped off from the main part of a
 	 * class file. However, for reflection, the type parameters must be encoded
 	 * into generic signatures and attached to a class file.
-	 *
 	 * <p>
 	 * For example,
 	 *
@@ -1398,7 +1366,6 @@ public abstract class CtClass
 	 * 	}
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * this class is generated by the following code:
 	 *
@@ -1428,7 +1395,6 @@ public abstract class CtClass
 	 * 
 	 * cc.writeFile();
 	 * </pre>
-	 *
 	 * <p>
 	 * The generated class file is equivalent to the following:
 	 *
@@ -1448,12 +1414,10 @@ public abstract class CtClass
 	 * 	}
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * but it includes generic signatures for the class, the field, and the
 	 * methods so that the type variable <code>T</code> can be accessible
 	 * through reflection.
-	 *
 	 * <p>
 	 * <code>MethodSignature</code> is a utility class. You can directly pass
 	 * the signature string to the <code>setGenericSignature</code> method. For
@@ -1488,7 +1452,6 @@ public abstract class CtClass
 
 	/**
 	 * Sets the modifiers.
-	 *
 	 * <p>
 	 * If the class is a nested class, this method also modifies the class
 	 * declaring that nested class (i.e. the enclosing class is modified).
@@ -1519,7 +1482,6 @@ public abstract class CtClass
 	 * Changes a super class unless this object represents an interface. The new
 	 * super class must be compatible with the old one; for example, it should
 	 * inherit from the old super class.
-	 *
 	 * <p>
 	 * If this object represents an interface, this method is equivalent to
 	 * <code>addInterface()</code>; it appends <code>clazz</code> to the list of
@@ -1537,7 +1499,6 @@ public abstract class CtClass
 	/**
 	 * Disallows (or allows) automatically pruning this <code>CtClass</code>
 	 * object.
-	 *
 	 * <p>
 	 * Javassist can automatically prune a <code>CtClass</code> object when
 	 * <code>toBytecode()</code> (or <code>toClass()</code>,
@@ -1546,17 +1507,15 @@ public abstract class CtClass
 	 * <code>toBytecode()</code> (or <code>toClass()</code>,
 	 * <code>writeFile()</code>) is called, pruning may significantly save
 	 * memory consumption.
-	 *
 	 * <p>
 	 * If <code>ClassPool.doPruning</code> is true, the automatic pruning is on
 	 * by default. Otherwise, it is off. The default value of
 	 * <code>ClassPool.doPruning</code> is false.
-	 * 
+	 *
 	 * @param stop
 	 *            disallow pruning if true. Otherwise, allow.
 	 * @return the previous status of pruning. true if pruning is already
 	 *         stopped.
-	 *
 	 * @see #detach()
 	 * @see #prune()
 	 * @see ClassPool#doPruning
@@ -1570,7 +1529,6 @@ public abstract class CtClass
 	 * Determines whether the class directly or indirectly extends the given
 	 * class. If this class extends a class A and the class A extends a class B,
 	 * then subclassof(B) returns true.
-	 *
 	 * <p>
 	 * This method returns true if the given class is identical to the class
 	 * represented by this object.
@@ -1614,7 +1572,6 @@ public abstract class CtClass
 	/**
 	 * Converts this class to a class file. Once this method is called, further
 	 * modifications are not possible any more.
-	 *
 	 * <p>
 	 * This method dose not close the output stream in the end.
 	 *
@@ -1632,14 +1589,11 @@ public abstract class CtClass
 	 * the class, this method uses the context class loader of the current
 	 * thread. If the program is running on some application server, the context
 	 * class loader might be inappropriate to load the class.
-	 *
 	 * <p>
 	 * This method is provided for convenience. If you need more complex
 	 * functionality, you should write your own class loader.
-	 *
 	 * <p>
 	 * Note: this method calls <code>toClass()</code> in <code>ClassPool</code>.
-	 *
 	 * <p>
 	 * <b>Warining:</b> A Class object returned by this method may not work with
 	 * a security manager or a signed jar file because a protection domain is
@@ -1655,7 +1609,6 @@ public abstract class CtClass
 
 	/**
 	 * Converts this class to a <code>java.lang.Class</code> object.
-	 *
 	 * <p>
 	 * <b>Warining:</b> A Class object returned by this method may not work with
 	 * a security manager or a signed jar file because a protection domain is
@@ -1672,22 +1625,18 @@ public abstract class CtClass
 	/**
 	 * Converts this class to a <code>java.lang.Class</code> object. Once this
 	 * method is called, further modifications are not allowed any more.
-	 *
 	 * <p>
 	 * The class file represented by this <code>CtClass</code> is loaded by the
 	 * given class loader to construct a <code>java.lang.Class</code> object.
 	 * Since a private method on the class loader is invoked through the
 	 * reflection API, the caller must have permissions to do that.
-	 *
 	 * <p>
 	 * An easy way to obtain <code>ProtectionDomain</code> object is to call
 	 * <code>getProtectionDomain()</code> in <code>java.lang.Class</code>. It
 	 * returns the domain that the class belongs to.
-	 *
 	 * <p>
 	 * This method is provided for convenience. If you need more complex
 	 * functionality, you should write your own class loader.
-	 *
 	 * <p>
 	 * Note: this method calls <code>toClass()</code> in <code>ClassPool</code>.
 	 *

@@ -25,7 +25,7 @@ public interface Filter
 
 	/**
 	 * If true, the file is accepted, else rejected.
-	 * 
+	 *
 	 * @param filename
 	 * @return
 	 */

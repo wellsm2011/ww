@@ -23,12 +23,9 @@ import java.io.OutputStream;
 /**
  * A quick class-file writer. This is useful when a generated class file is
  * simple and the code generation should be fast.
- *
  * <p>
- * Example:
+ * Example: <blockquote>
  *
- * <blockquote>
- * 
  * <pre>
  * ClassFileWriter cfw = new ClassFileWriter(ClassFile.JAVA_4, 0);
  * ConstPoolWriter cpw = cfw.getConstPool();
@@ -59,14 +56,11 @@ import java.io.OutputStream;
  * 
  * byte[] classfile = cfw.end(AccessFlag.PUBLIC, thisClass, superClass, null, null);
  * </pre>
- * 
+ *
  * </blockquote>
- *
  * <p>
- * The code above generates the following class:
+ * The code above generates the following class: <blockquote>
  *
- * <blockquote>
- * 
  * <pre>
  * package sample;
  * 
@@ -86,7 +80,7 @@ import java.io.OutputStream;
  * 	}
  * }
  * </pre>
- * 
+ *
  * </blockquote>
  *
  * @since 3.13
@@ -95,7 +89,6 @@ public class ClassFileWriter
 {
 	/**
 	 * This writes attributes.
-	 *
 	 * <p>
 	 * For example, the following object writes a synthetic attribute:
 	 *
@@ -160,7 +153,6 @@ public class ClassFileWriter
 
 		/**
 		 * Adds a new <code>CONSTANT_Class_info</code> structure.
-		 *
 		 * <p>
 		 * This also adds a <code>CONSTANT_Utf8_info</code> structure for
 		 * storing the class name.
@@ -274,7 +266,6 @@ public class ClassFileWriter
 		 * @param nameAndTypeInfo
 		 *            <code>name_and_type_index</code>.
 		 * @return the index of the added entry.
-		 *
 		 * @since 3.17.1
 		 */
 		public int addInvokeDynamicInfo(int bootstrap, int nameAndTypeInfo)
@@ -309,7 +300,6 @@ public class ClassFileWriter
 		 * @param index
 		 *            <code>reference_index</code>.
 		 * @return the index of the added entry.
-		 *
 		 * @since 3.17.1
 		 */
 		public int addMethodHandleInfo(int kind, int index)
@@ -343,7 +333,6 @@ public class ClassFileWriter
 		 * @param desc
 		 *            <code>descriptor_index</code>.
 		 * @return the index of the added entry.
-		 *
 		 * @since 3.17.1
 		 */
 		public int addMethodTypeInfo(int desc)
@@ -386,7 +375,6 @@ public class ClassFileWriter
 
 		/**
 		 * Adds a new <code>CONSTANT_String_info</code> structure.
-		 *
 		 * <p>
 		 * This also adds a new <code>CONSTANT_Utf8_info</code> structure.
 		 *
@@ -823,7 +811,6 @@ public class ClassFileWriter
 	 *            <code>CONSTATNT_Class_info</code>. It may be null.
 	 * @param aw
 	 *            attributes of the class file. May be null.
-	 *
 	 * @see AccessFlag
 	 */
 	public void end(DataOutputStream out, int accessFlags, int thisClass, int superClass, int[] interfaces, AttributeWriter aw) throws IOException
@@ -873,7 +860,6 @@ public class ClassFileWriter
 	 *            <code>ClassInfo</code>. It may be null.
 	 * @param aw
 	 *            attributes of the class file. May be null.
-	 *
 	 * @see AccessFlag
 	 */
 	public byte[] end(int accessFlags, int thisClass, int superClass, int[] interfaces, AttributeWriter aw)

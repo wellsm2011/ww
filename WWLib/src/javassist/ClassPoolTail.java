@@ -204,13 +204,10 @@ final class ClassPoolTail
 	/*
 	 * -- faster version -- void checkClassName(String classname) throws
 	 * NotFoundException { if (find(classname) == null) throw new
-	 * NotFoundException(classname); }
-	 * 
-	 * -- slower version --
-	 * 
-	 * void checkClassName(String classname) throws NotFoundException {
-	 * InputStream fin = openClassfile(classname); try { fin.close(); } catch
-	 * (IOException e) {} }
+	 * NotFoundException(classname); } -- slower version -- void
+	 * checkClassName(String classname) throws NotFoundException { InputStream
+	 * fin = openClassfile(classname); try { fin.close(); } catch (IOException
+	 * e) {} }
 	 */
 
 	/**

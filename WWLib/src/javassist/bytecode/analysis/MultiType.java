@@ -29,12 +29,10 @@ import javassist.CtClass;
  * down to a single resolved type. This is done by eliminating non-assignable
  * types from the typeset when the {@code MultiType} is passed as an argument to
  * {@link Type#isAssignableFrom(Type)}, as well as removing non-intersecting
- * types during a merge.
- *
- * Note: Currently the {@code MultiType} instance is reused as much as possible
- * so that updates are visible from all frames. In addition, all
- * {@code MultiType} merge paths are also updated. This is somewhat hackish, but
- * it appears to handle most scenarios.
+ * types during a merge. Note: Currently the {@code MultiType} instance is
+ * reused as much as possible so that updates are visible from all frames. In
+ * addition, all {@code MultiType} merge paths are also updated. This is
+ * somewhat hackish, but it appears to handle most scenarios.
  *
  * @author Jason T. Greene
  */

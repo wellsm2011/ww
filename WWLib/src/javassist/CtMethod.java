@@ -28,7 +28,6 @@ import javassist.bytecode.Opcode;
 
 /**
  * An instance of <code>CtMethod</code> represents a method.
- *
  * <p>
  * See the super class <code>CtBehavior</code> since a number of useful methods
  * are in <code>CtBehavior</code>. A number of useful factory methods are in
@@ -263,7 +262,6 @@ public final class CtMethod extends CtBehavior
 	 *            the method name
 	 * @param parameters
 	 *            a list of the parameter types
-	 *
 	 * @see CtClass#addMethod(CtMethod)
 	 */
 	public CtMethod(CtClass returnType, String mname, CtClass[] parameters, CtClass declaring)
@@ -278,12 +276,10 @@ public final class CtMethod extends CtBehavior
 	/**
 	 * Creates a copy of a <code>CtMethod</code> object. The created method must
 	 * be added to a class with <code>CtClass.addMethod()</code>.
-	 *
 	 * <p>
 	 * All occurrences of class names in the created method are replaced with
 	 * names specified by <code>map</code> if <code>map</code> is not
 	 * <code>null</code>.
-	 *
 	 * <p>
 	 * For example, suppose that a method <code>at()</code> is as follows:
 	 *
@@ -293,7 +289,6 @@ public final class CtMethod extends CtBehavior
 	 * 	return (X) super.elementAt(i);
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * (<code>X</code> is a class name.) If <code>map</code> substitutes
 	 * <code>String</code> for <code>X</code>, then the created method is:
@@ -304,7 +299,6 @@ public final class CtMethod extends CtBehavior
 	 * 	return (String) super.elementAt(i);
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * By default, all the occurrences of the names of the class declaring
 	 * <code>at()</code> and the superclass are replaced with the name of the
@@ -312,7 +306,6 @@ public final class CtMethod extends CtBehavior
 	 * done whichever <code>map</code> is null or not. To prevent this
 	 * replacement, call <code>ClassMap.fix()</code> or <code>put()</code> to
 	 * explicitly specify replacement.
-	 *
 	 * <p>
 	 * <b>Note:</b> if the <code>.class</code> notation (for example,
 	 * <code>String.class</code>) is included in an expression, the Javac
@@ -327,7 +320,6 @@ public final class CtMethod extends CtBehavior
 	 * @param map
 	 *            the hashtable associating original class names with
 	 *            substituted names. It can be <code>null</code>.
-	 *
 	 * @see CtClass#addMethod(CtMethod)
 	 * @see ClassMap#fix(String)
 	 */
@@ -442,7 +434,6 @@ public final class CtMethod extends CtBehavior
 	/**
 	 * Copies a method body from another method. If this method is abstract, the
 	 * abstract modifier is removed after the method body is copied.
-	 *
 	 * <p>
 	 * All occurrences of the class names in the copied method body are replaced
 	 * with the names specified by <code>map</code> if <code>map</code> is not
@@ -476,7 +467,6 @@ public final class CtMethod extends CtBehavior
 	 * @param constParam
 	 *            the constant parameter given to the wrapped method (maybe
 	 *            <code>null</code>).
-	 *
 	 * @see CtNewMethod#wrapped(CtClass,String,CtClass[],CtClass[],CtMethod,CtMethod.ConstParameter,CtClass)
 	 */
 	public void setWrappedBody(CtMethod mbody, ConstParameter constParam) throws CannotCompileException

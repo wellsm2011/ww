@@ -28,6 +28,11 @@ public class RuntimeSupport
 {
 	static class DefaultMethodHandler implements MethodHandler, Serializable
 	{
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= 1L;
+
 		@Override
 		public Object invoke(Object self, Method m, Method proceed, Object[] args) throws Exception
 		{
@@ -62,7 +67,6 @@ public class RuntimeSupport
 	/**
 	 * Finds two methods specified by the parameters and stores them into the
 	 * given array.
-	 *
 	 * <p>
 	 * Added back for JBoss Seam. See JASSIST-206.
 	 * </p>
@@ -99,7 +103,6 @@ public class RuntimeSupport
 	/**
 	 * Finds a method with the given name and descriptor. It searches only the
 	 * class of self.
-	 *
 	 * <p>
 	 * Added back for JBoss Seam. See JASSIST-206.
 	 * </p>

@@ -18,6 +18,11 @@ package javassist.compiler;
 
 public final class KeywordTable extends java.util.HashMap
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public KeywordTable()
 	{
 		super();

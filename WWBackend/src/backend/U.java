@@ -33,7 +33,6 @@ import backend.lib.lzmastreams.LzmaOutputStream;
  * debug logging.
  *
  * @author Andrew Binns
- *
  */
 public class U
 {
@@ -66,7 +65,6 @@ public class U
 	 * invocation.
 	 *
 	 * @param <T>
-	 *
 	 * @param method
 	 *            is the method which is being attempted to be invoked.
 	 * @param input
@@ -272,7 +270,6 @@ public class U
 	/**
 	 * Attempts to open the file listed, if it can't kills the program with an
 	 * error message.
-	 *
 	 * <p>
 	 * <b>NOTE: If this file isn't required, do something else!</b>
 	 * </p>
@@ -296,10 +293,9 @@ public class U
 	}
 
 	/**
-	 * Given a filename, reads an object from it.
-	 *
-	 * Note: make sure you are reading into the correct class (and version of
-	 * the class), otherwise ClassNotFound exceptions will be thrown.
+	 * Given a filename, reads an object from it. Note: make sure you are
+	 * reading into the correct class (and version of the class), otherwise
+	 * ClassNotFound exceptions will be thrown.
 	 *
 	 * @param filename
 	 *            the filename to said object to.
@@ -504,10 +500,8 @@ public class U
 
 	/**
 	 * Sets the debugging level to something new. Used so that the debugging
-	 * level is set in the main, and not forgotten about...
-	 *
-	 * For example: 10 should be used for all internal U.java debugging
-	 * messages.
+	 * level is set in the main, and not forgotten about... For example: 10
+	 * should be used for all internal U.java debugging messages.
 	 *
 	 * @param newLevel
 	 *            the new debuglevel to use.

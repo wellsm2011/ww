@@ -22,7 +22,6 @@ import java.net.URL;
 /**
  * A search-path for obtaining a class file by
  * <code>getResourceAsStream()</code> in <code>java.lang.Class</code>.
- *
  * <p>
  * Try adding a <code>ClassClassPath</code> when a program is running with a
  * user-defined class loader and any class files are not found with the default
@@ -50,11 +49,9 @@ public class ClassClassPath implements ClassPath
 	{
 		/*
 		 * The value of thisClass was this.getClass() in early versions:
-		 * 
-		 * thisClass = this.getClass();
-		 * 
-		 * However, this made openClassfile() not search all the system class
-		 * paths if javassist.jar is put in jre/lib/ext/ (with JDK1.4).
+		 * thisClass = this.getClass(); However, this made openClassfile() not
+		 * search all the system class paths if javassist.jar is put in
+		 * jre/lib/ext/ (with JDK1.4).
 		 */
 		this(java.lang.Object.class);
 	}

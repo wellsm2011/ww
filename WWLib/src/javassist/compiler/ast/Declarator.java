@@ -24,6 +24,11 @@ import javassist.compiler.TokenId;
  */
 public class Declarator extends ASTList implements TokenId
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public static String astToClassName(ASTList name, char sep)
 	{
 		if (name == null)

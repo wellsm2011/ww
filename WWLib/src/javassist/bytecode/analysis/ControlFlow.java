@@ -26,7 +26,6 @@ import javassist.bytecode.stackmap.BasicBlock;
 
 /**
  * Represents the control flow graph of a given method.
- *
  * <p>
  * To obtain the control flow graph, do the following:
  * </p>
@@ -36,7 +35,6 @@ import javassist.bytecode.stackmap.BasicBlock;
  * ControlFlow cf = new ControlFlow(m);
  * Block[] blocks = cf.basicBlocks();
  * </pre>
- *
  * <p>
  * <code>blocks</code> is an array of basic blocks in that method body.
  * </p>
@@ -299,7 +297,7 @@ public class ControlFlow
 
 		/**
 		 * Returns the n-th child of this node.
-		 * 
+		 *
 		 * @param n
 		 *            an index in the array of children.
 		 */
@@ -479,7 +477,6 @@ public class ControlFlow
 	/**
 	 * Constructs a dominator tree. This method returns an array of the tree
 	 * nodes. The first element of the array is the root of the tree.
-	 * 
 	 * <p>
 	 * The order of the elements is the same as that of the elements in the
 	 * <code>Block</code> array returned by the <code>basicBlocks</code> method.
@@ -551,7 +548,6 @@ public class ControlFlow
 	 * Constructs a post dominator tree. This method returns an array of the
 	 * tree nodes. Note that the tree has multiple roots. The parent of the root
 	 * nodes is null.
-	 * 
 	 * <p>
 	 * The order of the elements is the same as that of the elements in the
 	 * <code>Block</code> array returned by the <code>basicBlocks</code> method.

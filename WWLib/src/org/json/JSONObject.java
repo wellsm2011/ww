@@ -410,7 +410,6 @@ public class JSONObject
 	 * JSONObject will be made from it and its toJSONString method will be
 	 * called. Otherwise, the value's toString method will be called, and the
 	 * result will be quoted.
-	 *
 	 * <p>
 	 * Warning: This method assumes that the data structure is acyclical.
 	 *
@@ -676,16 +675,12 @@ public class JSONObject
 	 * parameters and a name starting with <code>"get"</code> or
 	 * <code>"is"</code> followed by an uppercase letter, the method is invoked,
 	 * and a key and the value returned from the getter method are put into the
-	 * new JSONObject.
-	 *
-	 * The key is formed by removing the <code>"get"</code> or <code>"is"</code>
-	 * prefix. If the second remaining character is not upper case, then the
-	 * first character is converted to lower case.
-	 *
-	 * For example, if an object has a method named <code>"getName"</code>, and
-	 * if the result of calling <code>object.getName()</code> is
-	 * <code>"Larry Fine"</code>, then the JSONObject will contain
-	 * <code>"name": "Larry Fine"</code>.
+	 * new JSONObject. The key is formed by removing the <code>"get"</code> or
+	 * <code>"is"</code> prefix. If the second remaining character is not upper
+	 * case, then the first character is converted to lower case. For example,
+	 * if an object has a method named <code>"getName"</code>, and if the result
+	 * of calling <code>object.getName()</code> is <code>"Larry Fine"</code>,
+	 * then the JSONObject will contain <code>"name": "Larry Fine"</code>.
 	 *
 	 * @param bean
 	 *            An object that has getter methods that should be used to make
@@ -798,11 +793,10 @@ public class JSONObject
 	 * that if there is already an object stored under the key then a JSONArray
 	 * is stored under the key to hold all of the accumulated values. If there
 	 * is already a JSONArray, then the new value is appended to it. In
-	 * contrast, the put method replaces the previous value.
-	 *
-	 * If only one value is accumulated that is not a JSONArray, then the result
-	 * will be the same as using put. But if multiple values are accumulated,
-	 * then the result will be like append.
+	 * contrast, the put method replaces the previous value. If only one value
+	 * is accumulated that is not a JSONArray, then the result will be the same
+	 * as using put. But if multiple values are accumulated, then the result
+	 * will be like append.
 	 *
 	 * @param key
 	 *            A key string.

@@ -49,6 +49,11 @@ public class BasicBlock
 
 	static class JsrBytecode extends BadBytecode
 	{
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= 1L;
+
 		JsrBytecode()
 		{
 			super("JSR");

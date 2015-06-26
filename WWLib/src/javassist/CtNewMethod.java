@@ -48,7 +48,6 @@ public class CtNewMethod
 	 *            a list of the exception types
 	 * @param declaring
 	 *            the class to which the created method is added.
-	 *
 	 * @see CtMethod#CtMethod(CtClass,String,CtClass[],CtClass)
 	 */
 	public static CtMethod abstractMethod(CtClass returnType, String mname, CtClass[] parameters, CtClass[] exceptions, CtClass declaring) throws NotFoundException
@@ -72,7 +71,6 @@ public class CtNewMethod
 	 * @param map
 	 *            the hash table associating original class names with
 	 *            substituted names. It can be <code>null</code>.
-	 *
 	 * @see CtMethod#CtMethod(CtMethod,CtClass,ClassMap)
 	 */
 	public static CtMethod copy(CtMethod src, CtClass declaring, ClassMap map) throws CannotCompileException
@@ -96,7 +94,6 @@ public class CtNewMethod
 	 * @param map
 	 *            the hash table associating original class names with
 	 *            substituted names. It can be <code>null</code>.
-	 *
 	 * @see CtMethod#CtMethod(CtMethod,CtClass,ClassMap)
 	 */
 	public static CtMethod copy(CtMethod src, String name, CtClass declaring, ClassMap map) throws CannotCompileException
@@ -112,7 +109,6 @@ public class CtNewMethod
 	 * parameters passed to the created method. If the delegate method returns a
 	 * value, the created method returns that value to the caller. The delegate
 	 * method must be declared in a super class.
-	 *
 	 * <p>
 	 * The following method is an example of the created method.
 	 *
@@ -122,7 +118,6 @@ public class CtNewMethod
 	 * 	return super.f(p, q);
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * The name of the created method can be changed by <code>setName()</code>.
 	 *
@@ -267,7 +262,6 @@ public class CtNewMethod
 	 *            created method does nothing except returning zero or null.
 	 * @param declaring
 	 *            the class to which the created method is added.
-	 *
 	 * @see Modifier
 	 */
 	public static CtMethod make(int modifiers, CtClass returnType, String mname, CtClass[] parameters, CtClass[] exceptions, String body, CtClass declaring) throws CannotCompileException
@@ -310,7 +304,6 @@ public class CtNewMethod
 	 * <pre>
 	 * &quot;public Object id(Object obj) { return obj; }&quot;
 	 * </pre>
-	 *
 	 * <p>
 	 * If the source code includes <code>$proceed()</code>, then it is compiled
 	 * into a method call on the specified object.
@@ -396,19 +389,16 @@ public class CtNewMethod
 	/**
 	 * Creates a wrapped method. The wrapped method receives parameters in the
 	 * form of an array of <code>Object</code>.
-	 *
 	 * <p>
 	 * The body of the created method is a copy of the body of the method
 	 * specified by <code>body</code>. However, it is wrapped in
 	 * parameter-conversion code.
-	 *
 	 * <p>
 	 * The method specified by <code>body</code> must have this singature:
 	 *
 	 * <pre>
 	 * Object method(Object[] params, &lt;type&gt; cvalue)
 	 * </pre>
-	 *
 	 * <p>
 	 * The type of the <code>cvalue</code> depends on <code>constParam</code>.
 	 * If <code>constParam</code> is <code>null</code>, the signature must be:
@@ -416,7 +406,6 @@ public class CtNewMethod
 	 * <pre>
 	 * Object method(Object[] params)
 	 * </pre>
-	 *
 	 * <p>
 	 * The method body copied from <code>body</code> is wrapped in
 	 * parameter-conversion code, which converts parameters specified by
@@ -432,18 +421,15 @@ public class CtNewMethod
 	 * Object result = &lt;<i>returned value</i>&gt;
 	 * return (<i>&lt;returnType&gt;</i>)result;
 	 * </pre>
-	 *
 	 * <p>
 	 * The variables <code>p0</code>, <code>p2</code>, ... represent formal
 	 * parameters of the created method. The value of <code>cvalue</code> is
 	 * specified by <code>constParam</code>.
-	 *
 	 * <p>
 	 * If the type of a parameter or a returned value is a primitive type, then
 	 * the value is converted into a wrapper object such as
 	 * <code>java.lang.Integer</code>. If the type of the returned value is
 	 * <code>void</code>, the returned value is discarded.
-	 *
 	 * <p>
 	 * <i>Example:</i>
 	 *
@@ -458,7 +444,6 @@ public class CtNewMethod
 	 *                                  null, addMethod, null, vec);
 	 * vec.addMethod(m);
 	 * </pre>
-	 *
 	 * <p>
 	 * where the class <code>Sample</code> is as follows:
 	 *
@@ -472,7 +457,6 @@ public class CtNewMethod
 	 * 	}
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * This program produces a class <code>intVector</code>:
 	 *
@@ -490,7 +474,6 @@ public class CtNewMethod
 	 * 	}
 	 * }
 	 * </pre>
-	 *
 	 * <p>
 	 * Note that the type of the parameter to <code>add()</code> depends only on
 	 * the value of <code>argTypes</code> passed to

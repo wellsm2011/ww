@@ -668,7 +668,7 @@ public class SignatureAttribute extends AttributeInfo
 		/**
 		 * A factory method constructing a <code>TypeArgument</code> with an
 		 * upper bound. It represents <code>&lt;? extends ... &gt;</code>
-		 * 
+		 *
 		 * @param t
 		 *            an upper bound type.
 		 */
@@ -680,7 +680,7 @@ public class SignatureAttribute extends AttributeInfo
 		/**
 		 * A factory method constructing a <code>TypeArgument</code> with an
 		 * lower bound. It represents <code>&lt;? super ... &gt;</code>
-		 * 
+		 *
 		 * @param t
 		 *            an lower bbound type.
 		 */

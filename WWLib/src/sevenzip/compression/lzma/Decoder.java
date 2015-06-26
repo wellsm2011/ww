@@ -119,30 +119,30 @@ public class Decoder
 		}
 	}
 
-	OutWindow														m_OutWindow				= new OutWindow();
+	OutWindow								m_OutWindow				= new OutWindow();
 	sevenzip.compression.rangecoder.Decoder	m_RangeDecoder			= new sevenzip.compression.rangecoder.Decoder();
 
-	short[]															m_IsMatchDecoders		= new short[Base.kNumStates << Base.kNumPosStatesBitsMax];
-	short[]															m_IsRepDecoders			= new short[Base.kNumStates];
-	short[]															m_IsRepG0Decoders		= new short[Base.kNumStates];
-	short[]															m_IsRepG1Decoders		= new short[Base.kNumStates];
-	short[]															m_IsRepG2Decoders		= new short[Base.kNumStates];
-	short[]															m_IsRep0LongDecoders	= new short[Base.kNumStates << Base.kNumPosStatesBitsMax];
+	short[]									m_IsMatchDecoders		= new short[Base.kNumStates << Base.kNumPosStatesBitsMax];
+	short[]									m_IsRepDecoders			= new short[Base.kNumStates];
+	short[]									m_IsRepG0Decoders		= new short[Base.kNumStates];
+	short[]									m_IsRepG1Decoders		= new short[Base.kNumStates];
+	short[]									m_IsRepG2Decoders		= new short[Base.kNumStates];
+	short[]									m_IsRep0LongDecoders	= new short[Base.kNumStates << Base.kNumPosStatesBitsMax];
 
-	BitTreeDecoder[]												m_PosSlotDecoder		= new BitTreeDecoder[Base.kNumLenToPosStates];
-	short[]															m_PosDecoders			= new short[Base.kNumFullDistances - Base.kEndPosModelIndex];
+	BitTreeDecoder[]						m_PosSlotDecoder		= new BitTreeDecoder[Base.kNumLenToPosStates];
+	short[]									m_PosDecoders			= new short[Base.kNumFullDistances - Base.kEndPosModelIndex];
 
-	BitTreeDecoder													m_PosAlignDecoder		= new BitTreeDecoder(Base.kNumAlignBits);
+	BitTreeDecoder							m_PosAlignDecoder		= new BitTreeDecoder(Base.kNumAlignBits);
 
-	LenDecoder														m_LenDecoder			= new LenDecoder();
-	LenDecoder														m_RepLenDecoder			= new LenDecoder();
+	LenDecoder								m_LenDecoder			= new LenDecoder();
+	LenDecoder								m_RepLenDecoder			= new LenDecoder();
 
-	LiteralDecoder													m_LiteralDecoder		= new LiteralDecoder();
+	LiteralDecoder							m_LiteralDecoder		= new LiteralDecoder();
 
-	int																m_DictionarySize		= -1;
-	int																m_DictionarySizeCheck	= -1;
+	int										m_DictionarySize		= -1;
+	int										m_DictionarySizeCheck	= -1;
 
-	int																m_PosStateMask;
+	int										m_PosStateMask;
 
 	public Decoder()
 	{

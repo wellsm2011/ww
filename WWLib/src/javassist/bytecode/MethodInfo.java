@@ -28,15 +28,13 @@ import javassist.bytecode.stackmap.MapMaker;
 
 /**
  * <code>method_info</code> structure.
- *
  * <p>
  * The bytecode sequence of the method is represented by a
  * <code>CodeAttribute</code> object.
- *
  * <p>
  * The following code adds the default constructor to a class: of
  * <code>int</code> type: <blockquote>
- * 
+ *
  * <pre>
  * ClassFile cf = ...
  * Bytecode code = new Bytecode(cf.getConstPool());
@@ -49,7 +47,7 @@ import javassist.bytecode.stackmap.MapMaker;
  * minfo.setCodeAttribute(code.toCodeAttribute());
  * cf.addMethod(minfo);
  * </pre>
- * 
+ *
  * </blockquote>
  *
  * @see #getCodeAttribute()
@@ -101,11 +99,10 @@ public class MethodInfo
 	 * Constructs a copy of <code>method_info</code> structure. Class names
 	 * appearing in the source <code>method_info</code> are renamed according to
 	 * <code>classnameMap</code>.
-	 * 
 	 * <p>
 	 * Note: only <code>Code</code> and <code>Exceptions</code> attributes are
 	 * copied from the source. The other attributes are ignored.
-	 * 
+	 *
 	 * @param cp
 	 *            a constant pool table
 	 * @param methodname
@@ -125,7 +122,7 @@ public class MethodInfo
 	/**
 	 * Constructs a <code>method_info</code> structure. The initial value of
 	 * <code>access_flags</code> is zero.
-	 * 
+	 *
 	 * @param cp
 	 *            a constant pool table
 	 * @param methodname
@@ -176,7 +173,7 @@ public class MethodInfo
 
 	/**
 	 * Returns access flags.
-	 * 
+	 *
 	 * @see AccessFlag
 	 */
 	public int getAccessFlags()
@@ -187,7 +184,7 @@ public class MethodInfo
 	/**
 	 * Returns the attribute with the specified name. If it is not found, this
 	 * method returns null.
-	 * 
+	 *
 	 * @param name
 	 *            attribute name
 	 * @return an <code>AttributeInfo</code> object or null.
@@ -203,7 +200,7 @@ public class MethodInfo
 	 * shared with this object. If you add a new attribute to the list, the
 	 * attribute is also added to the method represented by this object. If you
 	 * remove an attribute from the list, it is also removed from the method.
-	 * 
+	 *
 	 * @return a list of <code>AttributeInfo</code> objects.
 	 * @see AttributeInfo
 	 */
@@ -217,7 +214,7 @@ public class MethodInfo
 
 	/**
 	 * Returns a Code attribute.
-	 * 
+	 *
 	 * @return a Code attribute or null if it is not specified.
 	 */
 	public CodeAttribute getCodeAttribute()
@@ -236,7 +233,7 @@ public class MethodInfo
 
 	/**
 	 * Returns a method descriptor.
-	 * 
+	 *
 	 * @see Descriptor
 	 */
 	public String getDescriptor()
@@ -246,7 +243,7 @@ public class MethodInfo
 
 	/**
 	 * Returns an Exceptions attribute.
-	 * 
+	 *
 	 * @return an Exceptions attribute or null if it is not specified.
 	 */
 	public ExceptionsAttribute getExceptionsAttribute()
@@ -258,7 +255,7 @@ public class MethodInfo
 	/**
 	 * Returns the line number of the source line corresponding to the specified
 	 * bytecode contained in this method.
-	 * 
+	 *
 	 * @param pos
 	 *            the position of the bytecode (&gt;= 0). an index into the code
 	 *            array.
@@ -481,7 +478,7 @@ public class MethodInfo
 
 	/**
 	 * Sets access flags.
-	 * 
+	 *
 	 * @see AccessFlag
 	 */
 	public void setAccessFlags(int acc)
@@ -491,7 +488,6 @@ public class MethodInfo
 
 	/**
 	 * Adds a Code attribute.
-	 * 
 	 * <p>
 	 * The added attribute must share the same constant pool table as this
 	 * <code>method_info</code> structure.
@@ -507,7 +503,7 @@ public class MethodInfo
 
 	/**
 	 * Sets a method descriptor.
-	 * 
+	 *
 	 * @see Descriptor
 	 */
 	public void setDescriptor(String desc)
@@ -518,7 +514,6 @@ public class MethodInfo
 
 	/**
 	 * Adds an Exception attribute.
-	 * 
 	 * <p>
 	 * The added attribute must share the same constant pool table as this
 	 * <code>method_info</code> structure.
@@ -543,22 +538,19 @@ public class MethodInfo
 
 	/**
 	 * Changes a super constructor called by this constructor.
-	 * 
 	 * <p>
 	 * This method modifies a call to <code>super()</code>, which should be at
 	 * the head of a constructor body, so that a constructor in a different
 	 * super class is called. This method does not change actual parameters.
 	 * Hence the new super class must have a constructor with the same signature
 	 * as the original one.
-	 * 
 	 * <p>
 	 * This method should be called when the super class of the class declaring
 	 * this method is changed.
-	 * 
 	 * <p>
 	 * This method does not perform anything unless this <code>MethodInfo</code>
 	 * represents a constructor.
-	 * 
+	 *
 	 * @param superclass
 	 *            the new super class
 	 */

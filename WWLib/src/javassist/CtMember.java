@@ -260,7 +260,6 @@ public abstract class CtMember
 	/**
 	 * Obtains a user-defined attribute with the given name. If that attribute
 	 * is not found in the class file, this method returns null.
-	 *
 	 * <p>
 	 * Note that an attribute is a data block specified by the class file
 	 * format. See {@link javassist.bytecode.AttributeInfo}.
@@ -311,7 +310,6 @@ public abstract class CtMember
 
 	/**
 	 * Obtains the name of the member.
-	 *
 	 * <p>
 	 * As for constructor names, see <code>getName()</code> in
 	 * <code>CtConstructor</code>.
@@ -355,7 +353,6 @@ public abstract class CtMember
 
 	/**
 	 * Adds a user-defined attribute. The attribute is saved in the class file.
-	 *
 	 * <p>
 	 * Note that an attribute is a data block specified by the class file
 	 * format. See {@link javassist.bytecode.AttributeInfo}.

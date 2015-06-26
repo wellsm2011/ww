@@ -10,8 +10,6 @@ import config.explorer.ExportedParam.MType;
 /**
  * Currently serves as a little example for future reference: parses itself from
  * a JSONObject, as well as offers example JSONExportable examples.
- *
- *
  */
 @ConfigMember(sectionKey = "items")
 public class Item
