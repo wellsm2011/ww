@@ -21,6 +21,12 @@ import backend.functionInterfaces.Handler;
 import config.core.Config;
 import config.core.SectionManager;
 
+/**
+ * This is the editor GUI main class. Designed to take a config file, then
+ * creates an editor for the memory-resident data-structure.
+ * 
+ * @author Andrew Binns
+ */
 public class EditorGui
 {
 	private Map<String, SectionManager>			configMemberMap;
@@ -31,6 +37,12 @@ public class EditorGui
 	private Class<?>							curDisplayType;
 	private Object								curDisplayItem;
 
+	/**
+	 * Initializes a GUI to edit the specified config file.
+	 * 
+	 * @param config
+	 *            the config object to load for editing. (of the data-members)
+	 */
 	public EditorGui(Config config)
 	{
 		this.configMemberMap = config.getAllMaps();
@@ -59,16 +71,31 @@ public class EditorGui
 		});
 	}
 
+	/**
+	 * Top-level GUI building method, this calls all other builders to create
+	 * the necessary items.
+	 * 
+	 * @param shell
+	 *            the parent control to build everything in
+	 */
 	private void buildGui(Shell shell)
 	{
 		Tree tree = new Tree(shell, SWT.BORDER);
 		Composite paramEditorParent = new Composite(shell, SWT.BORDER);
-		StackLayout layout = new StackLayout();
-		paramEditorParent.setLayout(layout);
-		Handler<Object> updateHandler = this.createParamEditor(paramEditorParent, layout);
+		Handler<Object> updateHandler = this.createParamEditor(paramEditorParent);
 		this.createConfigBrowser(tree, updateHandler);
 	}
 
+	/**
+	 * Populates the given tree based on this editor's loaded config map. Maps
+	 * clicks to the passed lambda.
+	 * 
+	 * @param tree
+	 *            the tree to populate
+	 * @param updateHandler
+	 *            the lambda to be called when the user clicks on a different
+	 *            section
+	 */
 	private void createConfigBrowser(Tree tree, Handler<Object> updateHandler)
 	{
 		tree.addMouseListener(new EditorTreeListener(updateHandler));
@@ -96,38 +123,61 @@ public class EditorGui
 		}
 	}
 
-	private Handler<Object> createParamEditor(Composite paramEditorParent, StackLayout layout)
+	/**
+	 * Initializes the parameter editor windows. Populates everything in the
+	 * passed composite. Returns a lambda to be called whenever the the tree is
+	 * clicked on and a switch is needed. Switches based on the type of the
+	 * passed item, if it is known (pre-prepared for) the correct pane is also
+	 * populated as well as thrown to the top.
+	 * 
+	 * @param paramEditorParent
+	 *            the parent composite to build the param editor inside of
+	 * @return the on-update editor handler
+	 */
+	private Handler<Object> createParamEditor(Composite paramEditorParent)
 	{
+		// Using a stacklayout so we can just shove the correct current editor
+		// to the top when needed on click. Basically this builds a composite in
+		// the parent for each different archetype of item in the config, and
+		// puts the correct one on top when the tree is clicked on.
+		StackLayout layout = new StackLayout();
+		paramEditorParent.setLayout(layout);
 		this.edMap = new LinkedHashMap<Class<?>, Composite>();
 		for (Entry<String, SectionManager> cur : this.configMemberMap.entrySet())
 		{
 			this.curDisplayType = cur.getValue().getType();
-			ScrolledComposite parent = new ScrolledComposite(paramEditorParent, SWT.H_SCROLL | SWT.V_SCROLL);
-			Composite curPane = new Composite(parent, SWT.NONE);
+			// ScrolledComposite shenagins to cause proper scrollbars when
+			// zoomed in too far, or the editor gets too large.
+			ScrolledComposite scrollWrapper = new ScrolledComposite(paramEditorParent, SWT.H_SCROLL | SWT.V_SCROLL);
+			Composite curPane = new Composite(scrollWrapper, SWT.NONE);
 			curPane.setData(new EditorPaneHandler(cur.getValue(), curPane));
 			curPane.pack();
-			parent.setContent(curPane);
-			this.edMap.put(this.curDisplayType, parent);
+			scrollWrapper.setContent(curPane);
+			this.edMap.put(this.curDisplayType, scrollWrapper);
 		}
+		// Returns a handler for when a new object should be edited
 		return (in) -> {
 			if (this.classToSecMap.containsKey(in.getClass()))
 			{
+				// Checks if the currently displayed type needs to be updated,
+				// swapping panes if needed.
 				if (!this.curDisplayType.equals(in.getClass()))
 				{
 					layout.topControl = this.edMap.get(in.getClass());
 					this.curDisplayType = in.getClass();
 					paramEditorParent.layout();
 				}
+				// Checks if the current item is the same as the previously
+				// stored item, if not, handles it as needed.
 				if (!this.curDisplayItem.equals(in))
 				{
 					ScrolledComposite scrollComp = (ScrolledComposite) layout.topControl;
 					EditorPaneHandler edPanelHandler = (EditorPaneHandler) scrollComp.getContent().getData();
 					edPanelHandler.update(in);
 				}
-
 				this.curDisplayItem = in;
 			} else
-				U.p("Nothing found..." + in);
+				U.p("Nothing found to be edited... What exactly is this? " + in + "[" + in.getClass() + "] ?? I don't understand it...");
 		};
 	}
 

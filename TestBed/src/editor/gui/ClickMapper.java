@@ -7,6 +7,12 @@ import org.eclipse.swt.events.MouseListener;
 
 import backend.functionInterfaces.Func;
 
+/**
+ * This exists purely as a wrapper to make SWT MouseListeners nicely doable with
+ * a Lambda instead of requiring an anonymous class.
+ * 
+ * @author Sudo
+ */
 public class ClickMapper implements MouseListener
 {
 	public enum ClickType
@@ -16,11 +22,24 @@ public class ClickMapper implements MouseListener
 
 	private BiConsumer<MouseEvent, ClickType>	handler;
 
+	/**
+	 * Passes on the listened events to the passed BiConsumer. Passed both the
+	 * type of event (mouseup, mousedown, doubleclick) as well as the actual
+	 * event itself.
+	 * 
+	 * @param eventHandler
+	 */
 	public ClickMapper(BiConsumer<MouseEvent, ClickType> eventHandler)
 	{
 		this.handler = eventHandler;
 	}
 
+	/**
+	 * Triggers the passed function on every mouse event.
+	 * 
+	 * @param onClick
+	 *            the lambda to trigger per event
+	 */
 	public ClickMapper(Func onClick)
 	{
 		this.handler = (event, cType) -> {
@@ -28,13 +47,26 @@ public class ClickMapper implements MouseListener
 		};
 	}
 
+	/**
+	 * Triggers the passed function on the specified mouse events
+	 * 
+	 * @param onClick
+	 *            the lambda to trigger
+	 * @param type
+	 *            the click types to trigger on
+	 */
 	public ClickMapper(Func onClick, ClickType... type)
 	{
-		this.handler = (event, cType) -> {
-			for (ClickType cur : type)
-				if (cType == cur)
-					onClick.exec();
-		};
+		if (type.length < 1)
+			this.handler = (event, cType) -> {
+				onClick.exec();
+			};
+		else
+			this.handler = (event, cType) -> {
+				for (ClickType cur : type)
+					if (cType == cur)
+						onClick.exec();
+			};
 	}
 
 	@Override

@@ -18,22 +18,39 @@ import backend.U;
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
 
+import config.explorer.ExportedParam;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
 import config.explorer.FinderListener;
 
 /**
+ * <p>
  * Testbed config, uses the JSON parser to parse different parts of a given
  * config file. Maintains ordering of original config file, as well as adding
  * config sections during writing out that were not in the original config file.
+ * </p>
+ * <p>
  * Rest under development.
+ * </p>
+ * <p>
+ * Actually uses reflection to scan and look over the entire classpath and find
+ * things with the @ConfigMember annotation.
+ * </p>
+ * 
+ * @see ConfigMember
+ * @see ExportedParam
+ * @see ExportedParameter
+ * @author Andrew Binns
  */
 public class Config
 {
 
 	/**
 	 * Looks through all classes, and finds those with the ConfigMember
-	 * interface.
+	 * annotation. Note, this actually via the tricks of javaassist bytecode
+	 * scanning, the sun JDI useful stuff, and the annoventions magic manages to
+	 * avoid actually loading all classes in the classpath during scanning. At
+	 * least, it should.
 	 *
 	 * @return a map of classnames to class objects that are annotated with the
 	 *         ConfigMember annotation

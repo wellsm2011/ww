@@ -12,6 +12,13 @@ import config.explorer.ExportedParam.DType;
 import config.explorer.ExportedParam.MType;
 import config.explorer.ExportedParameter;
 
+/**
+ * This class is a helper class for the main Config system, what this does is it
+ * allows nice populating and handling of distinct types, designed to allow for
+ * simple per-type editing and accessing of loaded types at runtime.
+ * 
+ * @author Andrew Binns
+ */
 public class SectionManager
 {
 	private static MType[]	stdParamFilter;
@@ -21,12 +28,23 @@ public class SectionManager
 		{ MType.GETTER, MType.SETTER };
 	}
 
+	/**
+	 * Takes a input class, and a list of method types to find, and returns a
+	 * mapping of those those methods wrapped in ExportedParameters with names.
+	 * 
+	 * @param input
+	 *            the input class to analyse
+	 * @param filter
+	 *            the method types to look for in the class
+	 * @return
+	 */
 	public static Map<String, ExportedParameter> findParametersByFilter(Class<?> input, MType... filter)
 	{
 		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
 		LinkedHashMap<String, LinkedHashMap<MType, Method>> map = new LinkedHashMap<String, LinkedHashMap<MType, Method>>();
 		LinkedHashMap<String, DType> keyToDataTypeMap = new LinkedHashMap<String, DType>();
 
+		// Finds and lists all methods by method type
 		for (Method curMethod : SectionManager.getSortedMethods(input))
 			if (curMethod.isAnnotationPresent(ExportedParam.class))
 			{
@@ -37,10 +55,12 @@ public class SectionManager
 				keyToDataTypeMap.put(paramData.key(), paramData.datatype());
 			}
 
+		// If no filters are selected, return them all
 		if (filter.length <= 0)
 			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
 				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), curParam.getValue(), keyToDataTypeMap.get(curParam.getKey())));
 
+		// Get all methods mentioned in the filter
 		if (filter.length > 0)
 			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
 			{
@@ -52,6 +72,14 @@ public class SectionManager
 		return res;
 	}
 
+	/**
+	 * Finds a list of methods in a given class that have the ExportedParam
+	 * annotation, and sorts them as it goes
+	 * 
+	 * @param input
+	 *            the class to scan for ExportedParam annotated methods
+	 * @return a sorted array of sorted, ExportedParam-annotated methods.
+	 */
 	private static Method[] getSortedMethods(Class<?> input)
 	{
 		PriorityQueue<Method> sorted = new PriorityQueue<Method>((Method a, Method b) -> {
@@ -78,6 +106,22 @@ public class SectionManager
 
 	private String							keyName;
 
+	/**
+	 * <p>
+	 * Initializes this SectionManager with the provided Class object. This then
+	 * caches a mapping of parameters for this type, as well as some other
+	 * information to make editing objects of this type easy later on.
+	 * </p>
+	 * <p>
+	 * This is here primarily for organization and to allow for per-type
+	 * structures, such as the config editing system.
+	 * </p>
+	 * <p>
+	 * This also stores a map of the currently stored type.
+	 * 
+	 * @param type
+	 *            the type this SectionManager manages.
+	 */
 	public SectionManager(Class<?> type)
 	{
 		this.type = type;
@@ -86,16 +130,32 @@ public class SectionManager
 			this.keyName = this.type.getAnnotation(ConfigMember.class).sectionKey();
 	}
 
+	/**
+	 * Returns the map of strings to this section's stored items.
+	 * 
+	 * @return a map named entries of this section's type.
+	 */
 	public Map<String, Object> getEntries()
 	{
 		return this.dataItems;
 	}
 
+	/**
+	 * Gets the JSON key for this manager's stored type.
+	 * 
+	 * @return the JSON key for this type in the config file.
+	 */
 	public String getKey()
 	{
 		return this.keyName;
 	}
 
+	/**
+	 * Gets a mapping of all parameters for this type, for easy manipulation of
+	 * runtime objects of this section's type.
+	 * 
+	 * @return a mapping of names to specific modifiable parameters.
+	 */
 	public Map<String, ExportedParameter> getParamMappings()
 	{
 		if (this.paramMappings == null)
@@ -103,27 +163,28 @@ public class SectionManager
 		return this.paramMappings;
 	}
 
+	/**
+	 * Gets the type this particular SectionManager manages
+	 * 
+	 * @return the type this manager manages.
+	 */
 	public Class<?> getType()
 	{
 		return this.type;
 	}
 
+	/**
+	 * Stores a data-member by name. Does not accept objects that are of the
+	 * correct type, this is simply not allowed.
+	 * 
+	 * @param key
+	 * @param curInstance
+	 */
 	public void offer(String key, Object curInstance)
 	{
 		if (!this.type.isInstance(curInstance))
-			U.e("Error, was passed " + curInstance.toString() + " for type " + this.type);
-		this.dataItems.put(key, curInstance);
-	}
-
-	public Object getExample()
-	{
-		try
-		{
-			return this.type.newInstance();
-		} catch (InstantiationException | IllegalAccessException e)
-		{
-			e.printStackTrace();
-		}
-		return null;
+			U.e("Error, was passed " + curInstance.toString() + " of type " + curInstance.getClass() + " for type " + this.type + ".\nThis is not OK. No data stored.");
+		else
+			this.dataItems.put(key, curInstance);
 	}
 }
