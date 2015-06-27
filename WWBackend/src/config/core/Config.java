@@ -266,8 +266,7 @@ public class Config
 					this.intelliParse(data, curJSONKey, type);
 				} catch (ClassCastException ex)
 				{
-					U.d("Extra key found in JSON file: " + curJSONKey + ". Did you spell the name correctly?", 1);
-					ex.printStackTrace();
+					U.e("Error, couldn't find parsing structure for " + curJSONKey + ". Did you spell the name correctly? Or are the correct parseables not listed?");
 				}
 		} catch (JSONException e)
 		{
