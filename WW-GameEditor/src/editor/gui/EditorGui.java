@@ -112,11 +112,11 @@ public class EditorGui
 				this.curDisplayItem = curSectionManager;
 				updateHandler.handle(curSectionManager);
 			}
-			for (Entry<String, Object> curElem : curSectionManager.getEntries().entrySet())
+			for (String curElemKey : curSectionManager.getKeys())
 			{
 				TreeItem elemItem = new TreeItem(sectionItem, 0);
-				elemItem.setText(curElem.getKey());
-				elemItem.setData(curElem.getValue());
+				elemItem.setText(curElemKey);
+				elemItem.setData(curSectionManager.getElem(curElemKey));
 				elemItem.setExpanded(true);
 			}
 			sectionItem.setExpanded(true);

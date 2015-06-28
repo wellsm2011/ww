@@ -1,4 +1,3 @@
-
 import config.core.Config;
 import editor.gui.EditorGui;
 

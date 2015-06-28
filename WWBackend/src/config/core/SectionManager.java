@@ -1,10 +1,12 @@
 package config.core;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 import backend.U;
 import config.explorer.ExportedParam;
@@ -131,10 +133,25 @@ public class SectionManager
 	}
 
 	/**
+	 * Based on a given key, returns the element associated with said key stored
+	 * in this section. Returns null if key is invalid.
+	 * 
+	 * @param key
+	 *            the key of the item to attempt to retrieve
+	 * @return the element assotiated with the given key
+	 * @see SectionManager#getKeys
+	 */
+	public Object getElem(String key)
+	{
+		return this.dataItems.get(key);
+	}
+
+	/**
 	 * Returns the map of strings to this section's stored items.
 	 * 
 	 * @return a map named entries of this section's type.
 	 */
+	@Deprecated
 	public Map<String, Object> getEntries()
 	{
 		return this.dataItems;
@@ -148,6 +165,18 @@ public class SectionManager
 	public String getKey()
 	{
 		return this.keyName;
+	}
+
+	/**
+	 * Returns a set of strings for iteration over this section's elements. Can
+	 * be used to retrieve the element associated with the given key.
+	 * 
+	 * @return a set of key strings
+	 * @see SectionManager#getElem
+	 */
+	public Set<String> getKeys()
+	{
+		return this.dataItems.keySet();
 	}
 
 	/**
@@ -186,5 +215,32 @@ public class SectionManager
 			U.e("Error, was passed " + curInstance.toString() + " of type " + curInstance.getClass() + " for type " + this.type + ".\nThis is not OK. No data stored.");
 		else
 			this.dataItems.put(key, curInstance);
+	}
+
+	/**
+	 * When given an element that fits in this section, returns a mapping of
+	 * param keys to current values as strings. Designed for reporting and
+	 * debugging use.
+	 * 
+	 * @param in
+	 *            the element to find the current status of
+	 * @return a map of param names to current values for the given object
+	 */
+	public Map<String, String> getGettablesFor(Object in)
+	{
+		Map<String, String> res = new HashMap<String, String>();
+		if (!this.type.isInstance(in) && in != null)
+			U.e("Error, was passed " + in.toString() + " of type " + in.getClass() + " for type " + this.type + ".\nThis is not OK. No data parsed.");
+		else if (in != null)
+			for (Entry<String, ExportedParameter> curParam : this.paramMappings.entrySet())
+				res.put(curParam.getKey(), curParam.getValue().getGettableAsString(in));
+		return res;
+	}
+
+	public Map<String, String> getGettablesForKey(String key)
+	{
+		if (!this.dataItems.containsKey(key))
+			U.e("Error, was passed key " + key + ". This does not matcha anything on file, returning a blank map.");
+		return this.getGettablesFor(this.dataItems.get(key));
 	}
 }

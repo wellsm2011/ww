@@ -152,16 +152,17 @@ public class Config
 	 *
 	 * @param name
 	 *            the key of the section
-	 * @return a hashmap from strings to the implied type
+	 * @return a section manager for the given type
 	 */
 	private SectionManager getManager(String name, Class<?> type)
 	{
-		if (!this.maps.containsKey(name))
-		{
-			SectionManager secMan = new SectionManager(type);
-			this.maps.put(name, secMan);
-			this.classToSectionMap.put(type, secMan);
-		}
+		if (!(type == null))
+			if (!this.maps.containsKey(name))
+			{
+				SectionManager secMan = new SectionManager(type);
+				this.maps.put(name, secMan);
+				this.classToSectionMap.put(type, secMan);
+			}
 		return this.maps.get(name);
 	}
 
@@ -170,13 +171,20 @@ public class Config
 	 *
 	 * @param key
 	 *            the key for the config section required
-	 * @return a hashmap of strings to the implied type.
+	 * @return the section manager for the given key. Null if not found.
 	 */
 	public SectionManager getSection(String key)
 	{
 		return this.getManager(key, null);
 	}
 
+	/**
+	 * Given a class, finds the section manager that corresponds to the given
+	 * type. Returns null if not found.
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public SectionManager getSectionByClass(Class<?> type)
 	{
 		return this.classToSectionMap.get(type);
@@ -257,6 +265,7 @@ public class Config
 		try
 		{
 			JSONObject data = new JSONObject(U.readFile(filename));
+			U.d("Loading config from data:\n" + data.toString(4), 5);
 			for (String curJSONKey : data.keySet())
 				try
 				{
@@ -349,7 +358,7 @@ public class Config
 	}
 
 	/**
-	 * Writes to file a JSON equivalent of this loaded config.
+	 * Writes to file, a JSON equivalent of this loaded config.
 	 *
 	 * @param filename
 	 *            the file to export to
@@ -361,10 +370,11 @@ public class Config
 		{
 			JSONObject member = new JSONObject();
 			SectionManager curSecMan = curConfigMember.getValue();
-			for (Entry<String, Object> curMemberItem : curSecMan.getEntries().entrySet())
-				member.putOpt(curMemberItem.getKey(), this.intelliGen(curMemberItem.getValue(), curSecMan));
+			for (String curElemKey : curSecMan.getKeys())
+				member.putOpt(curElemKey, this.intelliGen(curSecMan.getElem(curElemKey), curSecMan));
 			output.putOnce(curConfigMember.getKey(), member);
 		}
+		U.d("Writing parsed config to file:\n" + output.toString(4), 5);
 		U.writeToFile(filename, output.toString(4));
 	}
 }

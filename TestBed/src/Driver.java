@@ -1,8 +1,10 @@
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import backend.U;
 import config.core.Config;
+import config.core.SectionManager;
 
 public class Driver
 {
@@ -16,15 +18,8 @@ public class Driver
 		Driver.testConfig();
 	}
 
-	private static void testConfig()
-	{
-		Config config = new Config("config.json");
-		U.p(config);
-		config.writeToFile("parsedConfig.json");
-	}
-
 	@SuppressWarnings("unused")
-	private static void testLoadStore()
+	private static void objLoadStoreExample()
 	{
 		LinkedList<String> bob;
 
@@ -48,6 +43,21 @@ public class Driver
 			e.printStackTrace();
 		}
 		U.p("Saved!");
+	}
+
+	private static void testConfig()
+	{
+		Config config = new Config("config.json");
+		StringBuilder sb = new StringBuilder("\n");
+		for (Entry<String, SectionManager> curSec : config.getAllMaps().entrySet())
+		{
+			SectionManager curSecMan = curSec.getValue();
+			sb.append("Current Section Key: " + curSecMan.getKey() + "\n");
+			for (String curElemKey : curSecMan.getKeys())
+				sb.append("\t" + curElemKey + " -> " + curSecMan.getGettablesForKey(curElemKey) + "\n");
+		}
+		U.p(sb.toString());
+		config.writeToFile("parsedConfig.json");
 	}
 
 }
