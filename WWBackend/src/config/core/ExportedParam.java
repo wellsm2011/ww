@@ -1,4 +1,4 @@
-package config.explorer;
+package config.core;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -38,9 +38,14 @@ public @interface ExportedParam
 	 * STRMAP is mapped to Map&lt;String, String&gt;
 	 * </p>
 	 */
+	public enum SType
+	{
+		SINGLE, LIST, MAP// , OBJ
+	}
+	
 	public enum DType
 	{
-		NUM, STR, NUMLIST, STRLIST, NUMMAP, STRMAP// , OBJ
+		VAL, REF, ENUM
 	}
 
 	/**
@@ -52,23 +57,35 @@ public @interface ExportedParam
 	}
 
 	/**
-	 * The datatype for the currently annotated method, defaults to STR.
+	 * The storage type for the currently annotated method, whether a single val, list, or a map.
 	 */
-	DType datatype() default DType.STR;
+	SType storetype();
 
 	/**
-	 * The JSON key for this field, defaults to blank.
+	 * The JSON key for this field.
 	 */
-	String key() default "";
+	String key();
 
 	/**
 	 * The type this particular method is of, defaults to GETTER.
 	 */
-	MType methodtype() default MType.GETTER;
+	MType methodtype();
+	
+	/**
+	 * What type of thing is stored here
+	 * @return
+	 */
+	DType datatype();
 
 	/**
 	 * How this field should be sorted in comparasion to the other fields in the
 	 * json file, which determines how fields are sorted in the editor.
 	 */
-	int sortVal() default 1000;
+	int sortVal();
+	
+	/**
+	 * Optional, determines what name of type to reference
+	 * @return
+	 */
+	String valRef() default "";
 }

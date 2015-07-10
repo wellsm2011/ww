@@ -18,10 +18,7 @@ import backend.U;
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
 
-import config.explorer.ExportedParam;
-import config.explorer.ExportedParam.MType;
-import config.explorer.ExportedParameter;
-import config.explorer.FinderListener;
+import config.core.ExportedParam.MType;
 
 /**
  * <p>
@@ -306,34 +303,17 @@ public class Config
 		JSONArray val;
 		switch (curParam.getDatatype())
 		{
-			case NUM:
-				curParam.call(instance, MType.SETTER, curJSONSection.optDouble(curKey, 0.0));
-				break;
-			case STR:
+			case SINGLE:
 				curParam.call(instance, MType.SETTER, curJSONSection.optString(curKey, ""));
 				break;
-			case NUMLIST:
-				val = this.getJSONArr(curJSONSection, curKey);
-				List<Double> numList = new LinkedList<Double>();
-				for (int i = 0; i < val.length(); i++)
-					numList.add(val.optDouble(i, 0));
-				curParam.call(instance, MType.SETTER, numList);
-				break;
-			case STRLIST:
+			case LIST:
 				val = this.getJSONArr(curJSONSection, curKey);
 				List<String> strList = new LinkedList<String>();
 				for (int i = 0; i < val.length(); i++)
 					strList.add(val.optString(i, ""));
 				curParam.call(instance, MType.SETTER, strList);
 				break;
-			case NUMMAP:
-				obj = this.getJSONObj(curJSONSection, curKey);
-				Map<String, Double> numMap = new LinkedHashMap<String, Double>();
-				for (String mapKey : obj.keySet())
-					numMap.put(mapKey, obj.getDouble(mapKey));
-				curParam.call(instance, MType.SETTER, numMap);
-				break;
-			case STRMAP:
+			case MAP:
 				obj = this.getJSONObj(curJSONSection, curKey);
 				Map<String, String> strMap = new LinkedHashMap<String, String>();
 				for (String mapKey : obj.keySet())

@@ -1,4 +1,4 @@
-package config.explorer;
+package config.core;
 
 import backend.functionInterfaces.Handler;
 

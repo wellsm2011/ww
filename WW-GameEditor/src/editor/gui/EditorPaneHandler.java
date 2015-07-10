@@ -26,9 +26,9 @@ import org.eclipse.swt.widgets.Text;
 
 import backend.U;
 import backend.functionInterfaces.Handler;
+import config.core.ExportedParameter;
 import config.core.SectionManager;
-import config.explorer.ExportedParam.MType;
-import config.explorer.ExportedParameter;
+import config.core.ExportedParam.MType;
 
 /**
  * Editor helper class, builds a editing pane from the specified type of item.
@@ -108,22 +108,13 @@ public class EditorPaneHandler
 		for (Entry<String, ExportedParameter> curParam : paramMappings.entrySet())
 			switch (curParam.getValue().getDatatype())
 			{
-				case NUM:
-					this.setupNumberField(curParam);
-					break;
-				case NUMLIST:
-					this.setupNumberListField(curParam);
-					break;
-				case NUMMAP:
-					this.setupNumberMapField(curParam);
-					break;
-				case STR:
+				case SINGLE:
 					this.setupStringField(curParam);
 					break;
-				case STRLIST:
+				case LIST:
 					this.setupStringListField(curParam);
 					break;
-				case STRMAP:
+				case MAP:
 					this.setupStringMapField(curParam);
 					break;
 				default:
@@ -131,119 +122,119 @@ public class EditorPaneHandler
 			}
 	}
 
-	/**
-	 * Creates an editor for a number field for the specified parameter
-	 * 
-	 * @param curParam
-	 *            the parameter to edit
-	 */
-	private void setupNumberField(Entry<String, ExportedParameter> curParam)
-	{
-		Composite myPanel = new Composite(this.pane, SWT.SHADOW_NONE);
-		myPanel.setLayout(new GridLayout(2, false));
-		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
-		Text input = new Text(myPanel, SWT.BORDER);
-		input.addMouseListener(new ClickMapper(() -> {
-			input.setSelection(0, input.getText().length());
-		}));
-		caption.setText(curParam.getValue().getParamName());
-		input.setText(curParam.getValue().getParamName());
-		myPanel.pack();
-		this.loaders.add((in) -> {
-			input.setText(curParam.getValue().getGettableAsString(in));
-		});
-	}
+//	/**
+//	 * Creates an editor for a number field for the specified parameter
+//	 * 
+//	 * @param curParam
+//	 *            the parameter to edit
+//	 */
+//	private void setupNumberField(Entry<String, ExportedParameter> curParam)
+//	{
+//		Composite myPanel = new Composite(this.pane, SWT.SHADOW_NONE);
+//		myPanel.setLayout(new GridLayout(2, false));
+//		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
+//		Text input = new Text(myPanel, SWT.BORDER);
+//		input.addMouseListener(new ClickMapper(() -> {
+//			input.setSelection(0, input.getText().length());
+//		}));
+//		caption.setText(curParam.getValue().getParamName());
+//		input.setText(curParam.getValue().getParamName());
+//		myPanel.pack();
+//		this.loaders.add((in) -> {
+//			input.setText(curParam.getValue().getGettableAsString(in));
+//		});
+//	}
 
-	/**
-	 * Creates an editor for a number list for the specified parameter
-	 * 
-	 * @param curParam
-	 *            the parameter to edit
-	 */
-	private void setupNumberListField(Entry<String, ExportedParameter> curParam)
-	{
-		Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
-		numLabel.setText(curParam.getValue().getParamName());
-		this.loaders.add((in) -> {
-			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
-		});
-	}
-
-	/**
-	 * Creates an editor for a number map for the specified parameter
-	 * 
-	 * @param curParam
-	 *            the parameter to edit
-	 */
-	private void setupNumberMapField(Entry<String, ExportedParameter> curParam)
-	{
-		Composite myPanel = new Composite(this.pane, SWT.SHADOW_NONE);
-		myPanel.setLayout(new GridLayout(2, false));
-		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
-		caption.setText(curParam.getValue().getParamName());
-		final Table table = new Table(myPanel, SWT.FULL_SELECTION | SWT.HIDE_SELECTION);
-		TableColumn column1 = new TableColumn(table, SWT.NONE);
-		TableColumn column2 = new TableColumn(table, SWT.NONE);
-		column1.pack();
-		column2.pack();
-
-		final TableEditor editor = new TableEditor(table);
-		// The editor must have the same size as the cell and must
-		// not be any smaller than 50 pixels.
-		editor.horizontalAlignment = SWT.LEFT;
-		editor.grabHorizontal = true;
-		editor.minimumWidth = 50;
-		// editing the second column
-		final int EDITABLECOLUMN = 1;
-
-		table.addSelectionListener(new SelectionAdapter()
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e)
-			{
-				// Clean up any previous editor control
-				Control oldEditor = editor.getEditor();
-				if (oldEditor != null)
-					oldEditor.dispose();
-
-				// Identify the selected row
-				TableItem item = (TableItem) e.item;
-				if (item == null)
-					return;
-
-				// The control that will be the editor must be a child of the
-				// Table
-				Text newEditor = new Text(table, SWT.NONE);
-				newEditor.setText(item.getText(EDITABLECOLUMN));
-				newEditor.addModifyListener(new ModifyListener()
-				{
-					@Override
-					public void modifyText(ModifyEvent me)
-					{
-						Text text = (Text) editor.getEditor();
-						editor.getItem().setText(EDITABLECOLUMN, text.getText());
-					}
-				});
-				newEditor.selectAll();
-				newEditor.setFocus();
-				editor.setEditor(newEditor, item, EDITABLECOLUMN);
-			}
-		});
-
-		myPanel.pack();
-		this.loaders.add((in) -> {
-			table.removeAll();
-			Map<String, Double> map = U.cleanCast(curParam.getValue().call(in, MType.GETTER));
-			for (Entry<String, Double> curEntry : map.entrySet())
-			{
-				TableItem item = new TableItem(table, SWT.NONE);
-				item.setText(new String[]
-				{ curEntry.getKey(), curEntry.getValue() + "" });
-			}
-			table.pack();
-			myPanel.pack();
-		});
-	}
+//	/**
+//	 * Creates an editor for a number list for the specified parameter
+//	 * 
+//	 * @param curParam
+//	 *            the parameter to edit
+//	 */
+//	private void setupNumberListField(Entry<String, ExportedParameter> curParam)
+//	{
+//		Label numLabel = new Label(this.pane, SWT.SHADOW_NONE);
+//		numLabel.setText(curParam.getValue().getParamName());
+//		this.loaders.add((in) -> {
+//			numLabel.setText(curParam.getValue().getParamName() + " = " + curParam.getValue().getGettableAsString(in));
+//		});
+//	}
+//
+//	/**
+//	 * Creates an editor for a number map for the specified parameter
+//	 * 
+//	 * @param curParam
+//	 *            the parameter to edit
+//	 */
+//	private void setupNumberMapField(Entry<String, ExportedParameter> curParam)
+//	{
+//		Composite myPanel = new Composite(this.pane, SWT.SHADOW_NONE);
+//		myPanel.setLayout(new GridLayout(2, false));
+//		Label caption = new Label(myPanel, SWT.SHADOW_NONE);
+//		caption.setText(curParam.getValue().getParamName());
+//		final Table table = new Table(myPanel, SWT.FULL_SELECTION | SWT.HIDE_SELECTION);
+//		TableColumn column1 = new TableColumn(table, SWT.NONE);
+//		TableColumn column2 = new TableColumn(table, SWT.NONE);
+//		column1.pack();
+//		column2.pack();
+//
+//		final TableEditor editor = new TableEditor(table);
+//		// The editor must have the same size as the cell and must
+//		// not be any smaller than 50 pixels.
+//		editor.horizontalAlignment = SWT.LEFT;
+//		editor.grabHorizontal = true;
+//		editor.minimumWidth = 50;
+//		// editing the second column
+//		final int EDITABLECOLUMN = 1;
+//
+//		table.addSelectionListener(new SelectionAdapter()
+//		{
+//			@Override
+//			public void widgetSelected(SelectionEvent e)
+//			{
+//				// Clean up any previous editor control
+//				Control oldEditor = editor.getEditor();
+//				if (oldEditor != null)
+//					oldEditor.dispose();
+//
+//				// Identify the selected row
+//				TableItem item = (TableItem) e.item;
+//				if (item == null)
+//					return;
+//
+//				// The control that will be the editor must be a child of the
+//				// Table
+//				Text newEditor = new Text(table, SWT.NONE);
+//				newEditor.setText(item.getText(EDITABLECOLUMN));
+//				newEditor.addModifyListener(new ModifyListener()
+//				{
+//					@Override
+//					public void modifyText(ModifyEvent me)
+//					{
+//						Text text = (Text) editor.getEditor();
+//						editor.getItem().setText(EDITABLECOLUMN, text.getText());
+//					}
+//				});
+//				newEditor.selectAll();
+//				newEditor.setFocus();
+//				editor.setEditor(newEditor, item, EDITABLECOLUMN);
+//			}
+//		});
+//
+//		myPanel.pack();
+//		this.loaders.add((in) -> {
+//			table.removeAll();
+//			Map<String, Double> map = U.cleanCast(curParam.getValue().call(in, MType.GETTER));
+//			for (Entry<String, Double> curEntry : map.entrySet())
+//			{
+//				TableItem item = new TableItem(table, SWT.NONE);
+//				item.setText(new String[]
+//				{ curEntry.getKey(), curEntry.getValue() + "" });
+//			}
+//			table.pack();
+//			myPanel.pack();
+//		});
+//	}
 
 	/**
 	 * Creates an editor for a string field for the specified parameter

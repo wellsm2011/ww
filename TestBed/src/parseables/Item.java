@@ -3,9 +3,10 @@ package parseables;
 import java.util.List;
 
 import config.core.ConfigMember;
-import config.explorer.ExportedParam;
-import config.explorer.ExportedParam.DType;
-import config.explorer.ExportedParam.MType;
+import config.core.ExportedParam;
+import config.core.ExportedParam.DType;
+import config.core.ExportedParam.SType;
+import config.core.ExportedParam.MType;
 
 /**
  * Currently serves as a little example for future reference: parses itself from
@@ -17,25 +18,25 @@ public class Item
 	private double			exampleA;
 	private List<Double>	exampleB;
 
-	@ExportedParam(datatype = DType.NUM, key = "exampleA", methodtype = MType.GETTER)
+	@ExportedParam(storetype = SType.SINGLE, key = "exampleA", methodtype = MType.GETTER, datatype = DType.VAL, sortVal = 0)
 	public double getExampleA()
 	{
 		return this.exampleA;
 	}
 
-	@ExportedParam(datatype = DType.NUMLIST, key = "exampleB", methodtype = MType.GETTER)
+	@ExportedParam(storetype = SType.LIST, key = "exampleB", methodtype = MType.GETTER, datatype = DType.VAL, sortVal = 0)
 	public List<Double> getExampleB()
 	{
 		return this.exampleB;
 	}
 
-	@ExportedParam(datatype = DType.NUM, key = "exampleA", methodtype = MType.SETTER)
+	@ExportedParam(storetype = SType.SINGLE, key = "exampleA", methodtype = MType.SETTER, datatype = DType.VAL, sortVal = 0)
 	public void setExampleA(double input)
 	{
 		this.exampleA = input;
 	}
 
-	@ExportedParam(datatype = DType.NUMLIST, key = "exampleB", methodtype = MType.SETTER)
+	@ExportedParam(storetype = SType.LIST, key = "exampleB", methodtype = MType.SETTER, datatype = DType.VAL, sortVal = 0)
 	public void setExampleB(List<Double> input)
 	{
 		this.exampleB = input;

@@ -1,19 +1,19 @@
-package config.explorer;
+package config.core;
 
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import config.core.ExportedParam.SType;
+import config.core.ExportedParam.MType;
 import backend.U;
-import config.explorer.ExportedParam.DType;
-import config.explorer.ExportedParam.MType;
 
 public class ExportedParameter
 {
 	private String				paramName;
 	private Map<MType, Method>	methods;
-	private DType				datatype;
+	private SType				datatype;
 
-	public ExportedParameter(String name, Map<MType, Method> methods, DType datatype)
+	public ExportedParameter(String name, Map<MType, Method> methods, SType datatype)
 	{
 		this.paramName = name;
 		this.methods = methods;
@@ -25,7 +25,7 @@ public class ExportedParameter
 		return U.carefulCall(this.methods.get(targMethod), target, params);
 	}
 
-	public DType getDatatype()
+	public SType getDatatype()
 	{
 		return this.datatype;
 	}

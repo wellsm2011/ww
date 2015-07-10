@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import config.core.ConfigMember;
-import config.explorer.ExportedParam;
-import config.explorer.ExportedParam.DType;
-import config.explorer.ExportedParam.MType;
+import config.core.ExportedParam;
+import config.core.ExportedParam.DType;
+import config.core.ExportedParam.SType;
+import config.core.ExportedParam.MType;
 
 @ConfigMember(sectionKey = "phases")
 public class Phase
@@ -16,49 +17,49 @@ public class Phase
 	private List<String>		activeMods;
 	private List<String>		continueReqs;
 
-	@ExportedParam(datatype = DType.STRLIST, key = "activeMods", methodtype = MType.GETTER, sortVal = 3)
-	public List<String> getactiveMods()
+	@ExportedParam(storetype = SType.LIST, key = "activeMods", methodtype = MType.GETTER, sortVal = 3, datatype = DType.REF)
+	public List<String> getActiveMods()
 	{
 		return this.activeMods;
 	}
 
-	@ExportedParam(datatype = DType.STRLIST, key = "continueReqs", methodtype = MType.GETTER, sortVal = 4)
-	public List<String> getcontinueReqs()
+	@ExportedParam(storetype = SType.LIST, key = "continueReqs", methodtype = MType.GETTER, sortVal = 4, datatype = DType.VAL)
+	public List<String> getContinueReqs()
 	{
 		return this.continueReqs;
 	}
 
-	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.GETTER, sortVal = 1)
+	@ExportedParam(storetype = SType.LIST, key = "triggeredActions", methodtype = MType.GETTER, sortVal = 1, datatype = DType.REF)
 	public List<String> getTriggeredActions()
 	{
 		return this.triggeredActions;
 	}
 
-	@ExportedParam(datatype = DType.STRMAP, key = "triggeredAtomics", methodtype = MType.GETTER, sortVal = 2)
+	@ExportedParam(storetype = SType.MAP, key = "triggeredAtomics", methodtype = MType.GETTER, sortVal = 2, datatype = DType.REF)
 	public Map<String, String> getTriggeredAtomics()
 	{
 		return this.triggeredAtomics;
 	}
 
-	@ExportedParam(datatype = DType.STRLIST, key = "activeMods", methodtype = MType.SETTER, sortVal = 3)
+	@ExportedParam(storetype = SType.LIST, key = "activeMods", methodtype = MType.SETTER, sortVal = 3, datatype = DType.REF)
 	public void setActiveMods(List<String> input)
 	{
 		this.activeMods = input;
 	}
 
-	@ExportedParam(datatype = DType.STRLIST, key = "continueReqs", methodtype = MType.SETTER, sortVal = 4)
+	@ExportedParam(storetype = SType.LIST, key = "continueReqs", methodtype = MType.SETTER, sortVal = 4, datatype = DType.VAL)
 	public void setContinueReqs(List<String> input)
 	{
 		this.continueReqs = input;
 	}
 
-	@ExportedParam(datatype = DType.STRLIST, key = "triggeredActions", methodtype = MType.SETTER, sortVal = 1)
+	@ExportedParam(storetype = SType.LIST, key = "triggeredActions", methodtype = MType.SETTER, sortVal = 1, datatype = DType.REF)
 	public void setTriggeredActions(List<String> input)
 	{
 		this.triggeredActions = input;
 	}
 
-	@ExportedParam(datatype = DType.STRMAP, key = "triggeredAtomics", methodtype = MType.SETTER, sortVal = 2)
+	@ExportedParam(storetype = SType.MAP, key = "triggeredAtomics", methodtype = MType.SETTER, sortVal = 2, datatype = DType.REF)
 	public void setTriggeredAtomics(Map<String, String> input)
 	{
 		this.triggeredAtomics = input;

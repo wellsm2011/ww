@@ -9,10 +9,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import backend.U;
-import config.explorer.ExportedParam;
-import config.explorer.ExportedParam.DType;
-import config.explorer.ExportedParam.MType;
-import config.explorer.ExportedParameter;
+import config.core.ExportedParam.SType;
+import config.core.ExportedParam.MType;
 
 /**
  * This class is a helper class for the main Config system, what this does is it
@@ -44,7 +42,7 @@ public class SectionManager
 	{
 		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
 		LinkedHashMap<String, LinkedHashMap<MType, Method>> map = new LinkedHashMap<String, LinkedHashMap<MType, Method>>();
-		LinkedHashMap<String, DType> keyToDataTypeMap = new LinkedHashMap<String, DType>();
+		LinkedHashMap<String, SType> keyToDataTypeMap = new LinkedHashMap<String, SType>();
 
 		// Finds and lists all methods by method type
 		for (Method curMethod : SectionManager.getSortedMethods(input))
@@ -54,7 +52,7 @@ public class SectionManager
 				if (!map.containsKey(paramData.key()))
 					map.put(paramData.key(), new LinkedHashMap<MType, Method>());
 				map.get(paramData.key()).put(paramData.methodtype(), curMethod);
-				keyToDataTypeMap.put(paramData.key(), paramData.datatype());
+				keyToDataTypeMap.put(paramData.key(), paramData.storetype());
 			}
 
 		// If no filters are selected, return them all
@@ -242,5 +240,10 @@ public class SectionManager
 		if (!this.dataItems.containsKey(key))
 			U.e("Error, was passed key " + key + ". This does not matcha anything on file, returning a blank map.");
 		return this.getGettablesFor(this.dataItems.get(key));
+	}
+
+	public <T> T[] getItems()
+	{
+		return U.cleanCast(this.dataItems.values().toArray());
 	}
 }
