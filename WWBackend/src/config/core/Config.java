@@ -200,7 +200,7 @@ public class Config
 		JSONObject res = new JSONObject();
 		Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())
-			res.put(curExport.getKey(), curExport.getValue().call(input, MType.GETTER));
+			res.putObj(curExport.getKey(), curExport.getValue().call(input, MType.GETTER));
 		return res;
 	}
 

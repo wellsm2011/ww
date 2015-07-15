@@ -140,7 +140,7 @@ public class JSONObject
 	 * <code>JSONObject.NULL.equals(null)</code> returns <code>true</code>.
 	 * <code>JSONObject.NULL.toString()</code> returns <code>"null"</code>.
 	 */
-	public static final Object	NULL	= new Null();
+	public static final Object NULL = new Null();
 
 	/**
 	 * Produce a string from a double. The string "null" will be returned if the
@@ -552,7 +552,7 @@ public class JSONObject
 	/**
 	 * The map where the JSONObject's properties are kept.
 	 */
-	private final Map<String, Object>	map;
+	private final Map<String, Object> map;
 
 	/**
 	 * Construct an empty JSONObject.
@@ -728,8 +728,8 @@ public class JSONObject
 	 *
 	 * @param source
 	 *            A string beginning with <code>{</code>&nbsp;<small>(left
-	 *            brace)</small> and ending with <code>}</code>
-	 *            &nbsp;<small>(right brace)</small>.
+	 *            brace)</small> and ending with <code>}</code> &nbsp;
+	 *            <small>(right brace)</small>.
 	 * @exception JSONException
 	 *                If there is a syntax error in the source string or a
 	 *                duplicated key.
@@ -1477,6 +1477,36 @@ public class JSONObject
 	 *             If the value is non-finite number or if the key is null.
 	 */
 	public JSONObject put(String key, Object value) throws JSONException
+	{
+		if (key == null)
+			throw new NullPointerException("Null key.");
+		if (value != null)
+		{
+			JSONObject.testValidity(value);
+			this.map.put(key, value);
+		} else
+			this.remove(key);
+		return this;
+	}
+
+	/**
+	 * Copy of {@link JSONObject#put(String, Object)} to help reduce ambiguity.
+	 * <p>
+	 * Put a key/value pair in the JSONObject. If the value is null, then the
+	 * key will be removed from the JSONObject if it is present.
+	 * </p>
+	 *
+	 * @param key
+	 *            A key string.
+	 * @param value
+	 *            An object which is the value. It should be of one of these
+	 *            types: Boolean, Double, Integer, JSONArray, JSONObject, Long,
+	 *            String, or the JSONObject.NULL object.
+	 * @return this.
+	 * @throws JSONException
+	 *             If the value is non-finite number or if the key is null.
+	 */
+	public JSONObject putObj(String key, Object value) throws JSONException
 	{
 		if (key == null)
 			throw new NullPointerException("Null key.");
