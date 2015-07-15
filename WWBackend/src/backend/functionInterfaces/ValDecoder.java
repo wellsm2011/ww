@@ -3,7 +3,7 @@ package backend.functionInterfaces;
 import org.json.JSONObject;
 
 @FunctionalInterface
-public interface ValDecoder
+public interface ValDecoder<T>
 {
-	public <T> T decode(JSONObject input);
+	public T decode(JSONObject input);
 }
