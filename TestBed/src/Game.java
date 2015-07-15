@@ -1,5 +1,5 @@
-import parseables.Phase;
 import config.core.Config;
+import game.parseables.Phase;
 
 public class Game
 {

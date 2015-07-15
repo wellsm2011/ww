@@ -1,4 +1,4 @@
-package parseables;
+package game.parseables;
 
 import java.util.Map;
 

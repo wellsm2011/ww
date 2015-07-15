@@ -2,6 +2,7 @@ package config.core;
 
 import global.Globals;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 
 //Static import of U not used due to cleanup and proper styling, as well as basic readability.
 import backend.U;
+import backend.functionInterfaces.ValDecoder;
 
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
@@ -42,6 +44,20 @@ import config.core.ExportedParam.MType;
 public class Config
 {
 
+	private static HashMap<String, ValDecoder> decoders;
+
+	static
+	{
+		decoders = new HashMap<String, ValDecoder>();
+	}
+
+	public static void registerDecoder(String name, ValDecoder decoder) throws ExistingDecoderException
+	{
+		if (decoders.containsKey(name))
+			throw new ExistingDecoderException();
+		decoders.put(name.toLowerCase(), decoder);
+	}
+
 	/**
 	 * Looks through all classes, and finds those with the ConfigMember
 	 * annotation. Note, this actually via the tricks of javaassist bytecode
@@ -64,7 +80,7 @@ public class Config
 			{
 				e.printStackTrace();
 			}
-		}, ConfigMember.class));
+		} , ConfigMember.class));
 		discoverer.discover();
 		return res;
 	}

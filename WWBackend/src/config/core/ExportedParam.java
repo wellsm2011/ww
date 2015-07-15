@@ -9,23 +9,21 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 // can use in method only.
 /**
- * An annotation for marking up data-type classes for use in JSON config storage and loading, also adds support to being able to edit the memory-resident datastructures with the same functionality.
+ * An annotation for marking up data-type classes for use in JSON config storage
+ * and loading, also adds support to being able to edit the memory-resident
+ * datastructures with the same functionality.
  *
  * @author Andrew Binns
  */
 public @interface ExportedParam
 {
 	/**
-	 * //TODO
+	 * This denotes the number of types that are expected in this param, whether
+	 * a list, map, or just a single one.
 	 */
 	public enum SType
 	{
-		SINGLE, LIST, MAP// , OBJ
-	}
-	
-	public enum DType
-	{
-		VAL, REF, ENUM
+		SINGLE, LIST, MAP
 	}
 
 	/**
@@ -37,11 +35,6 @@ public @interface ExportedParam
 	}
 
 	/**
-	 * The storage type for the currently annotated method, whether a single val, list, or a map.
-	 */
-	SType storetype();
-
-	/**
 	 * The JSON key for this field.
 	 */
 	String key();
@@ -50,22 +43,54 @@ public @interface ExportedParam
 	 * The type this particular method is of, defaults to GETTER.
 	 */
 	MType methodtype();
-	
+
 	/**
-	 * What type of thing is stored here
-	 * @return
+	 * The storage type for the currently annotated method, whether a single
+	 * val, list, or a map.
 	 */
-	DType datatype();
+	SType storetype();
+
+	/**
+	 * <p>
+	 * What type of thing is stored here. Can be a reference to another config
+	 * member type, value (passed as string), one option from a list
+	 * (Essentially like enumerated types, offers the user to limit the fields
+	 * to specific types, similar in functionality to an enum), or encoded
+	 * types. Decoders can be registered via the
+	 * {@link Config#registerDecoder(String, backend.functionInterfaces.ValDecoder)}
+	 * function.
+	 * </p>
+	 * <p>
+	 * Examples:
+	 * </p>
+	 * <p>
+	 * To denote a string: "string" or "str" or "val" or "value" are all
+	 * accepted.
+	 * </p>
+	 * <p>
+	 * To denote a reference: "ref:&lt;Classname&gt;" where &lt;Classname&gt; is
+	 * the name of the class to load. Can match the fully qualified name
+	 * (my.package.Classname) or just classname.
+	 * </p>
+	 * <p>
+	 * to denote a list of options:
+	 * "enum:item1,item2,item3,somethingelse,whatever"
+	 * </p>
+	 * <p>
+	 * to use a decoder: "decode:&lt;DecoderName!&gt;" where
+	 * &lt;DecoderName!&gt; is the name of the desired decoder. This is case
+	 * insensitive.
+	 * </p>
+	 * 
+	 * @see Config#registerDecoder(String,
+	 *      backend.functionInterfaces.ValDecoder)
+	 */
+	String dataType();
 
 	/**
 	 * How this field should be sorted in comparasion to the other fields in the
 	 * json file, which determines how fields are sorted in the editor.
 	 */
 	int sortVal();
-	
-	/**
-	 * Optional, determines what name of type to reference
-	 * @return
-	 */
-	String valRef() default "";
+
 }
