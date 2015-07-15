@@ -71,7 +71,7 @@ public class Executor implements Opcode
 		Type array = frame.pop();
 
 		// Special case, an array defined by aconst_null
-		// TODO - we might need to be more inteligent about this
+		// ITODO - we might need to be more inteligent about this
 		if (array == Type.UNINIT)
 		{
 			this.verifyAssignable(Type.INTEGER, index);

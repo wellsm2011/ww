@@ -320,8 +320,6 @@ public class Config
 					strMap.put(mapKey, obj.getString(mapKey));
 				curParam.call(instance, MType.SETTER, strMap);
 				break;
-			// case OBJ:
-			// obj = this.getJSONObj(curJSONSection, curKey);
 			default:
 				U.d("Unknown exported parameter found.", 2);
 				break;

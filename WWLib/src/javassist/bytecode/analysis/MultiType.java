@@ -38,7 +38,7 @@ import javassist.CtClass;
  */
 
 /*
- * TODO - A better, but more involved, approach would be to track the
+ * ITODO A better, but more involved, approach would be to track the
  * instruction offset that resulted in the creation of this type, and whenever
  * the typeset changes, to force a merge on that position. This would require
  * creating a new MultiType instance every time the typeset changes, and somehow

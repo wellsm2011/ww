@@ -68,7 +68,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 	private ScopedClassPoolRepositoryImpl()
 	{
 		this.classpool = ClassPool.getDefault();
-		// FIXME This doesn't look correct
+		// IFIXME This doesn't look correct
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		this.classpool.insertClassPath(new LoaderClassPath(cl));
 	}
@@ -173,7 +173,7 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 	{
 		synchronized (this.registeredCLs)
 		{
-			// FIXME: Probably want to take this method out later
+			// IFIXME: Probably want to take this method out later
 			// so that AOP framework can be independent of JMX
 			// This is in here so that we can remove a UCL from the ClassPool as
 			// a

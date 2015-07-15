@@ -6,6 +6,7 @@ import java.util.Map;
 import config.core.ConfigMember;
 import config.core.ExportedParam;
 import config.core.ExportedParam.SType;
+import config.core.ExportedParam.DType;
 import config.core.ExportedParam.MType;
 
 @ConfigMember(sectionKey = "abilities")
@@ -17,7 +18,7 @@ public class Ability
 	private Map<String, String>	triggerData;
 	private Map<String, String>	targetingData;
 
-	@ExportedParam(storetype = SType.LIST, key = "appliedActions", methodtype = MType.GETTER, sortVal = 4)
+	@ExportedParam(storetype = SType.LIST, key = "appliedActions", methodtype = MType.GETTER, sortVal = 4, datatype = DType.VAL)
 	public List<String> getAppliedActions()
 	{
 		return this.appliedActions;

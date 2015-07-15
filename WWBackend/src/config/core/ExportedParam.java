@@ -16,27 +16,7 @@ import java.lang.annotation.Target;
 public @interface ExportedParam
 {
 	/**
-	 * <p>
-	 * The supported datatypes for what is stored in the config file.
-	 * </p>
-	 * <p>
-	 * NUM is mapped to double
-	 * </p>
-	 * <p>
-	 * STR is mapped to String
-	 * </p>
-	 * <p>
-	 * NUMLIST is mapped to List&lt;String&gt;
-	 * </p>
-	 * <p>
-	 * STRLIST is mapped to List&lt;Double&gt;
-	 * </p>
-	 * <p>
-	 * NUMMAP is mapped to Map&lt;String, Double&gt;
-	 * </p>
-	 * <p>
-	 * STRMAP is mapped to Map&lt;String, String&gt;
-	 * </p>
+	 * //TODO
 	 */
 	public enum SType
 	{

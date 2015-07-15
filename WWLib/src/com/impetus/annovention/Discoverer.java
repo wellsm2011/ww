@@ -160,7 +160,7 @@ public abstract class Discoverer
 				}
 			} catch (IOException e)
 			{
-				// TODO: Do something with this exception
+				// ITODO: Do something with this exception
 				e.printStackTrace();
 			}
 	}
