@@ -106,7 +106,7 @@ public class EditorPaneHandler
 	private void populateLoaders(Map<String, ExportedParameter> paramMappings)
 	{
 		for (Entry<String, ExportedParameter> curParam : paramMappings.entrySet())
-			switch (curParam.getValue().getDatatype())
+			switch (curParam.getValue().getStoreType())
 			{
 				case SINGLE:
 					this.setupStringField(curParam);

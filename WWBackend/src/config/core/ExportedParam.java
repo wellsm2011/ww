@@ -57,7 +57,7 @@ public @interface ExportedParam
 	 * (Essentially like enumerated types, offers the user to limit the fields
 	 * to specific types, similar in functionality to an enum), or encoded
 	 * types. Decoders can be registered via the
-	 * {@link Config#registerDecoder(String, backend.functionInterfaces.ValDecoder)}
+	 * {@link Config#registerType(String, backend.functionInterfaces.ValDecoder)}
 	 * function.
 	 * </p>
 	 * <p>
@@ -82,7 +82,7 @@ public @interface ExportedParam
 	 * insensitive.
 	 * </p>
 	 * 
-	 * @see Config#registerDecoder(String,
+	 * @see Config#registerType(String,
 	 *      backend.functionInterfaces.ValDecoder)
 	 */
 	String dataType();

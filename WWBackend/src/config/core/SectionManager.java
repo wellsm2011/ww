@@ -9,7 +9,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import backend.U;
-import config.core.ExportedParam.SType;
 import config.core.ExportedParam.MType;
 
 /**
@@ -21,9 +20,11 @@ import config.core.ExportedParam.MType;
  */
 public class SectionManager
 {
-	private static MType[]	stdParamFilter;
+	private static MType[] stdParamFilter;
+
 	static
 	{
+		// The types of methods to look for
 		SectionManager.stdParamFilter = new MType[]
 		{ MType.GETTER, MType.SETTER };
 	}
@@ -40,11 +41,12 @@ public class SectionManager
 	 */
 	public static Map<String, ExportedParameter> findParametersByFilter(Class<?> input, MType... filter)
 	{
-		LinkedHashMap<String, ExportedParameter> res = new LinkedHashMap<String, ExportedParameter>();
-		LinkedHashMap<String, LinkedHashMap<MType, Method>> map = new LinkedHashMap<String, LinkedHashMap<MType, Method>>();
-		LinkedHashMap<String, SType> keyToDataTypeMap = new LinkedHashMap<String, SType>();
+		Map<String, ExportedParameter> res = new LinkedHashMap<>();
+		Map<String, Map<MType, Method>> map = new LinkedHashMap<>();
+		Map<String, ExportedParam> annotationMap = new LinkedHashMap<>();
 
-		// Finds and lists all methods by method type
+		// Finds and lists all methods by method type. Also stores types and
+		// datatypes for each found annotation
 		for (Method curMethod : SectionManager.getSortedMethods(input))
 			if (curMethod.isAnnotationPresent(ExportedParam.class))
 			{
@@ -52,22 +54,22 @@ public class SectionManager
 				if (!map.containsKey(paramData.key()))
 					map.put(paramData.key(), new LinkedHashMap<MType, Method>());
 				map.get(paramData.key()).put(paramData.methodtype(), curMethod);
-				keyToDataTypeMap.put(paramData.key(), paramData.storetype());
+				annotationMap.put(paramData.key(), paramData);
 			}
 
 		// If no filters are selected, return them all
 		if (filter.length <= 0)
-			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
-				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), curParam.getValue(), keyToDataTypeMap.get(curParam.getKey())));
+			for (Entry<String, Map<MType, Method>> curParam : map.entrySet())
+				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), curParam.getValue(), annotationMap.get(curParam.getKey())));
 
 		// Get all methods mentioned in the filter
 		if (filter.length > 0)
-			for (Entry<String, LinkedHashMap<MType, Method>> curParam : map.entrySet())
+			for (Entry<String, Map<MType, Method>> curMethods : map.entrySet())
 			{
-				LinkedHashMap<MType, Method> methods = new LinkedHashMap<MType, Method>();
+				Map<MType, Method> methods = new HashMap<MType, Method>();
 				for (MType curFilter : filter)
-					methods.put(curFilter, curParam.getValue().get(curFilter));
-				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), methods, keyToDataTypeMap.get(curParam.getKey())));
+					methods.put(curFilter, curMethods.getValue().get(curFilter));
+				res.put(curMethods.getKey(), new ExportedParameter(curMethods.getKey(), methods, annotationMap.get(curMethods.getKey())));
 			}
 		return res;
 	}
@@ -98,13 +100,13 @@ public class SectionManager
 		return res;
 	}
 
-	private Class<?>						type;
+	private Class<?> type;
 
-	private Map<String, Object>				dataItems;
+	private Map<String, Object> dataItems;
 
-	private Map<String, ExportedParameter>	paramMappings;
+	private Map<String, ExportedParameter> paramMappings;
 
-	private String							keyName;
+	private String keyName;
 
 	/**
 	 * <p>

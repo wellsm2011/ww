@@ -5,27 +5,27 @@ import java.util.Map;
 
 import config.core.ConfigMember;
 import config.core.ExportedParam;
+import config.core.ExportedParam.MType;
 import config.core.ExportedParam.SType;
 import game.core.Atomic;
-import config.core.ExportedParam.MType;
 
 @ConfigMember(sectionKey = "abilities")
 public class Ability
 {
-	private Map<String, String>		appliedAtomics;
-	private List<String>		appliedActions;
+	private Map<String, Atomic>	appliedAtomics;
+	private List<Action>		appliedActions;
 	private List<String>		tags;
 	private Map<String, String>	triggerData;
 	private Map<String, String>	targetingData;
 
 	@ExportedParam(storetype = SType.LIST, dataType = "ref:Action", key = "appliedActions", methodtype = MType.GETTER, sortVal = 4)
-	public List<String> getAppliedActions()
+	public List<Action> getAppliedActions()
 	{
 		return this.appliedActions;
 	}
 
-	@ExportedParam(storetype = SType.LIST, dataType = "decode:Atomic", key = "appliedAtomics", methodtype = MType.GETTER, sortVal = 5)
-	public Map<String, String> getAppliedAtomics()
+	@ExportedParam(storetype = SType.MAP, dataType = "decode:Atomic", key = "appliedAtomics", methodtype = MType.GETTER, sortVal = 5)
+	public Map<String, Atomic> getAppliedAtomics()
 	{
 		return this.appliedAtomics;
 	}
@@ -48,14 +48,14 @@ public class Ability
 		return this.triggerData;
 	}
 
-	@ExportedParam(storetype = SType.LIST, dataType = "string", key = "appliedActions", methodtype = MType.SETTER, sortVal = 4)
-	public void setAppliedActions(List<String> input)
+	@ExportedParam(storetype = SType.LIST, dataType = "ref:Action", key = "appliedActions", methodtype = MType.SETTER, sortVal = 4)
+	public void setAppliedActions(List<Action> input)
 	{
 		this.appliedActions = input;
 	}
 
-	@ExportedParam(storetype = SType.MAP, dataType = "string", key = "appliedAtomics", methodtype = MType.SETTER, sortVal = 5)
-	public void setAppliedAtomics(Map<String, String> input)
+	@ExportedParam(storetype = SType.MAP, dataType = "decode:Atomic", key = "appliedAtomics", methodtype = MType.SETTER, sortVal = 5)
+	public void setAppliedAtomics(Map<String, Atomic> input)
 	{
 		this.appliedAtomics = input;
 	}

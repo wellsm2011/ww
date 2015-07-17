@@ -1,5 +1,7 @@
 package game.core;
 
+import org.json.JSONObject;
+
 import backend.U;
 import config.core.Config;
 import config.core.ExistingDecoderException;
@@ -8,15 +10,11 @@ public class Atomic
 {
 	static
 	{
-		try
-		{
-			Config.registerDecoder("Atomic", obj -> {
-				U.p(obj);
-				return new Atomic();
-			});
-		} catch (ExistingDecoderException e)
-		{
-			
-		}
+		Config.registerType("Atomic", obj -> {
+			U.p(obj);
+			return new Atomic();
+		},cur ->{
+			return new JSONObject();
+		});
 	}
 }

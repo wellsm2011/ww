@@ -1,6 +1,7 @@
 package config.core;
 
 import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import config.core.ExportedParam.SType;
@@ -11,13 +12,15 @@ public class ExportedParameter
 {
 	private String				paramName;
 	private Map<MType, Method>	methods;
-	private SType				datatype;
+	private SType				storeType;
+	private String				dataType;
 
-	public ExportedParameter(String name, Map<MType, Method> methods, SType datatype)
+	public ExportedParameter(String name, Map<MType, Method> methods, ExportedParam paramInfo)
 	{
 		this.paramName = name;
 		this.methods = methods;
-		this.datatype = datatype;
+		this.storeType = paramInfo.storetype();
+		this.dataType = paramInfo.dataType();
 	}
 
 	public <T> T call(Object target, MType targMethod, Object... params)
@@ -25,9 +28,14 @@ public class ExportedParameter
 		return U.carefulCall(this.methods.get(targMethod), target, params);
 	}
 
-	public SType getDatatype()
+	public SType getStoreType()
 	{
-		return this.datatype;
+		return this.storeType;
+	}
+
+	public String getDataType()
+	{
+		return dataType;
 	}
 
 	public String getGettableAsString(Object input)

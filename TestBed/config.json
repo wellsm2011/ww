@@ -24,15 +24,21 @@
     "abilities": {
         "Start Lynch Vote": {
             "tags": ["dayending"],
-            "trigger": {"on": "use"},
+            "trigger": {"type" : "usable"},
             "targeting": {
-                "type": "vote[role!=Fool,reqMajority=51%]",
+                "type":"vote",
+				"blacklist": "role!=Fool",
+				"typeparam" : "reqMajority=51%]",
                 "filter": "",
                 "selection": "list"
             },
             "appliedActions": ["lynch"],
             "appliedAtomics": {
-				"ChatPost":"system:Starting Lynch Vote!->villager"
+				"ChatPost":{
+						"source":"system",
+						"message":"Starting Lynch Vote!",
+						"channel":"villager"
+					}
 			}
         },
         "Maul Face": {

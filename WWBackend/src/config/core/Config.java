@@ -16,6 +16,7 @@ import org.json.JSONObject;
 //Static import of U not used due to cleanup and proper styling, as well as basic readability.
 import backend.U;
 import backend.functionInterfaces.ValDecoder;
+import backend.functionInterfaces.ValEncoder;
 
 import com.impetus.annovention.ClasspathDiscoverer;
 import com.impetus.annovention.Discoverer;
@@ -44,18 +45,24 @@ import config.core.ExportedParam.MType;
 public class Config
 {
 
-	private static HashMap<String, ValDecoder> decoders;
+	private static HashMap<String, ValDecoder<?>> decoders;
+	private static HashMap<String, ValEncoder<?>> encoders;
 
 	static
 	{
-		decoders = new HashMap<String, ValDecoder>();
+		decoders = new HashMap<String, ValDecoder<?>>();
+		encoders = new HashMap<String, ValEncoder<?>>();
 	}
 
-	public static void registerDecoder(String name, ValDecoder decoder) throws ExistingDecoderException
+	public static boolean registerType(String name, ValDecoder<?> decoder, ValEncoder<?> encoder)
 	{
 		if (decoders.containsKey(name))
-			throw new ExistingDecoderException();
+			return false;
+		if (encoders.containsKey(name))
+			return false;
 		decoders.put(name.toLowerCase(), decoder);
+		encoders.put(name.toLowerCase(), encoder);
+		return true;
 	}
 
 	/**
@@ -317,7 +324,10 @@ public class Config
 	{
 		JSONObject obj;
 		JSONArray val;
-		switch (curParam.getDatatype())
+		
+		//switch(curParam.g)
+		
+		switch (curParam.getStoreType())
 		{
 			case SINGLE:
 				curParam.call(instance, MType.SETTER, curJSONSection.optString(curKey, ""));
