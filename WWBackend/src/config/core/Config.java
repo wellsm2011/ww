@@ -244,26 +244,35 @@ public class Config
 		if (jsonData == null)
 			jsonData = new JSONObject();
 		SectionManager secMan = this.getManager(key, type);
+		// instantiate all objects first off, so references can be resolved
+		// later
+		for (String cur : jsonData.keySet())
+			try
+			{
+				Object curInstance = type.newInstance();
+				secMan.offer(cur, curInstance);
+			} catch (InstantiationException | IllegalAccessException e)
+			{
+				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, or something equally odd. "
+						+ "Like you specifiying an abstract class or interface as a config member, instead of a instantiable class...", e);
+			}
+		// parse all the param data
 		for (String cur : jsonData.keySet())
 			try
 			{
 				// Get the current JSON object, instantiate it to the given type
 				// and populate the class.
+				Object curInstance = secMan.getElem(cur);
 				JSONObject curJSONSection = jsonData.optJSONObject(cur);
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
-				Object curInstance = type.newInstance();
 				Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 				for (String curKey : curJSONSection.keySet())
 					if (paramMap.containsKey(curKey))
 						this.parseParam(curJSONSection, curKey, paramMap.get(curKey), curInstance);
 					else
 						U.d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
-				secMan.offer(cur, curInstance);
-			} catch (InstantiationException e)
-			{
-				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, .", e);
-			} catch (IllegalAccessException | JSONException e)
+			} catch (JSONException e)
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
 				e.printStackTrace();
