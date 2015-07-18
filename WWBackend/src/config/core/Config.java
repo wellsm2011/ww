@@ -262,7 +262,7 @@ public class Config
 				secMan.offer(cur, curInstance);
 			} catch (InstantiationException e)
 			{
-				U.e("Error instantiating class " + type.getName() + ". Make sure you are using the correct type for the key '" + key + "' in the Config class.", e);
+				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, .", e);
 			} catch (IllegalAccessException | JSONException e)
 			{
 				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
@@ -338,29 +338,39 @@ public class Config
 	{
 		JSONObject obj;
 
+		ValDecoder<?> decoder = decoders.get(curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1));
+
 		switch (curParam.getStoreType())
 		{
 			case SINGLE:
 				obj = curJSONSection.optJSONObject(curKey);
 				if (obj == null)
 					obj = new JSONObject();
-				curParam.call(instance, MType.SETTER, obj);
+				curParam.call(instance, MType.SETTER, decoder.decode(obj));
 				break;
 			case LIST:
 				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
 				// Using arraylist because overall we should be having fairly
 				// static lengths
-				List<?> list = new ArrayList<Object>(arr.length());
+				List<Object> list = new ArrayList<>(arr.length());
 				for (int i = 0; i < arr.length(); i++)
-					list.add(arr.optJSONObject(i));
+				{
+					JSONObject curObj = arr.optJSONObject(i);
+					if (curObj != null)
+						list.add(decoder.decode(curObj));
+				}
 				curParam.call(instance, MType.SETTER, list);
 				break;
 			case MAP:
 				obj = this.getJSONObj(curJSONSection, curKey);
-				Map<String, String> strMap = new LinkedHashMap<String, String>();
+				Map<String, Object> map = new LinkedHashMap<>();
 				for (String mapKey : obj.keySet())
-					strMap.put(mapKey, obj.getString(mapKey));
-				curParam.call(instance, MType.SETTER, strMap);
+				{
+					JSONObject curItem = obj.optJSONObject(mapKey);
+					if (curItem != null)
+						map.put(mapKey, decoder.decode(curItem));
+				}
+				curParam.call(instance, MType.SETTER, map);
 				break;
 			default:
 				U.d("Unknown exported parameter found.", 2);
@@ -370,8 +380,7 @@ public class Config
 
 	private void handleEnum(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
 	{
-		// TODO Auto-generated method stub
-
+		// TODO iff ever needed.
 	}
 
 	private void handleReferences(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
