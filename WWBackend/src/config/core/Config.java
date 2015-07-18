@@ -238,24 +238,11 @@ public class Config
 	 * @param type
 	 *            the type to attempt to use for this part of the config file
 	 */
-	private void intelliParse(JSONObject data, String key, Class<?> type)
+	private void intelliParse(JSONObject data, String key, SectionManager secMan)
 	{
 		JSONObject jsonData = data.optJSONObject(key);
 		if (jsonData == null)
 			jsonData = new JSONObject();
-		SectionManager secMan = this.getManager(key, type);
-		// instantiate all objects first off, so references can be resolved
-		// later
-		for (String cur : jsonData.keySet())
-			try
-			{
-				Object curInstance = type.newInstance();
-				secMan.offer(cur, curInstance);
-			} catch (InstantiationException | IllegalAccessException e)
-			{
-				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, or something equally odd. "
-						+ "Like you specifiying an abstract class or interface as a config member, instead of a instantiable class...", e);
-			}
 		// parse all the param data
 		for (String cur : jsonData.keySet())
 			try
@@ -290,31 +277,55 @@ public class Config
 	{
 		Map<String, Class<?>> configMembers = Config.findConfigMembers();
 		U.p(configMembers);
-		try
-		{
-			JSONObject data = new JSONObject(U.readFile(filename));
-			U.d("Loading config from data:\n" + data.toString(4), 5);
-			for (String curJSONKey : data.keySet())
-				try
-				{
-					Class<?> type = configMembers.get(curJSONKey);
-					if (type == null)
-						throw new ClassCastException();
-					this.intelliParse(data, curJSONKey, type);
-				} catch (ClassCastException ex)
-				{
-					U.e("Error, couldn't find parsing structure for " + curJSONKey + ". Did you spell the name correctly? Or are the correct parseables not listed?");
-				}
-		} catch (JSONException e)
-		{
-			U.e("Error parsing config file", e);
-			Globals.exit();
-		} catch (NullPointerException e)
-		{
-			U.e("Internal error parsing config file.");
-			e.printStackTrace();
-			Globals.exit();
-		}
+		JSONObject data = new JSONObject(U.readFile(filename));
+		U.d("Loading config from data:\n" + data.toString(4), 5);
+		// instantiate all objects first off, so references can be resolved
+		// later
+		for (String curSectionKey : data.keySet())
+			try
+			{
+				JSONObject jsonData = data.optJSONObject(curSectionKey);
+				Class<?> type = configMembers.get(curSectionKey);
+				instantiateSectionElems(curSectionKey, jsonData, type);
+			} catch (ClassCastException ex)
+			{
+				U.e("Error, couldn't find parsing structure for " + curSectionKey + ". Did you spell the name correctly? Or are the correct parseables not listed?");
+			}
+		// Parse each into memeory
+		for (String curJSONKey : data.keySet())
+			try
+			{
+				this.intelliParse(data, curJSONKey, this.getSection(curJSONKey));
+			} catch (JSONException e)
+			{
+				U.e("Error parsing config file", e);
+				Globals.exit();
+			} catch (NullPointerException e)
+			{
+				U.e("Internal error parsing config file.");
+				e.printStackTrace();
+				Globals.exit();
+			}
+	}
+
+	private void instantiateSectionElems(String curSectionKey, JSONObject jsonData, Class<?> type)
+	{
+		if (type == null)
+			throw new ClassCastException();
+		SectionManager secMan = this.getManager(curSectionKey, type);
+		// Loop over all elements in this section, instantiating each,
+		// and putting in the relavent section manager
+		for (String curElemKey : jsonData.keySet())
+			try
+			{
+				Object curInstance = type.newInstance();
+				secMan.offer(curSectionKey, curInstance);
+
+			} catch (InstantiationException | IllegalAccessException e)
+			{
+				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, or something equally odd. "
+						+ "Like you specifiying an abstract class or interface as a config member, instead of a instantiable class...", e);
+			}
 	}
 
 	/**
