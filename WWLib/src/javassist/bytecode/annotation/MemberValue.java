@@ -60,9 +60,9 @@ public abstract class MemberValue
 		}
 	}
 
-	ConstPool	cp;
+	ConstPool cp;
 
-	char		tag;
+	char tag;
 
 	MemberValue(char tag, ConstPool cp)
 	{

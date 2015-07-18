@@ -33,7 +33,7 @@ public class Expr extends ASTList implements TokenId
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static Expr make(int op, ASTree oprand1)
 	{
@@ -45,7 +45,7 @@ public class Expr extends ASTList implements TokenId
 		return new Expr(op, oprand1, new ASTList(oprand2));
 	}
 
-	protected int	operatorId;
+	protected int operatorId;
 
 	Expr(int op, ASTree _head)
 	{

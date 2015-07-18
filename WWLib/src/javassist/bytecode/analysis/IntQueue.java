@@ -30,9 +30,9 @@ class IntQueue
 		}
 	}
 
-	private IntQueue.Entry	head;
+	private IntQueue.Entry head;
 
-	private IntQueue.Entry	tail;
+	private IntQueue.Entry tail;
 
 	void add(int value)
 	{

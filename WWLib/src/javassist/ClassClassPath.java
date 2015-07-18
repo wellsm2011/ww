@@ -43,7 +43,7 @@ import java.net.URL;
  */
 public class ClassClassPath implements ClassPath
 {
-	private Class	thisClass;
+	private Class thisClass;
 
 	ClassClassPath()
 	{

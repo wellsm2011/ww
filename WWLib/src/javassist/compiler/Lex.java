@@ -20,9 +20,10 @@ public class Lex implements TokenId
 {
 	// !"#$%&'( )*+,-./0 12345678 9:;<=>?
 	private static final int[]			equalOps	=
-													{ TokenId.NEQ, 0, 0, 0, TokenId.MOD_E, TokenId.AND_E, 0, 0, 0, TokenId.MUL_E, TokenId.PLUS_E, 0, TokenId.MINUS_E, 0, TokenId.DIV_E, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, TokenId.LE, TokenId.EQ, TokenId.GE, 0 };
+	{ TokenId.NEQ, 0, 0, 0, TokenId.MOD_E, TokenId.AND_E, 0, 0, 0, TokenId.MUL_E, TokenId.PLUS_E, 0, TokenId.MINUS_E, 0, TokenId.DIV_E, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TokenId.LE, TokenId.EQ,
+			TokenId.GE, 0 };
 	private static final KeywordTable	ktable		= new KeywordTable();
+
 	static
 	{
 		Lex.ktable.append("abstract", TokenId.ABSTRACT);
@@ -88,17 +89,17 @@ public class Lex implements TokenId
 		return '0' <= c && c <= '9';
 	}
 
-	private int				lastChar;
+	private int lastChar;
 
-	private StringBuffer	textBuffer;
+	private StringBuffer textBuffer;
 
-	private Token			currentToken;
+	private Token currentToken;
 
-	private Token			lookAheadTokens;
+	private Token lookAheadTokens;
 
-	private String			input;
+	private String input;
 
-	private int				position, maxlen, lineNumber;
+	private int position, maxlen, lineNumber;
 
 	/**
 	 * Constructs a lexical analyzer.

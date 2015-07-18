@@ -27,7 +27,7 @@ public class NewExpr extends ASTList implements TokenId
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static NewExpr makeObjectArray(ASTList className, ASTList arraySize, ArrayInit init)
 	{
@@ -39,9 +39,9 @@ public class NewExpr extends ASTList implements TokenId
 		return e;
 	}
 
-	protected boolean	newArray;
+	protected boolean newArray;
 
-	protected int		arrayType;
+	protected int arrayType;
 
 	public NewExpr(ASTList className, ASTList args)
 	{

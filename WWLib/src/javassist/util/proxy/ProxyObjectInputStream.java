@@ -37,7 +37,7 @@ public class ProxyObjectInputStream extends ObjectInputStream
 	 * thread which creates the input stream or the system class loader if the
 	 * context class loader is null.
 	 */
-	private ClassLoader	loader;
+	private ClassLoader loader;
 
 	/**
 	 * create an input stream which can be used to deserialize an object graph

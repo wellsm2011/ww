@@ -56,7 +56,7 @@ public class ClassMap extends java.util.HashMap
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Converts a class name from the internal representation used in the JVM to
@@ -75,7 +75,7 @@ public class ClassMap extends java.util.HashMap
 		return Descriptor.toJvmName(classname);
 	}
 
-	private ClassMap	parent;
+	private ClassMap parent;
 
 	/**
 	 * Constructs a hash table.

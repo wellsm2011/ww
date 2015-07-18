@@ -3,10 +3,10 @@ package game.parseables;
 import java.util.List;
 import java.util.Map;
 
-import config.core.ConfigMember;
-import config.core.ExportedParam;
-import config.core.ExportedParam.MType;
-import config.core.ExportedParam.SType;
+import config.core.annotations.ConfigMember;
+import config.core.annotations.ExportedParam;
+import config.core.annotations.ExportedParam.MType;
+import config.core.annotations.ExportedParam.SType;
 import game.core.Atomic;
 
 @ConfigMember(sectionKey = "abilities")
@@ -18,7 +18,7 @@ public class Ability
 	private Map<String, String>	triggerData;
 	private Map<String, String>	targetingData;
 
-	@ExportedParam(storetype = SType.LIST, dataType = "ref:Action", key = "appliedActions", methodtype = MType.GETTER, sortVal = 4)
+	@ExportedParam(storetype = SType.LIST, dataType = "ref:actions", key = "appliedActions", methodtype = MType.GETTER, sortVal = 4)
 	public List<Action> getAppliedActions()
 	{
 		return this.appliedActions;
@@ -48,7 +48,7 @@ public class Ability
 		return this.triggerData;
 	}
 
-	@ExportedParam(storetype = SType.LIST, dataType = "ref:Action", key = "appliedActions", methodtype = MType.SETTER, sortVal = 4)
+	@ExportedParam(storetype = SType.LIST, dataType = "ref:actions", key = "appliedActions", methodtype = MType.SETTER, sortVal = 4)
 	public void setAppliedActions(List<Action> input)
 	{
 		this.appliedActions = input;

@@ -78,7 +78,7 @@ public abstract class CtBehavior extends CtMember
 		destClass.rebuildClassFile();
 	}
 
-	protected MethodInfo	methodInfo;
+	protected MethodInfo methodInfo;
 
 	protected CtBehavior(CtClass clazz, MethodInfo minfo)
 	{
@@ -842,7 +842,8 @@ public abstract class CtBehavior extends CtMember
 	}
 
 	/**
-	 * Inserts bytecode at the specified line in the body. It is equivalent to: <br>
+	 * Inserts bytecode at the specified line in the body. It is equivalent to:
+	 * <br>
 	 * <code>insertAt(lineNum, true, src)</code> <br>
 	 * See this method as well.
 	 *

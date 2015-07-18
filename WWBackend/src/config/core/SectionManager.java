@@ -9,7 +9,9 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import backend.U;
-import config.core.ExportedParam.MType;
+import config.core.annotations.ConfigMember;
+import config.core.annotations.ExportedParam;
+import config.core.annotations.ExportedParam.MType;
 
 /**
  * This class is a helper class for the main Config system, what this does is it

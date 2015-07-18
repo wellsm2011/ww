@@ -30,7 +30,7 @@ public abstract class ASTree implements Serializable
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Is a method for the visitor pattern. It calls <code>at---()</code> on the

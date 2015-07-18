@@ -28,7 +28,7 @@ import javassist.bytecode.StackMapTable;
 
 final public class TransformNew extends Transformer
 {
-	private int	nested;
+	private int		nested;
 	private String	classname, trapClass, trapMethod;
 
 	public TransformNew(Transformer next, String classname, String trapClass, String trapMethod)

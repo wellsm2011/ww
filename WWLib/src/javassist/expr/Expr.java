@@ -44,7 +44,7 @@ import javassist.compiler.Javac;
  */
 public abstract class Expr implements Opcode
 {
-	static final String	javaLangObject	= "java.lang.Object";
+	static final String javaLangObject = "java.lang.Object";
 
 	private static void addClass(LinkedList list, CtClass c)
 	{
@@ -100,17 +100,17 @@ public abstract class Expr implements Opcode
 		}
 	}
 
-	int				currentPos;
+	int currentPos;
 
-	CodeIterator	iterator;
+	CodeIterator iterator;
 
-	CtClass			thisClass;
+	CtClass thisClass;
 
-	MethodInfo		thisMethod;
+	MethodInfo thisMethod;
 
-	boolean			edited;
+	boolean edited;
 
-	int				maxLocals, maxStack;
+	int maxLocals, maxStack;
 
 	/**
 	 * Undocumented constructor. Do not use; internal-use only.

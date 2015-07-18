@@ -27,7 +27,7 @@ public class DoubleConst extends ASTree
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	private static DoubleConst compute(int op, double value1, double value2, int newType)
 	{
@@ -56,9 +56,9 @@ public class DoubleConst extends ASTree
 		return new DoubleConst(newValue, newType);
 	}
 
-	protected double	value;
+	protected double value;
 
-	protected int		type;
+	protected int type;
 
 	public DoubleConst(double v, int tokenId)
 	{

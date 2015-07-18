@@ -28,7 +28,7 @@ public class ExceptionsAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"Exceptions"</code>.
 	 */
-	public static final String	tag	= "Exceptions";
+	public static final String tag = "Exceptions";
 
 	/**
 	 * Constructs a new exceptions attribute.

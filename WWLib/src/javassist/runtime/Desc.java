@@ -36,7 +36,7 @@ public class Desc
 	 * If false, it is loaded by <code>Class.forName()</code>. The default value
 	 * is false.
 	 */
-	public static boolean	useContextClassLoader	= false;
+	public static boolean useContextClassLoader = false;
 
 	private static Class getClassObject(String name) throws ClassNotFoundException
 	{

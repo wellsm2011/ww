@@ -28,7 +28,7 @@ public class EnclosingMethodAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"EnclosingMethod"</code>.
 	 */
-	public static final String	tag	= "EnclosingMethod";
+	public static final String tag = "EnclosingMethod";
 
 	EnclosingMethodAttribute(ConstPool cp, int n, DataInputStream in) throws IOException
 	{

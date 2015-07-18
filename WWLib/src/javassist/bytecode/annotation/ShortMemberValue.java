@@ -30,7 +30,7 @@ import javassist.bytecode.ConstPool;
  */
 public class ShortMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a short constant value. The initial value is 0.

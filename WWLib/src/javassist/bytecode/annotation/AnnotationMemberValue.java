@@ -29,7 +29,7 @@ import javassist.bytecode.ConstPool;
  */
 public class AnnotationMemberValue extends MemberValue
 {
-	Annotation	value;
+	Annotation value;
 
 	/**
 	 * Constructs an annotation member. The initial value is specified by the

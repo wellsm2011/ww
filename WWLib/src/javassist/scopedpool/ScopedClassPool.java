@@ -43,15 +43,15 @@ public class ScopedClassPool extends ClassPool
 		ClassPool.releaseUnmodifiedClassFile = false;
 	}
 
-	protected ScopedClassPoolRepository	repository;
+	protected ScopedClassPoolRepository repository;
 
-	protected WeakReference				classLoader;
+	protected WeakReference classLoader;
 
-	protected LoaderClassPath			classPath;
+	protected LoaderClassPath classPath;
 
-	protected SoftValueHashMap			softcache		= new SoftValueHashMap();
+	protected SoftValueHashMap softcache = new SoftValueHashMap();
 
-	boolean								isBootstrapCl	= true;
+	boolean isBootstrapCl = true;
 
 	/**
 	 * Create a new ScopedClassPool.

@@ -50,7 +50,7 @@ public class ControlFlow
 {
 	static abstract class Access
 	{
-		Node[]	all;
+		Node[] all;
 
 		Access(Node[] nodes)
 		{
@@ -81,11 +81,11 @@ public class ControlFlow
 		 * attribute to a <code>Block</code> object. The Javassist library never
 		 * accesses this field.
 		 */
-		public Object	clientData	= null;
+		public Object clientData = null;
 
-		int				index;
-		MethodInfo		method;
-		Block[]			entrances;
+		int			index;
+		MethodInfo	method;
+		Block[]		entrances;
 
 		Block(int pos, MethodInfo minfo)
 		{
@@ -275,11 +275,11 @@ public class ControlFlow
 			}
 		}
 
-		private Block	block;
+		private Block block;
 
-		private Node	parent;
+		private Node parent;
 
-		private Node[]	children;
+		private Node[] children;
 
 		Node(Block b)
 		{
@@ -400,13 +400,13 @@ public class ControlFlow
 		}
 	}
 
-	private CtClass		clazz;
+	private CtClass clazz;
 
-	private MethodInfo	methodInfo;
+	private MethodInfo methodInfo;
 
-	private Block[]		basicBlocks;
+	private Block[] basicBlocks;
 
-	private Frame[]		frames;
+	private Frame[] frames;
 
 	/**
 	 * Constructs a control-flow analyzer.

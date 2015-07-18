@@ -4,16 +4,17 @@ import java.io.IOException;
 
 public class Encoder
 {
-	static final int		kTopMask				= ~((1 << 24) - 1);
+	static final int kTopMask = ~((1 << 24) - 1);
 
-	static final int		kNumBitModelTotalBits	= 11;
-	static final int		kBitModelTotal			= 1 << Encoder.kNumBitModelTotalBits;
-	static final int		kNumMoveBits			= 5;
+	static final int	kNumBitModelTotalBits	= 11;
+	static final int	kBitModelTotal			= 1 << Encoder.kNumBitModelTotalBits;
+	static final int	kNumMoveBits			= 5;
 
-	static final int		kNumMoveReducingBits	= 2;
+	static final int kNumMoveReducingBits = 2;
 
 	public static final int	kNumBitPriceShiftBits	= 6;
 	private static int[]	ProbPrices				= new int[Encoder.kBitModelTotal >>> Encoder.kNumMoveReducingBits];
+
 	static
 	{
 		int kNumBits = Encoder.kNumBitModelTotalBits - Encoder.kNumMoveReducingBits;
@@ -47,17 +48,17 @@ public class Encoder
 			probs[i] = Encoder.kBitModelTotal >>> 1;
 	}
 
-	java.io.OutputStream	Stream;
+	java.io.OutputStream Stream;
 
-	long					Low;
+	long Low;
 
-	int						Range;
+	int Range;
 
-	int						_cacheSize;
+	int _cacheSize;
 
-	int						_cache;
+	int _cache;
 
-	long					_position;
+	long _position;
 
 	public void Encode(short[] probs, int index, int symbol) throws IOException
 	{

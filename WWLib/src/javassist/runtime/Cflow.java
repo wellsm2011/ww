@@ -26,7 +26,7 @@ public class Cflow extends ThreadLocal
 {
 	private static class Depth
 	{
-		private int	depth;
+		private int depth;
 
 		Depth()
 		{

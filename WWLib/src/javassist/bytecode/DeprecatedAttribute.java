@@ -28,7 +28,7 @@ public class DeprecatedAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"Deprecated"</code>.
 	 */
-	public static final String	tag	= "Deprecated";
+	public static final String tag = "Deprecated";
 
 	/**
 	 * Constructs a Deprecated attribute.

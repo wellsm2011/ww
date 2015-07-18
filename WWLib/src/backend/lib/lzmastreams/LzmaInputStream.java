@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public class LzmaInputStream extends FilterInputStream
 {
-	protected DecoderThread	dth;
+	protected DecoderThread dth;
 
 	public LzmaInputStream(InputStream input)
 	{

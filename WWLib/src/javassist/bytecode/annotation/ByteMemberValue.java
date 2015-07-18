@@ -29,7 +29,7 @@ import javassist.bytecode.ConstPool;
  */
 public class ByteMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a byte constant value.

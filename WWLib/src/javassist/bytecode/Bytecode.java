@@ -49,12 +49,12 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 	 * Represents the <code>CtClass</code> file using the constant pool table
 	 * given to this <code>Bytecode</code> object.
 	 */
-	public static final CtClass	THIS	= ConstPool.THIS;
+	public static final CtClass THIS = ConstPool.THIS;
 
-	ConstPool					constPool;
-	int							maxStack, maxLocals;
-	ExceptionTable				tryblocks;
-	private int					stackDepth;
+	ConstPool		constPool;
+	int				maxStack, maxLocals;
+	ExceptionTable	tryblocks;
+	private int		stackDepth;
 
 	/**
 	 * Constructs a <code>Bytecode</code> object with an empty bytecode
@@ -550,7 +550,7 @@ public class Bytecode extends ByteVector implements Cloneable, Opcode
 		this.addIndex(dyn);
 		this.add(0, 0);
 		this.growStack(Descriptor.dataSize(desc)); // assume
-													// ConstPool#REF_invokeStatic
+		// ConstPool#REF_invokeStatic
 	}
 
 	/**

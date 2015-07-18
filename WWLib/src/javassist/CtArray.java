@@ -21,9 +21,9 @@ package javassist;
  */
 final class CtArray extends CtClass
 {
-	protected ClassPool	pool;
+	protected ClassPool pool;
 
-	private CtClass[]	interfaces	= null;
+	private CtClass[] interfaces = null;
 
 	// the name of array type ends with "[]".
 	CtArray(String name, ClassPool cp)

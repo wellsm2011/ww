@@ -30,7 +30,7 @@ import javassist.bytecode.ConstPool;
  */
 public class CharMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a char constant value.

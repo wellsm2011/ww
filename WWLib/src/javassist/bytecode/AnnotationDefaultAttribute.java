@@ -70,7 +70,7 @@ public class AnnotationDefaultAttribute extends AttributeInfo
 	/**
 	 * The name of the <code>AnnotationDefault</code> attribute.
 	 */
-	public static final String	tag	= "AnnotationDefault";
+	public static final String tag = "AnnotationDefault";
 
 	/**
 	 * Constructs an empty <code>AnnotationDefault_attribute</code>. The default

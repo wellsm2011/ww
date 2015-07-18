@@ -72,9 +72,9 @@ public class NewExpr extends Expr
 		}
 	}
 
-	String	newTypeName;
+	String newTypeName;
 
-	int		newPos;
+	int newPos;
 
 	/*
 	 * Not used private int getNameAndType(ConstPool cp) { int pos = currentPos;
@@ -96,7 +96,8 @@ public class NewExpr extends Expr
 	private int canReplace() throws CannotCompileException
 	{
 		int op = this.iterator.byteAt(this.newPos + 3);
-		if (op == Opcode.DUP) // Typical single DUP or Javaflow DUP DUP2_X2 POP2
+		if (op == Opcode.DUP)   // Typical single DUP or Javaflow DUP DUP2_X2
+  // POP2
 			return this.iterator.byteAt(this.newPos + 4) == Opcode.DUP2_X2 && this.iterator.byteAt(this.newPos + 5) == Opcode.POP2 ? 6 : 4;
 		else if (op == Opcode.DUP_X1 && this.iterator.byteAt(this.newPos + 4) == Opcode.SWAP)
 			return 5;
@@ -250,7 +251,7 @@ public class NewExpr extends Expr
 			bytecode.addStore(retVar, newType); // initialize $_
 
 			jc.compileStmnt(statement);
-			if (codeSize > 3) // if the original code includes DUP.
+			if (codeSize > 3)   // if the original code includes DUP.
 				bytecode.addAload(retVar);
 
 			this.replace0(pos, bytecode, bytecodeSize);

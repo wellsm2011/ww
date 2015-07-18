@@ -78,7 +78,7 @@ import javassist.bytecode.annotation.StringMemberValue;
  * statement of the code snippet above must be changed into:
  *
  * <pre>
- * AnnotationsAttribute	attr	= (AnnotationsAttribute) minfo.getAttribute(AnnotationsAttribute.visibleTag);
+ * AnnotationsAttribute attr = (AnnotationsAttribute) minfo.getAttribute(AnnotationsAttribute.visibleTag);
  * </pre>
  * <p>
  * The attribute tag must be <code>visibleTag</code> instead of
@@ -259,10 +259,10 @@ public class AnnotationsAttribute extends AttributeInfo
 	static class Parser extends Walker
 	{
 		ConstPool		pool;
-		Annotation[][]	allParams;		// all parameters
-		Annotation[]	allAnno;		// all annotations
-		Annotation		currentAnno;	// current annotation
-		MemberValue		currentMember;	// current member
+		Annotation[][]	allParams;						// all parameters
+		Annotation[]	allAnno;						// all annotations
+		Annotation		currentAnno;			// current annotation
+		MemberValue		currentMember;			// current member
 
 		/**
 		 * Constructs a parser. This parser constructs a parse tree of the
@@ -481,7 +481,7 @@ public class AnnotationsAttribute extends AttributeInfo
 
 	static class Walker
 	{
-		byte[]	info;
+		byte[] info;
 
 		Walker(byte[] attrInfo)
 		{
@@ -626,12 +626,12 @@ public class AnnotationsAttribute extends AttributeInfo
 	/**
 	 * The name of the <code>RuntimeVisibleAnnotations</code> attribute.
 	 */
-	public static final String	visibleTag		= "RuntimeVisibleAnnotations";
+	public static final String visibleTag = "RuntimeVisibleAnnotations";
 
 	/**
 	 * The name of the <code>RuntimeInvisibleAnnotations</code> attribute.
 	 */
-	public static final String	invisibleTag	= "RuntimeInvisibleAnnotations";
+	public static final String invisibleTag = "RuntimeInvisibleAnnotations";
 
 	/**
 	 * @param n

@@ -79,7 +79,7 @@ public class JSONArray
 	/**
 	 * The arrayList where the JSONArray's properties are kept.
 	 */
-	private final ArrayList<Object>	myArrayList;
+	private final ArrayList<Object> myArrayList;
 
 	/**
 	 * Construct an empty JSONArray.
@@ -172,8 +172,8 @@ public class JSONArray
 	 *
 	 * @param source
 	 *            A string that begins with <code>[</code>&nbsp;<small>(left
-	 *            bracket)</small> and ends with <code>]</code>
-	 *            &nbsp;<small>(right bracket)</small>.
+	 *            bracket)</small> and ends with <code>]</code> &nbsp;
+	 *            <small>(right bracket)</small>.
 	 * @throws JSONException
 	 *             If there is a syntax error.
 	 */
@@ -943,8 +943,8 @@ public class JSONArray
 	 *            The number of spaces to add to each level of indentation.
 	 * @return a printable, displayable, transmittable representation of the
 	 *         object, beginning with <code>[</code>&nbsp;<small>(left
-	 *         bracket)</small> and ending with <code>]</code>
-	 *         &nbsp;<small>(right bracket)</small>.
+	 *         bracket)</small> and ending with <code>]</code> &nbsp;
+	 *         <small>(right bracket)</small>.
 	 * @throws JSONException
 	 */
 	public String toString(int indentFactor) throws JSONException

@@ -43,8 +43,8 @@ import javassist.compiler.ast.Variable;
 public final class Parser implements TokenId
 {
 	// !"#$%&'( )*+,-./0 12345678 9:;<=>?
-	private static final int[]	binaryOpPrecedence	=
-													{ 0, 0, 0, 0, 1, 6, 0, 0, 0, 1, 2, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0 };
+	private static final int[] binaryOpPrecedence =
+	{ 0, 0, 0, 0, 1, 6, 0, 0, 0, 1, 2, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0 };
 
 	private static boolean isAssignOp(int t)
 	{
@@ -57,7 +57,7 @@ public final class Parser implements TokenId
 		return t == TokenId.BOOLEAN || t == TokenId.BYTE || t == TokenId.CHAR || t == TokenId.SHORT || t == TokenId.INT || t == TokenId.LONG || t == TokenId.FLOAT || t == TokenId.DOUBLE;
 	}
 
-	private Lex	lex;
+	private Lex lex;
 
 	public Parser(Lex lex)
 	{
@@ -885,7 +885,7 @@ public final class Parser implements TokenId
 			int token = ((Keyword) expr).get();
 			if (token != TokenId.THIS && token != TokenId.SUPER)
 				throw new SyntaxError(this.lex);
-		} else if (expr instanceof Symbol) // Identifier
+		} else if (expr instanceof Symbol)   // Identifier
 			;
 		else if (expr instanceof Expr)
 		{

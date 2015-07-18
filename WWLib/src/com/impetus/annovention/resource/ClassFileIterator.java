@@ -44,10 +44,10 @@ public class ClassFileIterator implements ResourceIterator
 	}
 
 	/** files. */
-	private List<File>	files;
+	private List<File> files;
 
 	/** The index. */
-	private int			index	= 0;
+	private int index = 0;
 
 	/**
 	 * Instantiates a new class file iterator.

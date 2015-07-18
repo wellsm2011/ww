@@ -31,7 +31,7 @@ import javassist.compiler.JvstCodeGen;
 class CtNewWrappedMethod
 {
 
-	private static final String	addedWrappedMethod	= "_added_m$";
+	private static final String addedWrappedMethod = "_added_m$";
 
 	private static String addBodyMethod(CtClassType clazz, ClassFile classfile, CtMethod src) throws BadBytecode, CannotCompileException
 	{
@@ -155,7 +155,7 @@ class CtNewWrappedMethod
 			code.addInvokespecial(Bytecode.THIS, bodyname, desc);
 
 		CtNewWrappedMethod.compileReturn(code, returnType); // consumes 2 stack
-															// entries
+		// entries
 
 		if (stacksize < stacksize2 + 2)
 			stacksize = stacksize2 + 2;

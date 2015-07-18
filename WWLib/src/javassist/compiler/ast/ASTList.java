@@ -26,7 +26,7 @@ public class ASTList extends ASTree
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Appends an object to a list.
@@ -74,9 +74,9 @@ public class ASTList extends ASTree
 		return new ASTList(e1, new ASTList(e2, new ASTList(e3)));
 	}
 
-	private ASTree	left;
+	private ASTree left;
 
-	private ASTList	right;
+	private ASTList right;
 
 	public ASTList(ASTree _head)
 	{

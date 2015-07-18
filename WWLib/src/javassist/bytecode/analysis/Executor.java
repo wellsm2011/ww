@@ -656,7 +656,7 @@ public class Executor implements Opcode
 				break;
 			}
 
-			// Math
+				// Math
 			case IADD:
 				this.evalBinaryMath(Type.INTEGER, frame);
 				break;
@@ -780,7 +780,7 @@ public class Executor implements Opcode
 				break;
 			}
 
-			// Conversion
+				// Conversion
 			case I2L:
 				this.verifyAssignable(Type.INTEGER, this.simplePop(frame));
 				this.simplePush(Type.LONG, frame);

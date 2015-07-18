@@ -119,17 +119,19 @@ public class JvstCodeGen extends MemberCodeGen
 	String			paramArrayName	= null;
 	String			paramListName	= null;
 	CtClass[]		paramTypeList	= null;
-	private int		paramVarBase	= 0;		// variable index for $0 or $1.
+	private int		paramVarBase	= 0;				// variable index for $0
+														// or
+														// $1.
 	private boolean	useParam0		= false;	// true if $0 is used.
-	private String	param0Type		= null;	// JVM name
+	private String	param0Type		= null;			// JVM name
 	private CtClass	dollarType		= null;
 	CtClass			returnType		= null;
 	String			returnCastName	= null;
-	private String	returnVarName	= null;	// null if $_ is not used.
+	private String	returnVarName	= null;			// null if $_ is not used.
 
-	String			proceedName		= null;
+	String proceedName = null;
 
-	ProceedHandler	procHandler		= null;	// null if not used.
+	ProceedHandler procHandler = null;	// null if not used.
 
 	public JvstCodeGen(Bytecode b, CtClass cc, ClassPool cp)
 	{

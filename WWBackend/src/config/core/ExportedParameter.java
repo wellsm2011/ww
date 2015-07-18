@@ -4,8 +4,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import backend.U;
-import config.core.ExportedParam.MType;
-import config.core.ExportedParam.SType;
+import config.core.annotations.ExportedParam;
+import config.core.annotations.ExportedParam.MType;
+import config.core.annotations.ExportedParam.SType;
 
 public class ExportedParameter
 {

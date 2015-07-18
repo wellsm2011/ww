@@ -28,7 +28,7 @@ public class InnerClassesAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"InnerClasses"</code>.
 	 */
-	public static final String	tag	= "InnerClasses";
+	public static final String tag = "InnerClasses";
 
 	/**
 	 * Constructs an empty InnerClasses attribute.

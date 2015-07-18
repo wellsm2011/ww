@@ -183,13 +183,13 @@ public class MemberCodeGen extends CodeGen
 		throw new CompileError("bad new expression");
 	}
 
-	protected MemberResolver	resolver;
+	protected MemberResolver resolver;
 
-	protected CtClass			thisClass;
+	protected CtClass thisClass;
 
-	protected MethodInfo		thisMethod;
+	protected MethodInfo thisMethod;
 
-	protected boolean			resultStatic;
+	protected boolean resultStatic;
 
 	public MemberCodeGen(Bytecode b, CtClass cc, ClassPool cp)
 	{
@@ -336,7 +336,9 @@ public class MemberCodeGen extends CodeGen
 
 					if (this.arrayDim > 0)
 						targetClass = this.resolver.lookupClass(CodeGen.javaLangObject, true);
-					else if (this.exprType == TokenId.CLASS /* && arrayDim == 0 */)
+					else if (this.exprType == TokenId.CLASS /*
+															 * && arrayDim == 0
+															 */)
 						targetClass = this.resolver.lookupClassByJvmName(this.className);
 					else
 						MemberCodeGen.badMethod();
@@ -590,7 +592,7 @@ public class MemberCodeGen extends CodeGen
 			{
 				desc = this.getAccessibleConstructor(desc, declClass, minfo);
 				this.bytecode.addOpcode(Opcode.ACONST_NULL); // the last
-																// parameter
+				// parameter
 			}
 		} else if (AccessFlag.isPrivate(acc))
 			if (declClass == this.thisClass)
@@ -625,7 +627,7 @@ public class MemberCodeGen extends CodeGen
 			}
 
 			this.bytecode.addInvokestatic(declClass, mname, desc);
-		} else if (isSpecial) // if (isSpecial && notStatic(acc))
+		} else if (isSpecial)   // if (isSpecial && notStatic(acc))
 			this.bytecode.addInvokespecial(declClass, mname, desc);
 		else
 		{

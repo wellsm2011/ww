@@ -32,7 +32,7 @@ public class ClasspathDiscoverer extends Discoverer
 {
 
 	/** The filter. */
-	private Filter	filter;
+	private Filter filter;
 
 	/**
 	 * Instantiates a new classpath reader.

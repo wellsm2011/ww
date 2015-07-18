@@ -16,9 +16,9 @@ public class BitTreeDecoder
 		return symbol;
 	}
 
-	short[]	Models;
+	short[] Models;
 
-	int		NumBitLevels;
+	int NumBitLevels;
 
 	public BitTreeDecoder(int numBitLevels)
 	{

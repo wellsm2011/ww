@@ -140,7 +140,8 @@ public class Loader extends ClassLoader
 	 *
 	 * @param args
 	 *            command line parameters. <br>
-	 *            &nbsp;&nbsp;{@code args[0]} is the class name to be loaded. <br>
+	 *            &nbsp;&nbsp;{@code args[0]} is the class name to be loaded.
+	 *            <br>
 	 *            &nbsp;&nbsp;{@code args[1..n]} are parameters passed to the
 	 *            target {@code main()}.
 	 * @see javassist.Loader#run(String[])
@@ -151,12 +152,12 @@ public class Loader extends ClassLoader
 		cl.run(args);
 	}
 
-	private Hashtable			notDefinedHere;		// must be atomic.
-	private Vector				notDefinedPackages;	// must be atomic.
-	private ClassPool			source;
-	private Translator			translator;
+	private Hashtable	notDefinedHere;						// must be atomic.
+	private Vector		notDefinedPackages;			// must be atomic.
+	private ClassPool	source;
+	private Translator	translator;
 
-	private ProtectionDomain	domain;
+	private ProtectionDomain domain;
 
 	/**
 	 * Specifies the algorithm of class loading.
@@ -168,7 +169,7 @@ public class Loader extends ClassLoader
 	 * <p>
 	 * The default value is <code>true</code>.
 	 */
-	public boolean				doDelegation	= true;
+	public boolean doDelegation = true;
 
 	/**
 	 * Creates a new class loader.
@@ -408,7 +409,8 @@ public class Loader extends ClassLoader
 	 *
 	 * @param args
 	 *            command line parameters. <br>
-	 *            &nbsp;&nbsp;{@code args[0]} is the class name to be loaded. <br>
+	 *            &nbsp;&nbsp;{@code args[0]} is the class name to be loaded.
+	 *            <br>
 	 *            &nbsp;&nbsp;{@code args[1..n]} are parameters passed to the
 	 *            target {@code main()}.
 	 */

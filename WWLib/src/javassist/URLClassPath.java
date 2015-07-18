@@ -95,9 +95,9 @@ public class URLClassPath implements ClassPath
 	protected String	hostname;
 	protected int		port;
 
-	protected String	directory;
+	protected String directory;
 
-	protected String	packageName;
+	protected String packageName;
 
 	/**
 	 * Creates a search path specified with URL (http).

@@ -95,7 +95,7 @@ public abstract class TypeData
 			return "java.lang.Object"; // the array type may be NullType
 		}
 
-		private AbsTypeVar	array;
+		private AbsTypeVar array;
 
 		private ArrayElement(AbsTypeVar a)
 		{ // a is never null
@@ -192,7 +192,7 @@ public abstract class TypeData
 				return "[L" + elementType.replace('.', '/') + ";";
 		}
 
-		private AbsTypeVar	element;
+		private AbsTypeVar element;
 
 		private ArrayType(AbsTypeVar elementType)
 		{
@@ -332,7 +332,7 @@ public abstract class TypeData
 	 */
 	public static class ClassName extends TypeData
 	{
-		private String	name;	// dot separated.
+		private String name;	// dot separated.
 
 		public ClassName(String n)
 		{
@@ -421,21 +421,25 @@ public abstract class TypeData
 			return cc.isArray() && cc.getComponentType().getSuperclass() == null;
 		}
 
-		protected ArrayList	lowers;				// lower bounds of this
-													// type. ArrayList<TypeData>
-		protected ArrayList	usedBy;				// reverse relations of
-													// lowers
-		protected ArrayList	uppers;				// upper bounds of this
-													// type.
+		protected ArrayList	lowers;								// lower bounds
+																// of this
+																// type.
+																// ArrayList<TypeData>
+		protected ArrayList	usedBy;								// reverse
+																// relations of
+		// lowers
+		protected ArrayList	uppers;								// upper bounds
+																// of this
+		// type.
 		protected String	fixedType;
 
-		private boolean		is2WordType;			// cache
+		private boolean is2WordType;			// cache
 
-		private int			visited		= 0;
+		private int visited = 0;
 
-		private int			smallest	= 0;
+		private int smallest = 0;
 
-		private boolean		inList		= false;
+		private boolean inList = false;
 
 		public TypeVar(TypeData t)
 		{
@@ -453,7 +457,7 @@ public abstract class TypeData
 		{
 			if (this.visited > 0)
 				return index; // MapMaker.make() may call an already visited
-								// node.
+			// node.
 
 			this.visited = this.smallest = ++index;
 			preOrder.add(this);
@@ -810,7 +814,7 @@ public abstract class TypeData
 
 	public static class UninitTypeVar extends AbsTypeVar
 	{
-		protected TypeData	type;	// UninitData or TOP
+		protected TypeData type;	// UninitData or TOP
 
 		public UninitTypeVar(UninitData t)
 		{
@@ -1009,8 +1013,8 @@ public abstract class TypeData
 				return one.getClassPool().get(element == null ? "java.lang.Object" : element.getName() + "[]");
 		} else if (one.isPrimitive() || two.isPrimitive())
 			return null; // TOP
-		else if (one.isArray() || two.isArray()) // but !(one.isArray() &&
-													// two.isArray())
+		else if (one.isArray() || two.isArray())   // but !(one.isArray() &&
+			// two.isArray())
 			return one.getClassPool().get("java.lang.Object");
 		else
 			return TypeData.commonSuperClass(one, two);

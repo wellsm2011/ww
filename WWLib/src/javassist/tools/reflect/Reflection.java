@@ -52,7 +52,7 @@ import javassist.bytecode.MethodInfo;
  * 		return i + 1;
  * 	}
  * 
- * 	public int	value;
+ * 	public int value;
  * }
  * </pre>
  * <p>
@@ -90,20 +90,20 @@ import javassist.bytecode.MethodInfo;
 public class Reflection implements Translator
 {
 
-	static final String		classobjectField			= "_classobject";
-	static final String		classobjectAccessor			= "_getClass";
-	static final String		metaobjectField				= "_metaobject";
-	static final String		metaobjectGetter			= "_getMetaobject";
-	static final String		metaobjectSetter			= "_setMetaobject";
-	static final String		readPrefix					= "_r_";
-	static final String		writePrefix					= "_w_";
+	static final String	classobjectField	= "_classobject";
+	static final String	classobjectAccessor	= "_getClass";
+	static final String	metaobjectField		= "_metaobject";
+	static final String	metaobjectGetter	= "_getMetaobject";
+	static final String	metaobjectSetter	= "_setMetaobject";
+	static final String	readPrefix			= "_r_";
+	static final String	writePrefix			= "_w_";
 
-	static final String		metaobjectClassName			= "javassist.tools.reflect.Metaobject";
-	static final String		classMetaobjectClassName	= "javassist.tools.reflect.ClassMetaobject";
+	static final String	metaobjectClassName			= "javassist.tools.reflect.Metaobject";
+	static final String	classMetaobjectClassName	= "javassist.tools.reflect.ClassMetaobject";
 
-	protected CtMethod		trapMethod, trapStaticMethod;
-	protected CtMethod		trapRead, trapWrite;
-	protected CtClass[]		readParam;
+	protected CtMethod	trapMethod, trapStaticMethod;
+	protected CtMethod	trapRead, trapWrite;
+	protected CtClass[]	readParam;
 
 	protected ClassPool		classPool;
 	protected CodeConverter	converter;
@@ -300,7 +300,7 @@ public class Reflection implements Translator
 		CtMethod body;
 		String name = m.getName();
 
-		if (this.isExcluded(name)) // internally-used method inherited
+		if (this.isExcluded(name))   // internally-used method inherited
 			return; // from a reflective class.
 
 		CtMethod m2;

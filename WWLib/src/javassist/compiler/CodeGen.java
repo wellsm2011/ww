@@ -58,7 +58,7 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 	 */
 	protected static abstract class ReturnHook
 	{
-		ReturnHook	next;
+		ReturnHook next;
 
 		protected ReturnHook(CodeGen gen)
 		{
@@ -77,38 +77,43 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 		}
 	}
 
-	static final String			javaLangObject		= "java.lang.Object";
+	static final String javaLangObject = "java.lang.Object";
 
-	static final String			jvmJavaLangObject	= "java/lang/Object";
-	static final String			javaLangString		= "java.lang.String";
+	static final String	jvmJavaLangObject	= "java/lang/Object";
+	static final String	javaLangString		= "java.lang.String";
 
 	static final String			jvmJavaLangString	= "java/lang/String";
 	static final int[]			binOp				=
-													{ '+', Opcode.DADD, Opcode.FADD, Opcode.LADD, Opcode.IADD, '-', Opcode.DSUB, Opcode.FSUB, Opcode.LSUB, Opcode.ISUB, '*', Opcode.DMUL, Opcode.FMUL,
-			Opcode.LMUL, Opcode.IMUL, '/', Opcode.DDIV, Opcode.FDIV, Opcode.LDIV, Opcode.IDIV, '%', Opcode.DREM, Opcode.FREM, Opcode.LREM, Opcode.IREM, '|', Opcode.NOP, Opcode.NOP, Opcode.LOR,
-			Opcode.IOR, '^', Opcode.NOP, Opcode.NOP, Opcode.LXOR, Opcode.IXOR, '&', Opcode.NOP, Opcode.NOP, Opcode.LAND, Opcode.IAND, TokenId.LSHIFT, Opcode.NOP, Opcode.NOP, Opcode.LSHL, Opcode.ISHL,
-			TokenId.RSHIFT, Opcode.NOP, Opcode.NOP, Opcode.LSHR, Opcode.ISHR, TokenId.ARSHIFT, Opcode.NOP, Opcode.NOP, Opcode.LUSHR, Opcode.IUSHR };
+	{ '+', Opcode.DADD, Opcode.FADD, Opcode.LADD, Opcode.IADD, '-', Opcode.DSUB, Opcode.FSUB, Opcode.LSUB, Opcode.ISUB, '*', Opcode.DMUL, Opcode.FMUL, Opcode.LMUL, Opcode.IMUL, '/', Opcode.DDIV,
+			Opcode.FDIV, Opcode.LDIV, Opcode.IDIV, '%', Opcode.DREM, Opcode.FREM, Opcode.LREM, Opcode.IREM, '|', Opcode.NOP, Opcode.NOP, Opcode.LOR, Opcode.IOR, '^', Opcode.NOP, Opcode.NOP,
+			Opcode.LXOR, Opcode.IXOR, '&', Opcode.NOP, Opcode.NOP, Opcode.LAND, Opcode.IAND, TokenId.LSHIFT, Opcode.NOP, Opcode.NOP, Opcode.LSHL, Opcode.ISHL, TokenId.RSHIFT, Opcode.NOP, Opcode.NOP,
+			Opcode.LSHR, Opcode.ISHR, TokenId.ARSHIFT, Opcode.NOP, Opcode.NOP, Opcode.LUSHR, Opcode.IUSHR };
 	private static final int	ifOp[]				=
-													{ TokenId.EQ, Opcode.IF_ICMPEQ, Opcode.IF_ICMPNE, TokenId.NEQ, Opcode.IF_ICMPNE, Opcode.IF_ICMPEQ, TokenId.LE, Opcode.IF_ICMPLE, Opcode.IF_ICMPGT,
-			TokenId.GE, Opcode.IF_ICMPGE, Opcode.IF_ICMPLT, '<', Opcode.IF_ICMPLT, Opcode.IF_ICMPGE, '>', Opcode.IF_ICMPGT, Opcode.IF_ICMPLE };
+	{ TokenId.EQ, Opcode.IF_ICMPEQ, Opcode.IF_ICMPNE, TokenId.NEQ, Opcode.IF_ICMPNE, Opcode.IF_ICMPEQ, TokenId.LE, Opcode.IF_ICMPLE, Opcode.IF_ICMPGT, TokenId.GE, Opcode.IF_ICMPGE, Opcode.IF_ICMPLT,
+			'<', Opcode.IF_ICMPLT, Opcode.IF_ICMPGE, '>', Opcode.IF_ICMPGT, Opcode.IF_ICMPLE };
 
-	private static final int	ifOp2[]				=
-													{ TokenId.EQ, Opcode.IFEQ, Opcode.IFNE, TokenId.NEQ, Opcode.IFNE, Opcode.IFEQ, TokenId.LE, Opcode.IFLE, Opcode.IFGT, TokenId.GE, Opcode.IFGE,
-			Opcode.IFLT, '<', Opcode.IFLT, Opcode.IFGE, '>', Opcode.IFGT, Opcode.IFLE };
+	private static final int ifOp2[] =
+	{ TokenId.EQ, Opcode.IFEQ, Opcode.IFNE, TokenId.NEQ, Opcode.IFNE, Opcode.IFEQ, TokenId.LE, Opcode.IFLE, Opcode.IFGT, TokenId.GE, Opcode.IFGE, Opcode.IFLT, '<', Opcode.IFLT, Opcode.IFGE, '>',
+			Opcode.IFGT, Opcode.IFLE };
 
-	private static final int	P_DOUBLE			= 0;
+	private static final int P_DOUBLE = 0;
 
-	private static final int	P_FLOAT				= 1;
+	private static final int P_FLOAT = 1;
 
-	private static final int	P_LONG				= 2;
+	private static final int P_LONG = 2;
 
-	private static final int	P_INT				= 3;
+	private static final int P_INT = 3;
 
-	private static final int	P_OTHER				= -1;
-	private static final int[]	castOp				=
-													{ Opcode./* D F L I */
-													/* double */NOP, Opcode.D2F, Opcode.D2L, Opcode.D2I, Opcode./* float */F2D, Opcode.NOP, Opcode.F2L, Opcode.F2I, Opcode./* long */L2D, Opcode.L2F,
-			Opcode.NOP, Opcode.L2I, Opcode./* other */I2D, Opcode.I2F, Opcode.I2L, Opcode.NOP };
+	private static final int	P_OTHER	= -1;
+	private static final int[]	castOp	=
+	{ Opcode.																																												/*
+																																															 * D
+																																															 * F
+																																															 * L
+																																															 * I
+																																															 */
+			/* double */NOP, Opcode.D2F, Opcode.D2L, Opcode.D2I, Opcode./* float */F2D, Opcode.NOP, Opcode.F2L, Opcode.F2I, Opcode./* long */L2D, Opcode.L2F, Opcode.NOP, Opcode.L2I,
+			Opcode./* other */I2D, Opcode.I2F, Opcode.I2L, Opcode.NOP };
 
 	protected static void badAssign(Expr expr) throws CompileError
 	{
@@ -354,37 +359,37 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 			return CodeGen.P_INT; // BOOLEAN, BYTE, CHAR, SHORT, INT
 	}
 
-	protected Bytecode		bytecode;
+	protected Bytecode bytecode;
 
-	private int				tempVar;
+	private int tempVar;
 
-	TypeChecker				typeChecker;
+	TypeChecker typeChecker;
 
 	/**
 	 * true if the last visited node is a return statement.
 	 */
-	protected boolean		hasReturned;
+	protected boolean hasReturned;
 
 	/**
 	 * Must be true if compilation is for a static method.
 	 */
-	public boolean			inStaticMethod;
+	public boolean inStaticMethod;
 
-	protected ArrayList		breakList, continueList;
+	protected ArrayList breakList, continueList;
 
-	protected ReturnHook	returnHooks;
+	protected ReturnHook returnHooks;
 
 	/*
 	 * The following fields are used by atXXX() methods for returning the type
 	 * of the compiled expression.
 	 */
-	protected int			exprType;					// VOID, NULL, CLASS,
-														// BOOLEAN, INT, ...
+	protected int exprType;					// VOID, NULL, CLASS,
+	// BOOLEAN, INT, ...
 
-	protected int			arrayDim;
+	protected int arrayDim;
 
-	protected String		className;					// JVM-internal
-														// representation
+	protected String className;					// JVM-internal
+	// representation
 
 	public CodeGen(Bytecode b)
 	{
@@ -820,7 +825,7 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 			}
 
 			this.bytecode.addIconst(0);
-		} else if (token == TokenId.CALL) // method call
+		} else if (token == TokenId.CALL)   // method call
 			CodeGen.fatal();
 		else
 		{
@@ -1873,10 +1878,10 @@ public abstract class CodeGen extends Visitor implements Opcode, TokenId
 		int type1_p = CodeGen.typePrecedence(type1);
 		int type2_p = CodeGen.typePrecedence(type2);
 
-		if (type2_p < 0 && type1_p < 0) // not primitive types
+		if (type2_p < 0 && type1_p < 0)   // not primitive types
 			return;
 
-		if (type2_p < 0 || type1_p < 0) // either is not a primitive type
+		if (type2_p < 0 || type1_p < 0)   // either is not a primitive type
 			CodeGen.badTypes(expr);
 
 		int op, result_type;

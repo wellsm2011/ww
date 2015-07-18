@@ -153,7 +153,7 @@ class ClassInfo extends ConstInfo
 
 abstract class ConstInfo
 {
-	int	index;
+	int index;
 
 	public ConstInfo(int i)
 	{
@@ -235,119 +235,119 @@ public final class ConstPool
 	/**
 	 * <code>CONSTANT_Class</code>
 	 */
-	public static final int		CONST_Class					= ClassInfo.tag;
+	public static final int	CONST_Class					= ClassInfo.tag;
 	/**
 	 * <code>CONSTANT_Fieldref</code>
 	 */
-	public static final int		CONST_Fieldref				= FieldrefInfo.tag;
+	public static final int	CONST_Fieldref				= FieldrefInfo.tag;
 	/**
 	 * <code>CONSTANT_Methodref</code>
 	 */
-	public static final int		CONST_Methodref				= MethodrefInfo.tag;
+	public static final int	CONST_Methodref				= MethodrefInfo.tag;
 	/**
 	 * <code>CONSTANT_InterfaceMethodref</code>
 	 */
-	public static final int		CONST_InterfaceMethodref	= InterfaceMethodrefInfo.tag;
+	public static final int	CONST_InterfaceMethodref	= InterfaceMethodrefInfo.tag;
 
 	/**
 	 * <code>CONSTANT_String</code>
 	 */
-	public static final int		CONST_String				= StringInfo.tag;
+	public static final int CONST_String = StringInfo.tag;
 
 	/**
 	 * <code>CONSTANT_Integer</code>
 	 */
-	public static final int		CONST_Integer				= IntegerInfo.tag;
+	public static final int CONST_Integer = IntegerInfo.tag;
 
 	/**
 	 * <code>CONSTANT_Float</code>
 	 */
-	public static final int		CONST_Float					= FloatInfo.tag;
+	public static final int CONST_Float = FloatInfo.tag;
 
 	/**
 	 * <code>CONSTANT_Long</code>
 	 */
-	public static final int		CONST_Long					= LongInfo.tag;
+	public static final int CONST_Long = LongInfo.tag;
 
 	/**
 	 * <code>CONSTANT_Double</code>
 	 */
-	public static final int		CONST_Double				= DoubleInfo.tag;
+	public static final int CONST_Double = DoubleInfo.tag;
 
 	/**
 	 * <code>CONSTANT_NameAndType</code>
 	 */
-	public static final int		CONST_NameAndType			= NameAndTypeInfo.tag;
+	public static final int CONST_NameAndType = NameAndTypeInfo.tag;
 
 	/**
 	 * <code>CONSTANT_Utf8</code>
 	 */
-	public static final int		CONST_Utf8					= Utf8Info.tag;
+	public static final int CONST_Utf8 = Utf8Info.tag;
 
 	/**
 	 * <code>CONSTANT_MethodHandle</code>
 	 */
-	public static final int		CONST_MethodHandle			= MethodHandleInfo.tag;
+	public static final int CONST_MethodHandle = MethodHandleInfo.tag;
 
 	/**
 	 * <code>CONSTANT_MethodHandle</code>
 	 */
-	public static final int		CONST_MethodType			= MethodTypeInfo.tag;
+	public static final int CONST_MethodType = MethodTypeInfo.tag;
 
 	/**
 	 * <code>CONSTANT_MethodHandle</code>
 	 */
-	public static final int		CONST_InvokeDynamic			= InvokeDynamicInfo.tag;
+	public static final int CONST_InvokeDynamic = InvokeDynamicInfo.tag;
 
 	/**
 	 * Represents the class using this constant pool table.
 	 */
-	public static final CtClass	THIS						= null;
+	public static final CtClass THIS = null;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_getField				= 1;
+	public static final int REF_getField = 1;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_getStatic				= 2;
+	public static final int REF_getStatic = 2;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_putField				= 3;
+	public static final int REF_putField = 3;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_putStatic				= 4;
+	public static final int REF_putStatic = 4;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_invokeVirtual			= 5;
+	public static final int REF_invokeVirtual = 5;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_invokeStatic			= 6;
+	public static final int REF_invokeStatic = 6;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_invokeSpecial			= 7;
+	public static final int REF_invokeSpecial = 7;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_newInvokeSpecial		= 8;
+	public static final int REF_newInvokeSpecial = 8;
 
 	/**
 	 * <code>reference_kind</code> of <code>CONSTANT_MethodHandle_info</code>.
 	 */
-	public static final int		REF_invokeInterface			= 9;
+	public static final int REF_invokeInterface = 9;
 
 	private static HashMap makeItemsCache(LongVector items)
 	{
@@ -365,13 +365,13 @@ public final class ConstPool
 		return cache;
 	}
 
-	LongVector	items;
+	LongVector items;
 
-	int			numOfItems;
+	int numOfItems;
 
-	int			thisClassInfo;
+	int thisClassInfo;
 
-	HashMap		itemsCache;
+	HashMap itemsCache;
 
 	/**
 	 * Constructs a constant pool table from the given byte stream.
@@ -452,7 +452,7 @@ public final class ConstPool
 	public int addDoubleInfo(double d)
 	{
 		int i = this.addItem(new DoubleInfo(d, this.numOfItems));
-		if (i == this.numOfItems - 1) // if not existing
+		if (i == this.numOfItems - 1)   // if not existing
 			this.addConstInfoPadding();
 
 		return i;
@@ -593,7 +593,7 @@ public final class ConstPool
 	public int addLongInfo(long l)
 	{
 		int i = this.addItem(new LongInfo(l, this.numOfItems));
-		if (i == this.numOfItems - 1) // if not existing
+		if (i == this.numOfItems - 1)   // if not existing
 			this.addConstInfoPadding();
 
 		return i;
@@ -1606,7 +1606,7 @@ class DoubleInfo extends ConstInfo
 
 class FieldrefInfo extends MemberrefInfo
 {
-	static final int	tag	= 9;
+	static final int tag = 9;
 
 	public FieldrefInfo(DataInputStream in, int thisIndex) throws IOException
 	{
@@ -1751,7 +1751,7 @@ class IntegerInfo extends ConstInfo
 
 class InterfaceMethodrefInfo extends MemberrefInfo
 {
-	static final int	tag	= 11;
+	static final int tag = 11;
 
 	public InterfaceMethodrefInfo(DataInputStream in, int thisIndex) throws IOException
 	{
@@ -2038,7 +2038,7 @@ class MethodHandleInfo extends ConstInfo
 
 class MethodrefInfo extends MemberrefInfo
 {
-	static final int	tag	= 10;
+	static final int tag = 10;
 
 	public MethodrefInfo(DataInputStream in, int thisIndex) throws IOException
 	{

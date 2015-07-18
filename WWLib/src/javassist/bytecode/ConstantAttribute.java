@@ -28,7 +28,7 @@ public class ConstantAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"ConstantValue"</code>.
 	 */
-	public static final String	tag	= "ConstantValue";
+	public static final String tag = "ConstantValue";
 
 	/**
 	 * Constructs a ConstantValue attribute.

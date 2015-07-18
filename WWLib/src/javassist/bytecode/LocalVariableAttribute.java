@@ -28,12 +28,12 @@ public class LocalVariableAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"LocalVariableTable"</code>.
 	 */
-	public static final String	tag		= "LocalVariableTable";
+	public static final String tag = "LocalVariableTable";
 
 	/**
 	 * The name of the attribute <code>"LocalVariableTypeTable"</code>.
 	 */
-	public static final String	typeTag	= "LocalVariableTypeTable";
+	public static final String typeTag = "LocalVariableTypeTable";
 
 	/**
 	 * Constructs an empty LocalVariableTable.

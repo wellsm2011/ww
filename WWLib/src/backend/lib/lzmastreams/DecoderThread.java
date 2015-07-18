@@ -9,8 +9,9 @@ import sevenzip.compression.lzma.Decoder;
 
 class DecoderThread implements Runnable
 {
-	static final int						propSize	= 5;
-	static final byte[]						props		= new byte[DecoderThread.propSize];
+	static final int	propSize	= 5;
+	static final byte[]	props		= new byte[DecoderThread.propSize];
+
 	static
 	{
 		// enc.SetEndMarkerMode( true );
@@ -21,13 +22,14 @@ class DecoderThread implements Runnable
 		DecoderThread.props[3] = 0x10;
 		DecoderThread.props[4] = 0x00;
 	}
+
 	protected ArrayBlockingQueue<byte[]>	queue;
 	protected InputStream					in;
 
-	protected OutputStream					out;
+	protected OutputStream out;
 
-	protected Decoder						dec;
-	protected IOException					localException;
+	protected Decoder		dec;
+	protected IOException	localException;
 
 	protected DecoderThread(InputStream input)
 	{

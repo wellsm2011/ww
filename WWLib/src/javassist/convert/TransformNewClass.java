@@ -25,7 +25,7 @@ import javassist.bytecode.Opcode;
 
 final public class TransformNewClass extends Transformer
 {
-	private int	nested;
+	private int		nested;
 	private String	classname, newClassName;
 	private int		newClassIndex, newMethodNTIndex, newMethodIndex;
 

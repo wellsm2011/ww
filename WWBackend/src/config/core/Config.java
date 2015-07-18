@@ -3,7 +3,6 @@ package config.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,7 +18,12 @@ import com.impetus.annovention.Discoverer;
 import backend.U;
 import backend.functionInterfaces.ValDecoder;
 import backend.functionInterfaces.ValEncoder;
-import config.core.ExportedParam.MType;
+import config.core.annotations.ConfigMember;
+import config.core.annotations.ExportedParam;
+import config.core.annotations.ExportedParam.MType;
+import config.core.annotations.HasCustomConfigType;
+import config.core.exceptions.UnknownDecoderException;
+import config.core.exceptions.UnknownReferenceException;
 import global.Globals;
 
 /**
@@ -67,6 +71,7 @@ public class Config
 	{
 		Map<String, Class<?>> res = new LinkedHashMap<String, Class<?>>();
 		Discoverer discoverer = new ClasspathDiscoverer();
+		// Find all our config members
 		discoverer.addAnnotationListener(new FinderListener((in) -> {
 			try
 			{
@@ -76,6 +81,18 @@ public class Config
 				e.printStackTrace();
 			}
 		} , ConfigMember.class));
+		// Also pick up on items that mention having a custom config decoder.
+		// Designed to merely make sure that their static constructor is called,
+		// so they can register themselves for our use later
+		discoverer.addAnnotationListener(new FinderListener((in) -> {
+			try
+			{
+				Class.forName(in);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		} , HasCustomConfigType.class));
 		discoverer.discover();
 		return res;
 	}
@@ -127,6 +144,12 @@ public class Config
 	public Map<Class<?>, SectionManager> getClassToSectionManagerMap()
 	{
 		return this.classToSectionMap;
+	}
+
+	private ValDecoder<?> getDecoder(ExportedParameter curParam)
+	{
+		String name = curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1);
+		return Config.decoders.get(name.toLowerCase());
 	}
 
 	/**
@@ -209,6 +232,184 @@ public class Config
 		return this.classToSectionMap.get(type);
 	}
 
+	private void handleCustomDecode(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance) throws UnknownDecoderException
+	{
+		JSONObject obj;
+
+		ValDecoder<?> decoder = this.getDecoder(curParam);
+		if (decoder == null)
+			throw new UnknownDecoderException(curParam.getDataType());
+		switch (curParam.getStoreType())
+		{
+			case SINGLE:
+				obj = curJSONSection.optJSONObject(curKey);
+				if (obj == null)
+					obj = new JSONObject();
+				curParam.call(instance, MType.SETTER, decoder.decode(obj));
+				break;
+			case LIST:
+				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
+				// Using arraylist because overall we should be having fairly
+				// static lengths
+				List<Object> list = new ArrayList<>(arr.length());
+				for (int i = 0; i < arr.length(); i++)
+				{
+					JSONObject curObj = arr.optJSONObject(i);
+					if (curObj != null)
+						list.add(decoder.decode(curObj));
+				}
+				curParam.call(instance, MType.SETTER, list);
+				break;
+			case MAP:
+				obj = this.getJSONObj(curJSONSection, curKey);
+				Map<String, Object> map = new LinkedHashMap<>();
+				for (String mapKey : obj.keySet())
+				{
+					JSONObject curItem = obj.optJSONObject(mapKey);
+
+					if (curItem != null)
+						map.put(mapKey, decoder.decode(curItem));
+				}
+				curParam.call(instance, MType.SETTER, map);
+				break;
+			default:
+				U.d("Unknown exported parameter found.", 2);
+				break;
+		}
+	}
+
+	private void handleEnum(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	{
+		// TODO iff ever needed.
+	}
+
+	/**
+	 * Handles the given section as primitives
+	 * 
+	 * @param curJSONSection
+	 * @param curKey
+	 * @param curParam
+	 * @param instance
+	 */
+	private void handlePrimitive(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	{
+		String str;
+		Double dbl;
+		switch (curParam.getStoreType())
+		{
+			case SINGLE:
+				Object elem = curJSONSection.get(curKey);
+				if (elem instanceof Number)
+					curParam.call(instance, MType.SETTER, curJSONSection.getDouble(curKey));
+				else
+					curParam.call(instance, MType.SETTER, curJSONSection.getString(curKey));
+				break;
+			case LIST:
+				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
+				// Using arraylist because overall we should be having fairly
+				// static lengths
+				try
+				{
+					List<String> list = new ArrayList<>(arr.length());
+					for (int i = 0; i < arr.length(); i++)
+						list.add(arr.getString(i));
+					curParam.call(instance, MType.SETTER, list);
+				} catch (JSONException e)
+				{
+					List<Double> list = new ArrayList<>(arr.length());
+					for (int i = 0; i < arr.length(); i++)
+						list.add(arr.getDouble(i));
+					curParam.call(instance, MType.SETTER, list);
+				}
+				break;
+			case MAP:
+				JSONObject obj = this.getJSONObj(curJSONSection, curKey);
+				try
+				{
+					Map<String, String> map = new LinkedHashMap<>();
+					for (String mapKey : obj.keySet())
+					{
+						str = obj.getString(mapKey);
+						map.put(mapKey, str);
+					}
+					curParam.call(instance, MType.SETTER, map);
+				} catch (JSONException e)
+				{
+					Map<String, Double> map = new LinkedHashMap<>();
+					for (String mapKey : obj.keySet())
+					{
+						dbl = obj.getDouble(mapKey);
+						map.put(mapKey, dbl);
+					}
+					curParam.call(instance, MType.SETTER, map);
+				}
+				break;
+			default:
+				U.d("Unknown exported parameter found.", 2);
+				break;
+		}
+	}
+
+	private void handleReferences(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance) throws UnknownReferenceException
+	{
+		String refName;
+		SectionManager secMan = this.getSection(curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1));
+		if (secMan == null)
+			throw new UnknownReferenceException("Could not find section manager for declared reference type " + curParam.getDataType());
+		switch (curParam.getStoreType())
+		{
+			case SINGLE:
+				refName = curJSONSection.getString(curKey);
+				curParam.call(instance, MType.SETTER, secMan.getElem(refName));
+				break;
+			case LIST:
+				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
+				// Using arraylist because overall we should be having fairly
+				// static lengths
+				List<Object> list = new ArrayList<>(arr.length());
+				for (int i = 0; i < arr.length(); i++)
+				{
+					refName = arr.getString(i);
+					list.add(secMan.getElem(refName));
+				}
+				curParam.call(instance, MType.SETTER, list);
+				break;
+			case MAP:
+				JSONObject obj = this.getJSONObj(curJSONSection, curKey);
+				Map<String, Object> map = new LinkedHashMap<>();
+				for (String mapKey : obj.keySet())
+				{
+					refName = obj.getString(mapKey);
+					map.put(mapKey, secMan.getElem(refName));
+				}
+				curParam.call(instance, MType.SETTER, map);
+				break;
+			default:
+				U.d("Unknown exported parameter found.", 2);
+				break;
+		}
+	}
+
+	private void instantiateSectionElems(String curSectionKey, JSONObject jsonData, Class<?> type)
+	{
+		if (type == null)
+			throw new ClassCastException();
+		SectionManager secMan = this.getManager(curSectionKey, type);
+		// Loop over all elements in this section, instantiating each,
+		// and putting in the relavent section manager
+		for (String curElemKey : jsonData.keySet())
+			try
+			{
+				Object curInstance = type.newInstance();
+				secMan.offer(curElemKey, curInstance);
+
+			} catch (InstantiationException | IllegalAccessException e)
+			{
+				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, or something equally odd. "
+						+ "Like you specifiying an abstract class or interface as a config member, instead of a instantiable class...", e);
+			}
+	}
+
 	/**
 	 * Intelligently generates a JSONRepresentation of the specified object
 	 * based on pre-specified annotations.
@@ -237,8 +438,10 @@ public class Config
 	 *            the key for this section
 	 * @param type
 	 *            the type to attempt to use for this part of the config file
+	 * @throws UnknownReferenceException
+	 * @throws UnknownDecoderException
 	 */
-	private void intelliParse(JSONObject data, String key, SectionManager secMan)
+	private void intelliParse(JSONObject data, String key, SectionManager secMan) throws UnknownReferenceException, UnknownDecoderException
 	{
 		JSONObject jsonData = data.optJSONObject(key);
 		if (jsonData == null)
@@ -286,7 +489,7 @@ public class Config
 			{
 				JSONObject jsonData = data.optJSONObject(curSectionKey);
 				Class<?> type = configMembers.get(curSectionKey);
-				instantiateSectionElems(curSectionKey, jsonData, type);
+				this.instantiateSectionElems(curSectionKey, jsonData, type);
 			} catch (ClassCastException ex)
 			{
 				U.e("Error, couldn't find parsing structure for " + curSectionKey + ". Did you spell the name correctly? Or are the correct parseables not listed?");
@@ -296,7 +499,7 @@ public class Config
 			try
 			{
 				this.intelliParse(data, curJSONKey, this.getSection(curJSONKey));
-			} catch (JSONException e)
+			} catch (JSONException | UnknownReferenceException | UnknownDecoderException e)
 			{
 				U.e("Error parsing config file", e);
 				Globals.exit();
@@ -305,26 +508,6 @@ public class Config
 				U.e("Internal error parsing config file.");
 				e.printStackTrace();
 				Globals.exit();
-			}
-	}
-
-	private void instantiateSectionElems(String curSectionKey, JSONObject jsonData, Class<?> type)
-	{
-		if (type == null)
-			throw new ClassCastException();
-		SectionManager secMan = this.getManager(curSectionKey, type);
-		// Loop over all elements in this section, instantiating each,
-		// and putting in the relavent section manager
-		for (String curElemKey : jsonData.keySet())
-			try
-			{
-				Object curInstance = type.newInstance();
-				secMan.offer(curSectionKey, curInstance);
-
-			} catch (InstantiationException | IllegalAccessException e)
-			{
-				U.e("Error instantiating class " + type.getName() + ". Probably you hid the blank constructor, or something equally odd. "
-						+ "Like you specifiying an abstract class or interface as a config member, instead of a instantiable class...", e);
 			}
 	}
 
@@ -338,81 +521,21 @@ public class Config
 	 *            the key to pull the data from
 	 * @param curParam
 	 *            the parameter to attempt to parse
+	 * @throws UnknownReferenceException
+	 *             if an unknown reference type is declared
+	 * @throws UnknownDecoderException
+	 *             if an unknown decoder is referenced
 	 */
-	private void parseParam(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	private void parseParam(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance) throws UnknownReferenceException, UnknownDecoderException
 	{
-		JSONObject obj;
-		JSONArray val;
-
-		if (U.matchesAny(curParam.getDataType(), "string", "str", "val", "value"))
-			handleString(curJSONSection, curKey, curParam, instance);
+		if (U.matchesAny(curParam.getDataType(), "string", "str", "val", "value", "num", "number"))
+			this.handlePrimitive(curJSONSection, curKey, curParam, instance);
 		if (curParam.getDataType().startsWith("ref:"))
-			handleReferences(curJSONSection, curKey, curParam, instance);
+			this.handleReferences(curJSONSection, curKey, curParam, instance);
 		else if (curParam.getDataType().startsWith("enum"))
-			handleEnum(curJSONSection, curKey, curParam, instance);
+			this.handleEnum(curJSONSection, curKey, curParam, instance);
 		else if (curParam.getDataType().startsWith("decode:"))
-			handleCustomDecode(curJSONSection, curKey, curParam, instance);
-	}
-
-	private void handleCustomDecode(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
-	{
-		JSONObject obj;
-
-		ValDecoder<?> decoder = decoders.get(curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1));
-
-		switch (curParam.getStoreType())
-		{
-			case SINGLE:
-				obj = curJSONSection.optJSONObject(curKey);
-				if (obj == null)
-					obj = new JSONObject();
-				curParam.call(instance, MType.SETTER, decoder.decode(obj));
-				break;
-			case LIST:
-				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
-				// Using arraylist because overall we should be having fairly
-				// static lengths
-				List<Object> list = new ArrayList<>(arr.length());
-				for (int i = 0; i < arr.length(); i++)
-				{
-					JSONObject curObj = arr.optJSONObject(i);
-					if (curObj != null)
-						list.add(decoder.decode(curObj));
-				}
-				curParam.call(instance, MType.SETTER, list);
-				break;
-			case MAP:
-				obj = this.getJSONObj(curJSONSection, curKey);
-				Map<String, Object> map = new LinkedHashMap<>();
-				for (String mapKey : obj.keySet())
-				{
-					JSONObject curItem = obj.optJSONObject(mapKey);
-					if (curItem != null)
-						map.put(mapKey, decoder.decode(curItem));
-				}
-				curParam.call(instance, MType.SETTER, map);
-				break;
-			default:
-				U.d("Unknown exported parameter found.", 2);
-				break;
-		}
-	}
-
-	private void handleEnum(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
-	{
-		// TODO iff ever needed.
-	}
-
-	private void handleReferences(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	private void handleString(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
-	{
-		// TODO Auto-generated method stub
-
+			this.handleCustomDecode(curJSONSection, curKey, curParam, instance);
 	}
 
 	/**

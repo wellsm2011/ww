@@ -49,7 +49,7 @@ public class AppletServer extends Webserver
 	private StubGenerator		stubGen;
 	private Hashtable			exportedNames;
 
-	private Vector				exportedObjects;
+	private Vector exportedObjects;
 
 	private AppletServer(ClassPool loader, StubGenerator gen, int port) throws IOException, NotFoundException, CannotCompileException
 	{

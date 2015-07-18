@@ -56,7 +56,7 @@ public class CodeIterator implements Opcode
 		/**
 		 * 
 		 */
-		private static final long	serialVersionUID	= 1L;
+		private static final long serialVersionUID = 1L;
 	}
 
 	static abstract class Branch
@@ -83,7 +83,7 @@ public class CodeIterator implements Opcode
 			return offset;
 		}
 
-		int	pos, orgPos;
+		int pos, orgPos;
 
 		Branch(int p)
 		{
@@ -181,12 +181,12 @@ public class CodeIterator implements Opcode
 		/**
 		 * The position of the gap.
 		 */
-		public int	position;
+		public int position;
 
 		/**
 		 * The length of the gap.
 		 */
-		public int	length;
+		public int length;
 	}
 
 	// if<cond>, if_icmp<cond>, or if_acmp<cond>
@@ -250,7 +250,7 @@ public class CodeIterator implements Opcode
 
 	static class Jump32 extends Branch
 	{
-		int	offset;
+		int offset;
 
 		Jump32(int p, int off)
 		{
@@ -317,7 +317,7 @@ public class CodeIterator implements Opcode
 
 	static class Lookup extends Switcher
 	{
-		int[]	matches;
+		int[] matches;
 
 		Lookup(int pos, int defaultByte, int[] matches, int[] offsets, Pointers ptrs)
 		{
@@ -350,10 +350,10 @@ public class CodeIterator implements Opcode
 
 	static class Pointers
 	{
-		int					cursor;
-		int					mark0, mark;
-		ExceptionTable		etable;
-		LineNumberAttribute	line;
+		int						cursor;
+		int						mark0, mark;
+		ExceptionTable			etable;
+		LineNumberAttribute		line;
 		LocalVariableAttribute	vars, types;
 		StackMapTable			stack;
 		StackMap				stack2;
@@ -504,7 +504,7 @@ public class CodeIterator implements Opcode
 
 	static class Table extends Switcher
 	{
-		int	low, high;
+		int low, high;
 
 		Table(int pos, int defaultByte, int low, int high, int[] offsets, Pointers ptrs)
 		{
@@ -539,11 +539,11 @@ public class CodeIterator implements Opcode
 	/*
 	 * opcodeLegth is used for implementing nextOpcode().
 	 */
-	private static final int	opcodeLength[]	=
-												{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 2, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 1, 1,
-			1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 5, 5, 3, 2, 3, 1, 1, 3, 3, 1, 1, 0, 4, 3, 3, 5, 5 };
+	private static final int opcodeLength[] =
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 2, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 5, 5, 3, 2, 3, 1,
+			1, 3, 3, 1, 1, 0, 4, 3, 3, 5, 5 };
 
 	// 0 .. LOOKUPSWITCH, TABLESWITCH, WIDE
 
@@ -964,7 +964,7 @@ public class CodeIterator implements Opcode
 			if (len > 0)
 				return index + len;
 			else if (opcode == Opcode.WIDE)
-				if (code[index + 1] == (byte) Opcode.IINC) // WIDE IINC
+				if (code[index + 1] == (byte) Opcode.IINC)   // WIDE IINC
 					return index + 6;
 				else
 					return index + 4; // WIDE ...
@@ -992,15 +992,15 @@ public class CodeIterator implements Opcode
 		throw new BadBytecode(opcode);
 	}
 
-	protected CodeAttribute	codeAttr;
+	protected CodeAttribute codeAttr;
 
-	protected byte[]		bytecode;
+	protected byte[] bytecode;
 
-	protected int			endPos;
+	protected int endPos;
 
-	protected int			currentPos;
+	protected int currentPos;
 
-	protected int			mark;
+	protected int mark;
 
 	protected CodeIterator(CodeAttribute ca)
 	{

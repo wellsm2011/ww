@@ -73,11 +73,11 @@ class ServiceThread extends Thread
 public class Webserver
 {
 	private final static byte[]	endofline	=
-											{ 0x0d, 0x0a };
+	{ 0x0d, 0x0a };
 	private final static int	typeHtml	= 1;
 	private final static int	typeClass	= 2;
 
-	private final static int	typeGif		= 3;
+	private final static int typeGif = 3;
 
 	private final static int	typeJpeg	= 4;
 	private final static int	typeText	= 5;
@@ -98,14 +98,14 @@ public class Webserver
 	private ServerSocket	socket;
 	private ClassPool		classPool;
 
-	protected Translator	translator;
+	protected Translator translator;
 
 	/**
 	 * If this field is not null, the class files taken from
 	 * <code>ClassPool</code> are written out under the directory specified by
 	 * this field. The directory name must not end with a directory separator.
 	 */
-	public String			debugDir		= null;
+	public String debugDir = null;
 
 	/**
 	 * The top directory of html (and .gif, .class, ...) files. It must end with
@@ -119,7 +119,7 @@ public class Webserver
 	 * <code>Class.getResourceAsStream()</code> is called for searching the Java
 	 * class paths.
 	 */
-	public String			htmlfileBase	= null;
+	public String htmlfileBase = null;
 
 	/**
 	 * Constructs a web server.

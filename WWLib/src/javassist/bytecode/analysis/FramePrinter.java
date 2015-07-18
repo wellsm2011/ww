@@ -45,7 +45,7 @@ public final class FramePrinter
 		new FramePrinter(stream).print(clazz);
 	}
 
-	private final PrintStream	stream;
+	private final PrintStream stream;
 
 	/**
 	 * Constructs a bytecode printer.

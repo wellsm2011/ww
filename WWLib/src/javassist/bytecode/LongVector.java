@@ -19,7 +19,7 @@ package javassist.bytecode;
 final class LongVector
 {
 	static final int		ASIZE	= 128;
-	static final int		ABITS	= 7;	// ASIZE = 2^ABITS
+	static final int		ABITS	= 7;			// ASIZE = 2^ABITS
 	static final int		VSIZE	= 8;
 	private ConstInfo[][]	objects;
 	private int				elements;

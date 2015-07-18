@@ -26,11 +26,11 @@ public class CannotCompileException extends Exception
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
-	private Throwable			myCause;
+	private Throwable myCause;
 
-	private String				message;
+	private String message;
 
 	/**
 	 * Constructs a CannotCompileException with a ClassFormatError.

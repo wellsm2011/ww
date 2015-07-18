@@ -113,9 +113,9 @@ public class ClassPool
 	 * @see CtClass#stopPruning(boolean)
 	 * @see CtClass#detach()
 	 */
-	public static boolean					doPruning					= false;
+	public static boolean doPruning = false;
 
-	private static final int				COMPRESS_THRESHOLD			= 100;
+	private static final int COMPRESS_THRESHOLD = 100;
 
 	/**
 	 * If true, unmodified and not-recently-used class files are periodically
@@ -123,15 +123,15 @@ public class ClassPool
 	 * <p>
 	 * The initial value is true.
 	 */
-	public static boolean					releaseUnmodifiedClassFile	= true;
-	private static final int				INIT_HASH_SIZE				= 191;
+	public static boolean		releaseUnmodifiedClassFile	= true;
+	private static final int	INIT_HASH_SIZE				= 191;
 
 	/*
 	 * releaseUnmodifiedClassFile was introduced for avoiding a bug of JBoss
 	 * AOP. So the value should be true except for JBoss AOP.
 	 */
 
-	private static ClassPool				defaultPool					= null;
+	private static ClassPool defaultPool = null;
 
 	/**
 	 * Obtains a class loader that seems appropriate to look up a class by name.
@@ -197,24 +197,24 @@ public class ClassPool
 	 * <p>
 	 * The default value is false.
 	 */
-	public boolean			childFirstLookup	= false;
+	public boolean childFirstLookup = false;
 
-	private int				compressCount;
+	private int compressCount;
 
-	protected ClassPoolTail	source;
+	protected ClassPoolTail source;
 
-	protected ClassPool		parent;
+	protected ClassPool parent;
 
-	protected Hashtable		classes;						// should be
-															// synchronous
+	protected Hashtable classes;						// should be
+	// synchronous
 
 	/**
 	 * Table of registered cflow variables.
 	 */
-	private Hashtable		cflow				= null;	// should be
-															// synchronous.
+	private Hashtable cflow = null;	// should be
+	// synchronous.
 
-	private ArrayList		importedPackages;
+	private ArrayList importedPackages;
 
 	/**
 	 * Creates a root class pool. No parent class pool is specified.
@@ -403,7 +403,7 @@ public class ClassPool
 	synchronized void classNameChanged(String oldname, CtClass clazz)
 	{
 		CtClass c = this.getCached(oldname);
-		if (c == clazz) // must check this equation.
+		if (c == clazz)   // must check this equation.
 			this.removeCached(oldname); // see getAndRename().
 
 		String newName = clazz.getName();
@@ -602,7 +602,7 @@ public class ClassPool
 			((CtClassType) clazz).setClassPool(this);
 
 		clazz.setName(newName); // indirectly calls
-								// classNameChanged() in this class
+		// classNameChanged() in this class
 		return clazz;
 	}
 

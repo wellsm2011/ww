@@ -45,13 +45,13 @@ public class ParameterAnnotationsAttribute extends AttributeInfo
 	 * The name of the <code>RuntimeVisibleParameterAnnotations</code>
 	 * attribute.
 	 */
-	public static final String	visibleTag		= "RuntimeVisibleParameterAnnotations";
+	public static final String visibleTag = "RuntimeVisibleParameterAnnotations";
 
 	/**
 	 * The name of the <code>RuntimeInvisibleParameterAnnotations</code>
 	 * attribute.
 	 */
-	public static final String	invisibleTag	= "RuntimeInvisibleParameterAnnotations";
+	public static final String invisibleTag = "RuntimeInvisibleParameterAnnotations";
 
 	/**
 	 * @param n

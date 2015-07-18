@@ -132,7 +132,7 @@ final class ClassPoolTail
 		throw new IOException("too much data");
 	}
 
-	protected ClassPathList	pathList;
+	protected ClassPathList pathList;
 
 	public ClassPoolTail()
 	{
@@ -301,7 +301,7 @@ final class ClassPoolTail
 
 final class DirClassPath implements ClassPath
 {
-	String	directory;
+	String directory;
 
 	DirClassPath(String dirName)
 	{
@@ -427,7 +427,7 @@ final class JarClassPath implements ClassPath
 
 final class JarDirClassPath implements ClassPath
 {
-	JarClassPath[]	jars;
+	JarClassPath[] jars;
 
 	JarDirClassPath(String dirName) throws NotFoundException
 	{

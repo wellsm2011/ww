@@ -54,8 +54,8 @@ public class MapMaker extends Tracer
 	 * cc.getDeclaredConstructors()[0].getMethodInfo(); // minfo =
 	 * cc.getClassInitializer().getMethodInfo(); else minfo =
 	 * cc.getDeclaredMethod(args[2]).getMethodInfo(); CodeAttribute ca =
-	 * minfo.getCodeAttribute(); if (ca == null) {
-	 * System.out.println("abstarct method"); return; } TypedBlock[] blocks =
+	 * minfo.getCodeAttribute(); if (ca == null) { System.out.println(
+	 * "abstarct method"); return; } TypedBlock[] blocks =
 	 * TypedBlock.makeBlocks(minfo, ca, false); MapMaker mm = new MapMaker(cp,
 	 * minfo, ca); mm.make(blocks, ca.getCode()); for (int i = 0; i <
 	 * blocks.length; i++) System.out.println(blocks[i]); }
@@ -386,8 +386,8 @@ public class MapMaker extends Tracer
 	{
 		if (src == target)
 			return target;
-		else if (target instanceof TypeData.ClassName || target instanceof TypeData.BasicType) // a
-																								// parameter
+		else if (target instanceof TypeData.ClassName || target instanceof TypeData.BasicType)   // a
+			// parameter
 			return target;
 		else if (target instanceof TypeData.AbsTypeVar)
 		{
@@ -441,7 +441,7 @@ public class MapMaker extends Tracer
 	private TypeData.ClassName toExceptionType(int exceptionType)
 	{
 		String type;
-		if (exceptionType == 0) // for finally clauses
+		if (exceptionType == 0)   // for finally clauses
 			type = "java.lang.Throwable";
 		else
 			type = this.cpool.getClassInfo(exceptionType);

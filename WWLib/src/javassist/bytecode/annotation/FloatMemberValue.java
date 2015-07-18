@@ -31,7 +31,7 @@ import javassist.bytecode.ConstPool;
  */
 public class FloatMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a float constant value. The initial value is 0.0.

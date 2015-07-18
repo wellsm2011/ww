@@ -34,7 +34,7 @@ public class BinExpr extends Expr
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static BinExpr makeBin(int op, ASTree oprand1, ASTree oprand2)
 	{

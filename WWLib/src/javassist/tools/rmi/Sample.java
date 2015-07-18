@@ -27,9 +27,9 @@ public class Sample
 		throw new RemoteException("cannot call a static method.");
 	}
 
-	private ObjectImporter	importer;
+	private ObjectImporter importer;
 
-	private int				objectId;
+	private int objectId;
 
 	public Object forward(Object[] args, int identifier)
 	{

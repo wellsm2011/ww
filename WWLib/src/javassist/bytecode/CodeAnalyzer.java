@@ -26,9 +26,9 @@ class CodeAnalyzer implements Opcode
 		return Opcode.IRETURN <= opcode && opcode <= Opcode.RETURN || opcode == Opcode.ATHROW;
 	}
 
-	private ConstPool		constPool;
+	private ConstPool constPool;
 
-	private CodeAttribute	codeAttr;
+	private CodeAttribute codeAttr;
 
 	public CodeAnalyzer(CodeAttribute ca)
 	{
@@ -204,7 +204,7 @@ class CodeAnalyzer implements Opcode
 			if (this.processBranch(op, ci, index, codeLength, stack, stackDepth, jsrDepth))
 				break;
 
-			if (CodeAnalyzer.isEnd(op)) // return, ireturn, athrow, ...
+			if (CodeAnalyzer.isEnd(op))   // return, ireturn, athrow, ...
 				break;
 
 			if (op == Opcode.JSR || op == Opcode.JSR_W)
@@ -248,7 +248,7 @@ class CodeAnalyzer implements Opcode
 			case INVOKEDYNAMIC:
 				desc = this.constPool.getInvokeDynamicType(ci.u16bitAt(index + 1));
 				stack += Descriptor.dataSize(desc); // assume
-													// CosntPool#REF_invokeStatic
+				// CosntPool#REF_invokeStatic
 				break;
 			case ATHROW:
 				stack = 1; // the stack becomes empty (1 means no values).

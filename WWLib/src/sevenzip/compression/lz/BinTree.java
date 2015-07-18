@@ -6,12 +6,12 @@ import java.io.IOException;
 
 public class BinTree extends InWindow
 {
-	static final int			kHash2Size			= 1 << 10;
-	static final int			kHash3Size			= 1 << 16;
-	static final int			kBT2HashSize		= 1 << 16;
+	static final int	kHash2Size		= 1 << 10;
+	static final int	kHash3Size		= 1 << 16;
+	static final int	kBT2HashSize	= 1 << 16;
 
-	static final int			kStartMaxLen		= 1;
-	static final int			kHash3Offset		= BinTree.kHash2Size;
+	static final int	kStartMaxLen	= 1;
+	static final int	kHash3Offset	= BinTree.kHash2Size;
 
 	static final int			kEmptyHashValue		= 0;
 	static final int			kMaxValForNormalize	= (1 << 30) - 1;
@@ -31,21 +31,21 @@ public class BinTree extends InWindow
 		}
 	}
 
-	int							_cyclicBufferPos;
-	int							_cyclicBufferSize	= 0;
-	int							_matchMaxLen;
-	int[]						_son;
-	int[]						_hash;
-	int							_cutValue			= 0xFF;
-	int							_hashMask;
+	int		_cyclicBufferPos;
+	int		_cyclicBufferSize	= 0;
+	int		_matchMaxLen;
+	int[]	_son;
+	int[]	_hash;
+	int		_cutValue			= 0xFF;
+	int		_hashMask;
 
-	int							_hashSizeSum		= 0;
-	boolean						HASH_ARRAY			= true;
-	int							kNumHashDirectBytes	= 0;
+	int		_hashSizeSum		= 0;
+	boolean	HASH_ARRAY			= true;
+	int		kNumHashDirectBytes	= 0;
 
-	int							kMinMatchCheck		= 4;
+	int kMinMatchCheck = 4;
 
-	int							kFixHashSize		= BinTree.kHash2Size + BinTree.kHash3Size;
+	int kFixHashSize = BinTree.kHash2Size + BinTree.kHash3Size;
 
 	public boolean Create(int historySize, int keepAddBufferBefore, int matchMaxLen, int keepAddBufferAfter)
 	{

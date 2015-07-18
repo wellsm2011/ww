@@ -35,9 +35,9 @@ public class ExceptionTable implements Cloneable
 		return pc;
 	}
 
-	private ConstPool	constPool;
+	private ConstPool constPool;
 
-	private ArrayList	entries;
+	private ArrayList entries;
 
 	/**
 	 * Constructs an <code>exception_table[]</code>.

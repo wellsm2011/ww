@@ -26,7 +26,7 @@ class CtNewClass extends CtClassType
 	/*
 	 * true if the class is an interface.
 	 */
-	protected boolean	hasConstructor;
+	protected boolean hasConstructor;
 
 	CtNewClass(String name, ClassPool cp, boolean isInterface, CtClass superclass)
 	{

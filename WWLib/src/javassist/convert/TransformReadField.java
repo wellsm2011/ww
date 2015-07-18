@@ -62,9 +62,9 @@ public class TransformReadField extends Transformer
 	protected String	fieldname;
 	protected CtClass	fieldClass;
 
-	protected boolean	isPrivate;
+	protected boolean isPrivate;
 
-	protected String	methodClassname, methodName;
+	protected String methodClassname, methodName;
 
 	public TransformReadField(Transformer next, CtField field, String methodClassname, String methodName)
 	{
@@ -90,7 +90,7 @@ public class TransformReadField extends Transformer
 				{
 					iterator.move(pos);
 					pos = iterator.insertGap(1); // insertGap() may insert 4
-													// bytes.
+					// bytes.
 					iterator.writeByte(Opcode.ACONST_NULL, pos);
 					pos = iterator.next();
 				}

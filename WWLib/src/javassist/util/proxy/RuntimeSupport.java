@@ -31,7 +31,7 @@ public class RuntimeSupport
 		/**
 		 * 
 		 */
-		private static final long	serialVersionUID	= 1L;
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Object invoke(Object self, Method m, Method proceed, Object[] args) throws Exception
@@ -43,7 +43,7 @@ public class RuntimeSupport
 	/**
 	 * A method handler that only executes a method.
 	 */
-	public static MethodHandler	default_interceptor	= new DefaultMethodHandler();	;
+	public static MethodHandler default_interceptor = new DefaultMethodHandler();;
 
 	private static void error(Class clazz, String name, String desc)
 	{

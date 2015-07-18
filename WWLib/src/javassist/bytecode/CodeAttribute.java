@@ -55,7 +55,7 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 		LdcEntry	next;
 		int			where;
 
-		int			index;
+		int index;
 	}
 
 	// code[] is stored in AttributeInfo.info.
@@ -69,7 +69,7 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 		/**
 		 * 
 		 */
-		private static final long	serialVersionUID	= 1L;
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Constructs an exception.
@@ -83,7 +83,7 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 	/**
 	 * The name of this attribute <code>"Code"</code>.
 	 */
-	public static final String	tag	= "Code";
+	public static final String tag = "Code";
 
 	private static LdcEntry copyCode(byte[] code, int beginPos, int endPos, ConstPool srcCp, byte[] newcode, ConstPool destCp, Map classnameMap) throws BadBytecode
 	{
@@ -267,13 +267,13 @@ public class CodeAttribute extends AttributeInfo implements Opcode
 		}
 	}
 
-	private int				maxStack;
+	private int maxStack;
 
-	private int				maxLocals;
+	private int maxLocals;
 
-	private ExceptionTable	exceptions;
+	private ExceptionTable exceptions;
 
-	private ArrayList		attributes;
+	private ArrayList attributes;
 
 	/**
 	 * Constructs a copy of <code>Code_attribute</code>. Specified class names

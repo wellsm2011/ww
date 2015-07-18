@@ -36,7 +36,7 @@ import java.lang.reflect.Method;
  * object. For example,
  *
  * <pre>
- * Metaobject	m	= ((Metalevel) reflectiveObject)._getMetaobject();
+ * Metaobject m = ((Metalevel) reflectiveObject)._getMetaobject();
  * </pre>
  *
  * @see javassist.tools.reflect.ClassMetaobject

@@ -28,7 +28,7 @@ public class SourceFileAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"SourceFile"</code>.
 	 */
-	public static final String	tag	= "SourceFile";
+	public static final String tag = "SourceFile";
 
 	SourceFileAttribute(ConstPool cp, int n, DataInputStream in) throws IOException
 	{

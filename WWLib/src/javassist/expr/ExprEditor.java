@@ -173,7 +173,7 @@ public class ExprEditor
 			{
 				edited = true;
 				int size2 = iterator.getCodeLength();
-				if (size != size2) // the body was modified.
+				if (size != size2)   // the body was modified.
 					endPos += size2 - size;
 			}
 		}
@@ -263,7 +263,8 @@ public class ExprEditor
 			int pos = iterator.next();
 			int c = iterator.byteAt(pos);
 
-			if (c < Opcode.GETSTATIC) // c < 178
+			if (c < Opcode.GETSTATIC)
+				// c < 178
 				/* skip */;
 			else if (c < Opcode.NEWARRAY)
 			{ // c < 188

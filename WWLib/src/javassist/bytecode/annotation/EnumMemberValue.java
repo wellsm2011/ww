@@ -31,7 +31,7 @@ import javassist.bytecode.Descriptor;
  */
 public class EnumMemberValue extends MemberValue
 {
-	int	typeIndex, valueIndex;
+	int typeIndex, valueIndex;
 
 	/**
 	 * Constructs an enum constant value. The initial value is not specified.

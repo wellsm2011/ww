@@ -28,7 +28,7 @@ public class SyntheticAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"Synthetic"</code>.
 	 */
-	public static final String	tag	= "Synthetic";
+	public static final String tag = "Synthetic";
 
 	/**
 	 * Constructs a Synthetic attribute.

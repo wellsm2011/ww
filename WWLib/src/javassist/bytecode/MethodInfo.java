@@ -77,11 +77,11 @@ public class MethodInfo
 	int							accessFlags;
 	int							name;
 
-	String						cachedName;
+	String cachedName;
 
-	int							descriptor;
+	int descriptor;
 
-	ArrayList					attribute;					// may be null
+	ArrayList attribute;					// may be null
 
 	private MethodInfo(ConstPool cp)
 	{

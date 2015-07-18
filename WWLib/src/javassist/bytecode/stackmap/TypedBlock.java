@@ -134,14 +134,14 @@ public class TypedBlock extends BasicBlock
 		}
 	}
 
-	public int			stackTop, numLocals;
+	public int stackTop, numLocals;
 
 	// localsTypes is set to non-null when this block is first visited by a
 	// MapMaker.
 	// see alreadySet().
-	public TypeData[]	localsTypes;
+	public TypeData[] localsTypes;
 
-	public TypeData[]	stackTypes;
+	public TypeData[] stackTypes;
 
 	protected TypedBlock(int pos)
 	{

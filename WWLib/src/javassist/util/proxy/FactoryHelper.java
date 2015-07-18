@@ -36,7 +36,7 @@ import javassist.bytecode.ClassFile;
  */
 public class FactoryHelper
 {
-	private static java.lang.reflect.Method	defineClass1, defineClass2;
+	private static java.lang.reflect.Method defineClass1, defineClass2;
 
 	static
 	{
@@ -57,43 +57,42 @@ public class FactoryHelper
 	/**
 	 * <code>Class</code> objects representing primitive types.
 	 */
-	public static final Class[]				primitiveTypes	=
-															{ Boolean.TYPE, Byte.TYPE, Character.TYPE, Short.TYPE, Integer.TYPE, Long.TYPE, Float.TYPE, Double.TYPE, Void.TYPE };
+	public static final Class[] primitiveTypes =
+	{ Boolean.TYPE, Byte.TYPE, Character.TYPE, Short.TYPE, Integer.TYPE, Long.TYPE, Float.TYPE, Double.TYPE, Void.TYPE };
 
 	/**
 	 * The fully-qualified names of wrapper classes for primitive types.
 	 */
-	public static final String[]			wrapperTypes	=
-															{ "java.lang.Boolean", "java.lang.Byte", "java.lang.Character", "java.lang.Short", "java.lang.Integer", "java.lang.Long",
-			"java.lang.Float", "java.lang.Double", "java.lang.Void" };
+	public static final String[] wrapperTypes =
+	{ "java.lang.Boolean", "java.lang.Byte", "java.lang.Character", "java.lang.Short", "java.lang.Integer", "java.lang.Long", "java.lang.Float", "java.lang.Double", "java.lang.Void" };
 
 	/**
 	 * The descriptors of the constructors of wrapper classes.
 	 */
-	public static final String[]			wrapperDesc		=
-															{ "(Z)V", "(B)V", "(C)V", "(S)V", "(I)V", "(J)V", "(F)V", "(D)V" };
+	public static final String[] wrapperDesc =
+	{ "(Z)V", "(B)V", "(C)V", "(S)V", "(I)V", "(J)V", "(F)V", "(D)V" };
 
 	/**
 	 * The names of methods for obtaining a primitive value from a wrapper
 	 * object. For example, <code>intValue()</code> is such a method for
 	 * obtaining an integer value from a <code>java.lang.Integer</code> object.
 	 */
-	public static final String[]			unwarpMethods	=
-															{ "booleanValue", "byteValue", "charValue", "shortValue", "intValue", "longValue", "floatValue", "doubleValue" };
+	public static final String[] unwarpMethods =
+	{ "booleanValue", "byteValue", "charValue", "shortValue", "intValue", "longValue", "floatValue", "doubleValue" };
 
 	/**
 	 * The descriptors of the unwrapping methods contained in
 	 * <code>unwrapMethods</code>.
 	 */
-	public static final String[]			unwrapDesc		=
-															{ "()Z", "()B", "()C", "()S", "()I", "()J", "()F", "()D" };
+	public static final String[] unwrapDesc =
+	{ "()Z", "()B", "()C", "()S", "()I", "()J", "()F", "()D" };
 
 	/**
 	 * The data size of primitive types. <code>long</code> and
 	 * <code>double</code> are 2; the others are 1.
 	 */
-	public static final int[]				dataSize		=
-															{ 1, 1, 1, 1, 1, 2, 1, 2 };
+	public static final int[] dataSize =
+	{ 1, 1, 1, 1, 1, 2, 1, 2 };
 
 	private static byte[] toBytecode(ClassFile cf) throws IOException
 	{

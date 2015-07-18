@@ -35,7 +35,7 @@ import javassist.LoaderClassPath;
 public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 {
 	/** The instance */
-	private static final ScopedClassPoolRepositoryImpl	instance	= new ScopedClassPoolRepositoryImpl();
+	private static final ScopedClassPoolRepositoryImpl instance = new ScopedClassPoolRepositoryImpl();
 
 	/**
 	 * Get the instance.
@@ -48,19 +48,19 @@ public class ScopedClassPoolRepositoryImpl implements ScopedClassPoolRepository
 	}
 
 	/** Whether to prune */
-	private boolean						prune			= true;
+	private boolean prune = true;
 
 	/** Whether to prune when added to the classpool's cache */
-	boolean								pruneWhenCached;
+	boolean pruneWhenCached;
 
 	/** The registered classloaders */
-	protected Map						registeredCLs	= Collections.synchronizedMap(new WeakHashMap());
+	protected Map registeredCLs = Collections.synchronizedMap(new WeakHashMap());
 
 	/** The default class pool */
-	protected ClassPool					classpool;
+	protected ClassPool classpool;
 
 	/** The factory for creating class pools */
-	protected ScopedClassPoolFactory	factory			= new ScopedClassPoolFactoryImpl();
+	protected ScopedClassPoolFactory factory = new ScopedClassPoolFactoryImpl();
 
 	/**
 	 * Singleton.

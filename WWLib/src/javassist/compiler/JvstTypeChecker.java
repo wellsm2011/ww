@@ -33,7 +33,7 @@ import javassist.compiler.ast.Symbol;
 
 public class JvstTypeChecker extends TypeChecker
 {
-	private JvstCodeGen	codeGen;
+	private JvstCodeGen codeGen;
 
 	public JvstTypeChecker(CtClass cc, ClassPool cp, JvstCodeGen gen)
 	{

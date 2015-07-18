@@ -111,7 +111,7 @@ public class Analyzer implements Opcode
 	private ExceptionInfo[]			exceptions;
 	private Frame[]					frames;
 
-	private Subroutine[]			subroutines;
+	private Subroutine[] subroutines;
 
 	/**
 	 * Performs data-flow analysis on a method and returns an array, indexed by

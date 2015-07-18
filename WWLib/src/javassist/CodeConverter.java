@@ -352,7 +352,7 @@ public class CodeConverter
 		}
 	}
 
-	protected Transformer	transformers	= null;
+	protected Transformer transformers = null;
 
 	/**
 	 * Performs code conversion.
@@ -435,7 +435,7 @@ public class CodeConverter
 	 * The <code>CodeConverter</code> would translate bytecode equivalent to:
 	 *
 	 * <pre>
-	 * Point	p2	= p.move(x + y, 0);
+	 * Point p2 = p.move(x + y, 0);
 	 * </pre>
 	 * <p>
 	 * into the bytecode equivalent to:
@@ -489,7 +489,7 @@ public class CodeConverter
 	 * The <code>CodeConverter</code> would translate bytecode equivalent to:
 	 *
 	 * <pre>
-	 * Point	p2	= p.move(x + y, 0);
+	 * Point p2 = p.move(x + y, 0);
 	 * </pre>
 	 * <p>
 	 * into the bytecode equivalent to:
@@ -629,14 +629,14 @@ public class CodeConverter
 	 * <pre>
 	 * class POJO
 	 * {
-	 * 	int[]		ints		= new int[]
-	 * 							{ 1, 2, 3, 4, 5 };
-	 * 	long[]		longs		= new int[]
-	 * 							{ 10, 20, 30 };
-	 * 	Object		objects		= new Object[]
-	 * 							{ true, false };
-	 * 	Integer[]	integers	= new Integer[]
-	 * 							{ new Integer(10) };
+	 * 	int[] ints = new int[]
+	 * 								{ 1, 2, 3, 4, 5 };
+	 * 	long[] longs = new int[]
+	 * 								{ 10, 20, 30 };
+	 * 	Object objects = new Object[]
+	 * 								{ true, false };
+	 * 	Integer[] integers = new Integer[]
+	 * 								{ new Integer(10) };
 	 * }
 	 * </pre>
 	 *
@@ -723,15 +723,15 @@ public class CodeConverter
 	 * For example, the program below
 	 *
 	 * <pre>
-	 * Point	p	= new Point();
-	 * 							int	newX	= p.x + 3;
+	 * Point p = new Point();
+	 * int newX = p.x + 3;
 	 * </pre>
 	 * <p>
 	 * can be translated into:
 	 *
 	 * <pre>
-	 * Point	p	= new Point();
-	 * 							int	newX	= Accessor.readX(p) + 3;
+	 * Point p = new Point();
+	 * int newX = Accessor.readX(p) + 3;
 	 * </pre>
 	 * <p>
 	 * where

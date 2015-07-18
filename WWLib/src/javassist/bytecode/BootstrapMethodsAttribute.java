@@ -15,12 +15,12 @@ public class BootstrapMethodsAttribute extends AttributeInfo
 		 * <code>bootstrap_method_ref</code>. The value at this index must be a
 		 * <code>CONSTANT_MethodHandle_info</code>.
 		 */
-		public int		methodRef;
+		public int methodRef;
 
 		/**
 		 * <code>bootstrap_arguments</code>.
 		 */
-		public int[]	arguments;
+		public int[] arguments;
 
 		/**
 		 * Constructs an element of <code>bootstrap_methods</code>.
@@ -40,7 +40,7 @@ public class BootstrapMethodsAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"BootstrapMethods"</code>.
 	 */
-	public static final String	tag	= "BootstrapMethods";
+	public static final String tag = "BootstrapMethods";
 
 	/**
 	 * Constructs a BootstrapMethods attribute.

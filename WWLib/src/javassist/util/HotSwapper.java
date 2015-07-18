@@ -100,12 +100,12 @@ public class HotSwapper
 		return mereq;
 	}
 
-	private VirtualMachine		jvm;
+	private VirtualMachine jvm;
 
 	private MethodEntryRequest	request;
 	private Map					newClassFiles;
 
-	private Trigger				trigger;
+	private Trigger trigger;
 
 	/**
 	 * Connects to the JVM.

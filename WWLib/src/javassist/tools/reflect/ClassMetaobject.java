@@ -36,7 +36,7 @@ import java.util.Arrays;
  * object. For example,
  *
  * <pre>
- * ClassMetaobject	cm	= ((Metalevel) reflectiveObject)._getClass();
+ * ClassMetaobject cm = ((Metalevel) reflectiveObject)._getClass();
  * </pre>
  *
  * @see javassist.tools.reflect.Metaobject
@@ -47,13 +47,13 @@ public class ClassMetaobject implements Serializable
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID		= 1L;
+	private static final long	serialVersionUID	= 1L;
 	/**
 	 * The base-level methods controlled by a metaobject are renamed so that
 	 * they begin with <code>methodPrefix "_m_"</code>.
 	 */
-	static final String			methodPrefix			= "_m_";
-	static final int			methodPrefixLen			= 3;
+	static final String			methodPrefix		= "_m_";
+	static final int			methodPrefixLen		= 3;
 
 	/**
 	 * Specifies how a <code>java.lang.Class</code> object is loaded.
@@ -67,7 +67,7 @@ public class ClassMetaobject implements Serializable
 	 * If false, it is loaded by <code>Class.forName()</code>. The default value
 	 * is false.
 	 */
-	public static boolean		useContextClassLoader	= false;
+	public static boolean useContextClassLoader = false;
 
 	/**
 	 * Invokes a method whose name begins with <code>methodPrefix "_m_"</code>
@@ -97,11 +97,11 @@ public class ClassMetaobject implements Serializable
 		throw new CannotInvokeException("cannot find a method");
 	}
 
-	private Class			javaClass;
+	private Class javaClass;
 
-	private Constructor[]	constructors;
+	private Constructor[] constructors;
 
-	private Method[]		methods;
+	private Method[] methods;
 
 	/**
 	 * Constructs a <code>ClassMetaobject</code>.

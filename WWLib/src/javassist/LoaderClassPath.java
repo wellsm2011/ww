@@ -39,7 +39,7 @@ import java.net.URL;
  */
 public class LoaderClassPath implements ClassPath
 {
-	private WeakReference	clref;
+	private WeakReference clref;
 
 	/**
 	 * Creates a search path representing a class loader.

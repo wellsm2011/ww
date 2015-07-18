@@ -52,7 +52,7 @@ import javassist.CannotCompileException;
  * 
  * class Foo implements Cloneable
  * {
- * 	public int	width;
+ * 	public int width;
  * }
  * </pre>
  *
@@ -107,6 +107,7 @@ public final class ClassFile
 	 * 1.7) if the JVM supports <code>java.lang.invoke.CallSite</code>.
 	 */
 	public static int		MAJOR_VERSION	= ClassFile.JAVA_3;
+
 	static
 	{
 		try
@@ -164,29 +165,29 @@ public final class ClassFile
 		return (minfo.getAccessFlags() & AccessFlag.BRIDGE) == 0;
 	}
 
-	int			major, minor;		// version number
+	int major, minor;		// version number
 
-	ConstPool	constPool;
+	ConstPool constPool;
 
-	int			thisClass;
+	int thisClass;
 
-	int			accessFlags;
+	int accessFlags;
 
-	int			superClass;
+	int superClass;
 
-	int[]		interfaces;
+	int[] interfaces;
 
-	ArrayList	fields;
+	ArrayList fields;
 
-	ArrayList	methods;
+	ArrayList methods;
 
-	ArrayList	attributes;
+	ArrayList attributes;
 
-	String		thisclassname;		// not JVM-internal name
+	String thisclassname;		// not JVM-internal name
 
-	String[]	cachedInterfaces;
+	String[] cachedInterfaces;
 
-	String		cachedSuperclass;
+	String cachedSuperclass;
 
 	/**
 	 * Constructs a class file including no members.

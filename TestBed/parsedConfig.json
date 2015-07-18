@@ -3,35 +3,34 @@
         "maul": {
             "tags": ["kill"],
             "priority": 10,
-            "appliedAtomics": {
-                "ChatPost": "Some message",
-                "AddStatus": "Hurt,Turning",
-                "GrantAbility": "EatBrainz"
-            },
+            "appliedAtomics": [],
             "appliedActions": []
         },
         "lynch": {
             "tags": ["kill"],
             "priority": 5,
-            "appliedAtomics": {
-                "ChatPost": "Some message",
-                "AddStatus": "Dead",
-                "GrantAbility": "EatBrainz"
-            },
+            "appliedAtomics": [],
             "appliedActions": []
         }
     },
     "abilities": {
         "Start Lynch Vote": {
             "tags": ["dayending"],
-            "trigger": {"on": "use"},
+            "trigger": {"type": "usable"},
             "targeting": {
-                "type": "vote[role!=Fool,reqMajority=51%]",
+                "type": "vote",
+                "blacklist": "role!=Fool",
+                "typeparam": "reqMajority=51%]",
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": ["lynch"],
-            "appliedAtomics": {"ChatPost": "system:Starting Lynch Vote!->villager"}
+            "appliedActions": [{
+                "priority": 5,
+                "tags": ["kill"],
+                "appliedActions": [],
+                "appliedAtomics": []
+            }],
+            "appliedAtomics": {"ChatPost": {}}
         },
         "Maul Face": {
             "tags": [
@@ -44,7 +43,12 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": ["maul"],
+            "appliedActions": [{
+                "priority": 10,
+                "tags": ["kill"],
+                "appliedActions": [],
+                "appliedAtomics": []
+            }],
             "appliedAtomics": {}
         },
         "Brutal Death": {
@@ -58,7 +62,12 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": ["maul"],
+            "appliedActions": [{
+                "priority": 10,
+                "tags": ["kill"],
+                "appliedActions": [],
+                "appliedAtomics": []
+            }],
             "appliedAtomics": {}
         }
     },

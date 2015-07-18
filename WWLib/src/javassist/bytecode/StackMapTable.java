@@ -127,7 +127,7 @@ public class StackMapTable extends AttributeInfo
 
 	static class NewRemover extends SimpleCopy
 	{
-		int	posOfNew;
+		int posOfNew;
 
 		public NewRemover(byte[] data, int pos)
 		{
@@ -175,7 +175,7 @@ public class StackMapTable extends AttributeInfo
 
 	static class OffsetShifter extends Walker
 	{
-		int	where, gap;
+		int where, gap;
 
 		public OffsetShifter(StackMapTable smt, int where, int gap)
 		{
@@ -209,9 +209,9 @@ public class StackMapTable extends AttributeInfo
 			}
 		}
 
-		private PrintWriter	writer;
+		private PrintWriter writer;
 
-		private int			offset;
+		private int offset;
 
 		Printer(byte[] data, PrintWriter pw)
 		{
@@ -313,7 +313,7 @@ public class StackMapTable extends AttributeInfo
 		/**
 		 * 
 		 */
-		private static final long	serialVersionUID	= 1L;
+		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Constructs an exception.
@@ -341,7 +341,7 @@ public class StackMapTable extends AttributeInfo
 		int						position;
 		byte[]					updatedInfo;
 
-		boolean					exclusive;
+		boolean exclusive;
 
 		public Shifter(StackMapTable smt, int where, int gap, boolean exclusive)
 		{
@@ -439,7 +439,7 @@ public class StackMapTable extends AttributeInfo
 
 	static class SimpleCopy extends Walker
 	{
-		private Writer	writer;
+		private Writer writer;
 
 		public SimpleCopy(byte[] data)
 		{
@@ -801,7 +801,7 @@ public class StackMapTable extends AttributeInfo
 				pos = this.sameLocals(pos, type);
 			else if (type < 247)
 				throw new BadBytecode("bad frame_type in StackMapTable");
-			else if (type == 247) // SAME_LOCALS_1_STACK_ITEM_EXTENDED
+			else if (type == 247)   // SAME_LOCALS_1_STACK_ITEM_EXTENDED
 				pos = this.sameLocals(pos, type);
 			else if (type < 251)
 			{
@@ -1015,52 +1015,52 @@ public class StackMapTable extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"StackMapTable"</code>.
 	 */
-	public static final String	tag		= "StackMapTable";
+	public static final String tag = "StackMapTable";
 
 	/**
 	 * <code>Top_variable_info.tag</code>.
 	 */
-	public static final int		TOP		= 0;
+	public static final int TOP = 0;
 
 	/**
 	 * <code>Integer_variable_info.tag</code>.
 	 */
-	public static final int		INTEGER	= 1;
+	public static final int INTEGER = 1;
 
 	/**
 	 * <code>Float_variable_info.tag</code>.
 	 */
-	public static final int		FLOAT	= 2;
+	public static final int FLOAT = 2;
 
 	/**
 	 * <code>Double_variable_info.tag</code>.
 	 */
-	public static final int		DOUBLE	= 3;
+	public static final int DOUBLE = 3;
 
 	/**
 	 * <code>Long_variable_info.tag</code>.
 	 */
-	public static final int		LONG	= 4;
+	public static final int LONG = 4;
 
 	/**
 	 * <code>Null_variable_info.tag</code>.
 	 */
-	public static final int		NULL	= 5;
+	public static final int NULL = 5;
 
 	/**
 	 * <code>UninitializedThis_variable_info.tag</code>.
 	 */
-	public static final int		THIS	= 6;
+	public static final int THIS = 6;
 
 	/**
 	 * <code>Object_variable_info.tag</code>.
 	 */
-	public static final int		OBJECT	= 7;
+	public static final int OBJECT = 7;
 
 	/**
 	 * <code>Uninitialized_variable_info.tag</code>.
 	 */
-	public static final int		UNINIT	= 8;
+	public static final int UNINIT = 8;
 
 	/**
 	 * Returns the tag of the type specified by the descriptor. This method
@@ -1084,7 +1084,7 @@ public class StackMapTable extends AttributeInfo
 			case 'L':
 			case '[':
 				return StackMapTable.OBJECT;
-				// case 'V' :
+			// case 'V' :
 			default:
 				return StackMapTable.INTEGER;
 		}

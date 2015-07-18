@@ -10,7 +10,7 @@ public class Trigger
 	{
 		Config.registerType("Trigger", cur -> {
 			return new Trigger();
-		},cur ->{
+		} , cur -> {
 			return new JSONObject();
 		});
 	}

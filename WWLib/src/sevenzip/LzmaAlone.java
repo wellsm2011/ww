@@ -8,30 +8,30 @@ public class LzmaAlone
 {
 	static public class CommandLine
 	{
-		public static final int	kEncode					= 0;
-		public static final int	kDecode					= 1;
-		public static final int	kBenchmak				= 2;
+		public static final int	kEncode		= 0;
+		public static final int	kDecode		= 1;
+		public static final int	kBenchmak	= 2;
 
-		public int				Command					= -1;
-		public int				NumBenchmarkPasses		= 10;
+		public int	Command				= -1;
+		public int	NumBenchmarkPasses	= 10;
 
-		public int				DictionarySize			= 1 << 23;
-		public boolean			DictionarySizeIsDefined	= false;
+		public int		DictionarySize			= 1 << 23;
+		public boolean	DictionarySizeIsDefined	= false;
 
-		public int				Lc						= 3;
-		public int				Lp						= 0;
-		public int				Pb						= 2;
+		public int	Lc	= 3;
+		public int	Lp	= 0;
+		public int	Pb	= 2;
 
-		public int				Fb						= 128;
-		public boolean			FbIsDefined				= false;
+		public int		Fb			= 128;
+		public boolean	FbIsDefined	= false;
 
-		public boolean			Eos						= false;
+		public boolean Eos = false;
 
-		public int				Algorithm				= 2;
-		public int				MatchFinder				= 1;
+		public int	Algorithm	= 2;
+		public int	MatchFinder	= 1;
 
-		public String			InFile;
-		public String			OutFile;
+		public String	InFile;
+		public String	OutFile;
 
 		public boolean Parse(String[] args) throws Exception
 		{
@@ -234,14 +234,10 @@ public class LzmaAlone
 
 	static void PrintHelp()
 	{
-		System.out.println("\nUsage:  LZMA <e|d> [<switches>...] inputFile outputFile\n" + "  e: encode file\n"
-				+ "  d: decode file\n"
-				+ "  b: Benchmark\n"
-				+ "<Switches>\n"
-				+
-				// "  -a{N}:  set compression mode - [0, 1], default: 1 (max)\n"
+		System.out.println("\nUsage:  LZMA <e|d> [<switches>...] inputFile outputFile\n" + "  e: encode file\n" + "  d: decode file\n" + "  b: Benchmark\n" + "<Switches>\n" +
+				// " -a{N}: set compression mode - [0, 1], default: 1 (max)\n"
 				// +
-				"  -d{N}:  set dictionary - [0,28], default: 23 (8MB)\n" + "  -fb{N}: set number of fast bytes - [5, 273], default: 128\n"
+		"  -d{N}:  set dictionary - [0,28], default: 23 (8MB)\n" + "  -fb{N}: set number of fast bytes - [5, 273], default: 128\n"
 				+ "  -lc{N}: set number of literal context bits - [0, 8], default: 3\n" + "  -lp{N}: set number of literal pos bits - [0, 4], default: 0\n"
 				+ "  -pb{N}: set number of pos bits - [0, 4], default: 2\n" + "  -mf{MF_ID}: set Match Finder: [bt2, bt4], default: bt4\n" + "  -eos:   write End Of Stream marker\n");
 	}

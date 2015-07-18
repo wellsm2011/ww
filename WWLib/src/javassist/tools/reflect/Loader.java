@@ -127,7 +127,7 @@ public class Loader extends javassist.Loader
 		cl.run(args);
 	}
 
-	protected Reflection	reflection;
+	protected Reflection reflection;
 
 	/**
 	 * Constructs a new class loader.

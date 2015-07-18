@@ -27,7 +27,7 @@ public class Stmnt extends ASTList implements TokenId
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static Stmnt make(int op, ASTree oprand1, ASTree oprand2)
 	{
@@ -39,7 +39,7 @@ public class Stmnt extends ASTList implements TokenId
 		return new Stmnt(op, op1, new ASTList(op2, new ASTList(op3)));
 	}
 
-	protected int	operatorId;
+	protected int operatorId;
 
 	public Stmnt(int op)
 	{

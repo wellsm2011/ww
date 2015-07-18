@@ -60,14 +60,14 @@ public class StubGenerator implements Translator
 	private static final String	accessorObjectId	= "_getObjectId";
 	private static final String	sampleClass			= "javassist.tools.rmi.Sample";
 
-	private ClassPool			classPool;
-	private Hashtable			proxyClasses;
-	private CtMethod			forwardMethod;
-	private CtMethod			forwardStaticMethod;
+	private ClassPool	classPool;
+	private Hashtable	proxyClasses;
+	private CtMethod	forwardMethod;
+	private CtMethod	forwardStaticMethod;
 
-	private CtClass[]			proxyConstructorParamTypes;
-	private CtClass[]			interfacesForProxy;
-	private CtClass[]			exceptionForProxy;
+	private CtClass[]	proxyConstructorParamTypes;
+	private CtClass[]	interfacesForProxy;
+	private CtClass[]	exceptionForProxy;
 
 	/**
 	 * Constructs a stub-code generator.
@@ -97,8 +97,8 @@ public class StubGenerator implements Translator
 					else
 						body = this.forwardMethod;
 
-					wmethod = CtNewMethod
-							.wrapped(this.toCtClass(m.getReturnType()), m.getName(), this.toCtClass(m.getParameterTypes()), this.exceptionForProxy, body, ConstParameter.integer(i), proxy);
+					wmethod = CtNewMethod.wrapped(this.toCtClass(m.getReturnType()), m.getName(), this.toCtClass(m.getParameterTypes()), this.exceptionForProxy, body, ConstParameter.integer(i),
+							proxy);
 					wmethod.setModifiers(mod);
 					proxy.addMethod(wmethod);
 				} else if (!Modifier.isProtected(mod) && !Modifier.isPrivate(mod))

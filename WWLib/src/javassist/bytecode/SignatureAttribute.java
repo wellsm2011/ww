@@ -94,7 +94,7 @@ public class SignatureAttribute extends AttributeInfo
 	 */
 	public static class BaseType extends Type
 	{
-		char	descriptor;
+		char descriptor;
 
 		BaseType(char c)
 		{
@@ -262,7 +262,7 @@ public class SignatureAttribute extends AttributeInfo
 		/**
 		 * A class type representing <code>java.lang.Object</code>.
 		 */
-		public static ClassType	OBJECT	= new ClassType("java.lang.Object", null);
+		public static ClassType OBJECT = new ClassType("java.lang.Object", null);
 
 		static ClassType make(String s, int b, int e, TypeArgument[] targs, ClassType parent)
 		{
@@ -272,9 +272,9 @@ public class SignatureAttribute extends AttributeInfo
 				return new NestedClassType(s, b, e, targs, parent);
 		}
 
-		String			name;
+		String name;
 
-		TypeArgument[]	arguments;
+		TypeArgument[] arguments;
 
 		/**
 		 * Constructs a <code>ClassType</code>. It represents the name of a
@@ -414,7 +414,7 @@ public class SignatureAttribute extends AttributeInfo
 
 	static private class Cursor
 	{
-		int	position	= 0;
+		int position = 0;
 
 		int indexOf(String s, int ch) throws BadBytecode
 		{
@@ -560,7 +560,7 @@ public class SignatureAttribute extends AttributeInfo
 	 */
 	public static class NestedClassType extends ClassType
 	{
-		ClassType	parent;
+		ClassType parent;
 
 		/**
 		 * Constructs a <code>NestedClassType</code>.
@@ -689,9 +689,9 @@ public class SignatureAttribute extends AttributeInfo
 			return new TypeArgument(t, '-');
 		}
 
-		ObjectType	arg;
+		ObjectType arg;
 
-		char		wildcard;
+		char wildcard;
 
 		/**
 		 * Constructs a <code>TypeArgument</code> representing
@@ -794,10 +794,10 @@ public class SignatureAttribute extends AttributeInfo
 			sbuf.append('>');
 		}
 
-		String			name;
-		ObjectType		superClass;
+		String		name;
+		ObjectType	superClass;
 
-		ObjectType[]	superInterfaces;
+		ObjectType[] superInterfaces;
 
 		/**
 		 * Constructs a <code>TypeParameter</code> representing a type parameter
@@ -914,7 +914,7 @@ public class SignatureAttribute extends AttributeInfo
 	 */
 	public static class TypeVariable extends ObjectType
 	{
-		String	name;
+		String name;
 
 		/**
 		 * Constructs a <code>TypeVariable</code>.
@@ -959,7 +959,7 @@ public class SignatureAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"Signature"</code>.
 	 */
-	public static final String	tag	= "Signature";
+	public static final String tag = "Signature";
 
 	private static BadBytecode error(String sig)
 	{

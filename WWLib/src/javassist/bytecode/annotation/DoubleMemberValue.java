@@ -31,7 +31,7 @@ import javassist.bytecode.ConstPool;
  */
 public class DoubleMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a double constant value. The initial value is 0.0.

@@ -52,7 +52,7 @@ public class BasicBlock
 		/**
 		 * 
 		 */
-		private static final long	serialVersionUID	= 1L;
+		private static final long serialVersionUID = 1L;
 
 		JsrBytecode()
 		{
@@ -187,7 +187,7 @@ public class BasicBlock
 						bb.incoming++;
 						prev.exit = this.makeArray(bb);
 					} else // the previous mark already has exits.
-					if (prev.position + prev.length < m.position)
+						if (prev.position + prev.length < m.position)
 					{
 						// dead code is found.
 						prev = this.makeBlock(prev.position + prev.length);
@@ -196,7 +196,7 @@ public class BasicBlock
 						// the incoming flow from dead code is not counted
 						// bb.incoming++;
 						prev.stop = true; // because the incoming flow is not
-											// counted.
+						// counted.
 						prev.exit = this.makeArray(bb);
 					}
 
@@ -306,8 +306,8 @@ public class BasicBlock
 							int ncases = high - low + 1;
 							BasicBlock[] to = this.makeArray(ncases + 1);
 							to[0] = this.makeMark(marks, index + ci.s32bitAt(pos)).block; // default
-																							// branch
-																							// target
+							// branch
+							// target
 							int p = pos + 12;
 							int n = p + ncases * 4;
 							int k = 1;
@@ -325,8 +325,8 @@ public class BasicBlock
 							int ncases = ci.s32bitAt(pos + 4);
 							BasicBlock[] to = this.makeArray(ncases + 1);
 							to[0] = this.makeMark(marks, index + ci.s32bitAt(pos)).block; // default
-																							// branch
-																							// target
+							// branch
+							// target
 							int p = pos + 8 + 4;
 							int n = p + ncases * 8 - 4;
 							int k = 1;
@@ -371,8 +371,10 @@ public class BasicBlock
 		int				position;
 		BasicBlock		block;
 		BasicBlock[]	jump;
-		boolean			alwaysJmp;	// true if an unconditional branch.
-		int				size;		// 0 unless the mark indicates RETURN etc.
+		boolean			alwaysJmp;			// true if an unconditional branch.
+		int				size;						// 0 unless the mark
+													// indicates
+													// RETURN etc.
 		Catch			catcher;
 
 		Mark(int p)
@@ -417,17 +419,17 @@ public class BasicBlock
 		throw new BadBytecode("no basic block at " + pos);
 	}
 
-	protected int			position, length;
+	protected int position, length;
 
-	protected int			incoming;			// the number of incoming
-												// branches.
+	protected int incoming;			// the number of incoming
+	// branches.
 
-	protected BasicBlock[]	exit;				// null if the block is a leaf.
+	protected BasicBlock[] exit;				// null if the block is a leaf.
 
-	protected boolean		stop;				// true if the block ends with
-												// an unconditional jump.
+	protected boolean stop;				// true if the block ends with
+	// an unconditional jump.
 
-	protected Catch			toCatch;
+	protected Catch toCatch;
 
 	protected BasicBlock(int pos)
 	{

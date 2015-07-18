@@ -4,7 +4,7 @@ package sevenzip;
 
 public class CRC
 {
-	static public int[]	Table	= new int[256];
+	static public int[] Table = new int[256];
 
 	static
 	{
@@ -20,7 +20,7 @@ public class CRC
 		}
 	}
 
-	int					_value	= -1;
+	int _value = -1;
 
 	public int GetDigest()
 	{

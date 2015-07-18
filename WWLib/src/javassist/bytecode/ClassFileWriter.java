@@ -66,8 +66,8 @@ import java.io.OutputStream;
  * 
  * public class Test
  * {
- * 	public int	value;
- * 	public long	value2;
+ * 	public int value;
+ * 	public long value2;
  * 
  * 	public Test()
  * 	{
@@ -500,10 +500,10 @@ public class ClassFileWriter
 		protected int				throwsIndex;
 		protected int				stackIndex;
 
-		private int					startPos;
-		private boolean				isAbstract;
-		private int					catchPos;
-		private int					catchCount;
+		private int		startPos;
+		private boolean	isAbstract;
+		private int		catchPos;
+		private int		catchCount;
 
 		MethodWriter(ConstPoolWriter cp)
 		{
@@ -614,7 +614,7 @@ public class ClassFileWriter
 				this.startPos = this.output.getPos();
 				this.output.writeShort(this.codeIndex);
 				this.output.writeBlank(12); // attribute_length, maxStack,
-											// maxLocals, code_lenth
+				// maxLocals, code_lenth
 			}
 
 			this.catchPos = -1;
@@ -763,15 +763,15 @@ public class ClassFileWriter
 		}
 	}
 
-	private ByteStream		output;
+	private ByteStream output;
 
-	private ConstPoolWriter	constPool;
+	private ConstPoolWriter constPool;
 
-	private FieldWriter		fields;
+	private FieldWriter fields;
 
-	private MethodWriter	methods;
+	private MethodWriter methods;
 
-	int						thisClass, superClass;
+	int thisClass, superClass;
 
 	/**
 	 * Constructs a class file writer.

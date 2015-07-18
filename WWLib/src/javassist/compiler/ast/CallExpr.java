@@ -28,14 +28,14 @@ public class CallExpr extends Expr
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static CallExpr makeCall(ASTree target, ASTree args)
 	{
 		return new CallExpr(target, new ASTList(args));
 	}
 
-	private MemberResolver.Method	method; // cached result of lookupMethod()
+	private MemberResolver.Method method; // cached result of lookupMethod()
 
 	private CallExpr(ASTree _head, ASTList _tail)
 	{

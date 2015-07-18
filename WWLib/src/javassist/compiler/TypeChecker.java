@@ -223,18 +223,18 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 	 * The following fields are used by atXXX() methods for returning the type
 	 * of the compiled expression.
 	 */
-	protected int				exprType;	// VOID, NULL, CLASS, BOOLEAN, INT,
-											// ...
+	protected int exprType;	// VOID, NULL, CLASS, BOOLEAN, INT,
+	// ...
 
-	protected int				arrayDim;
+	protected int arrayDim;
 
-	protected String			className;	// JVM-internal representation
+	protected String className;	// JVM-internal representation
 
-	protected MemberResolver	resolver;
+	protected MemberResolver resolver;
 
-	protected CtClass			thisClass;
+	protected CtClass thisClass;
 
-	protected MethodInfo		thisMethod;
+	protected MethodInfo thisMethod;
 
 	public TypeChecker(CtClass cc, ClassPool cp)
 	{
@@ -386,7 +386,7 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 			Expr e = (Expr) method;
 			mname = ((Symbol) e.oprand2()).get();
 			int op = e.getOperator();
-			if (op == TokenId.MEMBER) // static method
+			if (op == TokenId.MEMBER)   // static method
 				targetClass = this.resolver.lookupClass(((Symbol) e.oprand1()).get(), false);
 			else if (op == '.')
 			{
@@ -414,7 +414,9 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 
 					if (this.arrayDim > 0)
 						targetClass = this.resolver.lookupClass(TypeChecker.javaLangObject, true);
-					else if (this.exprType == TokenId.CLASS /* && arrayDim == 0 */)
+					else if (this.exprType == TokenId.CLASS /*
+															 * && arrayDim == 0
+															 */)
 						targetClass = this.resolver.lookupClassByJvmName(this.className);
 					else
 						TypeChecker.badMethod();
@@ -512,7 +514,7 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 			this.atPlusPlus(token, oprand, expr);
 		else if (token == '!')
 			this.booleanExpr(expr);
-		else if (token == TokenId.CALL) // method call
+		else if (token == TokenId.CALL)   // method call
 			TypeChecker.fatal();
 		else
 		{
@@ -776,8 +778,8 @@ public class TypeChecker extends Visitor implements Opcode, TokenId
 		if (this.isConstant(expr, '+', left, right))
 			return null;
 
-		if (type1 == TokenId.CLASS && dim1 == 0 && TypeChecker.jvmJavaLangString.equals(cname) || this.exprType == TokenId.CLASS && this.arrayDim == 0
-				&& TypeChecker.jvmJavaLangString.equals(this.className))
+		if (type1 == TokenId.CLASS && dim1 == 0 && TypeChecker.jvmJavaLangString.equals(cname)
+				|| this.exprType == TokenId.CLASS && this.arrayDim == 0 && TypeChecker.jvmJavaLangString.equals(this.className))
 		{
 			ASTList sbufClass = ASTList.make(new Symbol("java"), new Symbol("lang"), new Symbol("StringBuffer"));
 			ASTree e = new NewExpr(sbufClass, null);

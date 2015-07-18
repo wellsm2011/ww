@@ -30,7 +30,7 @@ public class LocalVariableTypeAttribute extends LocalVariableAttribute
 	/**
 	 * The name of the attribute <code>"LocalVariableTypeTable"</code>.
 	 */
-	public static final String	tag	= LocalVariableAttribute.typeTag;
+	public static final String tag = LocalVariableAttribute.typeTag;
 
 	/**
 	 * Constructs an empty LocalVariableTypeTable.

@@ -39,9 +39,9 @@ import javassist.NotFoundException;
  */
 public class Type
 {
-	private static final Map	prims			= new IdentityHashMap();
+	private static final Map	prims	= new IdentityHashMap();
 	/** Represents the double primitive type */
-	public static final Type	DOUBLE			= new Type(CtClass.doubleType);
+	public static final Type	DOUBLE	= new Type(CtClass.doubleType);
 
 	/** Represents the boolean primitive type */
 	public static final Type	BOOLEAN			= new Type(CtClass.booleanType);
@@ -80,7 +80,7 @@ public class Type
 	 * A placeholder used by the analyzer for the second word position of a
 	 * double-word type
 	 */
-	public static final Type	TOP				= new Type(null, true);
+	public static final Type TOP = new Type(null, true);
 
 	/**
 	 * Represents a non-accessible value. Code cannot access the value this type
@@ -89,18 +89,19 @@ public class Type
 	 * uses the same position for a primitive type in one branch, and a
 	 * reference type in another branch.
 	 */
-	public static final Type	BOGUS			= new Type(null, true);
+	public static final Type BOGUS = new Type(null, true);
 
 	/** Represents the java.lang.Object reference type */
-	public static final Type	OBJECT			= Type.lookupType("java.lang.Object");
+	public static final Type OBJECT = Type.lookupType("java.lang.Object");
 
 	/** Represents the java.io.Serializable reference type */
-	public static final Type	SERIALIZABLE	= Type.lookupType("java.io.Serializable");
+	public static final Type SERIALIZABLE = Type.lookupType("java.io.Serializable");
 
 	/** Represents the java.lang.Coneable reference type */
-	public static final Type	CLONEABLE		= Type.lookupType("java.lang.Cloneable");
+	public static final Type	CLONEABLE	= Type.lookupType("java.lang.Cloneable");
 	/** Represents the java.lang.Throwable reference type */
-	public static final Type	THROWABLE		= Type.lookupType("java.lang.Throwable");
+	public static final Type	THROWABLE	= Type.lookupType("java.lang.Throwable");
+
 	static
 	{
 		Type.prims.put(CtClass.doubleType, Type.DOUBLE);
@@ -210,9 +211,9 @@ public class Type
 		}
 	}
 
-	private final CtClass	clazz;
+	private final CtClass clazz;
 
-	private final boolean	special;
+	private final boolean special;
 
 	Type(CtClass clazz)
 	{

@@ -29,7 +29,7 @@ import javassist.CtBehavior;
  * <pre>
  * {@code
  * ctMethod.insertAfter(new Callback("Thread.currentThread()") {
- *     @literal@Override
+ *     &#64;literal@Override
  *     public void result(Object... objects) {
  *         Thread thread = (Thread) objects[0];
  *         // do something with thread...
@@ -44,7 +44,7 @@ import javassist.CtBehavior;
  * <pre>
  * {@code
  * insertAfter(ctBehaviour, new Callback("Thread.currentThread(), dummyString") {
- *     @literal@Override
+ *     &#64;literal@Override
  *     public void result(Object... objects) {
  *         Thread thread = (Thread) objects[0];
  *         // do something with thread...
@@ -58,7 +58,7 @@ import javassist.CtBehavior;
 public abstract class Callback
 {
 
-	public static HashMap<String, Callback>	callbacks	= new HashMap<String, Callback>();
+	public static HashMap<String, Callback> callbacks = new HashMap<String, Callback>();
 
 	/**
 	 * Utility method to inserts callback at the end of the body. The callback
@@ -127,7 +127,7 @@ public abstract class Callback
 		behavior.insertBefore(callback.toString());
 	}
 
-	private final String	sourceCode;
+	private final String sourceCode;
 
 	/**
 	 * Constructs a new <code>Callback</code> object.

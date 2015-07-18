@@ -105,10 +105,10 @@ public class Annotation
 		}
 	}
 
-	ConstPool		pool;
-	int				typeIndex;
+	ConstPool	pool;
+	int			typeIndex;
 
-	LinkedHashMap	members;	// this sould be LinkedHashMap
+	LinkedHashMap members;	// this sould be LinkedHashMap
 
 	// but it is not supported by JDK 1.3.
 

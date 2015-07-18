@@ -60,7 +60,7 @@ import javassist.expr.ExprEditor;
  */
 class CtClassType extends CtClass
 {
-	private static final int	GET_THRESHOLD	= 2;	// see compress()
+	private static final int GET_THRESHOLD = 2;	// see compress()
 
 	static Object getAnnotationType(Class clz, ClassPool cp, AnnotationsAttribute a1, AnnotationsAttribute a2) throws ClassNotFoundException
 	{
@@ -420,37 +420,37 @@ class CtClassType extends CtClass
 		}
 	}
 
-	ClassPool				classPool;
-	boolean					wasChanged;
-	private boolean			wasFrozen;
+	ClassPool		classPool;
+	boolean			wasChanged;
+	private boolean	wasFrozen;
 
-	boolean					wasPruned;
+	boolean wasPruned;
 
-	boolean					gcConstPool;						// if true, the
-																// constant pool
-																// entries will
-																// be garbage
-																// collected.
+	boolean gcConstPool;						// if true, the
+	// constant pool
+	// entries will
+	// be garbage
+	// collected.
 
-	ClassFile				classfile;
+	ClassFile classfile;
 
-	byte[]					rawClassfile;						// backup
-																// storage
+	byte[] rawClassfile;						// backup
+	// storage
 
-	private WeakReference	memberCache;
+	private WeakReference memberCache;
 
-	private AccessorMaker	accessors;
+	private AccessorMaker accessors;
 
-	private FieldInitLink	fieldInitializers;
+	private FieldInitLink fieldInitializers;
 
-	private Hashtable		hiddenMethods;						// must be
-																// synchronous
+	private Hashtable hiddenMethods;						// must be
+	// synchronous
 
-	private int				uniqueNumberSeed;
+	private int uniqueNumberSeed;
 
-	private boolean			doPruning	= ClassPool.doPruning;
+	private boolean doPruning = ClassPool.doPruning;
 
-	private int				getCount;
+	private int getCount;
 
 	CtClassType(ClassFile cf, ClassPool cp)
 	{
@@ -1551,7 +1551,7 @@ class CtClassType extends CtClass
 			}
 		}
 
-		if (doInit) // need an initializer for static fileds.
+		if (doInit)   // need an initializer for static fileds.
 			this.modifyClassConstructor(cf, code, stacksize, 0);
 	}
 

@@ -24,8 +24,8 @@ public class FilterImpl implements Filter
 {
 
 	/** The ignored packages. */
-	private transient String[]	ignoredPackages	=
-												{ "javax", "java", "sun", "com.sun", "javassist" };
+	private transient String[] ignoredPackages =
+	{ "javax", "java", "sun", "com.sun", "javassist" };
 
 	/* @see com.impetus.annovention.Filter#accepts(java.lang.String) */
 	@Override

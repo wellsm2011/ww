@@ -33,7 +33,7 @@ import javassist.bytecode.Opcode;
  */
 public abstract class Transformer implements Opcode
 {
-	private Transformer	next;
+	private Transformer next;
 
 	public Transformer(Transformer t)
 	{

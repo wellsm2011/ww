@@ -38,11 +38,11 @@ import javassist.CtClass;
  */
 
 /*
- * ITODO A better, but more involved, approach would be to track the
- * instruction offset that resulted in the creation of this type, and whenever
- * the typeset changes, to force a merge on that position. This would require
- * creating a new MultiType instance every time the typeset changes, and somehow
- * communicating assignment changes to the Analyzer
+ * ITODO A better, but more involved, approach would be to track the instruction
+ * offset that resulted in the creation of this type, and whenever the typeset
+ * changes, to force a merge on that position. This would require creating a new
+ * MultiType instance every time the typeset changes, and somehow communicating
+ * assignment changes to the Analyzer
  */
 public class MultiType extends Type
 {

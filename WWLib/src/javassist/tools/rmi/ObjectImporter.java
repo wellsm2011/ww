@@ -82,15 +82,15 @@ public class ObjectImporter implements java.io.Serializable
 	 */
 	private static final long		serialVersionUID			= 1L;
 	private static final Class[]	proxyConstructorParamTypes	= new Class[]
-																{ ObjectImporter.class, int.class };
+																	{ ObjectImporter.class, int.class };
 	private final byte[]			endofline					=
-																{ 0x0d, 0x0a };
+	{ 0x0d, 0x0a };
 	private String					servername, orgServername;
 
-	private int						port, orgPort;
-	protected byte[]				lookupCommand				= "POST /lookup HTTP/1.0".getBytes();
+	private int			port, orgPort;
+	protected byte[]	lookupCommand	= "POST /lookup HTTP/1.0".getBytes();
 
-	protected byte[]				rmiCommand					= "POST /rmi HTTP/1.0".getBytes();
+	protected byte[] rmiCommand = "POST /rmi HTTP/1.0".getBytes();
 
 	/**
 	 * Constructs an object importer.
@@ -115,8 +115,8 @@ public class ObjectImporter implements java.io.Serializable
 	 * can construct an object importer as follows:
 	 *
 	 * <pre>
-	 * Viewer	v	= (Viewer) this.getClass().getClassLoader();
-	 * 															ObjectImporter	oi	= new ObjectImporter(v.getServer(), v.getPort());
+	 * Viewer v = (Viewer) this.getClass().getClassLoader();
+	 * ObjectImporter oi = new ObjectImporter(v.getServer(), v.getPort());
 	 * </pre>
 	 *
 	 * @see javassist.tools.web.Viewer

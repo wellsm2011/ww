@@ -46,7 +46,7 @@ public class Javac
 {
 	public static class CtFieldWithInit extends CtField
 	{
-		private ASTree	init;
+		private ASTree init;
 
 		CtFieldWithInit(CtClass type, String name, CtClass declaring) throws CannotCompileException
 		{
@@ -69,7 +69,7 @@ public class Javac
 	public static final String	param0Name		= "$0";
 	public static final String	resultVarName	= "$_";
 
-	public static final String	proceedName		= "$proceed";
+	public static final String proceedName = "$proceed";
 
 	private static void makeDefaultBody(Bytecode b, CtClass type)
 	{
@@ -110,11 +110,11 @@ public class Javac
 		return p.parseExpression(st);
 	}
 
-	JvstCodeGen			gen;
+	JvstCodeGen gen;
 
-	SymbolTable			stable;
+	SymbolTable stable;
 
-	private Bytecode	bytecode;
+	private Bytecode bytecode;
 
 	/**
 	 * Constructs a compiler. The produced bytecode is stored in the

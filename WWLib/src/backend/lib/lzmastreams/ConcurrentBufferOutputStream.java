@@ -23,7 +23,7 @@ class ConcurrentBufferOutputStream extends OutputStream
 		return new ArrayBlockingQueue<byte[]>(ConcurrentBufferOutputStream.QUEUESIZE);
 	}
 
-	protected ArrayBlockingQueue<byte[]>	q;
+	protected ArrayBlockingQueue<byte[]> q;
 
 	private ConcurrentBufferOutputStream(ArrayBlockingQueue<byte[]> q)
 	{

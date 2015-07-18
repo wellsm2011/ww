@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Decoder
 {
-	static final int	kTopMask				= ~((1 << 24) - 1);
+	static final int kTopMask = ~((1 << 24) - 1);
 
 	static final int	kNumBitModelTotalBits	= 11;
 	static final int	kBitModelTotal			= 1 << Decoder.kNumBitModelTotalBits;
@@ -16,11 +16,11 @@ public class Decoder
 			probs[i] = Decoder.kBitModelTotal >>> 1;
 	}
 
-	int					Range;
+	int Range;
 
-	int					Code;
+	int Code;
 
-	java.io.InputStream	Stream;
+	java.io.InputStream Stream;
 
 	public int DecodeBit(short[] probs, int index) throws IOException
 	{

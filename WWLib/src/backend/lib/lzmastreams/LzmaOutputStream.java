@@ -7,9 +7,9 @@ import java.io.OutputStream;
 
 public class LzmaOutputStream extends FilterOutputStream
 {
-	public static boolean	LZMA_HEADER	= true;
+	public static boolean LZMA_HEADER = true;
 
-	protected EncoderThread	encoderthread;
+	protected EncoderThread encoderthread;
 
 	/*
 	 * true for compatibility with lzma(1) command-line tool, false for

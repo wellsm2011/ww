@@ -12,7 +12,7 @@ public class MethodParametersAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"MethodParameters"</code>.
 	 */
-	public static final String	tag	= "MethodParameters";
+	public static final String tag = "MethodParameters";
 
 	MethodParametersAttribute(ConstPool cp, int n, DataInputStream in) throws IOException
 	{

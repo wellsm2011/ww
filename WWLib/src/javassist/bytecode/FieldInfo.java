@@ -47,7 +47,7 @@ public final class FieldInfo
 	String		cachedName;
 	String		cachedType;
 	int			descriptor;
-	ArrayList	attribute;		// may be null.
+	ArrayList	attribute;				// may be null.
 
 	private FieldInfo(ConstPool cp)
 	{

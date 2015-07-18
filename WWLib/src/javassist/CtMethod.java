@@ -128,7 +128,7 @@ public final class CtMethod extends CtBehavior
 
 	static class IntConstParameter extends ConstParameter
 	{
-		int	param;
+		int param;
 
 		IntConstParameter(int i)
 		{
@@ -157,7 +157,7 @@ public final class CtMethod extends CtBehavior
 
 	static class LongConstParameter extends ConstParameter
 	{
-		long	param;
+		long param;
 
 		LongConstParameter(long l)
 		{
@@ -186,7 +186,7 @@ public final class CtMethod extends CtBehavior
 
 	static class StringConstParameter extends ConstParameter
 	{
-		String	param;
+		String param;
 
 		StringConstParameter(String s)
 		{
@@ -248,7 +248,7 @@ public final class CtMethod extends CtBehavior
 		return CtNewMethod.make(src, declaring);
 	}
 
-	protected String	cachedStringRep;
+	protected String cachedStringRep;
 
 	/**
 	 * Creates a public abstract method. The created method must be added to a
@@ -406,7 +406,7 @@ public final class CtMethod extends CtBehavior
 	public boolean isEmpty()
 	{
 		CodeAttribute ca = this.getMethodInfo2().getCodeAttribute();
-		if (ca == null) // abstract or native
+		if (ca == null)   // abstract or native
 			return (this.getModifiers() & Modifier.ABSTRACT) != 0;
 
 		CodeIterator it = ca.iterator();

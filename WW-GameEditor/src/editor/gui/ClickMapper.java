@@ -20,7 +20,7 @@ public class ClickMapper implements MouseListener
 		MOUSEUP, MOUSEDOWN, DOUBLECLICK
 	}
 
-	private BiConsumer<MouseEvent, ClickType>	handler;
+	private BiConsumer<MouseEvent, ClickType> handler;
 
 	/**
 	 * Passes on the listened events to the passed BiConsumer. Passed both the

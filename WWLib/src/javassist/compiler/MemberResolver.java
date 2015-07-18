@@ -64,13 +64,13 @@ public class MemberResolver implements TokenId
 		}
 	}
 
-	private static final int	YES				= 0;
+	private static final int YES = 0;
 
-	private static final int	NO				= -1;
+	private static final int NO = -1;
 
-	private static final String	INVALID			= "<invalid>";
+	private static final String INVALID = "<invalid>";
 
-	private static WeakHashMap	invalidNamesMap	= new WeakHashMap();
+	private static WeakHashMap invalidNamesMap = new WeakHashMap();
 
 	public static int descToType(char c) throws CompileError
 	{
@@ -238,9 +238,9 @@ public class MemberResolver implements TokenId
 		return classname.replace('/', '.');
 	}
 
-	private ClassPool	classPool;
+	private ClassPool classPool;
 
-	private Hashtable	invalidNames	= null;
+	private Hashtable invalidNames = null;
 
 	public MemberResolver(ClassPool cp)
 	{

@@ -35,9 +35,9 @@ import java.net.URLConnection;
  * </pre>
  * <p>
  * This command calls <code>Main.main()</code> with <code>arg1,...</code> All
- * classes including <code>Main</code> are fetched from a server
- * http://<i>host</i>:<i>port</i>. Only the class file for <code>Viewer</code>
- * must exist on a local file system at the client side; even other
+ * classes including <code>Main</code> are fetched from a server http://
+ * <i>host</i>:<i>port</i>. Only the class file for <code>Viewer</code> must
+ * exist on a local file system at the client side; even other
  * <code>javassist.*</code> classes are not needed at the client side.
  * <code>Viewer</code> uses only Java core API classes.
  * <p>
@@ -46,8 +46,8 @@ import java.net.URLConnection;
  * write something like this:
  *
  * <pre>
- * Viewer	v	= (Viewer) this.getClass().getClassLoader();
- * 															String	port	= v.getPort();
+ * Viewer v = (Viewer) this.getClass().getClassLoader();
+ * String port = v.getPort();
  * </pre>
  */
 public class Viewer extends ClassLoader
@@ -67,9 +67,9 @@ public class Viewer extends ClassLoader
 			System.err.println("Usage: java javassist.tools.web.Viewer <host> <port> class [args ...]");
 	}
 
-	private String	server;
+	private String server;
 
-	private int		port;
+	private int port;
 
 	/**
 	 * Constructs a viewer.

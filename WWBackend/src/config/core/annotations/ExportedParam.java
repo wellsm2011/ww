@@ -1,9 +1,11 @@
-package config.core;
+package config.core.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import config.core.Config;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -48,13 +50,14 @@ public @interface ExportedParam
 	 * Examples:
 	 * </p>
 	 * <p>
-	 * To denote a string: "string" or "str" or "val" or "value" are all
-	 * accepted.
+	 * To denote a primitive (a string, or some kind of number): "string",
+	 * "str", "val", "value", "num", "number" are all accepted. These are also
+	 * case insensitive
 	 * </p>
 	 * <p>
-	 * To denote a reference: "ref:&lt;Classname&gt;" where &lt;Classname&gt; is
-	 * the name of the class to load. Can match the fully qualified name
-	 * (my.package.Classname) or just classname.
+	 * To denote a reference: "ref:&lt;SectionKey&gt;" where &lt;SectionKey&gt;
+	 * is the name of the section that this references. This is the sectionkey
+	 * which items are stored under. Note, this is case sensitive.
 	 * </p>
 	 * <p>
 	 * to denote a list of options:

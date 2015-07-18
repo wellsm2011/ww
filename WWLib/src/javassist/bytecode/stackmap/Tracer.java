@@ -35,14 +35,14 @@ public abstract class Tracer implements TypeTag
 		return desc.substring(index + 1, desc.length() - 1).replace('/', '.');
 	}
 
-	protected ClassPool		classPool;
-	protected ConstPool		cpool;
+	protected ClassPool	classPool;
+	protected ConstPool	cpool;
 
-	protected String		returnType;	// used as the type of ARETURN
+	protected String		returnType;			// used as the type of ARETURN
 	protected int			stackTop;
 	protected TypeData[]	stackTypes;
 
-	protected TypeData[]	localsTypes;
+	protected TypeData[] localsTypes;
 
 	public Tracer(ClassPool classes, ConstPool cp, int maxStack, int maxLocals, String retType)
 	{
@@ -562,7 +562,7 @@ public abstract class Tracer implements TypeTag
 				String type = this.cpool.getClassInfo(i);
 				if (type.charAt(0) == '[')
 					type = type.replace('.', '/'); // getClassInfo() may return
-													// "[java.lang.Object;".
+				// "[java.lang.Object;".
 
 				this.stackTypes[this.stackTop - 1] = new TypeData.ClassName(type);
 				return 3;

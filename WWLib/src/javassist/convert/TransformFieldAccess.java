@@ -26,10 +26,10 @@ import javassist.bytecode.Opcode;
 
 final public class TransformFieldAccess extends Transformer
 {
-	private String		newClassname, newFieldname;
-	private String		fieldname;
-	private CtClass		fieldClass;
-	private boolean		isPrivate;
+	private String	newClassname, newFieldname;
+	private String	fieldname;
+	private CtClass	fieldClass;
+	private boolean	isPrivate;
 
 	/* cache */
 	private int			newIndex;

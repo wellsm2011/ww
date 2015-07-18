@@ -42,7 +42,7 @@ public class AccessorMaker
 	private CtClass		clazz;
 	private int			uniqueNumber;
 
-	private HashMap		accessors;
+	private HashMap accessors;
 
 	public AccessorMaker(CtClass c)
 	{

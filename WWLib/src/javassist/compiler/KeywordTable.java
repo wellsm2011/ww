@@ -21,7 +21,7 @@ public final class KeywordTable extends java.util.HashMap
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public KeywordTable()
 	{

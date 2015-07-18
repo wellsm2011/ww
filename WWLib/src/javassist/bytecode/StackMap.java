@@ -43,7 +43,7 @@ public class StackMap extends AttributeInfo
 {
 	static class Copier extends Walker
 	{
-		byte[]	dest;
+		byte[]		dest;
 		ConstPool	srcCp, destCp;
 		Map			classnames;
 
@@ -152,7 +152,7 @@ public class StackMap extends AttributeInfo
 
 	static class NewRemover extends SimpleCopy
 	{
-		int	posOfNew;
+		int posOfNew;
 
 		NewRemover(StackMap map, int where)
 		{
@@ -215,7 +215,7 @@ public class StackMap extends AttributeInfo
 
 	static class Printer extends Walker
 	{
-		private java.io.PrintWriter	writer;
+		private java.io.PrintWriter writer;
 
 		public Printer(StackMap map, java.io.PrintWriter out)
 		{
@@ -270,7 +270,7 @@ public class StackMap extends AttributeInfo
 
 	static class SimpleCopy extends Walker
 	{
-		Writer	writer;
+		Writer writer;
 
 		SimpleCopy(StackMap map)
 		{
@@ -327,7 +327,7 @@ public class StackMap extends AttributeInfo
 
 	static class SwitchShifter extends Walker
 	{
-		private int	where, gap;
+		private int where, gap;
 
 		public SwitchShifter(StackMap smt, int where, int gap)
 		{
@@ -353,7 +353,7 @@ public class StackMap extends AttributeInfo
 	 */
 	public static class Walker
 	{
-		byte[]	info;
+		byte[] info;
 
 		/**
 		 * Constructs a walker.
@@ -471,7 +471,7 @@ public class StackMap extends AttributeInfo
 	{
 		// see javassist.bytecode.stackmap.MapMaker
 
-		private ByteArrayOutputStream	output;
+		private ByteArrayOutputStream output;
 
 		/**
 		 * Constructs a writer.
@@ -523,52 +523,52 @@ public class StackMap extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"StackMap"</code>.
 	 */
-	public static final String	tag		= "StackMap";
+	public static final String tag = "StackMap";
 
 	/**
 	 * <code>Top_variable_info.tag</code>.
 	 */
-	public static final int		TOP		= 0;
+	public static final int TOP = 0;
 
 	/**
 	 * <code>Integer_variable_info.tag</code>.
 	 */
-	public static final int		INTEGER	= 1;
+	public static final int INTEGER = 1;
 
 	/**
 	 * <code>Float_variable_info.tag</code>.
 	 */
-	public static final int		FLOAT	= 2;
+	public static final int FLOAT = 2;
 
 	/**
 	 * <code>Double_variable_info.tag</code>.
 	 */
-	public static final int		DOUBLE	= 3;
+	public static final int DOUBLE = 3;
 
 	/**
 	 * <code>Long_variable_info.tag</code>.
 	 */
-	public static final int		LONG	= 4;
+	public static final int LONG = 4;
 
 	/**
 	 * <code>Null_variable_info.tag</code>.
 	 */
-	public static final int		NULL	= 5;
+	public static final int NULL = 5;
 
 	/**
 	 * <code>UninitializedThis_variable_info.tag</code>.
 	 */
-	public static final int		THIS	= 6;
+	public static final int THIS = 6;
 
 	/**
 	 * <code>Object_variable_info.tag</code>.
 	 */
-	public static final int		OBJECT	= 7;
+	public static final int OBJECT = 7;
 
 	/**
 	 * <code>Uninitialized_variable_info.tag</code>.
 	 */
-	public static final int		UNINIT	= 8;
+	public static final int UNINIT = 8;
 
 	/**
 	 * Constructs a <code>stack_map</code> attribute.

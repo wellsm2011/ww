@@ -21,7 +21,7 @@ package javassist.tools.reflect;
  */
 public class Sample
 {
-	private static ClassMetaobject	_classobject;
+	private static ClassMetaobject _classobject;
 
 	public static Object trapRead(Object[] args, String name)
 	{
@@ -47,7 +47,7 @@ public class Sample
 		return null;
 	}
 
-	private Metaobject	_metaobject;
+	private Metaobject _metaobject;
 
 	public Object trap(Object[] args, int identifier) throws Throwable
 	{

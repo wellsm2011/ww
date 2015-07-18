@@ -7,12 +7,12 @@ public class LzmaBench
 {
 	static class CBenchRandomGenerator
 	{
-		CBitRandomGenerator	RG		= new CBitRandomGenerator();
+		CBitRandomGenerator	RG	= new CBitRandomGenerator();
 		int					Pos;
 		int					Rep0;
 
-		public int			BufferSize;
-		public byte[]		Buffer	= null;
+		public int		BufferSize;
+		public byte[]	Buffer	= null;
 
 		public CBenchRandomGenerator()
 		{
@@ -157,7 +157,7 @@ public class LzmaBench
 
 	static class CrcOutStream extends java.io.OutputStream
 	{
-		public CRC	CRC	= new CRC();
+		public CRC CRC = new CRC();
 
 		public int GetDigest()
 		{
@@ -246,11 +246,11 @@ public class LzmaBench
 		}
 	};
 
-	static final int	kAdditionalSize				= 1 << 21;	;
+	static final int kAdditionalSize = 1 << 21;;
 
-	static final int	kCompressedAdditionalSize	= 1 << 10;
+	static final int kCompressedAdditionalSize = 1 << 10;
 
-	static final int	kSubBits					= 8;
+	static final int kSubBits = 8;
 
 	static long GetCompressRating(int dictionarySize, long elapsedTime, long size)
 	{

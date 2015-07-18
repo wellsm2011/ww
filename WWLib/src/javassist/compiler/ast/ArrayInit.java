@@ -26,7 +26,7 @@ public class ArrayInit extends ASTList
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public ArrayInit(ASTree firstElement)
 	{

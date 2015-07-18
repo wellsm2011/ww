@@ -33,7 +33,7 @@ import javassist.bytecode.SignatureAttribute;
  */
 public class ClassMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a class value. The initial value is java.lang.Class.

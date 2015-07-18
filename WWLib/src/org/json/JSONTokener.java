@@ -64,7 +64,7 @@ public class JSONTokener
 	private char	previous;
 	private Reader	reader;
 
-	private boolean	usePrevious;
+	private boolean usePrevious;
 
 	/**
 	 * Construct a JSONTokener from an InputStream.
@@ -251,9 +251,9 @@ public class JSONTokener
 	 * single quotes, but an implementation is allowed to accept them.
 	 *
 	 * @param quote
-	 *            The quoting character, either <code>"</code>
-	 *            &nbsp;<small>(double quote)</small> or <code>'</code>
-	 *            &nbsp;<small>(single quote)</small>.
+	 *            The quoting character, either <code>"</code> &nbsp;
+	 *            <small>(double quote)</small> or <code>'</code> &nbsp;
+	 *            <small>(single quote)</small>.
 	 * @return A String.
 	 * @throws JSONException
 	 *             Unterminated string.

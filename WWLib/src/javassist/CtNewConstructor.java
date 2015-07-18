@@ -41,20 +41,20 @@ public class CtNewConstructor
 	 * Specifies that no parameters are passed to a super-class' constructor.
 	 * That is, the default constructor is invoked.
 	 */
-	public static final int	PASS_NONE	= 0;	// call super()
+	public static final int PASS_NONE = 0;	// call super()
 
 	/**
 	 * Specifies that parameters are converted into an array of
 	 * <code>Object</code> and passed to a super-class' constructor.
 	 */
-	public static final int	PASS_ARRAY	= 1;	// an array of parameters
+	public static final int PASS_ARRAY = 1;	// an array of parameters
 
 	/**
 	 * Specifies that parameters are passed <i>as is</i> to a super-class'
 	 * constructor. The signature of that constructor must be the same as that
 	 * of the created constructor.
 	 */
-	public static final int	PASS_PARAMS	= 2;
+	public static final int PASS_PARAMS = 2;
 
 	/**
 	 * Creates a copy of a constructor. This is a convenience method for calling
@@ -79,7 +79,8 @@ public class CtNewConstructor
 	/**
 	 * Creates a default (public) constructor.
 	 * <p>
-	 * The created constructor takes no parameter. It calls <code>super()</code>.
+	 * The created constructor takes no parameter. It calls <code>super()</code>
+	 * .
 	 */
 	public static CtConstructor defaultConstructor(CtClass declaring) throws CannotCompileException
 	{

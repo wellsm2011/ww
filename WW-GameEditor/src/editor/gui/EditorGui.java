@@ -1,7 +1,5 @@
 package editor.gui;
 
-import global.Globals;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,6 +18,7 @@ import backend.U;
 import backend.functionInterfaces.Handler;
 import config.core.Config;
 import config.core.SectionManager;
+import global.Globals;
 
 /**
  * This is the editor GUI main class. Designed to take a config file, then

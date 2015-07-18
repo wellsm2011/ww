@@ -17,7 +17,7 @@ class ConcurrentBufferInputStream extends InputStream
 	protected byte[]						buffer	= null;
 	protected int							next	= 0;
 
-	protected boolean						eof		= false;
+	protected boolean eof = false;
 
 	private ConcurrentBufferInputStream(ArrayBlockingQueue<byte[]> queue)
 	{

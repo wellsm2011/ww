@@ -30,7 +30,7 @@ import javassist.bytecode.ConstPool;
  */
 public class StringMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a string constant value. The initial value is "".

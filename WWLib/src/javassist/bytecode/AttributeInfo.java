@@ -194,11 +194,11 @@ public class AttributeInfo
 		}
 	}
 
-	protected ConstPool	constPool;
+	protected ConstPool constPool;
 
-	int					name;
+	int name;
 
-	byte[]				info;
+	byte[] info;
 
 	protected AttributeInfo(ConstPool cp, int attrname, byte[] attrinfo)
 	{

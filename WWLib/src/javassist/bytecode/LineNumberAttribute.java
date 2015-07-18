@@ -43,7 +43,7 @@ public class LineNumberAttribute extends AttributeInfo
 	/**
 	 * The name of this attribute <code>"LineNumberTable"</code>.
 	 */
-	public static final String	tag	= "LineNumberTable";
+	public static final String tag = "LineNumberTable";
 
 	private LineNumberAttribute(ConstPool cp, byte[] i)
 	{

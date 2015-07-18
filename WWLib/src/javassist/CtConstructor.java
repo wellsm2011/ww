@@ -288,7 +288,7 @@ public final class CtConstructor extends CtBehavior
 		CodeAttribute ca = this.getMethodInfo2().getCodeAttribute();
 		if (ca == null)
 			return false; // native or abstract??
-							// they are not allowed, though.
+		// they are not allowed, though.
 
 		ConstPool cp = ca.getConstPool();
 		CodeIterator it = ca.iterator();
@@ -297,9 +297,8 @@ public final class CtConstructor extends CtBehavior
 			int pos, desc;
 			int op0 = it.byteAt(it.next());
 			return op0 == Opcode.RETURN // empty static initializer
-					|| op0 == Opcode.ALOAD_0 && it.byteAt(pos = it.next()) == Opcode.INVOKESPECIAL
-					&& (desc = cp.isConstructor(this.getSuperclassName(), it.u16bitAt(pos + 1))) != 0
-					&& "()V".equals(cp.getUtf8Info(desc)) && it.byteAt(it.next()) == Opcode.RETURN && !it.hasNext();
+					|| op0 == Opcode.ALOAD_0 && it.byteAt(pos = it.next()) == Opcode.INVOKESPECIAL && (desc = cp.isConstructor(this.getSuperclassName(), it.u16bitAt(pos + 1))) != 0
+							&& "()V".equals(cp.getUtf8Info(desc)) && it.byteAt(it.next()) == Opcode.RETURN && !it.hasNext();
 		} catch (BadBytecode e)
 		{
 		}

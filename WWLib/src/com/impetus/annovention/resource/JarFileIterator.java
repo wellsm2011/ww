@@ -42,7 +42,7 @@ public final class JarFileIterator implements ResourceIterator
 	{
 
 		// input stream object which is wrapped
-		private InputStream	is;
+		private InputStream is;
 
 		public JarInputStreamWrapper(InputStream is)
 		{
@@ -105,19 +105,19 @@ public final class JarFileIterator implements ResourceIterator
 	}
 
 	/** jar input stream */
-	private JarInputStream	jarInputStream;
+	private JarInputStream jarInputStream;
 
 	/** next entry */
-	private JarEntry		next;
+	private JarEntry next;
 
 	/** filter. */
-	private Filter			filter;
+	private Filter filter;
 
 	/** initial. */
-	private boolean			start	= true;
+	private boolean start = true;
 
 	/** closed. */
-	private boolean			closed	= false;
+	private boolean closed = false;
 
 	/**
 	 * Instantiates a new jar file iterator.

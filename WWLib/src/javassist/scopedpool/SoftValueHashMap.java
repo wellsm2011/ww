@@ -42,7 +42,7 @@ public class SoftValueHashMap extends AbstractMap implements Map
 				return new SoftValueRef(key, val, q);
 		}
 
-		public Object	key;
+		public Object key;
 
 		private SoftValueRef(Object key, Object val, ReferenceQueue q)
 		{
@@ -53,10 +53,10 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	}
 
 	/* Hash table mapping WeakKeys to values */
-	private Map				hash;
+	private Map hash;
 
 	/* Reference queue for cleared WeakKeys */
-	private ReferenceQueue	queue	= new ReferenceQueue();
+	private ReferenceQueue queue = new ReferenceQueue();
 
 	/**
 	 * Constructs a new, empty <code>WeakHashMap</code> with the default initial
@@ -238,8 +238,8 @@ public class SoftValueHashMap extends AbstractMap implements Map
 	/**
 	 * Returns the number of key-value mappings in this map.
 	 * <strong>Note:</strong> <em>In contrast with most implementations of the
-	 * <code>Map</code> interface, the time required by this operation is
-	 * linear in the size of the map.</em>
+	 * <code>Map</code> interface, the time required by this operation is linear
+	 * in the size of the map.</em>
 	 */
 	@Override
 	public int size()

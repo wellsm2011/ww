@@ -29,18 +29,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.FieldInfo;
-import javassist.bytecode.MethodInfo;
-import javassist.bytecode.annotation.Annotation;
-
 import com.impetus.annovention.listener.ClassAnnotationDiscoveryListener;
 import com.impetus.annovention.listener.FieldAnnotationDiscoveryListener;
 import com.impetus.annovention.listener.MethodAnnotationDiscoveryListener;
 import com.impetus.annovention.resource.ClassFileIterator;
 import com.impetus.annovention.resource.JarFileIterator;
 import com.impetus.annovention.resource.ResourceIterator;
+
+import javassist.bytecode.AnnotationsAttribute;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.FieldInfo;
+import javassist.bytecode.MethodInfo;
+import javassist.bytecode.annotation.Annotation;
 
 /**
  * Base annotation discoverer.
@@ -51,13 +51,13 @@ public abstract class Discoverer
 {
 
 	/** map to hold ClassAnnotation listeners */
-	private static final Map<String, Set<ClassAnnotationDiscoveryListener>>		classAnnotationListeners	= new HashMap<String, Set<ClassAnnotationDiscoveryListener>>();
+	private static final Map<String, Set<ClassAnnotationDiscoveryListener>> classAnnotationListeners = new HashMap<String, Set<ClassAnnotationDiscoveryListener>>();
 
 	/** map to hold FieldAnnotation listeners */
-	private static final Map<String, Set<FieldAnnotationDiscoveryListener>>		fieldAnnotationListeners	= new HashMap<String, Set<FieldAnnotationDiscoveryListener>>();
+	private static final Map<String, Set<FieldAnnotationDiscoveryListener>> fieldAnnotationListeners = new HashMap<String, Set<FieldAnnotationDiscoveryListener>>();
 
 	/** map to hold MethodAnnotation listeners */
-	private static final Map<String, Set<MethodAnnotationDiscoveryListener>>	methodAnnotationListeners	= new HashMap<String, Set<MethodAnnotationDiscoveryListener>>();
+	private static final Map<String, Set<MethodAnnotationDiscoveryListener>> methodAnnotationListeners = new HashMap<String, Set<MethodAnnotationDiscoveryListener>>();
 
 	/**
 	 * Instantiates a new Discoverer.

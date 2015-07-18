@@ -30,9 +30,9 @@ public class BitTreeEncoder
 		return price;
 	}
 
-	short[]	Models;
+	short[] Models;
 
-	int		NumBitLevels;
+	int NumBitLevels;
 
 	public BitTreeEncoder(int numBitLevels)
 	{

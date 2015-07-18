@@ -266,19 +266,19 @@ public class ProxyFactory
 		String get(String classname);
 	}
 
-	private static final Class			OBJECT_TYPE					= Object.class;
-	private static final String			HOLDER						= "_methods_";
-	private static final String			HOLDER_TYPE					= "[Ljava/lang/reflect/Method;";
-	private static final String			FILTER_SIGNATURE_FIELD		= "_filter_signature";
-	private static final String			FILTER_SIGNATURE_TYPE		= "[B";
-	private static final String			HANDLER						= "handler";
-	private static final String			NULL_INTERCEPTOR_HOLDER		= "javassist.util.proxy.RuntimeSupport";
-	private static final String			DEFAULT_INTERCEPTOR			= "default_interceptor";
-	private static final String			HANDLER_TYPE				= 'L' + MethodHandler.class.getName().replace('.', '/') + ';';
+	private static final Class	OBJECT_TYPE				= Object.class;
+	private static final String	HOLDER					= "_methods_";
+	private static final String	HOLDER_TYPE				= "[Ljava/lang/reflect/Method;";
+	private static final String	FILTER_SIGNATURE_FIELD	= "_filter_signature";
+	private static final String	FILTER_SIGNATURE_TYPE	= "[B";
+	private static final String	HANDLER					= "handler";
+	private static final String	NULL_INTERCEPTOR_HOLDER	= "javassist.util.proxy.RuntimeSupport";
+	private static final String	DEFAULT_INTERCEPTOR		= "default_interceptor";
+	private static final String	HANDLER_TYPE			= 'L' + MethodHandler.class.getName().replace('.', '/') + ';';
 
-	private static final String			HANDLER_SETTER				= "setHandler";
+	private static final String HANDLER_SETTER = "setHandler";
 
-	private static final String			HANDLER_SETTER_TYPE			= "(" + ProxyFactory.HANDLER_TYPE + ")V";
+	private static final String HANDLER_SETTER_TYPE = "(" + ProxyFactory.HANDLER_TYPE + ")V";
 
 	private static final String			HANDLER_GETTER				= "getHandler";
 	private static final String			HANDLER_GETTER_TYPE			= "()" + ProxyFactory.HANDLER_TYPE;
@@ -319,7 +319,7 @@ public class ProxyFactory
 	public static volatile boolean		useWriteReplace				= true;
 	private static WeakHashMap			proxyCache					= new WeakHashMap();
 	private static char[]				hexDigits					=
-																	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 	/**
 	 * A provider used by <code>createClass()</code> for obtaining a class
 	 * loader. <code>get()</code> on this <code>ClassLoaderProvider</code>
@@ -343,13 +343,13 @@ public class ProxyFactory
 	 * @since 3.4
 	 */
 	public static ClassLoaderProvider	classLoaderProvider			= new ClassLoaderProvider()
-																	{
-																		@Override
-																		public ClassLoader get(ProxyFactory pf)
-																		{
-																			return pf.getClassLoader0();
-																		}
-																	};
+	{
+		@Override
+		public ClassLoader get(ProxyFactory pf)
+		{
+			return pf.getClassLoader0();
+		}
+	};
 
 	/**
 	 * A unique class name generator. Replacing this generator changes the
@@ -357,32 +357,32 @@ public class ProxyFactory
 	 * have to be a <code>synchronized</code> method since the access to this
 	 * field is mutually exclusive and thus thread safe.
 	 */
-	public static UniqueName			nameGenerator				= new UniqueName()
-																	{
-																		private final String	sep		= "_$$_jvst" + Integer.toHexString(this.hashCode() & 0xfff) + "_";
-																		private int				counter	= 0;
+	public static UniqueName	nameGenerator	= new UniqueName()
+	{
+		private final String sep = "_$$_jvst" + Integer.toHexString(this.hashCode() & 0xfff) + "_";
+		private int counter = 0;
 
-																		@Override
-																		public String get(String classname)
-																		{
-																			return classname + this.sep + Integer.toHexString(this.counter++);
-																		}
-																	};
-	private static Comparator			sorter						= new Comparator()
-																	{
+		@Override
+		public String get(String classname)
+		{
+			return classname + this.sep + Integer.toHexString(this.counter++);
+		}
+	};
+	private static Comparator	sorter			= new Comparator()
+	{
 
-																		@Override
-																		public int compare(Object o1, Object o2)
-																		{
-																			Map.Entry e1 = (Map.Entry) o1;
-																			Map.Entry e2 = (Map.Entry) o2;
-																			String key1 = (String) e1.getKey();
-																			String key2 = (String) e2.getKey();
-																			return key1.compareTo(key2);
-																		}
-																	};
+		@Override
+		public int compare(Object o1, Object o2)
+		{
+			Map.Entry e1 = (Map.Entry) o1;
+			Map.Entry e2 = (Map.Entry) o2;
+			String key1 = (String) e1.getKey();
+			String key2 = (String) e2.getKey();
+			return key1.compareTo(key2);
+		}
+	};
 
-	private static final String			HANDLER_GETTER_KEY			= ProxyFactory.HANDLER_GETTER + ":()";
+	private static final String HANDLER_GETTER_KEY = ProxyFactory.HANDLER_GETTER + ":()";
 
 	private static void addClassInitializer(ClassFile cf, ConstPool cp, String classname, int size, ArrayList forwarders) throws CannotCompileException
 	{
@@ -653,7 +653,7 @@ public class ProxyFactory
 		String desc = RuntimeSupport.makeDescriptor(cons.getParameterTypes(), Void.TYPE);
 		MethodInfo minfo = new MethodInfo(cp, "<init>", desc);
 		minfo.setAccessFlags(Modifier.PUBLIC); // cons.getModifiers() &
-												// ~Modifier.NATIVE
+		// ~Modifier.NATIVE
 		ProxyFactory.setThrows(minfo, cp, cons.getExceptionTypes());
 		Bytecode code = new Bytecode(cp, 0, 0);
 
@@ -883,39 +883,39 @@ public class ProxyFactory
 		ProxyFactory.setThrows(minfo, cp, exceptions);
 	}
 
-	private Class			superClass;
+	private Class superClass;
 
-	private Class[]			interfaces;
+	private Class[] interfaces;
 
-	private MethodFilter	methodFilter;
+	private MethodFilter methodFilter;
 
-	private MethodHandler	handler;				// retained for legacy usage
+	private MethodHandler handler;				// retained for legacy usage
 
-	private List			signatureMethods;
+	private List signatureMethods;
 
-	private boolean			hasGetHandler;
+	private boolean hasGetHandler;
 
-	private byte[]			signature;
+	private byte[] signature;
 
-	private String			classname;
+	private String classname;
 
-	private String			basename;
+	private String basename;
 
-	private String			superName;
+	private String superName;
 
-	private Class			thisClass;
+	private Class thisClass;
 
 	/**
 	 * per factory setting initialised from current setting for useCache but
 	 * able to be reset before each create call
 	 */
-	private boolean			factoryUseCache;
+	private boolean factoryUseCache;
 
 	/**
 	 * per factory setting initialised from current setting for useWriteReplace
 	 * but able to be reset before each create call
 	 */
-	private boolean			factoryWriteReplace;
+	private boolean factoryWriteReplace;
 
 	/**
 	 * If the value of this variable is not null, the class file of the
@@ -926,7 +926,7 @@ public class ProxyFactory
 	 * <p>
 	 * The default value is null.
 	 */
-	public String			writeDirectory;
+	public String writeDirectory;
 
 	/**
 	 * Constructs a factory of proxy class.
@@ -975,7 +975,7 @@ public class ProxyFactory
 	}
 
 	private void computeSignature(MethodFilter filter) // throws
-														// CannotCompileException
+	// CannotCompileException
 	{
 		this.makeSortedMethodList();
 
@@ -1018,8 +1018,8 @@ public class ProxyFactory
 	 *            the method handler for the proxy class.
 	 * @since 3.4
 	 */
-	public Object create(Class[] paramTypes, Object[] args, MethodHandler mh) throws NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException,
-			InvocationTargetException
+	public Object create(Class[] paramTypes, Object[] args, MethodHandler mh)
+			throws NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException
 	{
 		Object obj = this.create(paramTypes, args);
 		((Proxy) obj).setHandler(mh);
@@ -1251,7 +1251,7 @@ public class ProxyFactory
 			{
 				Method m = methods[i];
 				String key = m.getName() + ':' + RuntimeSupport.makeDescriptor(m); // see
-																					// keyToDesc().
+				// keyToDesc().
 				if (key.startsWith(ProxyFactory.HANDLER_GETTER_KEY))
 					this.hasGetHandler = true;
 
@@ -1280,7 +1280,7 @@ public class ProxyFactory
 	}
 
 	private void installSignature(byte[] signature) // throws
-													// CannotCompileException
+	// CannotCompileException
 	{
 		this.makeSortedMethodList();
 

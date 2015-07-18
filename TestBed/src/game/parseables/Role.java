@@ -2,10 +2,10 @@ package game.parseables;
 
 import java.util.List;
 
-import config.core.ConfigMember;
-import config.core.ExportedParam;
-import config.core.ExportedParam.SType;
-import config.core.ExportedParam.MType;
+import config.core.annotations.ConfigMember;
+import config.core.annotations.ExportedParam;
+import config.core.annotations.ExportedParam.MType;
+import config.core.annotations.ExportedParam.SType;
 
 @ConfigMember(sectionKey = "roles")
 public class Role

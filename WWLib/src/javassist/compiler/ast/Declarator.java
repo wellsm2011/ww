@@ -27,7 +27,7 @@ public class Declarator extends ASTList implements TokenId
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static String astToClassName(ASTList name, char sep)
 	{
@@ -57,12 +57,12 @@ public class Declarator extends ASTList implements TokenId
 		}
 	}
 
-	protected int		varType;
-	protected int		arrayDim;
+	protected int	varType;
+	protected int	arrayDim;
 
-	protected int		localVar;
+	protected int localVar;
 
-	protected String	qualifiedClass; // JVM-internal representation
+	protected String qualifiedClass; // JVM-internal representation
 
 	public Declarator(ASTList className, int dim)
 	{

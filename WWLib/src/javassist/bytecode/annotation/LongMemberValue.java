@@ -30,7 +30,7 @@ import javassist.bytecode.ConstPool;
  */
 public class LongMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a long constant value. The initial value is 0.

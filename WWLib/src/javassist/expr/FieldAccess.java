@@ -154,7 +154,7 @@ public class FieldAccess extends Expr
 		return c == Opcode.GETSTATIC || c == Opcode.PUTSTATIC;
 	}
 
-	int	opcode;
+	int opcode;
 
 	protected FieldAccess(int pos, CodeIterator i, CtClass declaring, MethodInfo m, int op)
 	{

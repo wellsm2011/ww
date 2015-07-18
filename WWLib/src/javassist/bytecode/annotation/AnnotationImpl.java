@@ -99,14 +99,14 @@ public class AnnotationImpl implements InvocationHandler
 		{ clazz }, handler);
 	}
 
-	private Annotation		annotation;
-	private ClassPool		pool;
+	private Annotation	annotation;
+	private ClassPool	pool;
 
-	private ClassLoader		classLoader;
+	private ClassLoader classLoader;
 
-	private transient Class	annotationType;
+	private transient Class annotationType;
 
-	private transient int	cachedHashCode	= Integer.MIN_VALUE;
+	private transient int cachedHashCode = Integer.MIN_VALUE;
 
 	private AnnotationImpl(Annotation a, ClassPool cp, ClassLoader loader)
 	{

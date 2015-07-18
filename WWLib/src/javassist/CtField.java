@@ -80,7 +80,7 @@ public class CtField extends CtMember
 
 	static class CodeInitializer extends CodeInitializer0
 	{
-		private String	expression;
+		private String expression;
 
 		CodeInitializer(String expr)
 		{
@@ -172,7 +172,7 @@ public class CtField extends CtMember
 
 	static class DoubleInitializer extends Initializer
 	{
-		double	value;
+		double value;
 
 		DoubleInitializer(double v)
 		{
@@ -215,7 +215,7 @@ public class CtField extends CtMember
 
 	static class FloatInitializer extends Initializer
 	{
-		float	value;
+		float value;
 
 		FloatInitializer(float v)
 		{
@@ -649,7 +649,7 @@ public class CtField extends CtMember
 
 	static class IntInitializer extends Initializer
 	{
-		int	value;
+		int value;
 
 		IntInitializer(int v)
 		{
@@ -690,7 +690,7 @@ public class CtField extends CtMember
 
 	static class LongInitializer extends Initializer
 	{
-		long	value;
+		long value;
 
 		LongInitializer(long v)
 		{
@@ -736,7 +736,7 @@ public class CtField extends CtMember
 	 */
 	static class MethodInitializer extends NewInitializer
 	{
-		String	methodName;
+		String methodName;
 
 		// the method class is specified by objectType.
 
@@ -983,7 +983,7 @@ public class CtField extends CtMember
 			return k;
 		}
 
-		int	nthParam;
+		int nthParam;
 
 		ParamInitializer()
 		{
@@ -1012,7 +1012,7 @@ public class CtField extends CtMember
 
 	static class PtreeInitializer extends CodeInitializer0
 	{
-		private ASTree	expression;
+		private ASTree expression;
 
 		PtreeInitializer(ASTree expr)
 		{
@@ -1034,7 +1034,7 @@ public class CtField extends CtMember
 
 	static class StringInitializer extends Initializer
 	{
-		String	value;
+		String value;
 
 		StringInitializer(String v)
 		{
@@ -1068,7 +1068,7 @@ public class CtField extends CtMember
 		}
 	}
 
-	static final String	javaLangString	= "java.lang.String";
+	static final String javaLangString = "java.lang.String";
 
 	/**
 	 * Compiles the given source code and creates a field. Examples of the
@@ -1102,7 +1102,7 @@ public class CtField extends CtMember
 		throw new CannotCompileException("not a field");
 	}
 
-	protected FieldInfo	fieldInfo;
+	protected FieldInfo fieldInfo;
 
 	/**
 	 * Creates a <code>CtField</code> object. The created field must be added to

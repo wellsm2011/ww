@@ -45,7 +45,7 @@ public class Instanceof extends Expr
 	 */
 	static class ProceedForInstanceof implements ProceedHandler
 	{
-		int	index;
+		int index;
 
 		ProceedForInstanceof(int i)
 		{

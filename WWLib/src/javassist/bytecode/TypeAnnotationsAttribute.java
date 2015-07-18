@@ -17,7 +17,7 @@ public class TypeAnnotationsAttribute extends AttributeInfo
 {
 	static class Copier extends AnnotationsAttribute.Copier
 	{
-		SubCopier	sub;
+		SubCopier sub;
 
 		Copier(byte[] attrInfo, ConstPool src, ConstPool dest, Map map)
 		{
@@ -45,7 +45,7 @@ public class TypeAnnotationsAttribute extends AttributeInfo
 
 	static class Renamer extends AnnotationsAttribute.Renamer
 	{
-		SubWalker	sub;
+		SubWalker sub;
 
 		Renamer(byte[] attrInfo, ConstPool cp, Map map)
 		{
@@ -166,7 +166,7 @@ public class TypeAnnotationsAttribute extends AttributeInfo
 
 	static class SubWalker
 	{
-		byte[]	info;
+		byte[] info;
 
 		SubWalker(byte[] attrInfo)
 		{
@@ -338,7 +338,7 @@ public class TypeAnnotationsAttribute extends AttributeInfo
 	 */
 	static class TAWalker extends AnnotationsAttribute.Walker
 	{
-		SubWalker	subWalker;
+		SubWalker subWalker;
 
 		TAWalker(byte[] attrInfo)
 		{
@@ -364,12 +364,12 @@ public class TypeAnnotationsAttribute extends AttributeInfo
 	/**
 	 * The name of the {@code RuntimeVisibleTypeAnnotations} attribute.
 	 */
-	public static final String	visibleTag		= "RuntimeVisibleTypeAnnotations";
+	public static final String visibleTag = "RuntimeVisibleTypeAnnotations";
 
 	/**
 	 * The name of the {@code RuntimeInvisibleTypeAnnotations} attribute.
 	 */
-	public static final String	invisibleTag	= "RuntimeInvisibleTypeAnnotations";
+	public static final String invisibleTag = "RuntimeInvisibleTypeAnnotations";
 
 	/**
 	 * @param n

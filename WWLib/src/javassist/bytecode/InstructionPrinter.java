@@ -27,7 +27,7 @@ import javassist.CtMethod;
 public class InstructionPrinter implements Opcode
 {
 
-	private final static String	opcodes[]	= Mnemonic.OPCODE;
+	private final static String opcodes[] = Mnemonic.OPCODE;
 
 	private static String arrayInfo(int type)
 	{
@@ -263,7 +263,7 @@ public class InstructionPrinter implements Opcode
 		}
 	}
 
-	private final PrintStream	stream;
+	private final PrintStream stream;
 
 	/**
 	 * Constructs a <code>InstructionPrinter</code> object.

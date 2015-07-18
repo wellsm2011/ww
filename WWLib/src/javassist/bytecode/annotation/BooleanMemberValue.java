@@ -29,7 +29,7 @@ import javassist.bytecode.ConstPool;
  */
 public class BooleanMemberValue extends MemberValue
 {
-	int	valueIndex;
+	int valueIndex;
 
 	/**
 	 * Constructs a boolean constant value.

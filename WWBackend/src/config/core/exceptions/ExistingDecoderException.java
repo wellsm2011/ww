@@ -1,4 +1,4 @@
-package config.core;
+package config.core.exceptions;
 
 public class ExistingDecoderException extends Exception
 {

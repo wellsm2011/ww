@@ -41,7 +41,7 @@ public abstract class CtMember
 		}
 
 		private CtMember	methodTail;
-		private CtMember	consTail;	// constructor tail
+		private CtMember	consTail;			// constructor tail
 		private CtMember	fieldTail;
 
 		Cache(CtClassType decl)
@@ -214,9 +214,9 @@ public abstract class CtMember
 		}
 	}
 
-	CtMember			next;			// for internal use
+	CtMember next;			// for internal use
 
-	protected CtClass	declaringClass;
+	protected CtClass declaringClass;
 
 	protected CtMember(CtClass clazz)
 	{

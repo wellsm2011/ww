@@ -75,7 +75,7 @@ public class NewArray extends Expr
 			else if (this.opcode == Opcode.NEWARRAY)
 				bytecode.add(this.index);
 			else
-			/* if (opcode == Opcode.MULTIANEWARRAY) */{
+			/* if (opcode == Opcode.MULTIANEWARRAY) */ {
 				bytecode.addIndex(this.index);
 				bytecode.add(this.dimension);
 				bytecode.growStack(1 - this.dimension);
@@ -91,7 +91,7 @@ public class NewArray extends Expr
 		}
 	}
 
-	int	opcode;
+	int opcode;
 
 	protected NewArray(int pos, CodeIterator i, CtClass declaring, MethodInfo m, int op)
 	{
