@@ -1,12 +1,11 @@
 package config.core;
 
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import config.core.ExportedParam.SType;
-import config.core.ExportedParam.MType;
 import backend.U;
+import config.core.ExportedParam.MType;
+import config.core.ExportedParam.SType;
 
 public class ExportedParameter
 {
@@ -28,14 +27,9 @@ public class ExportedParameter
 		return U.carefulCall(this.methods.get(targMethod), target, params);
 	}
 
-	public SType getStoreType()
-	{
-		return this.storeType;
-	}
-
 	public String getDataType()
 	{
-		return dataType;
+		return this.dataType;
 	}
 
 	public String getGettableAsString(Object input)
@@ -48,6 +42,11 @@ public class ExportedParameter
 	public String getParamName()
 	{
 		return this.paramName;
+	}
+
+	public SType getStoreType()
+	{
+		return this.storeType;
 	}
 
 	@Override

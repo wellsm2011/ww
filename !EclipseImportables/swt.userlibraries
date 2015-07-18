@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
-<eclipse-userlibraries version="2">
-    <library name="SWT" systemlibrary="false">
-        <archive javadoc="http://help.eclipse.org/luna/nftopic/org.eclipse.platform.doc.isv/reference/api/" path="/WWLib/lib/swt.jar"/>
-    </library>
-</eclipse-userlibraries>

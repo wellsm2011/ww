@@ -1,7 +1,6 @@
 package config.core;
 
-import global.Globals;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -13,15 +12,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.impetus.annovention.ClasspathDiscoverer;
+import com.impetus.annovention.Discoverer;
+
 //Static import of U not used due to cleanup and proper styling, as well as basic readability.
 import backend.U;
 import backend.functionInterfaces.ValDecoder;
 import backend.functionInterfaces.ValEncoder;
-
-import com.impetus.annovention.ClasspathDiscoverer;
-import com.impetus.annovention.Discoverer;
-
 import config.core.ExportedParam.MType;
+import global.Globals;
 
 /**
  * <p>
@@ -45,24 +44,13 @@ import config.core.ExportedParam.MType;
 public class Config
 {
 
-	private static HashMap<String, ValDecoder<?>> decoders;
-	private static HashMap<String, ValEncoder<?>> encoders;
+	private static HashMap<String, ValDecoder<?>>	decoders;
+	private static HashMap<String, ValEncoder<?>>	encoders;
 
 	static
 	{
-		decoders = new HashMap<String, ValDecoder<?>>();
-		encoders = new HashMap<String, ValEncoder<?>>();
-	}
-
-	public static boolean registerType(String name, ValDecoder<?> decoder, ValEncoder<?> encoder)
-	{
-		if (decoders.containsKey(name))
-			return false;
-		if (encoders.containsKey(name))
-			return false;
-		decoders.put(name.toLowerCase(), decoder);
-		encoders.put(name.toLowerCase(), encoder);
-		return true;
+		Config.decoders = new HashMap<String, ValDecoder<?>>();
+		Config.encoders = new HashMap<String, ValEncoder<?>>();
 	}
 
 	/**
@@ -90,6 +78,17 @@ public class Config
 		} , ConfigMember.class));
 		discoverer.discover();
 		return res;
+	}
+
+	public static boolean registerType(String name, ValDecoder<?> decoder, ValEncoder<?> encoder)
+	{
+		if (Config.decoders.containsKey(name))
+			return false;
+		if (Config.encoders.containsKey(name))
+			return false;
+		Config.decoders.put(name.toLowerCase(), decoder);
+		Config.encoders.put(name.toLowerCase(), encoder);
+		return true;
 	}
 
 	private LinkedHashMap<String, SectionManager>	maps;
@@ -324,20 +323,37 @@ public class Config
 	{
 		JSONObject obj;
 		JSONArray val;
-		
-		//switch(curParam.g)
-		
+
+		if (U.matchesAny(curParam.getDataType(), "string", "str", "val", "value"))
+			handleString(curJSONSection, curKey, curParam, instance);
+		if (curParam.getDataType().startsWith("ref:"))
+			handleReferences(curJSONSection, curKey, curParam, instance);
+		else if (curParam.getDataType().startsWith("enum"))
+			handleEnum(curJSONSection, curKey, curParam, instance);
+		else if (curParam.getDataType().startsWith("decode:"))
+			handleCustomDecode(curJSONSection, curKey, curParam, instance);
+	}
+
+	private void handleCustomDecode(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	{
+		JSONObject obj;
+
 		switch (curParam.getStoreType())
 		{
 			case SINGLE:
-				curParam.call(instance, MType.SETTER, curJSONSection.optString(curKey, ""));
+				obj = curJSONSection.optJSONObject(curKey);
+				if (obj == null)
+					obj = new JSONObject();
+				curParam.call(instance, MType.SETTER, obj);
 				break;
 			case LIST:
-				val = this.getJSONArr(curJSONSection, curKey);
-				List<String> strList = new LinkedList<String>();
-				for (int i = 0; i < val.length(); i++)
-					strList.add(val.optString(i, ""));
-				curParam.call(instance, MType.SETTER, strList);
+				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
+				// Using arraylist because overall we should be having fairly
+				// static lengths
+				List<?> list = new ArrayList<Object>(arr.length());
+				for (int i = 0; i < arr.length(); i++)
+					list.add(arr.optJSONObject(i));
+				curParam.call(instance, MType.SETTER, list);
 				break;
 			case MAP:
 				obj = this.getJSONObj(curJSONSection, curKey);
@@ -350,6 +366,24 @@ public class Config
 				U.d("Unknown exported parameter found.", 2);
 				break;
 		}
+	}
+
+	private void handleEnum(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	private void handleReferences(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	private void handleString(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 	/**

@@ -158,6 +158,38 @@ public class SectionManager
 	}
 
 	/**
+	 * When given an element that fits in this section, returns a mapping of
+	 * param keys to current values as strings. Designed for reporting and
+	 * debugging use.
+	 * 
+	 * @param in
+	 *            the element to find the current status of
+	 * @return a map of param names to current values for the given object
+	 */
+	public Map<String, String> getGettablesFor(Object in)
+	{
+		Map<String, String> res = new HashMap<String, String>();
+		if (!this.type.isInstance(in) && in != null)
+			U.e("Error, was passed " + in.toString() + " of type " + in.getClass() + " for type " + this.type + ".\nThis is not OK. No data parsed.");
+		else if (in != null)
+			for (Entry<String, ExportedParameter> curParam : this.paramMappings.entrySet())
+				res.put(curParam.getKey(), curParam.getValue().getGettableAsString(in));
+		return res;
+	}
+
+	public Map<String, String> getGettablesForKey(String key)
+	{
+		if (!this.dataItems.containsKey(key))
+			U.e("Error, was passed key " + key + ". This does not matcha anything on file, returning a blank map.");
+		return this.getGettablesFor(this.dataItems.get(key));
+	}
+
+	public <T> T[] getItems()
+	{
+		return U.cleanCast(this.dataItems.values().toArray());
+	}
+
+	/**
 	 * Gets the JSON key for this manager's stored type.
 	 * 
 	 * @return the JSON key for this type in the config file.
@@ -215,37 +247,5 @@ public class SectionManager
 			U.e("Error, was passed " + curInstance.toString() + " of type " + curInstance.getClass() + " for type " + this.type + ".\nThis is not OK. No data stored.");
 		else
 			this.dataItems.put(key, curInstance);
-	}
-
-	/**
-	 * When given an element that fits in this section, returns a mapping of
-	 * param keys to current values as strings. Designed for reporting and
-	 * debugging use.
-	 * 
-	 * @param in
-	 *            the element to find the current status of
-	 * @return a map of param names to current values for the given object
-	 */
-	public Map<String, String> getGettablesFor(Object in)
-	{
-		Map<String, String> res = new HashMap<String, String>();
-		if (!this.type.isInstance(in) && in != null)
-			U.e("Error, was passed " + in.toString() + " of type " + in.getClass() + " for type " + this.type + ".\nThis is not OK. No data parsed.");
-		else if (in != null)
-			for (Entry<String, ExportedParameter> curParam : this.paramMappings.entrySet())
-				res.put(curParam.getKey(), curParam.getValue().getGettableAsString(in));
-		return res;
-	}
-
-	public Map<String, String> getGettablesForKey(String key)
-	{
-		if (!this.dataItems.containsKey(key))
-			U.e("Error, was passed key " + key + ". This does not matcha anything on file, returning a blank map.");
-		return this.getGettablesFor(this.dataItems.get(key));
-	}
-
-	public <T> T[] getItems()
-	{
-		return U.cleanCast(this.dataItems.values().toArray());
 	}
 }

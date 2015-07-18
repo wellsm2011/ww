@@ -18,15 +18,6 @@ import java.lang.annotation.Target;
 public @interface ExportedParam
 {
 	/**
-	 * This denotes the number of types that are expected in this param, whether
-	 * a list, map, or just a single one.
-	 */
-	public enum SType
-	{
-		SINGLE, LIST, MAP
-	}
-
-	/**
 	 * The method types that are currently expected to be supported.
 	 */
 	public enum MType
@@ -35,20 +26,13 @@ public @interface ExportedParam
 	}
 
 	/**
-	 * The JSON key for this field.
+	 * This denotes the number of types that are expected in this param, whether
+	 * a list, map, or just a single one.
 	 */
-	String key();
-
-	/**
-	 * The type this particular method is of, defaults to GETTER.
-	 */
-	MType methodtype();
-
-	/**
-	 * The storage type for the currently annotated method, whether a single
-	 * val, list, or a map.
-	 */
-	SType storetype();
+	public enum SType
+	{
+		SINGLE, LIST, MAP
+	}
 
 	/**
 	 * <p>
@@ -82,15 +66,30 @@ public @interface ExportedParam
 	 * insensitive.
 	 * </p>
 	 * 
-	 * @see Config#registerType(String,
-	 *      backend.functionInterfaces.ValDecoder)
+	 * @see Config#registerType(String, backend.functionInterfaces.ValDecoder)
 	 */
 	String dataType();
+
+	/**
+	 * The JSON key for this field.
+	 */
+	String key();
+
+	/**
+	 * The type this particular method is of, defaults to GETTER.
+	 */
+	MType methodtype();
 
 	/**
 	 * How this field should be sorted in comparasion to the other fields in the
 	 * json file, which determines how fields are sorted in the editor.
 	 */
 	int sortVal();
+
+	/**
+	 * The storage type for the currently annotated method, whether a single
+	 * val, list, or a map.
+	 */
+	SType storetype();
 
 }

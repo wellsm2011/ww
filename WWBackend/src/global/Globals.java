@@ -6,7 +6,8 @@ import backend.functionInterfaces.Func;
 
 public class Globals
 {
-	private static LinkedList<Func>	onClose;
+	private static LinkedList<Func> onClose;
+
 	static
 	{
 		Globals.onClose = new LinkedList<Func>();

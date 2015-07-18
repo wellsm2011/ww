@@ -1,7 +1,5 @@
 package backend;
 
-import global.Globals;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +25,7 @@ import java.util.Scanner;
 
 import backend.lib.lzmastreams.LzmaInputStream;
 import backend.lib.lzmastreams.LzmaOutputStream;
+import global.Globals;
 
 /**
  * Utility class, handles printing output nicely, as well as multiple levels of
@@ -36,14 +35,14 @@ import backend.lib.lzmastreams.LzmaOutputStream;
  */
 public class U
 {
-	private static PrintStream								output;
-	// Note, don't go changing this, go use the mother-fucking correct way of
+	private static PrintStream		output;
+	// Note, don't go changing this, go use the correct way of
 	// setting debug level, the function exists for a reason.
-	private static int										debugging			= 0;
-	private static SimpleDateFormat							outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
-	private static SimpleDateFormat							timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
-	private static Scanner									input;
-	private static Random									rand;
+	private static int				debugging			= 0;
+	private static SimpleDateFormat	outputFormatter		= new SimpleDateFormat("HH:mm:ss.SSS");
+	private static SimpleDateFormat	timeStampFormatter	= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS");
+	private static Scanner			input;
+	private static Random			rand;
 
 	/**
 	 * Static constructor, used to initialize output to the system.out
@@ -57,7 +56,7 @@ public class U
 		U.rand = new Random();
 	}
 
-	private static final LinkedHashMap<Class<?>, Class<?>>	WRAPPER_TYPES		= U.getWrapperTypes();
+	private static final LinkedHashMap<Class<?>, Class<?>> WRAPPER_TYPES = U.getWrapperTypes();
 
 	/**
 	 * Calls the specified method with the specified parameters, checking to
@@ -290,6 +289,15 @@ public class U
 			Globals.exit();
 		}
 		return null;
+	}
+
+	public static boolean matchesAny(String input, String... options)
+	{
+		String lowered = input.toLowerCase();
+		for (String cur : options)
+			if (lowered.equals(cur))
+				return true;
+		return false;
 	}
 
 	/**

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<eclipse-userlibraries version="2">
+    <library name="JDI" systemlibrary="false">
+        <archive path="/WWLib/lib/jdi.jar"/>
+    </library>
+    <library name="Netty" systemlibrary="false">
+        <archive javadoc="jar:platform:/resource/WWLib/lib/netty-all-4.0.29.Final-javadoc.jar!/" path="/WWLib/lib/netty-all-4.0.29.Final.jar" source="/WWLib/lib/netty-all-4.0.29.Final-sources.jar"/>
+    </library>
+    <library name="SWT" systemlibrary="false">
+        <archive javadoc="http://help.eclipse.org/luna/nftopic/org.eclipse.platform.doc.isv/reference/api/" path="/WWLib/lib/swt.jar"/>
+    </library>
+</eclipse-userlibraries>

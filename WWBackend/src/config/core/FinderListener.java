@@ -1,8 +1,8 @@
 package config.core;
 
-import backend.functionInterfaces.Handler;
-
 import com.impetus.annovention.listener.ClassAnnotationDiscoveryListener;
+
+import backend.functionInterfaces.Handler;
 
 public class FinderListener implements ClassAnnotationDiscoveryListener
 {
