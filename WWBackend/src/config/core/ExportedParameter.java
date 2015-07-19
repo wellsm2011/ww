@@ -21,17 +21,6 @@ public class ExportedParameter
 		this.dataType = paramInfo.dataType();
 	}
 
-	public <T> void set(Object instance, T input)
-	{
-		try
-		{
-			this.field.set(instance, input);
-		} catch (IllegalArgumentException | IllegalAccessException e)
-		{
-			U.e("Error setting value" + input + " in object " + instance, e);
-		}
-	}
-
 	public <T> T get(Object instance)
 	{
 		try
@@ -57,6 +46,17 @@ public class ExportedParameter
 	public SType getStoreType()
 	{
 		return this.storeType;
+	}
+
+	public <T> void set(Object instance, T input)
+	{
+		try
+		{
+			this.field.set(instance, input);
+		} catch (IllegalArgumentException | IllegalAccessException e)
+		{
+			U.e("Error setting value" + input + " in object " + instance, e);
+		}
 	}
 
 	@Override

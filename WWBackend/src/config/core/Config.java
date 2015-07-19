@@ -408,6 +408,8 @@ public class Config
 	 */
 	private JSONObject intelliGen(Object input, SectionManager secMan)
 	{
+		// TODO handle putting reference names instead of their string
+		// equivalents...
 		JSONObject res = new JSONObject();
 		Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())

@@ -1,6 +1,5 @@
 package game.parseables;
 
-import java.util.List;
 import java.util.Map;
 
 import config.core.annotations.ConfigMember;

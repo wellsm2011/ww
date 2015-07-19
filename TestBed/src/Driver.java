@@ -56,7 +56,7 @@ public class Driver
 			for (String curElemKey : curSecMan.getKeys())
 				sb.append("\t" + curElemKey + " -> " + curSecMan.getGettablesForKey(curElemKey) + "\n");
 		}
-		//U.p(sb.toString());
+		// U.p(sb.toString());
 		config.writeToFile("parsedConfig.json");
 	}
 
