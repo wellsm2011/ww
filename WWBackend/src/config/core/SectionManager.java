@@ -1,6 +1,6 @@
 package config.core;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,7 +11,6 @@ import java.util.Set;
 import backend.U;
 import config.core.annotations.ConfigMember;
 import config.core.annotations.ExportedParam;
-import config.core.annotations.ExportedParam.MType;
 
 /**
  * This class is a helper class for the main Config system, what this does is it
@@ -22,14 +21,6 @@ import config.core.annotations.ExportedParam.MType;
  */
 public class SectionManager
 {
-	private static MType[] stdParamFilter;
-
-	static
-	{
-		// The types of methods to look for
-		SectionManager.stdParamFilter = new MType[]
-		{ MType.GETTER, MType.SETTER };
-	}
 
 	/**
 	 * Takes a input class, and a list of method types to find, and returns a
@@ -41,64 +32,26 @@ public class SectionManager
 	 *            the method types to look for in the class
 	 * @return
 	 */
-	public static Map<String, ExportedParameter> findParametersByFilter(Class<?> input, MType... filter)
+	public static Map<String, ExportedParameter> findExportedParams(Class<?> input)
 	{
-		Map<String, ExportedParameter> res = new LinkedHashMap<>();
-		Map<String, Map<MType, Method>> map = new LinkedHashMap<>();
-		Map<String, ExportedParam> annotationMap = new LinkedHashMap<>();
-
-		// Finds and lists all methods by method type. Also stores types and
-		// datatypes for each found annotation
-		for (Method curMethod : SectionManager.getSortedMethods(input))
-			if (curMethod.isAnnotationPresent(ExportedParam.class))
-			{
-				ExportedParam paramData = curMethod.getAnnotation(ExportedParam.class);
-				if (!map.containsKey(paramData.key()))
-					map.put(paramData.key(), new LinkedHashMap<MType, Method>());
-				map.get(paramData.key()).put(paramData.methodtype(), curMethod);
-				annotationMap.put(paramData.key(), paramData);
-			}
-
-		// If no filters are selected, return them all
-		if (filter.length <= 0)
-			for (Entry<String, Map<MType, Method>> curParam : map.entrySet())
-				res.put(curParam.getKey(), new ExportedParameter(curParam.getKey(), curParam.getValue(), annotationMap.get(curParam.getKey())));
-
-		// Get all methods mentioned in the filter
-		if (filter.length > 0)
-			for (Entry<String, Map<MType, Method>> curMethods : map.entrySet())
-			{
-				Map<MType, Method> methods = new HashMap<MType, Method>();
-				for (MType curFilter : filter)
-					methods.put(curFilter, curMethods.getValue().get(curFilter));
-				res.put(curMethods.getKey(), new ExportedParameter(curMethods.getKey(), methods, annotationMap.get(curMethods.getKey())));
-			}
-		return res;
-	}
-
-	/**
-	 * Finds a list of methods in a given class that have the ExportedParam
-	 * annotation, and sorts them as it goes
-	 * 
-	 * @param input
-	 *            the class to scan for ExportedParam annotated methods
-	 * @return a sorted array of sorted, ExportedParam-annotated methods.
-	 */
-	private static Method[] getSortedMethods(Class<?> input)
-	{
-		PriorityQueue<Method> sorted = new PriorityQueue<Method>((Method a, Method b) -> {
+		PriorityQueue<Field> sorted = new PriorityQueue<>((Field a, Field b) -> {
 			int aOrd = a.getAnnotation(ExportedParam.class).sortVal();
 			int bOrd = b.getAnnotation(ExportedParam.class).sortVal();
 			return aOrd - bOrd;
 		});
-		Method[] declaredMethods = input.getDeclaredMethods();
-		for (Method m : declaredMethods)
+		Field[] declaredFields = input.getDeclaredFields();
+		for (Field m : declaredFields)
 			if (m.isAnnotationPresent(ExportedParam.class))
 				sorted.offer(m);
-		Method[] res = new Method[sorted.size()];
-		int i = 0;
+		Map<String, ExportedParameter> res = new LinkedHashMap<>();
+
 		while (!sorted.isEmpty())
-			res[i++] = sorted.poll();
+		{
+			Field curField = sorted.poll();
+			curField.setAccessible(true);
+			ExportedParam paramData = curField.getAnnotation(ExportedParam.class);
+			res.put(paramData.key(), new ExportedParameter(paramData, curField));
+		}
 		return res;
 	}
 
@@ -129,7 +82,7 @@ public class SectionManager
 	public SectionManager(Class<?> type)
 	{
 		this.type = type;
-		this.dataItems = new LinkedHashMap<String, Object>();
+		this.dataItems = new LinkedHashMap<>();
 		if (this.type.isAnnotationPresent(ConfigMember.class))
 			this.keyName = this.type.getAnnotation(ConfigMember.class).sectionKey();
 	}
@@ -149,17 +102,6 @@ public class SectionManager
 	}
 
 	/**
-	 * Returns the map of strings to this section's stored items.
-	 * 
-	 * @return a map named entries of this section's type.
-	 */
-	@Deprecated
-	public Map<String, Object> getEntries()
-	{
-		return this.dataItems;
-	}
-
-	/**
 	 * When given an element that fits in this section, returns a mapping of
 	 * param keys to current values as strings. Designed for reporting and
 	 * debugging use.
@@ -170,12 +112,12 @@ public class SectionManager
 	 */
 	public Map<String, String> getGettablesFor(Object in)
 	{
-		Map<String, String> res = new HashMap<String, String>();
+		Map<String, String> res = new HashMap<>();
 		if (!this.type.isInstance(in) && in != null)
 			U.e("Error, was passed " + in.toString() + " of type " + in.getClass() + " for type " + this.type + ".\nThis is not OK. No data parsed.");
 		else if (in != null)
 			for (Entry<String, ExportedParameter> curParam : this.paramMappings.entrySet())
-				res.put(curParam.getKey(), curParam.getValue().getGettableAsString(in));
+				res.put(curParam.getKey(), curParam.getValue().get(in).toString());
 		return res;
 	}
 
@@ -183,7 +125,11 @@ public class SectionManager
 	{
 		if (!this.dataItems.containsKey(key))
 			U.e("Error, was passed key " + key + ". This does not matcha anything on file, returning a blank map.");
-		return this.getGettablesFor(this.dataItems.get(key));
+		Object in = this.dataItems.get(key);
+		if (in != null)
+			return this.getGettablesFor(in);
+		else
+			return new HashMap<>();
 	}
 
 	public <T> T[] getItems()
@@ -222,7 +168,7 @@ public class SectionManager
 	public Map<String, ExportedParameter> getParamMappings()
 	{
 		if (this.paramMappings == null)
-			this.paramMappings = SectionManager.findParametersByFilter(this.type, SectionManager.stdParamFilter);
+			this.paramMappings = SectionManager.findExportedParams(this.type);
 		return this.paramMappings;
 	}
 

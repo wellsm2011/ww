@@ -20,7 +20,6 @@ import backend.functionInterfaces.ValDecoder;
 import backend.functionInterfaces.ValEncoder;
 import config.core.annotations.ConfigMember;
 import config.core.annotations.ExportedParam;
-import config.core.annotations.ExportedParam.MType;
 import config.core.annotations.HasCustomConfigType;
 import config.core.exceptions.UnknownDecoderException;
 import config.core.exceptions.UnknownReferenceException;
@@ -47,7 +46,6 @@ import global.Globals;
  */
 public class Config
 {
-
 	private static HashMap<String, ValDecoder<?>>	decoders;
 	private static HashMap<String, ValEncoder<?>>	encoders;
 
@@ -69,7 +67,7 @@ public class Config
 	 */
 	public static Map<String, Class<?>> findConfigMembers()
 	{
-		Map<String, Class<?>> res = new LinkedHashMap<String, Class<?>>();
+		Map<String, Class<?>> res = new LinkedHashMap<>();
 		Discoverer discoverer = new ClasspathDiscoverer();
 		// Find all our config members
 		discoverer.addAnnotationListener(new FinderListener((in) -> {
@@ -119,8 +117,9 @@ public class Config
 	 */
 	public Config(String filename)
 	{
-		this.maps = new LinkedHashMap<String, SectionManager>();
-		this.classToSectionMap = new LinkedHashMap<Class<?>, SectionManager>();
+
+		this.maps = new LinkedHashMap<>();
+		this.classToSectionMap = new LinkedHashMap<>();
 		this.loadConfig(filename);
 	}
 
@@ -245,21 +244,10 @@ public class Config
 				obj = curJSONSection.optJSONObject(curKey);
 				if (obj == null)
 					obj = new JSONObject();
-				curParam.call(instance, MType.SETTER, decoder.decode(obj));
+				curParam.set(instance, decoder.decode(obj));
 				break;
 			case LIST:
-				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
-				// Using arraylist because overall we should be having fairly
-				// static lengths
-				List<Object> list = new ArrayList<>(arr.length());
-				for (int i = 0; i < arr.length(); i++)
-				{
-					JSONObject curObj = arr.optJSONObject(i);
-					if (curObj != null)
-						list.add(decoder.decode(curObj));
-				}
-				curParam.call(instance, MType.SETTER, list);
-				break;
+				throw new IllegalArgumentException("Custom decoders cannot parse list structures." + curJSONSection.toString());
 			case MAP:
 				obj = this.getJSONObj(curJSONSection, curKey);
 				Map<String, Object> map = new LinkedHashMap<>();
@@ -270,7 +258,7 @@ public class Config
 					if (curItem != null)
 						map.put(mapKey, decoder.decode(curItem));
 				}
-				curParam.call(instance, MType.SETTER, map);
+				curParam.set(instance, map);
 				break;
 			default:
 				U.d("Unknown exported parameter found.", 2);
@@ -300,9 +288,9 @@ public class Config
 			case SINGLE:
 				Object elem = curJSONSection.get(curKey);
 				if (elem instanceof Number)
-					curParam.call(instance, MType.SETTER, curJSONSection.getDouble(curKey));
+					curParam.set(instance, curJSONSection.getDouble(curKey));
 				else
-					curParam.call(instance, MType.SETTER, curJSONSection.getString(curKey));
+					curParam.set(instance, curJSONSection.getString(curKey));
 				break;
 			case LIST:
 				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
@@ -313,13 +301,13 @@ public class Config
 					List<String> list = new ArrayList<>(arr.length());
 					for (int i = 0; i < arr.length(); i++)
 						list.add(arr.getString(i));
-					curParam.call(instance, MType.SETTER, list);
+					curParam.set(instance, list);
 				} catch (JSONException e)
 				{
 					List<Double> list = new ArrayList<>(arr.length());
 					for (int i = 0; i < arr.length(); i++)
 						list.add(arr.getDouble(i));
-					curParam.call(instance, MType.SETTER, list);
+					curParam.set(instance, list);
 				}
 				break;
 			case MAP:
@@ -332,7 +320,7 @@ public class Config
 						str = obj.getString(mapKey);
 						map.put(mapKey, str);
 					}
-					curParam.call(instance, MType.SETTER, map);
+					curParam.set(instance, map);
 				} catch (JSONException e)
 				{
 					Map<String, Double> map = new LinkedHashMap<>();
@@ -341,7 +329,7 @@ public class Config
 						dbl = obj.getDouble(mapKey);
 						map.put(mapKey, dbl);
 					}
-					curParam.call(instance, MType.SETTER, map);
+					curParam.set(instance, map);
 				}
 				break;
 			default:
@@ -360,7 +348,7 @@ public class Config
 		{
 			case SINGLE:
 				refName = curJSONSection.getString(curKey);
-				curParam.call(instance, MType.SETTER, secMan.getElem(refName));
+				curParam.set(instance, refName);
 				break;
 			case LIST:
 				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
@@ -372,7 +360,7 @@ public class Config
 					refName = arr.getString(i);
 					list.add(secMan.getElem(refName));
 				}
-				curParam.call(instance, MType.SETTER, list);
+				curParam.set(instance, list);
 				break;
 			case MAP:
 				JSONObject obj = this.getJSONObj(curJSONSection, curKey);
@@ -382,7 +370,7 @@ public class Config
 					refName = obj.getString(mapKey);
 					map.put(mapKey, secMan.getElem(refName));
 				}
-				curParam.call(instance, MType.SETTER, map);
+				curParam.set(instance, map);
 				break;
 			default:
 				U.d("Unknown exported parameter found.", 2);
@@ -396,7 +384,7 @@ public class Config
 			throw new ClassCastException();
 		SectionManager secMan = this.getManager(curSectionKey, type);
 		// Loop over all elements in this section, instantiating each,
-		// and putting in the relavent section manager
+		// and putting in the relevant section manager
 		for (String curElemKey : jsonData.keySet())
 			try
 			{
@@ -423,7 +411,7 @@ public class Config
 		JSONObject res = new JSONObject();
 		Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())
-			res.putObj(curExport.getKey(), curExport.getValue().call(input, MType.GETTER));
+			res.putObj(curExport.getKey(), curExport.getValue().get(input));
 		return res;
 	}
 
@@ -479,9 +467,7 @@ public class Config
 	private void loadConfig(String filename)
 	{
 		Map<String, Class<?>> configMembers = Config.findConfigMembers();
-		U.p(configMembers);
 		JSONObject data = new JSONObject(U.readFile(filename));
-		U.d("Loading config from data:\n" + data.toString(4), 5);
 		// instantiate all objects first off, so references can be resolved
 		// later
 		for (String curSectionKey : data.keySet())
@@ -564,7 +550,6 @@ public class Config
 				member.putOpt(curElemKey, this.intelliGen(curSecMan.getElem(curElemKey), curSecMan));
 			output.putOnce(curConfigMember.getKey(), member);
 		}
-		U.d("Writing parsed config to file:\n" + output.toString(4), 5);
 		U.writeToFile(filename, output.toString(4));
 	}
 }

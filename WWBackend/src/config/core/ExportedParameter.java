@@ -1,43 +1,52 @@
 package config.core;
 
-import java.lang.reflect.Method;
-import java.util.Map;
+import java.lang.reflect.Field;
 
 import backend.U;
 import config.core.annotations.ExportedParam;
-import config.core.annotations.ExportedParam.MType;
 import config.core.annotations.ExportedParam.SType;
 
 public class ExportedParameter
 {
-	private String				paramName;
-	private Map<MType, Method>	methods;
-	private SType				storeType;
-	private String				dataType;
+	private String	paramName;
+	private SType	storeType;
+	private String	dataType;
+	private Field	field;
 
-	public ExportedParameter(String name, Map<MType, Method> methods, ExportedParam paramInfo)
+	public ExportedParameter(ExportedParam paramInfo, Field curField)
 	{
-		this.paramName = name;
-		this.methods = methods;
+		this.paramName = paramInfo.key();
+		this.field = curField;
 		this.storeType = paramInfo.storetype();
 		this.dataType = paramInfo.dataType();
 	}
 
-	public <T> T call(Object target, MType targMethod, Object... params)
+	public <T> void set(Object instance, T input)
 	{
-		return U.carefulCall(this.methods.get(targMethod), target, params);
+		try
+		{
+			this.field.set(instance, input);
+		} catch (IllegalArgumentException | IllegalAccessException e)
+		{
+			U.e("Error setting value" + input + " in object " + instance, e);
+		}
+	}
+
+	public <T> T get(Object instance)
+	{
+		try
+		{
+			return U.cleanCast(this.field.get(instance));
+		} catch (IllegalArgumentException | IllegalAccessException e)
+		{
+			U.e("Error gettiing value in " + this.field.getName() + " in object " + instance, e);
+		}
+		return null;
 	}
 
 	public String getDataType()
 	{
 		return this.dataType;
-	}
-
-	public String getGettableAsString(Object input)
-	{
-		if (this.methods.containsKey(MType.GETTER))
-			return this.call(input, MType.GETTER).toString();
-		return "";
 	}
 
 	public String getParamName()
@@ -53,6 +62,6 @@ public class ExportedParameter
 	@Override
 	public String toString()
 	{
-		return this.paramName + " - [" + this.methods.get(MType.GETTER).getName() + "]";
+		return this.paramName + " - [" + this.field.getName() + "]";
 	}
 }

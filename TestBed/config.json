@@ -4,21 +4,22 @@
             "tags": ["kill"],
             "priority": 10,
             "appliedAtomics": {
-                "ChatPost": "Some message",
-                "AddStatus": "Hurt,Turning",
-                "GrantAbility": "EatBrainz"
+                "ChatPost": {"message":"Some message"},
+                "AddStatus": {"message":"Some message"},
+                "GrantAbility": {"name":"EatBrainz"},
             },
-            "appliedActions": []
+            "appliedActions": {
+			}
         },
         "lynch": {
             "tags": ["kill"],
             "priority": 5,
             "appliedAtomics": {
-                "ChatPost": "Some message",
-                "AddStatus": "Dead",
-                "GrantAbility": "EatBrainz"
+                "ChatPost": {"message":"Some message"},
+                "AddStatus": {"message":"Some message"},
+                "GrantAbility": {"name":"EatBrainz"},
             },
-            "appliedActions": []
+            "appliedActions": {}
         }
     },
     "abilities": {
@@ -53,7 +54,7 @@
                 "selection": "list"
             },
             "appliedActions": ["maul"],
-            "appliedAtomics": {}
+            "appliedAtomics": []
         },
         "Brutal Death": {
             "tags": ["death"],
@@ -67,7 +68,7 @@
                 "selection": "list"
             },
             "appliedActions": ["maul"],
-            "appliedAtomics": {}
+            "appliedAtomics": []
         }
     },
     "gameCons": {

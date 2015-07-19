@@ -3,13 +3,21 @@
         "maul": {
             "tags": ["kill"],
             "priority": 10,
-            "appliedAtomics": [],
+            "appliedAtomics": {
+                "ChatPost": {},
+                "AddStatus": {},
+                "GrantAbility": {}
+            },
             "appliedActions": []
         },
         "lynch": {
             "tags": ["kill"],
             "priority": 5,
-            "appliedAtomics": [],
+            "appliedAtomics": {
+                "ChatPost": {},
+                "AddStatus": {},
+                "GrantAbility": {}
+            },
             "appliedActions": []
         }
     },
@@ -24,12 +32,7 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": [{
-                "priority": 5,
-                "tags": ["kill"],
-                "appliedActions": [],
-                "appliedAtomics": []
-            }],
+            "appliedActions": [{}],
             "appliedAtomics": {"ChatPost": {}}
         },
         "Maul Face": {
@@ -43,12 +46,7 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": [{
-                "priority": 10,
-                "tags": ["kill"],
-                "appliedActions": [],
-                "appliedAtomics": []
-            }],
+            "appliedActions": [{}],
             "appliedAtomics": {}
         },
         "Brutal Death": {
@@ -62,12 +60,7 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": [{
-                "priority": 10,
-                "tags": ["kill"],
-                "appliedActions": [],
-                "appliedAtomics": []
-            }],
+            "appliedActions": [{}],
             "appliedAtomics": {}
         }
     },
@@ -94,8 +87,8 @@
             "access": "public",
             "tags": ["target"],
             "chatChannels": ["public"],
-            "winCondition": ["DeadBaddies"],
-            "grantedAbilities": ["startLynchVote"],
+            "winCondition": [null],
+            "grantedAbilities": [null],
             "grantedStatuses": []
         },
         "Werewolf": {
@@ -105,10 +98,10 @@
                 "public",
                 "werewolfchat"
             ],
-            "winCondition": ["DeadTargets"],
+            "winCondition": [null],
             "grantedAbilities": [
-                "Maul Face",
-                "Brutal Death"
+                {},
+                {}
             ],
             "grantedStatuses": []
         }
@@ -117,7 +110,7 @@
         "Dead": {
             "access": "public",
             "tags": ["dead"],
-            "actionMods": ["Silence"],
+            "actionMods": [{}],
             "application": {
                 "type": "continuous",
                 "timeout": "inf"
@@ -128,27 +121,24 @@
         "Hurt": {
             "access": "private",
             "tags": ["bleeding"],
-            "actionMods": ["DeadOnDamage"],
+            "actionMods": [{}],
             "application": {
                 "type": "Timed",
                 "timeout": "2"
             },
             "onEndActions": [],
-            "onEndAtomics": {"delStatus": "Hurt"}
+            "onEndAtomics": {}
         },
         "Turning": {
             "access": "hidden",
             "tags": [""],
-            "actionMods": ["MaulImmune"],
+            "actionMods": [{}],
             "application": {
                 "type": "continuous",
                 "timeout": "inf"
             },
             "onEndActions": [],
-            "onEndAtomics": {
-                "delStatus": "Turning,[tag=bleeding]",
-                "replRole": "Werewolf"
-            }
+            "onEndAtomics": {}
         }
     },
     "actionMods": {
@@ -185,8 +175,7 @@
     },
     "phases": {
         "Daytime": {
-            "triggeredActions": [],
-            "triggeredAtomics": {},
+            "triggeredActions": {},
             "activeMods": [],
             "continueReqs": [
                 "ability[tag=dayending]",
@@ -194,8 +183,7 @@
             ]
         },
         "Nighttime": {
-            "triggeredActions": [],
-            "triggeredAtomics": {},
+            "triggeredActions": {},
             "activeMods": [],
             "continueReqs": [
                 "ability[tag=nightending]",

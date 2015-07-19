@@ -4,7 +4,6 @@ import java.util.List;
 
 import config.core.annotations.ConfigMember;
 import config.core.annotations.ExportedParam;
-import config.core.annotations.ExportedParam.MType;
 import config.core.annotations.ExportedParam.SType;
 
 /**
@@ -14,32 +13,11 @@ import config.core.annotations.ExportedParam.SType;
 @ConfigMember(sectionKey = "items")
 public class Item
 {
-	private double			exampleA;
-	private List<Double>	exampleB;
+	@ExportedParam(storetype = SType.SINGLE, dataType = "num", key = "exampleA", sortVal = 0)
+	private double exampleA;
 
-	@ExportedParam(storetype = SType.SINGLE, dataType = "string", key = "exampleA", methodtype = MType.GETTER, sortVal = 0)
-	public double getExampleA()
-	{
-		return this.exampleA;
-	}
-
-	@ExportedParam(storetype = SType.LIST, dataType = "string", key = "exampleB", methodtype = MType.GETTER, sortVal = 0)
-	public List<Double> getExampleB()
-	{
-		return this.exampleB;
-	}
-
-	@ExportedParam(storetype = SType.SINGLE, dataType = "string", key = "exampleA", methodtype = MType.SETTER, sortVal = 0)
-	public void setExampleA(double input)
-	{
-		this.exampleA = input;
-	}
-
-	@ExportedParam(storetype = SType.LIST, dataType = "string", key = "exampleB", methodtype = MType.SETTER, sortVal = 0)
-	public void setExampleB(List<Double> input)
-	{
-		this.exampleB = input;
-	}
+	@ExportedParam(storetype = SType.LIST, dataType = "num", key = "exampleB", sortVal = 0)
+	private List<Double> exampleB;
 
 	@Override
 	public String toString()

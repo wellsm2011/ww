@@ -1,6 +1,5 @@
 package backend;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -318,15 +317,12 @@ public class U
 	@SuppressWarnings("unchecked")
 	public static <T extends Serializable> T objReadFromFile(String filename) throws FileNotFoundException, ClassNotFoundException, IOException
 	{
-		ObjectInputStream ois = null;
-		FileInputStream fis = null;
-		LzmaInputStream lis = null;
+		// ObjectInputStream ois = null;
+		// FileInputStream fis = null;
+		// LzmaInputStream lis = null;
 		T result = null;
-		try
+		try (FileInputStream fis = new FileInputStream(filename); LzmaInputStream lis = new LzmaInputStream(fis); ObjectInputStream ois = new ObjectInputStream(lis);)
 		{
-			fis = new FileInputStream(filename);
-			lis = new LzmaInputStream(fis);
-			ois = new ObjectInputStream(lis);
 			result = (T) ois.readObject();
 		} catch (FileNotFoundException e)
 		{
@@ -340,11 +336,6 @@ public class U
 		{
 			U.e("'" + filename + "' file invalid, throwing exception.", e);
 			throw e;
-		} finally
-		{
-			U.tryCloseStream("Could not close object input stream while reading from file '" + filename + "'.", ois);
-			U.tryCloseStream("Could not close file input stream while reading from file '" + filename + "'.", fis);
-			U.tryCloseStream("Could not close LZMA input stream while reading from file '" + filename + "'.", lis);
 		}
 		return result;
 	}
@@ -360,15 +351,10 @@ public class U
 	 */
 	public static <T extends Serializable> void objWriteToFile(T obj, String filename) throws FileNotFoundException, IOException
 	{
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
-		LzmaOutputStream los = null;
 		U.d("Writing object to filename " + filename + ".", 10);
-		try
+		try (FileOutputStream fos = new FileOutputStream(filename); LzmaOutputStream los = new LzmaOutputStream(fos); ObjectOutputStream oos = new ObjectOutputStream(los);)
 		{
-			fos = new FileOutputStream(filename);
-			los = new LzmaOutputStream(fos);
-			oos = new ObjectOutputStream(los);
+
 			oos.writeObject(obj);
 		} catch (FileNotFoundException e)
 		{
@@ -378,11 +364,6 @@ public class U
 		{
 			U.e("Error: '" + filename + "' file invalid, throwing exception.", e);
 			throw e;
-		} finally
-		{
-			U.tryCloseStream("Could not close object output stream while reading from file '" + filename + "'.", oos);
-			U.tryCloseStream("Could not close file output stream while writing to file '" + filename + "'.", fos);
-			U.tryCloseStream("Could not close LZMA output stream while writing to file '" + filename + "'.", los);
 		}
 	}
 
@@ -535,28 +516,6 @@ public class U
 		{
 			U.e("Error sleeping", e);
 		}
-	}
-
-	/**
-	 * Tries to close the passed stream, if it is not null. If it encounters an
-	 * exception, it logs it and continues.
-	 *
-	 * @param message
-	 *            the message to log on IO exception
-	 * @param stream
-	 *            the stream to try and close
-	 */
-
-	public static void tryCloseStream(String message, Closeable stream)
-	{
-		if (stream != null)
-			try
-			{
-				stream.close();
-			} catch (IOException e)
-			{
-				U.e(message, e);
-			}
 	}
 
 	/**
