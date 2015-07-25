@@ -175,7 +175,8 @@
     },
     "phases": {
         "Daytime": {
-            "triggeredActions": {},
+            "triggeredActions": [],
+            "triggeredAtomics": {},
             "activeMods": [],
             "continueReqs": [
                 "ability[tag=dayending]",
@@ -183,7 +184,8 @@
             ]
         },
         "Nighttime": {
-            "triggeredActions": {},
+            "triggeredActions": [],
+            "triggeredAtomics": {},
             "activeMods": [],
             "continueReqs": [
                 "ability[tag=nightending]",

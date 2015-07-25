@@ -151,6 +151,12 @@ public class Config
 		return Config.decoders.get(name.toLowerCase());
 	}
 
+	private ValEncoder<?> getEncoder(ExportedParameter curParam)
+	{
+		String name = curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1);
+		return Config.encoders.get(name.toLowerCase());
+	}
+
 	/**
 	 * Wrapper, simply returns an empty/default JSONArray instead of null
 	 *
@@ -348,7 +354,7 @@ public class Config
 		{
 			case SINGLE:
 				refName = curJSONSection.getString(curKey);
-				curParam.set(instance, refName);
+				curParam.set(instance, secMan.getElem(refName));
 				break;
 			case LIST:
 				JSONArray arr = this.getJSONArr(curJSONSection, curKey);
@@ -405,16 +411,38 @@ public class Config
 	 * @param object
 	 *            the input object to create a representation of
 	 * @return the resulting JSON representation
+	 * @throws UnknownDecoderException 
 	 */
-	private JSONObject intelliGen(Object input, SectionManager secMan)
+	private JSONObject intelliGen(Object input, SectionManager secMan) throws UnknownDecoderException
 	{
 		// TODO handle putting reference names instead of their string
 		// equivalents...
 		JSONObject res = new JSONObject();
 		Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())
-			res.putObj(curExport.getKey(), curExport.getValue().get(input));
+		{
+			ExportedParameter curParam = curExport.getValue();
+			if (curParam.getDataType().startsWith("ref:"))
+			{
+				SectionManager targSecMan = this.getSection(curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1));
+				res.put(curExport.getKey(), targSecMan.getKeyFor(curParam.get(input)));
+			} else if (curParam.getDataType().startsWith("decode:"))
+				{
+				ValEncoder<?> encoder = this.getEncoder(curParam);
+				if (encoder == null)
+					throw new UnknownDecoderException(curParam.getDataType());
+				}
+			else
+				;
+		}
 		return res;
+	}
+
+	private void generate(Object input, JSONObject res, ExportedParameter curPAram)
+	{
+		if (curPAram.getDataType().startsWith(""))
+			res.putObj(curExport.getKey(), curExport.getValue().get(input));
+
 	}
 
 	/**
@@ -424,37 +452,37 @@ public class Config
 	 *
 	 * @param data
 	 *            the JSON Data to attempt to parse
-	 * @param key
+	 * @param sectionKey
 	 *            the key for this section
 	 * @param type
 	 *            the type to attempt to use for this part of the config file
 	 * @throws UnknownReferenceException
 	 * @throws UnknownDecoderException
 	 */
-	private void intelliParse(JSONObject data, String key, SectionManager secMan) throws UnknownReferenceException, UnknownDecoderException
+	private void intelliParse(JSONObject data, String sectionKey, SectionManager secMan) throws UnknownReferenceException, UnknownDecoderException
 	{
-		JSONObject jsonData = data.optJSONObject(key);
+		JSONObject jsonData = data.optJSONObject(sectionKey);
 		if (jsonData == null)
 			jsonData = new JSONObject();
 		// parse all the param data
-		for (String cur : jsonData.keySet())
+		for (String elemName : jsonData.keySet())
 			try
 			{
 				// Get the current JSON object, instantiate it to the given type
 				// and populate the class.
-				Object curInstance = secMan.getElem(cur);
-				JSONObject curJSONSection = jsonData.optJSONObject(cur);
+				Object curInstance = secMan.getElem(elemName);
+				JSONObject curJSONSection = jsonData.optJSONObject(elemName);
 				if (curJSONSection == null)
 					curJSONSection = new JSONObject();
 				Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
-				for (String curKey : curJSONSection.keySet())
-					if (paramMap.containsKey(curKey))
-						this.parseParam(curJSONSection, curKey, paramMap.get(curKey), curInstance);
+				for (String paramKey : curJSONSection.keySet())
+					if (paramMap.containsKey(paramKey))
+						this.parseParam(curJSONSection, paramKey, paramMap.get(paramKey), curInstance);
 					else
-						U.d("Dropped extra key found in JSON structure: " + curKey + ".", 1);
+						U.d("Dropped extra key found in JSON structure: " + paramKey + " for entry " + elemName + " in " + sectionKey + ".", 1);
 			} catch (JSONException e)
 			{
-				U.e("Issue parsing " + key + " during config loading. Probably an internal error with the \"" + key + "\" handler.");
+				U.e("Issue parsing " + sectionKey + " during config loading. Probably an internal error with the \"" + sectionKey + "\" handler.");
 				e.printStackTrace();
 			}
 	}

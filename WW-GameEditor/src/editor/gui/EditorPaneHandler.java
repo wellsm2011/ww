@@ -28,7 +28,6 @@ import backend.U;
 import backend.functionInterfaces.Handler;
 import config.core.ExportedParameter;
 import config.core.SectionManager;
-import config.core.annotations.ExportedParam.MType;
 
 /**
  * Editor helper class, builds a editing pane from the specified type of item.
@@ -260,7 +259,7 @@ public class EditorPaneHandler
 		input.setText(curParam.getValue().getParamName());
 		myPanel.pack();
 		this.loaders.add((in) -> {
-			input.setText(curParam.getValue().getGettableAsString(in));
+			input.setText(curParam.getValue().get(in));
 			myPanel.pack();
 		});
 	}
@@ -280,7 +279,7 @@ public class EditorPaneHandler
 
 		List list = new List(myPanel, SWT.BORDER | SWT.V_SCROLL);
 		this.loaders.add((in) -> {
-			java.util.List<String> curList = curParam.getValue().call(in, MType.GETTER);
+			java.util.List<String> curList = curParam.getValue().get(in);
 			list.removeAll();
 			for (String cur : curList)
 				list.add(cur);
@@ -349,7 +348,7 @@ public class EditorPaneHandler
 		myPanel.pack();
 		this.loaders.add((in) -> {
 			table.removeAll();
-			Map<String, String> map = U.cleanCast(curParam.getValue().call(in, MType.GETTER));
+			Map<String, String> map = U.cleanCast(curParam.getValue().get(in));
 			for (Entry<String, String> curEntry : map.entrySet())
 			{
 				TableItem item = new TableItem(table, SWT.NONE);

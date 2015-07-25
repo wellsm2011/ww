@@ -14,7 +14,7 @@ public class Phase
 	@ExportedParam(storetype = SType.LIST, dataType = "ref:actions", key = "triggeredActions", sortVal = 1)
 	private List<Action> triggeredActions;
 
-	@ExportedParam(storetype = SType.MAP, dataType = "decode:Atomic", key = "triggeredActions", sortVal = 2)
+	@ExportedParam(storetype = SType.MAP, dataType = "decode:Atomic", key = "triggeredAtomics", sortVal = 2)
 	private Map<String, Atomic> triggeredAtomics;
 
 	@ExportedParam(storetype = SType.LIST, dataType = "ref:actionMods", key = "activeMods", sortVal = 3)

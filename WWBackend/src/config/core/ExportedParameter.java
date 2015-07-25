@@ -33,6 +33,10 @@ public class ExportedParameter
 		return null;
 	}
 
+	/**
+	 * @see ExportedParam#dataType()
+	 * @return
+	 */
 	public String getDataType()
 	{
 		return this.dataType;
