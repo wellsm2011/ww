@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
-import backend.U;
 import config.core.Config;
 import config.core.annotations.HasCustomConfigType;
 
@@ -32,7 +31,7 @@ public class Atomic
 
 	public Atomic()
 	{
-		data = new HashMap<>();
+		this.data = new HashMap<>();
 	}
 
 	private Map<String, String> getData()
