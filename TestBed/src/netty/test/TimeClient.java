@@ -19,7 +19,6 @@ public class TimeClient
 {
 	static class TimeClientHandler extends ChannelInboundHandlerAdapter
 	{
-
 		@Override
 		public void channelRead(ChannelHandlerContext ctx, Object msg)
 		{
@@ -41,7 +40,6 @@ public class TimeClient
 			cause.printStackTrace();
 			ctx.close();
 		}
-
 	}
 
 	public static void main(String[] args) throws Exception
