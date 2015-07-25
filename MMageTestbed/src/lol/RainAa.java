@@ -20,6 +20,7 @@ public class RainAa
 		while (champs.size() > 1)
 			RainAa.runAttack(champs);
 		U.p(champs.getFirst() + " is the winner!");
+		keyboard.close();
 	}
 
 	private static void runAttack(LinkedList<RainAa> champs)
