@@ -2,14 +2,17 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
+import org.json.JSONException;
+
 import backend.U;
 import config.core.Config;
 import config.core.SectionManager;
+import config.core.exceptions.UnknownDecoderException;
 
 public class Driver
 {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws JSONException, UnknownDecoderException
 	{
 		// Since people can't apparently figure out how to do this themselves
 		// and have to go editing source code instead <_<
@@ -45,7 +48,7 @@ public class Driver
 		U.p("Saved!");
 	}
 
-	private static void testConfig()
+	private static void testConfig() throws JSONException, UnknownDecoderException
 	{
 		Config config = new Config("config.json");
 		StringBuilder sb = new StringBuilder("\n");

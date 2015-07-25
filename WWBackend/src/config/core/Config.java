@@ -438,13 +438,6 @@ public class Config
 		return res;
 	}
 
-	private void generate(Object input, JSONObject res, ExportedParameter curPAram)
-	{
-		if (curPAram.getDataType().startsWith(""))
-			res.putObj(curExport.getKey(), curExport.getValue().get(input));
-
-	}
-
 	/**
 	 * Intelligently parses the specified data from the json object and the
 	 * specified type. Uses the standard annotations (ExportedParam) to
@@ -568,8 +561,10 @@ public class Config
 	 *
 	 * @param filename
 	 *            the file to export to
+	 * @throws UnknownDecoderException 
+	 * @throws JSONException 
 	 */
-	public void writeToFile(String filename)
+	public void writeToFile(String filename) throws JSONException, UnknownDecoderException
 	{
 		JSONObject output = new JSONObject();
 		for (Entry<String, SectionManager> curConfigMember : this.maps.entrySet())
