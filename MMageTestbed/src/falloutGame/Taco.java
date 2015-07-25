@@ -4,7 +4,8 @@ public class Taco
 {
 
 }
-/*
+/*@formatter:off
+  * 
   * Inventory Items
   * Weapons - Pistol or SMG - Start with Pistol, find SMG in Room 0,0
   * Keycard - Required to open locked door in 3,2. Dropped by Enemy in 1,2.
@@ -13,7 +14,7 @@ public class Taco
   * Harmonica - Prints out a song name when played. Start with.
   * Taco - One-use taco that 10x your HP. Find in Chest, Room 3,1.
   * 
-  * 
+  *
   * Commands
   * Fight/Combat = f
   * Explore/Move = e
@@ -41,6 +42,6 @@ public class Taco
   * T-S-1 2
   *     L L
   *   E-O-3
-  *  
   *
-*/
+  *@formatter:on
+  */
