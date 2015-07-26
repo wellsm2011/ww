@@ -46,13 +46,13 @@ import global.Globals;
  */
 public class Config
 {
-	private static HashMap<String, ValDecoder<?>>	decoders;
-	private static HashMap<String, ValEncoder<?>>	encoders;
+	private static Map<String, ValDecoder<?>>	decoders;
+	private static Map<String, ValEncoder>		encoders;
 
 	static
 	{
-		Config.decoders = new HashMap<String, ValDecoder<?>>();
-		Config.encoders = new HashMap<String, ValEncoder<?>>();
+		Config.decoders = new HashMap<>();
+		Config.encoders = new HashMap<>();
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Config
 		return res;
 	}
 
-	public static boolean registerType(String name, ValDecoder<?> decoder, ValEncoder<?> encoder)
+	public static boolean registerType(String name, ValDecoder<?> decoder, ValEncoder encoder)
 	{
 		if (Config.decoders.containsKey(name))
 			return false;
@@ -151,7 +151,7 @@ public class Config
 		return Config.decoders.get(name.toLowerCase());
 	}
 
-	private ValEncoder<?> getEncoder(ExportedParameter curParam)
+	private ValEncoder getEncoder(ExportedParameter curParam)
 	{
 		String name = curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1);
 		return Config.encoders.get(name.toLowerCase());
@@ -274,7 +274,7 @@ public class Config
 
 	private void handleEnum(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
 	{
-		// TODO iff ever needed.
+		// TODO iff ever needed, handle enum types
 	}
 
 	/**
@@ -411,12 +411,10 @@ public class Config
 	 * @param object
 	 *            the input object to create a representation of
 	 * @return the resulting JSON representation
-	 * @throws UnknownDecoderException 
+	 * @throws UnknownDecoderException
 	 */
 	private JSONObject intelliGen(Object input, SectionManager secMan) throws UnknownDecoderException
 	{
-		// TODO handle putting reference names instead of their string
-		// equivalents...
 		JSONObject res = new JSONObject();
 		Map<String, ExportedParameter> paramMap = secMan.getParamMappings();
 		for (Entry<String, ExportedParameter> curExport : paramMap.entrySet())
@@ -426,14 +424,53 @@ public class Config
 			{
 				SectionManager targSecMan = this.getSection(curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1));
 				res.put(curExport.getKey(), targSecMan.getKeyFor(curParam.get(input)));
-			} else if (curParam.getDataType().startsWith("decode:"))
+				switch (curParam.getStoreType())
 				{
-				ValEncoder<?> encoder = this.getEncoder(curParam);
+					case LIST:
+						List<?> listToExport = curParam.get(input);
+						List<String> encodedList = new ArrayList<>(listToExport.size());
+						listToExport.forEach(cur -> encodedList.add(targSecMan.getKeyFor(cur)));
+						res.put(curExport.getKey(), encodedList);
+						break;
+					case MAP:
+						Map<String, ?> mapToExport = curParam.get(input);
+						Map<String, String> encodedMap = new LinkedHashMap<>();
+						mapToExport.forEach((key, val) -> encodedMap.put(key, targSecMan.getKeyFor(val)));
+						res.put(curExport.getKey(), encodedMap);
+						break;
+					case SINGLE:
+						res.put(curExport.getKey(), targSecMan.getKeyFor(curParam.get(input)));
+						break;
+				}
+			} else if (curParam.getDataType().startsWith("decode:"))
+			{
+				ValEncoder encoder = this.getEncoder(curParam);
 				if (encoder == null)
 					throw new UnknownDecoderException(curParam.getDataType());
+				switch (curParam.getStoreType())
+				{
+					case LIST:
+						List<?> listToExport = curParam.get(input);
+						List<JSONObject> encodedList = new ArrayList<>(listToExport.size());
+						listToExport.forEach(cur -> encodedList.add(encoder.encode(cur)));
+						res.put(curExport.getKey(), encodedList);
+						break;
+					case MAP:
+						Map<String, ?> mapToExport = curParam.get(input);
+						Map<String, JSONObject> encodedMap = new LinkedHashMap<>();
+						mapToExport.forEach((key, val) -> encodedMap.put(key, encoder.encode(val)));
+						res.put(curExport.getKey(), encodedMap);
+						break;
+					case SINGLE:
+						res.put(curExport.getKey(), encoder.encode(curParam.get(input)));
+						break;
+
 				}
-			else
+			} else if (curParam.getDataType().startsWith("enum:"))
+				// TODO iff ever needed, handle enum types.
 				;
+			else
+				res.putObj(curExport.getKey(), curParam.get(input));
 		}
 		return res;
 	}
@@ -561,8 +598,8 @@ public class Config
 	 *
 	 * @param filename
 	 *            the file to export to
-	 * @throws UnknownDecoderException 
-	 * @throws JSONException 
+	 * @throws UnknownDecoderException
+	 * @throws JSONException
 	 */
 	public void writeToFile(String filename) throws JSONException, UnknownDecoderException
 	{

@@ -22,4 +22,9 @@ public class Action
 
 	@ExportedParam(storetype = SType.LIST, dataType = "ref:actions", key = "appliedActions", sortVal = 4)
 	private List<Action> appliedActions;
+
+	public String toString()
+	{
+		return "{" + tags + ";" + priority + ";" + appliedAtomics + ";" + appliedActions + "}";
+	}
 }

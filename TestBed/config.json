@@ -8,8 +8,7 @@
                 "AddStatus": {"message":"Some message"},
                 "GrantAbility": {"name":"EatBrainz"},
             },
-            "appliedActions": {
-			}
+            "appliedActions": ["lynch"]
         },
         "lynch": {
             "tags": ["kill"],
@@ -19,7 +18,7 @@
                 "AddStatus": {"message":"Some message"},
                 "GrantAbility": {"name":"EatBrainz"},
             },
-            "appliedActions": {}
+            "appliedActions": []
         }
     },
     "abilities": {

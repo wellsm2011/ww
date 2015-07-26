@@ -4,19 +4,19 @@
             "tags": ["kill"],
             "priority": 10,
             "appliedAtomics": {
-                "ChatPost": {},
-                "AddStatus": {},
-                "GrantAbility": {}
+                "ChatPost": {"message": "Some message"},
+                "AddStatus": {"message": "Some message"},
+                "GrantAbility": {"name": "EatBrainz"}
             },
-            "appliedActions": []
+            "appliedActions": ["lynch"]
         },
         "lynch": {
             "tags": ["kill"],
             "priority": 5,
             "appliedAtomics": {
-                "ChatPost": {},
-                "AddStatus": {},
-                "GrantAbility": {}
+                "ChatPost": {"message": "Some message"},
+                "AddStatus": {"message": "Some message"},
+                "GrantAbility": {"name": "EatBrainz"}
             },
             "appliedActions": []
         }
@@ -32,8 +32,12 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": [{}],
-            "appliedAtomics": {"ChatPost": {}}
+            "appliedActions": ["lynch"],
+            "appliedAtomics": {"ChatPost": {
+                "channel": "villager",
+                "source": "system",
+                "message": "Starting Lynch Vote!"
+            }}
         },
         "Maul Face": {
             "tags": [
@@ -46,7 +50,7 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": [{}],
+            "appliedActions": ["maul"],
             "appliedAtomics": {}
         },
         "Brutal Death": {
@@ -60,7 +64,7 @@
                 "filter": "",
                 "selection": "list"
             },
-            "appliedActions": [{}],
+            "appliedActions": ["maul"],
             "appliedAtomics": {}
         }
     },
@@ -87,8 +91,8 @@
             "access": "public",
             "tags": ["target"],
             "chatChannels": ["public"],
-            "winCondition": [null],
-            "grantedAbilities": [null],
+            "winCondition": [""],
+            "grantedAbilities": [""],
             "grantedStatuses": []
         },
         "Werewolf": {
@@ -98,10 +102,10 @@
                 "public",
                 "werewolfchat"
             ],
-            "winCondition": [null],
+            "winCondition": [""],
             "grantedAbilities": [
-                {},
-                {}
+                "Maul Face",
+                "Brutal Death"
             ],
             "grantedStatuses": []
         }
@@ -110,7 +114,7 @@
         "Dead": {
             "access": "public",
             "tags": ["dead"],
-            "actionMods": [{}],
+            "actionMods": ["Silence"],
             "application": {
                 "type": "continuous",
                 "timeout": "inf"
@@ -121,7 +125,7 @@
         "Hurt": {
             "access": "private",
             "tags": ["bleeding"],
-            "actionMods": [{}],
+            "actionMods": ["DeadOnDamage"],
             "application": {
                 "type": "Timed",
                 "timeout": "2"
@@ -132,7 +136,7 @@
         "Turning": {
             "access": "hidden",
             "tags": [""],
-            "actionMods": [{}],
+            "actionMods": ["MaulImmune"],
             "application": {
                 "type": "continuous",
                 "timeout": "inf"

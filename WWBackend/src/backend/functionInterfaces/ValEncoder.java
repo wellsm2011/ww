@@ -3,7 +3,7 @@ package backend.functionInterfaces;
 import org.json.JSONObject;
 
 @FunctionalInterface
-public interface ValEncoder<T>
+public interface ValEncoder
 {
-	public JSONObject encode(T input);
+	public JSONObject encode(Object val);
 }

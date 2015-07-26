@@ -1,7 +1,6 @@
 package config.core;
 
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -148,6 +147,15 @@ public class SectionManager
 		return this.keyName;
 	}
 
+	public String getKeyFor(Object object)
+	{
+		for (Entry<String, Object> cur : this.dataItems.entrySet())
+			if (cur.getValue() == object)
+				return cur.getKey();
+		return "";
+
+	}
+
 	/**
 	 * Returns a set of strings for iteration over this section's elements. Can
 	 * be used to retrieve the element associated with the given key.
@@ -196,14 +204,5 @@ public class SectionManager
 			U.e("Error, was passed " + curInstance.toString() + " of type " + curInstance.getClass() + " for type " + this.type + ".\nThis is not OK. No data stored.");
 		else
 			this.dataItems.put(key, curInstance);
-	}
-
-	public String getKeyFor(Object object)
-	{
-		for(Entry<String, Object> cur : this.dataItems.entrySet())
-			if(cur.getValue() == object)
-				return cur.getKey();
-		return "";
-						
 	}
 }
