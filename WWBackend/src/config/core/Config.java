@@ -95,6 +95,23 @@ public class Config
 		return res;
 	}
 
+	/**
+	 * Allows for registration of custom encoder/decoder pairs with a type, this
+	 * allows for custom types to be nicely imported and exported. Eventually
+	 * this may also require a GUI pane be offered so that the editor can
+	 * properly handle the custom type.
+	 * 
+	 * @param name
+	 *            the name of the type to register
+	 * @param decoder
+	 *            the decoder function, goes from a JSONObject to whatever the
+	 *            expected type is.
+	 * @param encoder
+	 *            the encoder function, goes from some object to a JSONObject
+	 *            for exporting.
+	 * @return true if the type was successfully registered, false if there is a
+	 *         already registered encoder or decoder.
+	 */
 	public static boolean registerType(String name, ValDecoder<?> decoder, ValEncoder encoder)
 	{
 		if (Config.decoders.containsKey(name))
@@ -140,17 +157,26 @@ public class Config
 		return this.maps;
 	}
 
-	public Map<Class<?>, SectionManager> getClassToSectionManagerMap()
-	{
-		return this.classToSectionMap;
-	}
-
+	/**
+	 * For a given exported parameter, attempts to get the decoder it refers to.
+	 * 
+	 * @param curParam
+	 *            the parameter to search for
+	 * @return the ValDecoder for that type, or null if not found.
+	 */
 	private ValDecoder<?> getDecoder(ExportedParameter curParam)
 	{
 		String name = curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1);
 		return Config.decoders.get(name.toLowerCase());
 	}
 
+	/**
+	 * For a given exported parameter, attempts to get the encoder it refers to.
+	 * 
+	 * @param curParam
+	 *            the parameter to search for
+	 * @return the ValEncoder for that type, or null if not found.
+	 */
 	private ValEncoder getEncoder(ExportedParameter curParam)
 	{
 		String name = curParam.getDataType().substring(curParam.getDataType().indexOf(':') + 1);
@@ -237,13 +263,28 @@ public class Config
 		return this.classToSectionMap.get(type);
 	}
 
+	/**
+	 * Handles decoding the given json section into the given instance using a
+	 * custom decoder.
+	 * 
+	 * @param curJSONSection
+	 *            the json section to pull from to get a section to decode
+	 * @param curKey
+	 *            the key for the current section of json to decode
+	 * @param curParam
+	 *            the data for the current parameter
+	 * @param instance
+	 *            the object to load the parameters into
+	 * @throws UnknownDecoderException
+	 *             if the decoder for the specified type has not been declared.
+	 */
 	private void handleCustomDecode(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance) throws UnknownDecoderException
 	{
 		JSONObject obj;
 
 		ValDecoder<?> decoder = this.getDecoder(curParam);
 		if (decoder == null)
-			throw new UnknownDecoderException(curParam.getDataType());
+			throw new UnknownDecoderException("No registered decoder for " + curParam.getDataType());
 		switch (curParam.getStoreType())
 		{
 			case SINGLE:
@@ -272,6 +313,15 @@ public class Config
 		}
 	}
 
+	/**
+	 * Parses the given json section, as an enum-like type system. Currently
+	 * unimplemented due to lack of need.
+	 * 
+	 * @param curJSONSection
+	 * @param curKey
+	 * @param curParam
+	 * @param instance
+	 */
 	private void handleEnum(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance)
 	{
 		// TODO iff ever needed, handle enum types
@@ -344,6 +394,15 @@ public class Config
 		}
 	}
 
+	/**
+	 * Handles the given section as references to other config sections.
+	 * 
+	 * @param curJSONSection
+	 * @param curKey
+	 * @param curParam
+	 * @param instance
+	 * @throws UnknownReferenceException
+	 */
 	private void handleReferences(JSONObject curJSONSection, String curKey, ExportedParameter curParam, Object instance) throws UnknownReferenceException
 	{
 		String refName;
@@ -384,6 +443,19 @@ public class Config
 		}
 	}
 
+	/**
+	 * Loops over all the elements in a given json section, instantiates each.
+	 * This is done as a seperate step to allow for references to nicely be
+	 * handled at the next pass.
+	 * 
+	 * @param curSectionKey
+	 *            key of the current section, used to create the section
+	 *            manager.
+	 * @param jsonData
+	 *            the json data to loop over
+	 * @param type
+	 *            the internal type that this section refers to
+	 */
 	private void instantiateSectionElems(String curSectionKey, JSONObject jsonData, Class<?> type)
 	{
 		if (type == null)

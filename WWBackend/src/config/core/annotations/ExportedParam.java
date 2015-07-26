@@ -19,13 +19,6 @@ import config.core.Config;
  */
 public @interface ExportedParam
 {
-	// /**
-	// * The method types that are currently expected to be supported.
-	// */
-	// public enum MType
-	// {
-	// SETTER, GETTER
-	// }
 
 	/**
 	 * This denotes the number of types that are expected in this param, whether
@@ -77,11 +70,6 @@ public @interface ExportedParam
 	 * The JSON key for this field.
 	 */
 	String key();
-
-	// /**
-	// * The type this particular method is of, defaults to GETTER.
-	// */
-	// MType methodtype();
 
 	/**
 	 * How this field should be sorted in comparasion to the other fields in the
