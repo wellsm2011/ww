@@ -1,0 +1,157 @@
+{
+	// I like the idea of having teams be an official data type. 
+	// It allows for team-based actions much more readily.
+	"teams" : {
+		"werewolves" : {
+			"abilities" : ["wolfMaul"],
+			"chatChannels" : ["public", "wolfChat", "private"],
+			"wincon" : "parity[village]"
+		}
+		"village" : {
+			"chatChannels" : ["public", "private"]
+			"wincon" : "elemination[werewolves]"
+		}
+	},
+	"roles" : {
+		"villager" : {
+			
+		},
+		"seer" : {
+			grantedAbilities: [
+				"seerPeek"
+			],
+		},
+		"doctor" : {
+			grantedAbilities: {
+				"doctorSave"
+			},
+		},
+		"werewolf" : {
+			
+		}
+	},
+	"abilities" : {
+		"seerPeek" : {
+			"phase": "night",
+			"priority": 30,
+			"action": "peek",
+			"targeting": {
+				"selection": "!self",
+			}
+		},
+		"wolfMaul" : {
+			"phase": "night",
+			"priority": 20,
+			"targeting": {
+				"type": "",
+				selection: ""
+			}
+		},
+		"villageLynch" : {
+			phase: "day",
+			
+		},
+		"doctorSave" : {
+		
+		}
+	},
+	"statuses" : {
+		"dead" : {
+			"access" : "public",
+			"tags" : ["dead"],
+			"appliedMods" : ["silence"],
+			
+		},
+		"tough" : {
+			
+		},
+		"protected" : {
+			
+		},
+		"recentlySaved" : {
+			"access" : "private",
+			"tags" : [],
+			
+		}
+	},
+	// Actions can be: successful, survived, prevented, unsuccessful, or invalid
+	"actions" : {
+		"maul" : {
+			
+		},
+		"lynch" : {
+		
+		},
+		"peek" : {
+			chatPost: [
+				"peekSuccess",
+				"peekFailure"
+			]
+		},
+		"protect" : {
+		
+		}
+	},
+	"modifiers" : {
+	
+	},
+	"chatPost" : {
+		"maulNotification" : {
+			"condition" : "action.success",
+			"channel" : "public",
+			"source" : "system",
+			"message" : "[target] was mauled."
+		}
+	},
+	"infoReq" : {
+		
+	},
+    "actionMods": {
+        "MaulImmune": {
+            "priority": 1,
+            "trigger": {
+                "on": "attemptedAbility",
+                "filter": "name=Maul Face"
+            },
+            "effect": {"targeting.filter": ">>player!=_this"},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        },
+        "DeadOnDamage": {
+            "priority": 1,
+            "trigger": {
+                "on": "ability",
+                "filter": "tag=dead|hurt"
+            },
+            "effect": {"appliedAtomics": ">>addStatus:Dead"},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        },
+        "Silence": {
+            "priority": 1,
+            "trigger": {
+                "on": "attemptedAtomic",
+                "filter": "name=ChatPost"
+            },
+            "effect": {"value": ""},
+            "triggeredActions": [],
+            "triggeredAtomics": {}
+        }
+    },
+	"condition" : {
+		"actionSuccess" : {
+			"any" : [
+				""
+			]
+		}
+	}
+	"phases" : {
+		"day" : {
+			"priority": [1, 20]
+			"triggeredActions" : ["startVote"],
+		},
+		"night" : {
+			"priority": [21, 100]
+		}
+	}
+}
