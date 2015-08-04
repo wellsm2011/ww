@@ -51,7 +51,7 @@ public class Driver
 	private static void testConfig() throws JSONException, UnknownDecoderException
 	{
 		Config config = new Config("config.json");
-		
+
 		StringBuilder sb = new StringBuilder("\n");
 		for (Entry<String, SectionManager> curSec : config.getAllMaps().entrySet())
 		{
